@@ -1,0 +1,19 @@
+#!/bin/sh
+# Back up Firefox bookmarks
+
+# To get this script to work properly, you'll need to make sure that you've set the
+# browser.bookmarks.autoExportHTML preference to true in about:config for Firefox >3.0,
+# as that FF version doesn't write out bookmarks.html by default anymore.
+# 
+# Also, all goes pear-shaped if you have more than one FF profile.
+
+# This will be different on other operating systems
+FF_PROFILES_DIR="${HOME}/Library/Application Support/Firefox/Profiles"
+OUTDIR=${HOME}/Documents/Storage/Backup/Monthly/
+
+FF_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`
+cp "$FF_PROFILE/bookmarks.html" .
+lzma -9 ./bookmarks.html
+mv ./bookmarks.html.lzma ${OUTDIR}
+
+

@@ -1,0 +1,24 @@
+#!/bin/sh
+# Back up my dotfiles to a place where my off-site backup utility
+# will find them.
+
+DOTFILES="${HOME}/Documents/Storage/Backup/Monthly/dotfiles"
+
+cp ~/.bashrc $DOTFILES/dotbashrc
+cp ~/.emacs $DOTFILES/dotemacs
+cp ~/.gitignore $DOTFILES/dotgitignore
+cp ~/.hgrc $DOTFILES/dothgrc
+cp ~/.nanorc $DOTFILES/dotnanorc
+cp ~/.pinerc $DOTFILES/dotpinerc
+
+rm -rf $DOTFILES/dotprivate
+cp -Rf ~/.private $DOTFILES/dotprivate
+
+rm -rf $DOTFILES/dotemacsdotd
+cp -Rf ~/.emacs.d $DOTFILES/dotemacsdotd
+
+rm -rf $DOTFILES/dotssh
+cp -Rf ~/.ssh $DOTFILES/dotssh
+
+rm -rf $DOTFILES/dotterminfo
+cp -Rf ~/.terminfo $DOTFILES/dotterminfo

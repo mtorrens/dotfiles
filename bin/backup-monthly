@@ -1,0 +1,9 @@
+#!/bin/sh
+# All my monthly backups, tarring things up for storage where my
+# off-site backup setup can get to them.
+
+~/bin/backup/bookmarks
+~/bin/backup/calendar
+~/bin/backup/dotfiles
+~/bin/backup/todo
+

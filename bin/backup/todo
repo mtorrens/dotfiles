@@ -1,0 +1,18 @@
+#!/bin/sh
+# Back up my to-do list from Remember the Milk using wget with a password
+# credential file stored privately.
+
+source ${HOME}/bin/backup/utilities.sh
+
+# Get the private wgetrc with RTM credentials
+get_private_file wgetrc-todo .wgetrc
+
+# Download the todos from RTM
+wget https://www.rememberthemilk.com/icalendar/cpence/ -O todo.ics
+
+# Remove the wgetrc
+release_private_file .wgetrc
+
+# Compress and save to backup directory
+bzip2 -9 todo.ics
+mv todo.ics.bz2 ${HOME}/Documents/Storage/Backup/Monthly/
