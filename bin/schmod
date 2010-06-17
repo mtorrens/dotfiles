@@ -1,0 +1,13 @@
+#!/bin/sh
+# schmod: chmod all files 644, directories 755 using find
+
+if [ "$1" = "--help" -o $# -lt 1 ]; then
+  echo "schmod: chmod recursively to sane values"
+  echo ""
+  echo "Usage: $0 <directory>"
+  exit 1
+fi
+
+find "$@" -type d -print -exec chmod 755 {} \;
+find "$@" -type f -print -exec chmod 644 {} \;
+
