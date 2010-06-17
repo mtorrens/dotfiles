@@ -1,0 +1,11 @@
+#!/bin/sh
+# Extract pages from a PDF file using Ghostscript
+
+if [ "$1" = "--help" -o $# -lt 4 ]; then
+  echo "pdfextract: extract pages from a PDF file"
+  echo ""
+  echo "Usage: $0 <in.pdf> <firstpage> <lastpage> <out.pdf>"
+  exit 1
+fi
+
+gs -sDEVICE=pdfwrite -dBATCH -dQUIET -dNOPAUSE -dFirstPage=$2 -dLastPage=$3 "-sOutputFile=$4" "$1"

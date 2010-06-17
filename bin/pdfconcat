@@ -1,0 +1,15 @@
+#!/bin/sh
+# Concatenate lots of PDFs into one PDF
+
+if [ "$1" = "--help" -o $# -lt 2 ]; then
+  echo "pdfconcat: concatenate two or more PDF files into one output file"
+  echo ""
+  echo "Usage: pdfconcat <out.pdf> <in.pdf> [in2.pdf ...]"
+  exit 1
+fi
+
+out="$1"
+shift
+
+gs -sDEVICE=pdfwrite -dBATCH -dQUIET -dNOPAUSE "-sOutputFile=$out" "$@"
+
