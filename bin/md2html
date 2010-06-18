@@ -1,0 +1,16 @@
+#!/bin/sh
+# Convert Markdown-formatted text to HTML
+
+if [ "$1" = "--help" -o $# -lt 1 ]; then
+  echo "md2html: convert Markdown-formatted text to clean HTML"
+  echo ""
+  echo "Usage: md2html <file>"
+  exit 1
+fi
+
+FILENAME="$@"
+EXTENSION=`echo $FILENAME | sed "s/^.*\.//"`
+HTML="`basename "${FILE}" .${EXTENSION}`.html"
+
+pandoc -f markdown -t html -s -o ${HTML} -c "/common.css" -S -A "${HOME}/Documents/Website/template/foot.html" $FILE
+tidy -quiet -modify -utf8 --output-xhtml yes --indent auto --break-before-br yes --wrap 80 --tidy-mark no ${HTML}

@@ -1,0 +1,43 @@
+#!/bin/bash
+# Convert Markdown-formatted text to PDF
+
+if [ "$1" = "--help" -o $# -lt 1 ]; then
+  echo "md2pdf: convert Markdown-formatted text to PDF"
+  echo ""
+  echo "Usage: md2pdf <file>"
+  exit 1
+fi
+
+MMD_PATH="${HOME}/Library/Application Support/MultiMarkDown/bin"
+
+FILE="$@"
+HTML="`basename "$FILE" .markdown`.html"
+TEX="`basename "$FILE" .markdown`.tex"
+
+if [ ! -e "$FILE" ]; then
+  echo "ERROR: File $FILE does not exist!"
+  exit 1
+fi
+
+"$MMD_PATH/multimarkdown2XHTML.pl" < "$FILE" > "$HTML"
+
+rm -f "$TEX"
+
+echo "\\documentclass{article}" >> "$TEX"
+echo "\\usepackage{cparticle}" >> "$TEX"
+echo "\\setcounter{secnumdepth}{-1}" >> "$TEX"
+echo "\\usepackage{paralist}" >> "$TEX"
+echo "\\setlength{\\plitemsep}{3pt}" >> "$TEX"
+echo "\\begin{document}" >> "$TEX"
+
+pandoc -f html -t latex "$HTML" >> "$TEX"
+
+echo "\\end{document}" >> "$TEX"
+
+gsed -i "s/{itemize}/{compactitem}/g" "$TEX"
+
+buildtex "$TEX"
+
+rm "$TEX"
+rm "$HTML"
+
