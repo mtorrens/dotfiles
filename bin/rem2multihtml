@@ -1,0 +1,86 @@
+#!/bin/bash
+# Convert my Remind calendar to multiple HTML files (one month behind current
+# and two months after current)
+
+
+# This script will be run from a cron daemon, make sure to set extra $PATH
+# here.
+PATH="/opt/local/bin:/usr/local/bin:${HOME}/bin:$PATH"
+
+CALENDAR_FILE="${HOME}/Documents/Calendar.rem"
+CALENDAR_DIR="${HOME}/Documents/Calendar/html"
+
+#
+# Get the month values for last month, next month and the month after
+#
+this_month=`date +%m`
+this_year=`date +%Y`
+
+last_month=$(( $this_month - 1 ))
+if [ "$last_month" == "0" ]; then
+  last_month="12"
+  last_year=$(( $this_year - 1))
+else
+  last_year=$this_year
+fi
+
+last_month=`gdate -d ${last_year}-${last_month}-01 +%B`
+
+next_month=$(( $this_month + 1 ))
+this_month=`gdate +%B`
+
+if [ "$next_month" == "13" ]; then
+  next_month="01"
+  next_year=$(( $this_year + 1))
+else
+  next_year=$this_year
+fi
+
+two_month=$(( $next_month + 1))
+next_month=`gdate -d ${next_year}-${next_month}-01 +%B`
+
+if [ "$two_month" == "13" ]; then
+  two_month="01"
+  two_year=$(( $next_year + 1))
+else
+  two_year=$this_year
+fi
+
+two_month=`gdate -d ${two_year}-${two_month}-01 +%B`
+
+#
+# Make the calendars
+#
+remind -p ${CALENDAR_FILE} ${last_month} ${last_year} | rem2html > ${CALENDAR_DIR}/last-month.html
+remind -p ${CALENDAR_FILE} | rem2html > ${CALENDAR_DIR}/calendar.html
+remind -p ${CALENDAR_FILE} ${next_month} ${next_year} | rem2html > ${CALENDAR_DIR}/next-month.html
+remind -p ${CALENDAR_FILE} ${two_month} ${two_year} | rem2html > ${CALENDAR_DIR}/two-month.html
+
+#
+# Replace strings with links for previous and next calendars
+#
+c='<caption class="rem-sc-caption">'
+
+last_month_caption="${c}${last_month}</caption>"
+this_month_caption="${c}${this_month}</caption>"
+next_month_caption="${c}${next_month}</caption>"
+two_month_caption="${c}${two_month}</caption>"
+
+last_month_link="${c}<a href=\"last-month.html\">${last_month}</a></caption>"
+this_month_link="${c}<a href=\"calendar.html\">${this_month}</a></caption>"
+next_month_link="${c}<a href=\"next-month.html\">${next_month}</a></caption>"
+two_month_link="${c}<a href=\"two-month.html\">${two_month}</a></caption>"
+
+# Last month has this month
+gsed -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/last-month.html
+
+# This month has last month and next month
+gsed -e "s|${last_month_caption}|${last_month_link}|" -i ${CALENDAR_DIR}/calendar.html
+gsed -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/calendar.html
+
+# Next month has this month and two month
+gsed -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/next-month.html
+gsed -e "s|${two_month_caption}|${two_month_link}|" -i ${CALENDAR_DIR}/next-month.html
+
+# Two month has next month
+gsed -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/two-month.html
