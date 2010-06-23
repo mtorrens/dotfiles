@@ -16,6 +16,8 @@
 # Shell configuration
 !.bashrc
 !.bash_profile
+!.hushlogin
+!.inputrc
 !.profile
 
 # Emacs configuration
