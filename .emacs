@@ -99,10 +99,24 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message t)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; Kill backups and auto-saves
 (setq backup-inhibited t)
 (setq auto-save-default nil)
+
+;; Name duplicate buffers something reasonable
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "|")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+
+;; Show unfinished multi-keystrokes quickly
+(setq echo-keystrokes 0.1)
+
+;; Make C-x b not suck
+(iswitchb-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
