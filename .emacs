@@ -49,17 +49,13 @@
 				      buffer-file-name)
           (buffer-name))))
 
-;; If we're in a window system, disable the toolbar and scroll bar
-(if window-system
-    (progn
-      (tool-bar-mode -1)
-      (set-scroll-bar-mode nil)))
+;; Disable tool, scroll, menu bars if they're available
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-;; If we're not in a window system, disable the menu bar, activate mouse
-(if (not window-system)
-    (progn
-      (menu-bar-mode -1)
-      (xterm-mouse-mode t)))
+;; Activate mouse if not in a windowing system
+(if (not window-system) (xterm-mouse-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -80,10 +76,18 @@
 
 ;; Enable font highlighting, always
 (global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
 (setq font-lock-support-mode 'jit-lock-mode)
 (setq jit-lock-stealth-time 1)
 
 ;; Save files in UTF-8 unless told otherwise
+(prefer-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
 (set-language-environment "UTF-8")
 (set-input-method nil)
 
