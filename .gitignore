@@ -46,3 +46,7 @@
 
 # Nano
 !.nanorc
+
+# GTK
+!.gtkrc-2.0
+
