@@ -50,3 +50,6 @@
 # GTK
 !.gtkrc-2.0
 
+# Alpine
+#!.pinerc (not yet, this needs to be sanitized)
+!.mailcap

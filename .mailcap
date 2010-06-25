@@ -1,0 +1,4 @@
+application/*; /usr/bin/open %s
+audio/*; /usr/bin/open %s
+image/*; /usr/bin/open %s
+video/*; /usr/bin/open %s
