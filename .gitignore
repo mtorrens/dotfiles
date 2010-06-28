@@ -28,6 +28,12 @@
 !.emacs.d/*
 !.emacs.d/*/*
 !.emacs.d/*/*/*
+!.emacs.d/*/*/*/*
+!.emacs.d/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*/*/*/*
 
 # Ignore compiled elisp in all directories
 .emacs.d/*/*.elc
