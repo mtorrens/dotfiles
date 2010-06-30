@@ -65,7 +65,10 @@ alias grep='grep --color=auto'
 # Some random aliases
 alias quit=exit
 alias blosxom="~/bin/blosxom/blosxom -password='staticpass'"
-alias abook="abook --datafile ${HOME}/Documents/Addresses"
+
+# This is a fancy alias to make sure that cabal install is used globally.
+# FIXME: What other Cabal commands will need to be prefixed like this?  Any?
+cabal() { if [[ $1 == "install" ]]; then shift; command sudo cabal install --global $@; else command cabal $@; fi; }
 
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
