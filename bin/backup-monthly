@@ -2,6 +2,7 @@
 # All my monthly backups, tarring things up for storage where my
 # off-site backup setup can get to them.
 
+~/bin/backup/addresses
 ~/bin/backup/bookmarks
 ~/bin/backup/calendar
 ~/bin/backup/dotfiles

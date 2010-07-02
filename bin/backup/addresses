@@ -1,0 +1,18 @@
+#!/bin/sh
+# Dump my address book from the LDAP server
+
+source ${HOME}/bin/backup/utilities.sh
+
+# Get the private ldapsearch password
+get_private_file ldap-pass .ldap-pass
+
+# Fetch the contents of the LDAP directory
+ldapsearch -h ldap.messagingengine.com -D "cn=charles@charlespence.net,dc=User" \
+	-x -y ~/.ldap-pass -b "dc=AddressBook" > addresses.ldif
+
+# Remove the wgetrc
+release_private_file .ldap-pass
+
+# Compress and save to backup directory
+lzma -9 addresses.ldif
+mv addresses.ldif.lzma ${HOME}/Documents/Storage/Backup/Monthly

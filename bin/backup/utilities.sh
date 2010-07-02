@@ -1,11 +1,13 @@
 #!/bin/bash
-# Get and remove private data files, doing our best to trap signals
-# and not leave anything orphaned in ${HOME}.
+# Get and remove GPG-encrypted private data files, doing our best 
+# to trap signals and not leave anything orphaned in ${HOME}.
+
+GPG=gpg2
 
 function get_private_file {
 	
-	# Copy in the file
-	cp ${HOME}/.private/$1 ${HOME}/$2
+	# Decrypt the file with a safe umask
+	umask 077 && $GPG --output ${HOME}/$2 --decrypt ${HOME}/.private/$1.gpg
 	
 	# Delete the file if the script fails
 	trap "rm -f ${HOME}/$2; exit" INT TERM EXIT
