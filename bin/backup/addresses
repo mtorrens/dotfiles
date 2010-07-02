@@ -10,7 +10,7 @@ get_private_file ldap-pass .ldap-pass
 ldapsearch -h ldap.messagingengine.com -D "cn=charles@charlespence.net,dc=User" \
 	-x -y ~/.ldap-pass -b "dc=AddressBook" > addresses.ldif
 
-# Remove the wgetrc
+# Remove the LDAP password
 release_private_file .ldap-pass
 
 # Compress and save to backup directory
