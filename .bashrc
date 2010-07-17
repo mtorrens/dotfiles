@@ -98,4 +98,4 @@ alias rmdir=grmdir
 alias sed=gsed
 alias sort=gsort
 alias tail=gtail
-
+alias tar=gnutar
