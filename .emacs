@@ -29,13 +29,11 @@
 (if window-system
     (setq default-frame-alist
 	  '(
-	    (width             . 181)
-	    (height            . 50)
+	    (width             . 120)
+	    (height            . 45)
 	    (left              . 0)
 	    (top               . 0)
 	    (cursor-type       . bar)
-	    (left-fringe       . 0)
-	    (right-fringe      . 0)
 	    )
 	  )
 )
@@ -76,7 +74,6 @@
 
 ;; Enable font highlighting, always
 (global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)
 (setq font-lock-support-mode 'jit-lock-mode)
 (setq jit-lock-stealth-time 1)
 
@@ -95,9 +92,12 @@
 (if window-system
     (global-hl-line-mode 1))
 
-;; Proper fonts
+;; Set the font to fixed-with by default, and we'll use
+;; proportional occasionally below.
 (if window-system
-    (set-face-font 'default "Inconsolata-14"))
+    (progn
+	  (set-face-font 'default "Droid Sans Mono-13")
+	  (set-face-font 'variable-pitch "Sabon LT Std-16")))
 
 ;; Kill silly splash screens/messages
 (setq inhibit-splash-screen t)
@@ -137,13 +137,9 @@
 (if window-system
     (progn
       (require 'color-theme)
-      (require 'zenburn)
       (color-theme-initialize)
       (setq color-theme-is-global t)
-      (color-theme-zenburn)
-      
-      ;; Enable this to cycle through color themes
-      ;;(require 'doremi-cmd)
+	  (color-theme-pence)
       ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -241,14 +237,6 @@
 	     'add-to-list
 	   'remove)))
 
-;; For some reason, this version of the code needs to be used on some versions of Emacs...
-;;
-;;    (mapc (lambda (e) (setq completion-ignored-extensions
-;;			    (funcall add-or-remove 'completion-ignored-extensions e)))
-;;	  '(".aux" ".bbl" ".blg" ".dvi" ".log" ".nav" ".out" ".pdf" ".snm" ".toc" ".gz"))
-
-;; While this code needs to be used on other versions of Emacs...
-;;
       (setq completion-ignored-extensions
 	    (funcall add-or-remove 'completion-ignored-extensions
 	       '(".aux" ".bbl" ".blg" ".dvi" ".log" ".nav" ".out" ".pdf" ".snm" ".toc" ".gz")))
@@ -274,10 +262,10 @@
   (interactive)
   
   ;; Add a huge fringe so we get a nice buffer width
-  (make-local-variable 'left-fringe-width)
-  (setq left-fringe-width 275)
-  (make-local-variable 'right-fringe-width)
-  (setq right-fringe-width 275)
+  ;;(make-local-variable 'left-fringe-width)
+  ;;(setq left-fringe-width 275)
+  ;;(make-local-variable 'right-fringe-width)
+  ;;(setq right-fringe-width 275)
 )
 
 (add-hook 'text-mode-hook 'cpence-all-text-mode-hook)
@@ -327,6 +315,10 @@
   (ispell-change-dictionary "american")
   (setq ispell-program-name "aspell")
   (local-set-key (kbd "<f9>") 'ispell-buffer)
+  
+  ;; If we're using visual-line-mode, I want proportional fonts
+  ;;(variable-pitch-mode t)
+  ;;(set 'line-spacing 7)
   )
 
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
@@ -347,9 +339,11 @@
 
 (autoload 'tex-wcount-mode "tex-wcount.el")
 
+
+
 (defun cpence-tex-mode-hook ()
   (interactive)
-  
+
   ;; Set the output view style to just call "open"
   (setq TeX-view-program-list (quote (("open" "open %o"))))
   (setq TeX-view-program-selection (quote ((output-pdf "open") (output-html "open"))))
