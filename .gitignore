@@ -6,6 +6,7 @@
 
 # gitignore for this repo
 !.gitignore
+!.gitmodules
 
 # My binary directory containing scripts
 !bin
