@@ -97,10 +97,10 @@ filesize=`stat -f %z "${FILEDIR}/${FILEBASE}.pdf"`
 # This is the only way I can find to easily get the number of pages from a PDF
 # file using only GhostScript.  The standard "pdfinfo" seems to hang occasionally,
 # while pdf2dsc just errors out instantly.
-pdf2dsc ${FILEDIR}/${FILEBASE}.pdf ${FILEDIR}/${FILEBASE}.dsc
-if [ -f ${FILEDIR}/${FILEBASE}.dsc ] ; then
-  pages=`grep "%%Pages:" ${FILEDIR}/${FILEBASE}.dsc | sed "s/%%Pages: //"`
-  rm -f ${FILEDIR}/${FILEBASE}.dsc
+pdf2dsc "${FILEDIR}/${FILEBASE}.pdf" "${FILEDIR}/${FILEBASE}.dsc"
+if [ -f "${FILEDIR}/${FILEBASE}.dsc" ] ; then
+  pages=`grep "%%Pages:" "${FILEDIR}/${FILEBASE}.dsc" | sed "s/%%Pages: //"`
+  rm -f "${FILEDIR}/${FILEBASE}.dsc"
 else
   pages="1"
 fi
