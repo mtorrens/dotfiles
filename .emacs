@@ -18,6 +18,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Who are you, anyway?
+
+(setq user-full-name "Charles Pence")
+(setq user-mail-address "charles@charlespence.net")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window configuration
 
 ;; Modeline
@@ -29,8 +36,8 @@
 (if window-system
     (setq default-frame-alist
 	  '(
-	    (width             . 120)
-	    (height            . 45)
+	    (width             . 90)
+	    (height            . 35)
 	    (left              . 0)
 	    (top               . 0)
 	    (cursor-type       . bar)
@@ -54,7 +61,6 @@
 
 ;; Activate mouse if not in a windowing system
 (if (not window-system) (xterm-mouse-mode t))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -419,10 +425,9 @@
 (defun cpence-c-mode-hook ()
   (interactive)
   
-  ;; Not sure which one of these I want to use yet
+  ;; Make as many things automagic as possible
   (c-toggle-auto-state 1)
-  
-  ;;(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+  (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 )
 
 (add-hook 'c-mode-common-hook 'cpence-c-mode-hook)
@@ -433,6 +438,7 @@
 (require 'yasnippet)
 
 (yas/initialize)
+(setq yas/trigger-key "M-/")
 (yas/load-directory "~/.emacs.d/snippets")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
