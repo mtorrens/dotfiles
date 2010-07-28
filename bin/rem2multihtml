@@ -84,3 +84,14 @@ gsed -e "s|${two_month_caption}|${two_month_link}|" -i ${CALENDAR_DIR}/next-mont
 
 # Two month has next month
 gsed -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/two-month.html
+
+
+#
+# Formatting
+#
+
+# Put the times for events in a span, so we can format them
+gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/last-month.html 
+gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/calendar.html 
+gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/next-month.html 
+gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/two-month.html 
