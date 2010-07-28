@@ -13,6 +13,9 @@ set smarthome
 ## Enable smooth scrolling
 set smooth
 
+## Xterm mouse please
+set mouse
+
 ###############################################################################
 ## Syntax Highlighting: included w/ nano
 
