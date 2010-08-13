@@ -91,6 +91,7 @@ alias dir=gdir
 alias dirname=gdirname
 alias head=ghead
 #already did ls=gls
+alias make=gmake
 alias mkdir=gmkdir
 alias mv=gmv
 alias pwd=gpwd
