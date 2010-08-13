@@ -428,6 +428,13 @@
   ;; Make as many things automagic as possible
   (c-toggle-auto-state 1)
   (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+  
+  ;; Don't indent namespaces
+  (c-set-offset 'innamespace 0)
+  
+  ;; Set cleanups
+  (add-to-list 'c-cleanup-list 'defun-close-semi)
+  (add-to-list 'c-cleanup-list 'space-before-funcall)
 )
 
 (add-hook 'c-mode-common-hook 'cpence-c-mode-hook)

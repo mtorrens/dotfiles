@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: Charles Pence <charles@charlespence.net>
+# name: Insert C++ header variable mode
+# key: cpph
+# --
+// Local Variables:
+// mode: c++
+// End:
