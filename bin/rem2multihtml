@@ -13,8 +13,8 @@ CALENDAR_DIR="${HOME}/Documents/Calendar/html"
 #
 # Get the month values for last month, next month and the month after
 #
-this_month=`date +%m`
-this_year=`date +%Y`
+this_month=`gdate +%m | sed "s/^0//"`
+this_year=`gdate +%Y`
 
 last_month=$(( $this_month - 1 ))
 if [ "$last_month" == "0" ]; then
