@@ -7,14 +7,18 @@
 # here.
 PATH="/opt/local/bin:/usr/local/bin:${HOME}/bin:$PATH"
 
+# Set the location of GNU date and sed
+DATE="gdate"
+SED="gsed"
+
 CALENDAR_FILE="${HOME}/Documents/Calendar.rem"
 CALENDAR_DIR="${HOME}/Documents/Calendar/html"
 
 #
 # Get the month values for last month, next month and the month after
 #
-this_month=`gdate +%m | sed "s/^0//"`
-this_year=`gdate +%Y`
+this_month=`$DATE +%m | sed "s/^0//"`
+this_year=`$DATE +%Y`
 
 last_month=$(( $this_month - 1 ))
 if [ "$last_month" == "0" ]; then
@@ -24,10 +28,10 @@ else
   last_year=$this_year
 fi
 
-last_month=`gdate -d ${last_year}-${last_month}-01 +%B`
+last_month=`$DATE -d ${last_year}-${last_month}-01 +%B`
 
 next_month=$(( $this_month + 1 ))
-this_month=`gdate +%B`
+this_month=`$DATE +%B`
 
 if [ "$next_month" == "13" ]; then
   next_month="01"
@@ -37,7 +41,7 @@ else
 fi
 
 two_month=$(( $next_month + 1))
-next_month=`gdate -d ${next_year}-${next_month}-01 +%B`
+next_month=`$DATE -d ${next_year}-${next_month}-01 +%B`
 
 if [ "$two_month" == "13" ]; then
   two_month="01"
@@ -46,7 +50,7 @@ else
   two_year=$this_year
 fi
 
-two_month=`gdate -d ${two_year}-${two_month}-01 +%B`
+two_month=`$DATE -d ${two_year}-${two_month}-01 +%B`
 
 #
 # Make the calendars
@@ -72,26 +76,27 @@ next_month_link="${c}<a href=\"next-month.html\">${next_month}</a></caption>"
 two_month_link="${c}<a href=\"two-month.html\">${two_month}</a></caption>"
 
 # Last month has this month
-gsed -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/last-month.html
+$SED -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/last-month.html
 
 # This month has last month and next month
-gsed -e "s|${last_month_caption}|${last_month_link}|" -i ${CALENDAR_DIR}/calendar.html
-gsed -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/calendar.html
+$SED -e "s|${last_month_caption}|${last_month_link}|" -i ${CALENDAR_DIR}/calendar.html
+$SED -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/calendar.html
 
 # Next month has this month and two month
-gsed -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/next-month.html
-gsed -e "s|${two_month_caption}|${two_month_link}|" -i ${CALENDAR_DIR}/next-month.html
+$SED -e "s|${this_month_caption}|${this_month_link}|" -i ${CALENDAR_DIR}/next-month.html
+$SED -e "s|${two_month_caption}|${two_month_link}|" -i ${CALENDAR_DIR}/next-month.html
 
 # Two month has next month
-gsed -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/two-month.html
+$SED -e "s|${next_month_caption}|${next_month_link}|" -i ${CALENDAR_DIR}/two-month.html
 
 
 #
 # Formatting
 #
 
-# Put the times for events in a span, so we can format them
-gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/last-month.html 
-gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/calendar.html 
-gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/next-month.html 
-gsed -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9][ap]m\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/two-month.html 
+# Put the times for events in a span, so we can format them.
+# Time format: either "12:00am" or "12:00-3:00am" or "8:00pm-12:00am+1"
+$SED -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9]\([ap]m\)\?\(-[0-9]*[0-9]:[0-9][0-9][ap]m\([+][0-9]\)\?\)\?\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/last-month.html 
+$SED -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9]\([ap]m\)\?\(-[0-9]*[0-9]:[0-9][0-9][ap]m\([+][0-9]\)\?\)\?\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/calendar.html 
+$SED -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9]\([ap]m\)\?\(-[0-9]*[0-9]:[0-9][0-9][ap]m\([+][0-9]\)\?\)\?\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/next-month.html 
+$SED -e 's@rem-entry">\([0-9]*[0-9]:[0-9][0-9]\([ap]m\)\?\(-[0-9]*[0-9]:[0-9][0-9][ap]m\([+][0-9]\)\?\)\?\) @rem-entry"><span class="eventtime">\1</span> @g' -i ${CALENDAR_DIR}/two-month.html 
