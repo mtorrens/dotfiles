@@ -1,0 +1,45 @@
+#!/bin/bash
+
+ICALTOREM=/opt/local/bin/ical2rem-cli
+INFILE="$HOME/.private/webcal-subs"
+OUTFILE="$HOME/Documents/Calendar/Subscriptions.rem"
+
+# Make a temporary subscription file (so that if any of this fails, we won't
+# overwrite)
+substemp="`mktemp -t icals`"
+
+# Read in the subscription list
+cat $INFILE | while read line
+do
+  # Download the calendar
+  tempfile="`mktemp -t icals`"
+  wget -O $tempfile -q $line
+  
+  # If that failed, die
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Calendar download failed, aborting..."
+    exit 1
+  fi
+  
+  # Convert to REM
+  temprem="`mktemp -t icals`"
+  $ICALTOREM --lead-time 0 < $tempfile > $temprem 2> /dev/null
+  
+  # If that failed, die
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Calendar conversion to .REM failed, aborting..."
+    exit 1
+  fi
+  
+  # Append to the REM
+  cat $temprem >> $substemp
+  echo -e "\n\n" >> $substemp
+  
+  # Delete temporaries
+  rm -f $tempfile
+  rm -f $temprem
+done
+
+# Move the file into place
+mv -f $substemp $OUTFILE
+
