@@ -6,3 +6,4 @@ export INFOPATH=/opt/local/share/info:/usr/local/share/info:$INFOPATH
 
 export EDITOR=nano
 
+export PKG_CONFIG_PATH=/opt/local/lib/pkgconfig:/opt/local/share/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig
