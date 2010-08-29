@@ -1,4 +1,5 @@
 #!/bin/bash
+# webcal2rem: Fetch a list of ical web subscriptions, convert to Remind
 
 ICALTOREM=/opt/local/bin/ical2rem-cli
 INFILE="$HOME/.private/webcal-subs"
