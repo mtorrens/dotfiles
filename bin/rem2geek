@@ -1,0 +1,83 @@
+#!/bin/bash
+# rem2geek: Output the first few events of a remind calendar in a format for
+#           display on the desktop.
+
+REMFILE="${HOME}/Documents/Calendar.rem"
+REMIND=/usr/local/bin/remind
+DATE=/opt/local/bin/gdate
+
+MAXDAYS=7
+MAXEVENTS=10
+
+# Days: underlined
+DAYFORMAT="\033[4m"
+# Times: nothing, until I can change ANSI colors in GT
+TIMEFORMAT="\033[0m"
+# Events: bold
+EVENTFORMAT="\033[1m"
+
+
+remlines=`$REMIND -ln "$REMFILE" | sort | head -n $MAXEVENTS`
+IFS=`echo -en "\n\b"`
+
+today=`$DATE "+%s"`
+currdate=""
+((maxdays=$MAXDAYS*86400))
+
+reset="\033[0m"
+
+for i in $remlines; do
+  date=`echo $i | cut -d" " -f 1`
+  
+  # See if we need to print a new date header
+  if [ "$currdate" != "$date" ]; then
+    currdate=$date
+    
+    # Figure out how far this date is from today
+    currsecs=`$DATE -d "$currdate" "+%s"`
+    ((diffsec=currsecs-today))
+    
+    if [ $diffsec -gt $maxdays ] ; then
+      exit 0
+    fi
+    
+    echo -ne $DAYFORMAT
+    if [ $diffsec -gt 432000 ] ; then
+      echo "`$DATE -d "$currdate" "+%-m/%-d"`:"
+    else
+      echo "`$DATE -d "$currdate" "+%A"`:"
+    fi
+    echo -ne $reset
+  fi
+  
+  # Print a bullet
+  echo -n " • "
+  
+  # Lop the date off of the event
+  event=`echo $i | cut -d" " -f 2-`
+  
+  # Extract the next word and see if it's a time
+  time=`echo $event | cut -d" " -f 1`
+  havetime=0
+  if echo "$time" | grep -qe "[0-9]\{1,2\}:[0-9]\{2\}[ap]m"; then
+    havetime=1
+    event=`echo $event | cut -d" " -f 2-`
+  fi
+  
+  # Echo the time or a spacer
+  if [ $havetime -eq 0 ]; then
+    echo -n "        "
+  else
+    echo -ne $TIMEFORMAT
+    echo -n `printf "%7s" "$time"`
+    echo -ne $reset
+    echo -n " "
+  fi
+  
+  # And the rest of the event
+  echo -ne $EVENTFORMAT
+  echo -ne $event
+  echo -ne $reset
+  echo ""
+done
+
