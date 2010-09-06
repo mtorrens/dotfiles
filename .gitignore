@@ -14,6 +14,11 @@
 !bin/*/*
 !bin/*/*/*
 
+# Ignore compiled python in all directories
+bin/*.pyc
+bin/*/*.pyc
+bin/*/*/*.pyc
+
 # Shell configuration
 !.bashrc
 !.bash_profile

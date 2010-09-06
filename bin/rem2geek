@@ -17,7 +17,7 @@ TIMEFORMAT="\033[0m"
 EVENTFORMAT="\033[1m"
 
 
-remlines=`$REMIND -ln "$REMFILE" | sort | head -n $MAXEVENTS`
+remlines=`$REMIND -b1 -ln "$REMFILE" | sort | head -n $MAXEVENTS`
 IFS=`echo -en "\n\b"`
 
 today=`$DATE "+%s"`
@@ -59,17 +59,17 @@ for i in $remlines; do
   # Extract the next word and see if it's a time
   time=`echo $event | cut -d" " -f 1`
   havetime=0
-  if echo "$time" | grep -qe "[0-9]\{1,2\}:[0-9]\{2\}[ap]m"; then
+  if echo "$time" | grep -qe "[0-9]\{1,2\}:[0-9]\{2\}"; then
     havetime=1
     event=`echo $event | cut -d" " -f 2-`
   fi
   
   # Echo the time or a spacer
   if [ $havetime -eq 0 ]; then
-    echo -n "        "
+    echo -n "      "
   else
     echo -ne $TIMEFORMAT
-    echo -n `printf "%7s" "$time"`
+    echo -n `printf "%5s" "$time"`
     echo -ne $reset
     echo -n " "
   fi
