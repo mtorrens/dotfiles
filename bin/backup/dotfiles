@@ -9,7 +9,6 @@ cp ~/.emacs $DOTFILES/dotemacs
 cp ~/.gitignore $DOTFILES/dotgitignore
 cp ~/.hgrc $DOTFILES/dothgrc
 cp ~/.nanorc $DOTFILES/dotnanorc
-cp ~/.pinerc $DOTFILES/dotpinerc
 
 rm -rf $DOTFILES/dotprivate
 cp -Rf ~/.private $DOTFILES/dotprivate
