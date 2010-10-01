@@ -1,7 +1,0 @@
-#!/bin/sh
-# Back up remind calendar
-
-tar cvf calendar.tar ${HOME}/Documents/Calendar/ ${HOME}/Documents/Calendar.rem
-lzma -9 calendar.tar
-mv calendar.tar.lzma ${HOME}/Documents/Storage/Backup/Monthly
-
