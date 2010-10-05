@@ -1,0 +1,43 @@
+#!/bin/bash
+#  Use calcure to print out events from a folder full of ICS files
+
+ICSFILES="$HOME/Documents/Storage/Backup/Monthly/Calendar"
+DAYS=5
+
+DATE=/opt/local/bin/gdate
+SED=/opt/local/bin/gsed
+CALCURSE=/opt/local/bin/calcurse
+
+rm -f ~/.calcurse/apts ~/.calcurse/imported.ics
+for i in $ICSFILES/*.ics ; do
+  $SED -e '/^ / !{h};/^ / {H;x;s/;.*:\r\n /:/g}' -e '/:\r$/ d' < $i >> ~/.calcurse/imported.ics
+done
+$CALCURSE -i ~/.calcurse/imported.ics 2>&1 > /dev/null
+
+for ((i=1;i<=$DAYS;i++)) ; do
+  j=$(echo $i'-1' | bc)
+  day[$i]=$($DATE -d "$j days" +%D | $SED 's/\//\\\//g')
+  dayname[$i]=$($DATE -d "$j days" +%A)
+done
+
+dayname[1]="Today"
+dayname[2]="Tomorrow"
+
+# Replace actual newlines with "\n" for echo later
+apptlist=$($CALCURSE -r$DAYS | $SED "s/\*/-/g" | $SED -e :a -e '$!N;s/\n/\\n/;ta')
+
+# Append all the date lines to the time lines
+apptlist=$(echo "$apptlist" | $SED "s/\\( - [0-9][0-9]:[0-9][0-9] -> [0-9][0-9]:[0-9][0-9]\\)\\\n/\1:/g")
+
+# Replace the arrows with dashes
+apptlist=$(echo "$apptlist" | $SED "s/ -> /\xE2\x80\x93/g")
+
+# Change the dashes to bullets
+apptlist=$(echo "$apptlist" | $SED -e "s/\\\n - /\\\n \xE2\x80\xA2 /g")
+
+for ((i=1;i<=$DAYS;i++)) ; do
+  apptlist=$(echo "$apptlist" | $SED -e 's/'${day[$i]}':/'${dayname[$i]}':/')
+done
+
+echo -e $apptlist
+
