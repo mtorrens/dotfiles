@@ -55,6 +55,7 @@ import xml.dom.minidom
 import urllib2
 import hashlib
 import os
+import sys
 from termcolor import colored
 from datetime import datetime
 
@@ -64,7 +65,10 @@ from datetime import datetime
 
 # The URL of the feed(s). The URLs should be between the square brackets, in quotes, and separated by 
 # commas.
-feeds = ["http://www.rememberthemilk.com/atom/cpence/13321036/?tok=eJwVyFEKQkEIBdAVDeioV12OT*dBEBHU-onO50HORa6bw*A3UtAMDZLWcU12nYCpMKayh4jTaf7tXGfO6vd59VnPx*e7WGQzCRYqVDLY4k5slbp2Tx1i4T0yuxAMCCvEa5isDTPqdGwsU353YicY"]
+feeds = ["https://www.rememberthemilk.com/atom/cpence/13321036/"]
+
+RTM_USERNAME = "cpence"
+RTM_PASSWORD_FILE = "/Users/cpence/.private/rtmpass"
 
 # These should be "True" or "False"
 DISPLAY_THE_REAL_LIST_A_TASK_IS_IN_IF_THE_FEED_IS_FOR_A_SMART_LIST = True
@@ -100,10 +104,10 @@ def readBackupFile(path):
 def loadOnlineFeed(feedURL):
 	backupFilePath = CACHE_DIRECTORY + hashlib.md5(feedURL).hexdigest() + ".xml"
 	
-	try: 
+	try:
 		feed = urllib2.urlopen(feedURL).read()
 		createBackupFile(backupFilePath,feed)
-	except:		
+	except:
 		return False
 			
 	return feed
@@ -193,6 +197,28 @@ def displayList(listTitle, tasks):
 				print s.encode("utf-8")
 	print ""				
 def displayFeeds(feedURLs):
+	# Set up a password handler to make this work
+	try:
+		passfile = open (RTM_PASSWORD_FILE)
+	
+		try:	
+			# Chop the \n off
+			password = passfile.readline()
+			if(password[len(password)-1] == '\n'):
+				password = password[0:len(password)-1]
+		finally:
+			passfile.close()
+	except IOError:
+		password = ""
+	
+	# Create an auth object
+	passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
+	passman.add_password(None, 'www.rememberthemilk.com', RTM_USERNAME, password)
+	
+	auth_handler = urllib2.HTTPBasicAuthHandler(passman)
+	opener = urllib2.build_opener(auth_handler)
+	urllib2.install_opener(opener)
+	
 	for feedURL in feedURLs:	
 		#Try to load the feed - first from the web, then from the backup
 		offline = False;
