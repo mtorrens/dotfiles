@@ -71,7 +71,7 @@ DISPLAY_THE_REAL_LIST_A_TASK_IS_IN_IF_THE_FEED_IS_FOR_A_SMART_LIST = True
 CACHE_FILES = True
 
 # The directory to store the cached files in. This only does anything if "CACHE_FILES" is "True"
-CACHE_DIRECTORY = "/Users/cpence/.private/rtmcache"
+CACHE_DIRECTORY = "/Users/cpence/.private/rtmcache/"
 
 ####################################################################################################
 ########### The fun part - don't change unless you know what you're doing (I don't) ################
