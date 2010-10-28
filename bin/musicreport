@@ -47,11 +47,12 @@ done
 
 rm -f $OUTPUT_DIR/index.html
 echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" /><title>Music Listing</title></head><body>" > $OUTPUT_DIR/index.html
+echo "<h1>Music Listing</h1>" >> $OUTPUT_DIR/index.html
 echo "<p>Last Updated: `date +%D`</p>" >> $OUTPUT_DIR/index.html
 echo "<ul>" >> $OUTPUT_DIR/index.html
 
 for tempfile in $OUTPUT_DIR/*.temp ; do
-  genre="`basename $tempfile .temp`"
+  genre=`basename "$tempfile" .temp`
   htmlfile="$OUTPUT_DIR/$genre.html"
   
   echo "<li><a href=\"$genre.html\">$genre</a></li>" >> $OUTPUT_DIR/index.html
