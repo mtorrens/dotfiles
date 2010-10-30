@@ -1,0 +1,99 @@
+#!/usr/bin/python
+
+# Some mail clients, such as Apple Mail, cannot handle the
+# inconsistencies in the mailbox ("mbox") files created by
+# Mozilla Mail (a.k.a. Thunderbird). This utility cleans
+# them up so that they can be imported successfully by these
+# other clients.
+
+# Simply pass the program a file or directory, and it will
+# scan for mbox files, clean them, and write the output to
+# files with a ".cleaned" extension.
+
+# Note: Any files that already have a ".cleaned" extension
+# will be overwritten.
+
+# Version 1.0
+# Written by Trevor Harmon <trevor@vocaro.com>
+# License: GPL - http://www.gnu.org/copyleft/gpl.html
+
+import sys, os
+from string import *
+
+def cleanMozillaMail(filename):
+
+	print 'Reading messages from \'' + filename + '\''
+
+	# Read the file
+	infile = open(filename, 'r')
+	inlines = infile.readlines()
+
+	# Make sure it's a valid mbox file
+	if len(inlines) == 0 or not inlines[0].startswith('From '):
+		print 'Error: File does not appear to be a valid mbox file'
+		return False
+
+	# Apple Mail doesn't like "From " headers to have email addresses in them
+	if not inlines[0].startswith('From -'):
+		email = inlines[0][5:find(inlines[0], ' ', 5)]
+		inlines[0] = inlines[0].replace(email, '-', 1)
+
+	# Prepare for parsing
+	index = 0
+	messageIndex = 0
+	messages = []
+	message = []
+
+	# Walk through each line of the input and search for message boundaries
+	for line in inlines:
+
+		if index != 0 and find(line, 'From ') == 0:
+			# Found a message; begin adding lines to a new message array
+			messageIndex = messageIndex + 1
+			messages.append(message)
+			message = []
+
+		message.append(line)
+
+		index = index + 1
+
+	messages.append(message)  # Don't forget the last one
+
+	print 'Processing', messageIndex+1, 'messages...',
+
+	# Strip all empty lines and lines containing only "." from the end of the message
+	for message in messages:
+		while len(message[len(message)-1].strip()) == 0 or message[len(message)-1].strip() == '.':
+			message.pop()  # Remove the last line from the message
+
+	# Write out each message to a new file
+	outfile = open(filename + '.cleaned', 'w')
+	for message in messages:
+		for line in message:
+			line = line.replace('\r\n', '\n')  # Apple Mail doesn't like 0x0D 0x0A
+			outfile.write(line)
+		outfile.write('\n')  # Put a vertical space between each message
+
+	print 'done.'
+	print 'Wrote to \'' + filename + '.cleaned\''
+	return True
+
+if len(sys.argv) != 2:
+	print 'Usage: cleanmbox.exe <directory|file>'
+else:
+	cleaned = 0
+	if os.path.isdir(sys.argv[1]):
+		if sys.argv[1].endswith('/'):
+			sys.argv[1] = rstrip(sys.argv[1], '/')
+		# Search for all files in the given directory and clean each one
+		for root, dirs, files in os.walk(sys.argv[1]):
+			for filename in files:
+				if not filename.endswith('.msf') and not filename.endswith('.cleaned'):
+					if cleanMozillaMail(root + '/' + filename):
+						cleaned = cleaned + 1
+	else:
+		if cleanMozillaMail(sys.argv[1]):
+			cleaned = 1
+
+	print 'Cleaned', cleaned, 'mailbox(es).'
+
