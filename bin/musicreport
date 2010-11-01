@@ -28,6 +28,10 @@ for album in $MUSIC_DIR/* ; do
   genre=`echo "$ogginfo" | grep -i "^[ 	]*genre=" | cut -d = -f 2-`
   mb_albumid=`echo "$ogginfo" | grep -i "^[ 	]*musicbrainz_albumid=" | cut -d = -f 2-`
   
+  if [[ "$genre" = "" ]] ; then
+    continue
+  fi
+
   genre_tempfile="$OUTPUT_DIR/$genre.temp"
   
   if [[ "$albumartist" != "" ]] ; then
@@ -67,3 +71,4 @@ done
 
 echo "</ul></body></html>" >> $OUTPUT_DIR/index.html
 
+rm $OUTPUT_DIR/*.temp
