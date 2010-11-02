@@ -1,0 +1,124 @@
+%%
+%% This is file `template.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% nddiss2e.dtx  (with options: `template')
+%% 
+%% This is a generated file.
+%% 
+%%  Copyright (C) 2004-2005 Sameer Vijay
+%% 
+%%  This file may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either
+%%  version 1.2 of this license or (at your option) any later
+%%  version. The latest version of this license is in
+%%     http://www.latex-project.org/lppl.txt
+%% 
+%% 
+%% ==============================================================
+%% 
+%% Notre Dame's Dissertation document class by Sameer Vijay
+%% that adheres to the University of Notre Dame guidelines
+%% published in Spring 2004.
+%% 
+%% Please send any improvements/suggestions to :
+%%     Shari Hill, Graduate Reviewer.
+%%     shill2@nd.edu
+%% 
+%% For documentation on how to use nddiss2e class, process the
+%% file nddiss2e.dtx through LaTeX.
+%% 
+%% ==============================================================
+%% 
+\ProvidesFile{template.tex}
+    [2005/07/27 v3.0 ^^J%
+     Template file for NDdiss2e class by Sameer Vijay^^J]
+\documentclass[draft]{nddiss2e}
+                     % Available options are
+                     % (a) draft + 10pt/11pt/12pt + twoadvisors + textrefs
+                     % (b) review + noinfo + twoadvisors + textrefs
+                     % (c) final + noinfo + twoadvisors + textrefs
+
+\begin{document}
+
+\frontmatter         % All the items before Chapter 1 go in ``frontmatter''
+
+\title{ }            % Title of Work
+\author{ }           % Author's name
+\work{ }             % ``Dissertation'' or ``Thesis''
+\degprior{ }         % All prior degrees
+\degaward{ }         % Degree you're aiming for
+\advisor{ }          % Advisor's name
+ % \secondadvisor{ } % Second advisor, if used option ``twoadvisors''
+\department{ }       % Name of the department
+
+\maketitle           % The title page is created now
+
+ % \copyrightholder{ } % If you're not the copyright holder
+ % \copyrightyear{ }   % If the copyright is not for the current year
+ % \makecopyright      % If not making your work public domain
+                       % uncomment out \makecopyright
+ % \makepublicdomain   % Uncomment this to make your work public domain
+
+ % \begin{abstract}
+ % \end{abstract}
+ %                         % Either place the text between begin/end, or
+ % \include{abstract}  % put it in a file to be included
+
+ % \renewcommand{\dedicationname}{\mbox{}} % Replace \mbox{} if you want
+                                           % something else
+ % \begin{dedication}
+ % \end{dedication}
+ %                       % Use one of the two choices to add dedication text
+ % \include{dedication}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+ %% \renewcommand{\symbolsname}{newsymname} % Replace ``newsymname'' with
+                                           % the name you want, and uncomment
+ % \begin{symbols}
+ % \end{symbols}
+ %                       % Use one of the two choices to add symbols text
+ % \include{symbols}
+
+ %% \renewcommand{\prefacename}{ } % If you want another Preface name, add
+                                   % something else, and uncomment
+ % \begin{preface}
+ % \end{preface}
+ %                       % Use one of the two choices to add preface text
+ % \include{preface}
+
+ %% \renewcommand{\acknowledgename}{ } % If you want another Acknowledgement name
+                                       % add something else, and uncomment
+ % \begin{acknowledge}
+ % \end{acknowledge}
+ %                       % Use one of the two choices to add acknowledge text
+ % \include{acknowledgement}
+
+\mainmatter
+ % Place the text body here.
+ % \include{chapter-one}
+
+\appendix
+
+ % If you have appendices, add them here.
+ % Begin each one with \chapter{title} as before- the \appendix command takes
+ % care of renaming chapter headings and creates a new page in the Table of
+ % Contents for them.
+ % \include{appendix-one}
+
+\backmatter              % Place for bibliography and index
+
+\bibliographystyle{nddiss2e}  % Use the ``nddiss2e'' biblio-style
+ \bibliography{ }           % input the bib-database file name
+
+\end{document}
+
+%%
+\endinput
+%%
+%% End of file `template.tex'.

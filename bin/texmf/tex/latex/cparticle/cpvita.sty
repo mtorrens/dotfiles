@@ -1,0 +1,71 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cpvita}[2009/11/11 C. Pence CV Template]
+
+\RequirePackage[letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in,headheight=0in,headsep=0in]{geometry}
+
+\RequirePackage{genmpage}
+\RequirePackage{needspace}
+
+\RequirePackage{lastpage}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage\ \textsc{/} \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+\RequirePackage[none]{hyphenat}
+
+\RequirePackage{paralist}
+\setlength{\plitemsep}{2pt}
+\setdefaultleftmargin{1em}{2.2em}{1.87em}{1.7em}{1em}{1em}
+
+% Name and contact information
+\newcommand{\name}{My Name}
+\newcommand{\address}{My Address\\Address Line 2\\Address Line 3}
+\newcommand{\phone}{555-555-1212}
+\newcommand{\email}{e@mail.com}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% New commands and environments
+
+% This defines how the name looks
+\newcommand{\bigname}[1]{\begin{center}\addfontfeature{LetterSpace=10.0,WordSpace=3.3}{\LARGE\MakeUppercase{#1}}\end{center}}
+
+% A ressection is a main section (<H1>Section</H1>)
+\newenvironment{ressection}[1]{
+  \needspace{40pt}
+  \vspace{20pt}
+  \centerline{\Large\addfontfeature{LetterSpace=8.0,WordSpace=1.25}{\MakeUppercase{#1}}}
+  \begin{compactitem}\vspace{6pt}}
+{\end{compactitem}}
+
+% A resitem is a simple list element in a ressection (first level)
+\newcommand{\resitem}[1]{\item #1}
+
+% A resdateitem is a simple list element in a ressection with a date
+\newcommand{\resdateitem}[2]{\item {#1 \hfill #2}}
+
+% A ressubitem is a simple list element in anything but a ressection (second level)
+\newcommand{\ressubitem}[1]{\item #1}
+
+% A resdateitem is a simple list element in a ressection with a date
+\newcommand{\resdatesubitem}[2]{\item {#1 \hfill #2}}
+
+% A resbigitem is a complex list element for stuff like jobs and education:
+%  Arg 1: Name of company or university
+%  Arg 2: Title
+%  Arg 3: Dates
+\newcommand{\resbigitem}[3]{\item \textbf{#1} \hfill #3
+
+\nopagebreak[4]
+\textit{#2}}
+
+% This is a list that comes with a resbigitem
+\newenvironment{ressubsec}[3]{\vspace{6pt} \resbigitem{#1}{#2}{#3} \begin{compactitem}}{\end{compactitem}}
+
+% This is a simple sublist
+\newenvironment{reslist}[1]{\resitem{\textbf{#1}} \begin{compactitem}}{\end{compactitem}}
+
+

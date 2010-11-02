@@ -1,0 +1,116 @@
+\documentclass[ignorenonframetext,mathserif,xcolor=svgnames,bigger]{beamer}
+%\documentclass{article}
+%\usepackage{beamerarticle}
+\usepackage{graphicx}
+\usepackage{textpos}
+
+\RequirePackage{euler}
+\RequirePackage{fontspec}
+\RequirePackage{xunicode}
+\RequirePackage{xltxtra}
+
+% Fonts
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmainfont[Mapping=tex-text]{Gentium Book Basic}
+\setsansfont[Mapping=tex-text]{Syntax LT Std}
+\setmonofont{Lucida Sans Typewriter}
+
+\mode<presentation> {
+
+% Set up some colors for later
+\definecolor{hlgreen}{rgb}{0.498,0.624,0.498}
+\definecolor{hlred}{rgb}{0.863,0.639,0.639}
+\definecolor{hlyellow}{rgb}{0.941,0.875,0.686}
+\definecolor{hlblue}{rgb}{0.549,0.816,0.827}
+
+\usetheme{Pittsburgh}
+\useinnertheme{rounded}
+\usefonttheme{structurebold}
+\setbeamercolor{normal text}{fg=white,bg=black}
+\setbeamercolor{structure}{fg=hlgreen}
+\setbeamercolor{palette primary}{fg=white}
+\setbeamercolor{palette secondary}{fg=white}
+\setbeamerfont{institute}{size=\tiny}
+\setbeamerfont{author}{size=\large}
+\setbeamerfont{title}{size=\huge}
+\setbeamerfont{date}{size=\small}
+
+\setbeamertemplate{title page}
+{
+  \begin{textblock*}{\paperwidth}[1,1](0.9\paperwidth,0.8\paperheight)
+    \usebeamerfont{institute} \insertinstitute
+  \end{textblock*}
+
+  \begin{center}
+    {\usebeamercolor[fg]{titlelike}\usebeamerfont{title} \inserttitle} \\
+    \vspace{1.5cm}
+    {\usebeamerfont{date} \insertdate}
+    
+    \vspace{1cm}
+    {\usebeamerfont{author} \insertauthor}    
+  \end{center}
+  
+  \vfill
+}
+
+\usenavigationsymbolstemplate{}
+\beamertemplatedotitem
+\beamertemplateenumeratealpha
+
+\setbeamerfont{quote}{shape=\upshape}
+\setbeamerfont{quotation}{shape=\upshape}
+
+\setbeamercolor{highlight}{fg=black,bg=hlyellow}
+\newcommand{\highlight}[1]{\colorbox{hlyellow}{#1}}
+}
+
+\mode<article>{
+\usepackage[left=1in,top=1in,bottom=1in,right=1in]{geometry}
+
+\definecolor{hlgreen}{rgb}{0,0,0}
+\definecolor{hlred}{rgb}{0,0,0}
+\definecolor{hlyellow}{rgb}{0,0,0}
+}
+
+\title{Slide Presentation Title}
+\author[Charles Pence]{Charles Pence \\ {\scriptsize \texttt{cpence@nd.edu}}}
+\institute{\parbox{\paperwidth}{ \begin{minipage}[t]{0.6\linewidth} \parbox{\linewidth}{\centering University of Notre Dame \\ Program in the History and Philosophy of Science \\ Department of Philosophy} \end{minipage} \begin{minipage}[b]{0.35\linewidth} \hspace{1em} \raisebox{-1.5em}{\includegraphics[width=0.8\linewidth]{nd-shield}} \end{minipage} }}
+\date[ABBREV.]{Conference and/or Date of Presentation}
+
+\begin{document}
+\frame{\titlepage}
+\maketitle
+
+\frame
+{
+  \frametitle{Outline}
+
+  \begin{itemize}
+  \item The outline of a presentation
+  \end{itemize}
+
+  \only<1->{Plain text or $equations$ that are animated}
+  \begin{itemize}
+  \item<2-> Bullet points that
+  \item<3-> are animated.
+  \end{itemize}
+}
+
+\only<presentation>{
+\frame
+{
+  \begin{center}
+  \vspace{1cm}
+  \hspace{0cm}\begin{beamercolorbox}[sep=1em,wd=5cm,center,rounded=true]{highlight}
+  \Large Questions?
+  \end{beamercolorbox}
+
+  \vspace{1cm}
+  
+  \texttt{cpence@nd.edu}
+  \end{center}
+}
+}
+
+\end{document}
+
