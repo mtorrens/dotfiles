@@ -13,6 +13,11 @@
 !bin/*
 !bin/*/*
 !bin/*/*/*
+!bin/*/*/*/*
+!bin/*/*/*/*/*
+!bin/*/*/*/*/*/*
+!bin/*/*/*/*/*/*/*
+!bin/*/*/*/*/*/*/*/*
 
 # Ignore compiled python in all directories
 bin/*.pyc
