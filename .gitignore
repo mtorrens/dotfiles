@@ -19,6 +19,9 @@
 !bin/*/*/*/*/*/*/*
 !bin/*/*/*/*/*/*/*/*
 
+# Ignore my Mendeley-generated BibTeX file
+bin/texmf/bibtex/bib
+
 # Ignore compiled python in all directories
 bin/*.pyc
 bin/*/*.pyc
