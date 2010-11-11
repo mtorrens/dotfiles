@@ -64,7 +64,7 @@ alias grep='grep --color=auto'
 
 # Some random aliases
 alias quit=exit
-alias blosxom="~/bin/blosxom/blosxom -password='staticpass'"
+alias cleanports="sudo port -f -p clean --all all"
 alias openvnc="ssh -f -L 5900:localhost:5900 10.1.1.2 x11vnc -safer -localhost -nopw -once -xkb -display :0"
 
 # This is a fancy alias to make sure that cabal install is used globally.

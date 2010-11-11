@@ -13,6 +13,9 @@ set smarthome
 ## Enable smooth scrolling
 set smooth
 
+## Don't save history
+unset historylog
+
 ###############################################################################
 ## Syntax Highlighting: included w/ nano
 
