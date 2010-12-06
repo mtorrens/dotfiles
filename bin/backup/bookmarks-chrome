@@ -1,0 +1,12 @@
+#!/bin/sh
+# Back up Chrome bookmarks
+
+# This will be different on other operating systems
+CHROME_DIR="${HOME}/Library/Application Support/Google/Chrome/Default"
+OUTDIR=${HOME}/Dropbox/Charles/Storage/Monthly/
+
+cp "$CHROME_DIR/Bookmarks" .
+lzma -9 ./Bookmarks
+mv ./Bookmarks.lzma ${OUTDIR}
+
+
