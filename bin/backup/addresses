@@ -15,4 +15,4 @@ release_private_file .ldap-pass
 
 # Compress and save to backup directory
 lzma -9 addresses.ldif
-mv addresses.ldif.lzma ${HOME}/Documents/Storage/Backup/Monthly
+mv addresses.ldif.lzma ${HOME}/Dropbox/Charles/Storage/Monthly

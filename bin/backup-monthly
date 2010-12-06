@@ -3,7 +3,7 @@
 # off-site backup setup can get to them.
 
 ~/bin/backup/addresses
-~/bin/backup/bookmarks
+~/bin/backup/bookmarks-chrome
 ~/bin/backup/dotfiles
 ~/bin/backup/todo
 
