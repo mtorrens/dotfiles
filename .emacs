@@ -429,8 +429,9 @@
   (c-toggle-auto-state 1)
   (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
   
-  ;; Don't indent namespaces
+  ;; Don't indent namespaces, do indent comments
   (c-set-offset 'innamespace 0)
+  (setq c-comment-only-line-offset 0)
   
   ;; Set cleanups
   (add-to-list 'c-cleanup-list 'defun-close-semi)
