@@ -1,0 +1,15 @@
+#!/bin/sh
+# Back up Thunderbird contacts
+
+# All goes pear-shaped if you have more than one TB profile.
+
+# This will be different on other operating systems
+FF_PROFILES_DIR="${HOME}/Library/Thunderbird/Profiles"
+OUTDIR=${HOME}/Dropbox/Charles/Storage/Monthly/
+
+TB_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`
+cp "$TB_PROFILE/abook.mab" .
+lzma -9 ./abook.mab
+mv ./abook.mab.lzma ${OUTDIR}
+
+
