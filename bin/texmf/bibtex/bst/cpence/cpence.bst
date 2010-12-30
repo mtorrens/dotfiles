@@ -379,13 +379,6 @@ FUNCTION {format.isbn}
   if$
 }
 
-FUNCTION {format.issn}
-{ issn empty$
-    { "" }
-    { new.block "ISSN " issn * }
-  if$
-}
-
 FUNCTION {format.url}
 { url empty$
     { "" }
@@ -516,12 +509,6 @@ FUNCTION {format.date}
     { "empty year in " cite$ * warning$
        pop$ "" }
     'skip$
-  if$
-  month empty$
-    'skip$
-    { month
-      " " * swap$ *
-    }
   if$
   extra.label *
 }
@@ -827,8 +814,7 @@ FUNCTION {article}
       if$
     }
   if$
-  format.issn output
-  format.url output
+% format.url output
   new.block
   note output
   fin.entry
@@ -1043,7 +1029,6 @@ FUNCTION {misc}
   format.title output
   howpublished new.block.checka
   howpublished output
-  format.issn output
   format.url output
   new.block
   note output
