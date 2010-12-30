@@ -38,8 +38,8 @@
 	  '(
 	    (width             . 90)
 	    (height            . 35)
-	    (left              . 0)
-	    (top               . 0)
+	    (left              . 100)
+	    (top               . 24)
 	    (cursor-type       . bar)
 	    )
 	  )
