@@ -67,9 +67,10 @@
 ;; General settings
 
 ;; Set the PATH to include various OS X locations
-(setenv "PATH" (concat "/opt/local/bin:/usr/texbin:" (getenv "PATH")))
+(setenv "PATH" (concat "/usr/local/bin:/opt/local/bin:/usr/texbin:" (getenv "PATH")))
 (setq exec-path (cons "/usr/texbin" exec-path))
 (setq exec-path (cons "/opt/local/bin" exec-path))
+(setq exec-path (cons "/usr/local/bin" exec-path))
 
 ;; Show the mark, and enable deletion
 (transient-mark-mode t)
@@ -102,8 +103,8 @@
 ;; proportional occasionally below.
 (if window-system
     (progn
-	  (set-face-font 'default "Droid Sans Mono-13")
-	  (set-face-font 'variable-pitch "Sabon LT Std-16")))
+	  (set-face-font 'default "Inconsolata-15")
+	  (set-face-font 'variable-pitch "Gentium Basic-18")))
 
 ;; Kill silly splash screens/messages
 (setq inhibit-splash-screen t)
@@ -456,6 +457,7 @@
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
       (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+(add-hook 'markdown-mode-hook (lambda () (variable-pitch-mode t)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
