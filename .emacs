@@ -420,6 +420,7 @@
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode t)
+(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80))
 
 (setq-default c-default-style "bsd")
 
@@ -457,7 +458,18 @@
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
       (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
-(add-hook 'markdown-mode-hook (lambda () (variable-pitch-mode t)))
+
+(defun cpence-markdown-mode-hook ()
+  (interactive)
+  
+  ;; Hooray for variable-pitch fonts
+  (variable-pitch-mode t)
+  
+  ;; Actually insert TAB characters, don't do Markdown-mode's "cycling"
+  (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)
+)
+
+(add-hook 'markdown-mode-hook 'cpence-markdown-mode-hook)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
