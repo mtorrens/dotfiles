@@ -850,8 +850,8 @@ FUNCTION {book}
     }
   if$
   format.edition output
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -868,8 +868,8 @@ FUNCTION {booklet}
   howpublished address new.block.checkb
   howpublished output
   address output
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -907,8 +907,8 @@ FUNCTION {inbook}
     }
   if$
   format.edition output
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -937,8 +937,8 @@ FUNCTION {incollection}
       format.chapter.pages output
     }
   if$
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -974,8 +974,8 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -995,7 +995,7 @@ FUNCTION {manual}
   organization output
   address output
   format.edition output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1013,7 +1013,7 @@ FUNCTION {mastersthesis}
   "Master's thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1048,7 +1048,7 @@ FUNCTION {phdthesis}
   "PhD thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1068,8 +1068,8 @@ FUNCTION {proceedings}
   new.sentence
   organization output
   publisher output
-  format.isbn output
-  format.url output
+%  format.isbn output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1087,7 +1087,7 @@ FUNCTION {techreport}
   format.tr.number output.nonnull
   institution "institution" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
