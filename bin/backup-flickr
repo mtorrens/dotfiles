@@ -1,0 +1,8 @@
+#!/bin/sh
+# Use offlickr to get all photos, metadata, and locations out
+# of my Flickr account
+
+FLICKR_BACKUP_DIR=/Users/cpence/Temporary/flickr
+
+offlickr -i "10158670@N00" -d $FLICKR_BACKUP_DIR/Locations -v -L
+offlickr -i "10158670@N00" -d $FLICKR_BACKUP_DIR/Photos -v -p -n -s
