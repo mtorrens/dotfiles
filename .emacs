@@ -322,10 +322,6 @@
   (ispell-change-dictionary "american")
   (setq ispell-program-name "aspell")
   (local-set-key (kbd "<f9>") 'ispell-buffer)
-  
-  ;; If we're using visual-line-mode, I want proportional fonts
-  ;;(variable-pitch-mode t)
-  ;;(set 'line-spacing 7)
   )
 
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
@@ -368,6 +364,7 @@
   (TeX-PDF-mode 1)
 
   ;; More curly-quote support
+  (smart-quotes-mode t)
   (font-latex-add-quotes '("“" "”"))
   )
 
@@ -461,6 +458,9 @@
 
 (defun cpence-markdown-mode-hook ()
   (interactive)
+  
+  ;; Hooray for smart quotes
+  (smart-quotes-mode t)
   
   ;; Hooray for variable-pitch fonts
   (variable-pitch-mode t)
