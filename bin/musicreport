@@ -11,7 +11,7 @@ if [ "$1" = "--help" ]; then
 fi
 
 MUSIC_DIR=/Volumes/share/Music/Library
-OUTPUT_DIR=$HOME/Documents/Website/music
+OUTPUT_DIR=$HOME/Dropbox/Charles/Documents/Website/input/music
 
 
 rm -f $OUTPUT_DIR/*.html
