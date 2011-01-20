@@ -74,6 +74,9 @@ cabal() { if [[ $1 == "install" ]]; then shift; command sudo cabal install --glo
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 
+# This builds the static version of my website
+alias poole='poole --md-ext=headerid --md-ext=tables --md-ext=def_list'
+
 
 ###############################################################################
 # Aliases for all the coreutils that are installed by MacPorts
