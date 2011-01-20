@@ -1,0 +1,26 @@
+#!/bin/bash
+# Start the GPG agent on OS X (making sure only one is running).
+# Thanks to http://www.beitz.org/node/85
+
+# Location of my GPG install
+GPGPATH=/opt/local/bin
+# Location of my pinentry program
+PINENTRY=/usr/local/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
+
+# Kill off any old GPG-agents to be careful
+killall gpg-agent
+rm -f $HOME/.gpg-agent-info
+
+# Start it up
+$GPGPATH/gpg-agent --daemon --use-standard-socket --pinentry-program $PINENTRY --enable-ssh-support --write-env-file
+RETVAL=$?
+
+# Process gpg environment file if successful (thx to MacGPG2 for this snippet):
+if [ $RETVAL -eq 0 ]; then
+ for var in `cat $HOME/.gpg-agent-info`
+    do
+        parameter=${var%%=*}     # Extract name.
+        value=${var##*=}         # Extract value.
+        defaults write "$HOME/.MacOSX/environment" $parameter "$value"
+  done
+fi
