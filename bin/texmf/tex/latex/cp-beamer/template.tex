@@ -12,8 +12,8 @@
 % Fonts
 \defaultfontfeatures{Scale=MatchLowercase}
 \setmainfont[Mapping=tex-text]{Gentium Book Basic}
-\setsansfont[Mapping=tex-text]{Syntax LT Std}
-\setmonofont{Lucida Sans Typewriter}
+\setsansfont[Scale=MatchLowercase,LetterSpace=-1.8]{Lucida Sans}
+\setmonofont[Scale=MatchUppercase]{Droid Sans Mono}
 
 \mode<presentation> {
 
@@ -71,6 +71,10 @@
 \definecolor{hlred}{rgb}{0,0,0}
 \definecolor{hlyellow}{rgb}{0,0,0}
 }
+
+% For synchronized Beamer notes in Skim
+\let\oldframe=\frame
+\renewcommand{\frame}[1]{\oldframe{ #1 \note{ }}}
 
 \title{Slide Presentation Title}
 \author[Charles Pence]{Charles Pence \\ {\scriptsize \texttt{cpence@nd.edu}}}
