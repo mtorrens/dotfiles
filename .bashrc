@@ -62,6 +62,10 @@ eval $(gdircolors -b)
 alias ls='gls --color=auto'
 alias grep='grep --color=auto'
 
+# Read man pages in Skim
+manp() { man -t "${1}" | ps2pdf - - | open -f -a Skim ; }
+alias man='manp'
+
 # Some random aliases
 alias quit=exit
 alias cleanports="sudo port -f -p clean --all all"
@@ -93,6 +97,7 @@ alias date=gdate
 alias dd=gdd
 alias dir=gdir
 alias dirname=gdirname
+alias find=gfind
 alias head=ghead
 #already did ls=gls
 alias make=gmake
