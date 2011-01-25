@@ -1,0 +1,5 @@
+#!/bin/sh
+# Open the "Export Addresses" app that comes with Mail Scripts.
+
+open -a "Export Addresses"
+
