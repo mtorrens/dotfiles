@@ -30,6 +30,7 @@ echo "\\usepackage{paralist}" >> "$TEX"
 echo "\\setlength{\\plitemsep}{3pt}" >> "$TEX"
 echo "\\begin{document}" >> "$TEX"
 
+# FIXME!
 pandoc -f html -t latex "$HTML" >> "$TEX"
 
 echo "\\end{document}" >> "$TEX"
