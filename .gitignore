@@ -34,11 +34,6 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
-# Terminfo for emacs-term
-!.terminfo
-!.terminfo/*
-!.terminfo/*/*
-
 # Nano
 !.nanorc
 
