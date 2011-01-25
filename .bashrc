@@ -4,9 +4,9 @@
 ###############################################################################
 # Bash Configuration
 
-# Get MacPorts' bash-completion
-if [ -f /opt/local/etc/bash_completion ]; then
-	. /opt/local/etc/bash_completion
+# Get bash-completion
+if [ -f /usr/local/etc/bash_completion ]; then
+	. /usr/local/etc/bash_completion
 fi
 
 # Set up the bash history
@@ -57,9 +57,9 @@ export COPYFILE_DISABLE=true
 ###############################################################################
 # Aliases for daily use
 
-# Set up the directory colors
-eval $(gdircolors -b)
-alias ls='gls --color=auto'
+# Set up the directory colors (BSD-style)
+export LSCOLORS="ExGxFxdaCxDaDaabagCxCx"
+alias ls='ls -G'
 alias grep='grep --color=auto'
 
 # Read man pages in Skim
@@ -68,12 +68,7 @@ alias man='manp'
 
 # Some random aliases
 alias quit=exit
-alias cleanports="sudo port -f -p clean --all all"
 alias openvnc="ssh -f -L 5900:localhost:5900 10.1.1.2 x11vnc -safer -localhost -nopw -once -xkb -display :0"
-
-# This is a fancy alias to make sure that cabal install is used globally.
-# FIXME: What other Cabal commands will need to be prefixed like this?  Any?
-cabal() { if [[ $1 == "install" ]]; then shift; command sudo cabal install --global $@; else command cabal $@; fi; }
 
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
@@ -81,31 +76,8 @@ alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 # This builds the static version of my website
 alias poole="poole --md-ext=headerid --md-ext=tables --md-ext=def_list --ignore='^\.DS_Store|~$|\.ccss$' $HOME/Dropbox/Charles/Documents/Website"
 
+# Configure Python virtualenv
+export WORKON_HOME=~/Development/Python
+source /usr/local/Cellar/python/2.7.1/bin/virtualenvwrapper.sh
 
-###############################################################################
-# Aliases for all the coreutils that are installed by MacPorts
 
-# I used to install these without the 'g' prefix, but that leads to bizarre
-# breakage in build systems which see OS X and expect the BSD, not the GNU
-# behavior for their utilities ('basename' was a killer for this).
-
-alias basename=gbasename
-alias cat=gcat
-alias cp=gcp
-alias cut=gcut
-alias date=gdate
-alias dd=gdd
-alias dir=gdir
-alias dirname=gdirname
-alias find=gfind
-alias head=ghead
-#already did ls=gls
-alias make=gmake
-alias mkdir=gmkdir
-alias mv=gmv
-alias pwd=gpwd
-alias rmdir=grmdir
-alias sed=gsed
-alias sort=gsort
-alias tail=gtail
-alias tar=gnutar
