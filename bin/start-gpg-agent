@@ -3,7 +3,7 @@
 # Thanks to http://www.beitz.org/node/85
 
 # Location of my GPG install
-GPGPATH=/opt/local/bin
+GPGPATH=/usr/local/bin
 # Location of my pinentry program
 PINENTRY=/usr/local/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
 
