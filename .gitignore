@@ -37,6 +37,9 @@ bin/*/*/*.pyc
 # Nano
 !.nanorc
 
+# Mercurial
+!.hgrc
+
 # GTK
 !.gtkrc-2.0
 
