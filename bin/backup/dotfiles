@@ -4,20 +4,22 @@
 
 DOTFILES="${HOME}/Dropbox/Charles/Storage/Monthly/dotfiles"
 
-cp ~/.bashrc $DOTFILES/dotbashrc
-cp ~/.emacs $DOTFILES/dotemacs
 cp ~/.gitignore $DOTFILES/dotgitignore
-cp ~/.hgrc $DOTFILES/dothgrc
+cp ~/.gitmodules $DOTFILES/dotgitmodules
+
+cp ~/.bashrc $DOTFILES/dotbashrc
+cp ~/.bash_profile $DOTFILES/dotbash_profile
+cp ~/.hushlogin $DOTFILES/dothushlogin
+cp ~/.inputrc $DOTFILES/dotinputrc
+cp ~/.profile $DOTFILES/dotprofile
+
 cp ~/.nanorc $DOTFILES/dotnanorc
+cp ~/.hgrc $DOTFILES/dothgrc
+cp ~/.gtkrc-2.0 $DOTFILES/dotgtkrc-2.0
+cp ~/.gnupg/gpg.conf $DOTFILES/gpg.conf
 
 rm -rf $DOTFILES/dotprivate
 cp -Rf ~/.private $DOTFILES/dotprivate
 
-rm -rf $DOTFILES/dotemacsdotd
-cp -Rf ~/.emacs.d $DOTFILES/dotemacsdotd
-
 rm -rf $DOTFILES/dotssh
 cp -Rf ~/.ssh $DOTFILES/dotssh
-
-rm -rf $DOTFILES/dotterminfo
-cp -Rf ~/.terminfo $DOTFILES/dotterminfo
