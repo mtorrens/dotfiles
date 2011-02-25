@@ -1,0 +1,24 @@
+#!/bin/bash
+# Pull down some calendars and pack them for backup
+
+OUTDIR="${HOME}/Dropbox/Charles/Storage/Monthly"
+
+# This file should contain:
+# export CAL_1="url"
+# ...
+# export CAL_N="url"
+# export NUM_CALS=N
+. ${HOME}/.private/calendars.sh
+
+for ((i = 1 ; i <= $NUM_CALS ; i++ ))
+do
+  varname="CAL_$i"
+  wget -q -O "calendar$i.ics" ${!varname}
+done
+
+tar cf calendar.tar *.ics
+lzma -9 calendar.tar
+mv calendar.tar.lzma $OUTDIR
+
+rm -f *.ics
+
