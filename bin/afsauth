@@ -1,0 +1,3 @@
+#!/bin/sh
+kinit -l 30d cpence@CRC.ND.EDU
+aklog -d -c crc.nd.edu -k CRC.ND.EDU
