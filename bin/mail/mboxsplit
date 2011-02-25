@@ -1,9 +1,10 @@
-#!/opt/local/bin/ruby -w
+#!/usr/bin/ruby -w
 
 # Split a mbox file into $year-$month files
 # Copyright (C) 2008 Joerg Jaspert 
 # BSD style license, on Debian see /usr/share/common-licenses/BSD
 
+require 'rubygems'
 require 'pathname'
 require 'rmail'
 
