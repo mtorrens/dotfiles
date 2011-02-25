@@ -2,7 +2,7 @@
 # Get and remove GPG-encrypted private data files, doing our best 
 # to trap signals and not leave anything orphaned in ${HOME}.
 
-GPG=gpg2
+GPG=/usr/local/bin/gpg
 
 function get_private_file {
 	
