@@ -1,0 +1,24 @@
+#!/bin/sh
+# Back up Google Contacts
+
+OUTDIR="${HOME}/Dropbox/Charles/Storage/Monthly"
+
+~/bin/backup/contacts-gmail.py
+
+while IFS='
+' read -r line
+do
+    case $line in
+        "ORG:"*)
+            echo $line | sed "s/;//g"; 
+            ;;
+        *)
+            echo $line
+            ;;
+    esac
+done < contacts.vcf >> test.vcf
+
+mv test.vcf contacts.vcf
+lzma -9 contacts.vcf
+
+mv contacts.vcf.lzma ${OUTDIR}
