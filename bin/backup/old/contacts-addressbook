@@ -1,0 +1,12 @@
+#!/bin/sh
+# Open the "Export Addresses" app that comes with Mail Scripts.
+
+OUTDIR=$HOME/Dropbox/Charles/Storage/Monthly
+
+open -a "Export Addresses"
+read -p "Press ENTER when contacts are exported..."
+
+mv $HOME/Desktop/Contacts.txt ./contacts.txt
+lzma -9 contacts.txt
+mv contacts.txt.lzma $OUTDIR
+
