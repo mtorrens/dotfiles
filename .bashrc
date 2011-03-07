@@ -5,17 +5,21 @@
 # Bash Configuration
 
 # Get bash-completion
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
 if [ -f /usr/local/etc/bash_completion ]; then
-	. /usr/local/etc/bash_completion
+  . /usr/local/etc/bash_completion
 fi
 
 # Set up the bash history
 export HISTSIZE=4096
 export HISTFILESIZE=16384
 
-# Engage some shell options
-shopt -s autocd
-shopt -s checkjobs
+# Engage some shell options (quietly, in case they don't
+# exist)
+shopt -sq autocd
+shopt -sq checkjobs
 
 
 ###############################################################################
@@ -47,11 +51,11 @@ export PS1="${PROMPT}${PR_TITLEBAR}"
 # I don't want a history for less
 export LESSHISTFILE=-
 
-# Disable mail checking by default on OS X
-export MAILPATH=""
-
-# Remove a worthless OS X "feature"
-export COPYFILE_DISABLE=true
+# Disable mail checking and resource-fork copying, only on OS X
+if [ `uname -s` = "Darwin" ]; then
+  export MAILPATH=""
+  export COPYFILE_DISABLE=true
+fi
 
 
 ###############################################################################
