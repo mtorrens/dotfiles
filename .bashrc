@@ -57,9 +57,15 @@ export COPYFILE_DISABLE=true
 ###############################################################################
 # Aliases for daily use
 
-# Set up the directory colors (BSD-style)
-export LSCOLORS="ExGxFxdaCxDaDaabagCxCx"
-alias ls='ls -G'
+# Set up the directory colors, either GNU or BSD style depending on
+# whether or not dircolors is available.
+if [ type -P dircolors &> /dev/null ]; then
+  eval `dircolors -b`
+  alias ls='ls --color=auto'
+else
+  export LSCOLORS="ExGxFxdaCxDaDaabagCxCx"
+  alias ls='ls -G'
+fi
 alias grep='grep --color=auto'
 
 # Read man pages in Skim
@@ -68,13 +74,9 @@ alias man='manp'
 
 # Some random aliases
 alias quit=exit
-alias openvnc="ssh -f -L 5900:localhost:5900 10.1.1.2 x11vnc -safer -localhost -nopw -once -xkb -display :0"
 
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
-
-# This builds the static version of my website
-alias poole="poole --md-ext=headerid --md-ext=tables --md-ext=def_list --ignore='^\.DS_Store|~$|\.ccss$' $HOME/Dropbox/Charles/Documents/Website"
 
 # Configure Python virtualenv
 export WORKON_HOME=~/Development/Python
