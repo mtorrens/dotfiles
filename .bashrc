@@ -57,6 +57,11 @@ if [ `uname -s` = "Darwin" ]; then
   export COPYFILE_DISABLE=true
 fi
 
+# Find Cabal package directory if it's available
+if [ -d "$HOME/Library/Haskell/bin" ]; then
+  export PATH="$HOME/Library/Haskell/bin:$PATH"
+fi
+
 
 ###############################################################################
 # Aliases for daily use
