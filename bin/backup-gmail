@@ -1,0 +1,10 @@
+#!/bin/sh
+# Call Getmail to back up my GMail account
+
+source ${HOME}/bin/backup/utilities.sh
+
+get_private_file getmail.gmail .getmail/getmail.gmail
+getmail -r getmail.gmail
+release_private_file .getmail/getmail.gmail
+
+
