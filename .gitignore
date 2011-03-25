@@ -34,6 +34,17 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
+# Emacs
+!.emacs.d
+!.emacs.d/*
+!.emacs.d/*/*
+!.emacs.d/*/*/*
+!.emacs.d/*/*/*/*
+!.emacs.d/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*/*
+.emacs.d/recentf
+
 # Nano
 !.nanorc
 
