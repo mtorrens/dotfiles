@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (turn-on-bib-cite bib-cite-minor-mode) "auctex/bib-cite"
-;;;;;;  "auctex/bib-cite.el" (19853 10564))
+;;;;;;  "auctex/bib-cite.el" (19853 12228))
 ;;; Generated autoloads from auctex/bib-cite.el
 
 (autoload 'bib-cite-minor-mode "auctex/bib-cite" "\
@@ -23,7 +23,7 @@ Unconditionally turn on Bib Cite mode.
 ;;;***
 
 ;;;### (autoloads (context-mode) "auctex/context" "auctex/context.el"
-;;;;;;  (19853 10570))
+;;;;;;  (19853 12234))
 ;;; Generated autoloads from auctex/context.el
 
 (defalias 'ConTeXt-mode 'context-mode)
@@ -43,7 +43,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-en-mode) "auctex/context-en" "auctex/context-en.el"
-;;;;;;  (19853 10564))
+;;;;;;  (19853 12228))
 ;;; Generated autoloads from auctex/context-en.el
 
 (autoload 'context-en-mode "auctex/context-en" "\
@@ -61,7 +61,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (context-nl-mode) "auctex/context-nl" "auctex/context-nl.el"
-;;;;;;  (19853 10570))
+;;;;;;  (19853 12234))
 ;;; Generated autoloads from auctex/context-nl.el
 
 (autoload 'context-nl-mode "auctex/context-nl" "\
@@ -79,7 +79,7 @@ of context-mode-hook.
 ;;;***
 
 ;;;### (autoloads (font-latex-setup) "auctex/font-latex" "auctex/font-latex.el"
-;;;;;;  (19853 10564))
+;;;;;;  (19853 12228))
 ;;; Generated autoloads from auctex/font-latex.el
 
 (autoload 'font-latex-setup "auctex/font-latex" "\
@@ -90,7 +90,7 @@ Setup this buffer for LaTeX font-lock.  Usually called from a hook.
 ;;;***
 
 ;;;### (autoloads (docTeX-mode TeX-latex-mode BibTeX-auto-store)
-;;;;;;  "auctex/latex" "auctex/latex.el" (19853 10569))
+;;;;;;  "auctex/latex" "auctex/latex.el" (19853 12234))
 ;;; Generated autoloads from auctex/latex.el
 
 (autoload 'BibTeX-auto-store "auctex/latex" "\
@@ -128,7 +128,7 @@ runs the hooks in `docTeX-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (multi-prompt-key-value multi-prompt) "auctex/multi-prompt"
-;;;;;;  "auctex/multi-prompt.el" (19853 10569))
+;;;;;;  "auctex/multi-prompt.el" (19853 12234))
 ;;; Generated autoloads from auctex/multi-prompt.el
 
 (autoload 'multi-prompt "auctex/multi-prompt" "\
@@ -158,7 +158,7 @@ The return value is the string as entered in the minibuffer.
 ;;;***
 
 ;;;### (autoloads (preview-report-bug LaTeX-preview-setup preview-install-styles)
-;;;;;;  "auctex/preview" "auctex/preview.el" (19853 10569))
+;;;;;;  "auctex/preview" "auctex/preview.el" (19853 12233))
 ;;; Generated autoloads from auctex/preview.el
 
 (autoload 'preview-install-styles "auctex/preview" "\
@@ -191,7 +191,7 @@ Report a bug in the preview-latex package.
 
 ;;;### (autoloads (TeX-submit-bug-report ams-tex-mode TeX-auto-generate-global
 ;;;;;;  TeX-auto-generate TeX-plain-tex-mode TeX-tex-mode) "auctex/tex"
-;;;;;;  "auctex/tex.el" (19853 10570))
+;;;;;;  "auctex/tex.el" (19853 12234))
 ;;; Generated autoloads from auctex/tex.el
 
 (autoload 'TeX-tex-mode "auctex/tex" "\
@@ -259,7 +259,7 @@ information about your AUCTeX version and AUCTeX configuration.
 ;;;***
 
 ;;;### (autoloads (LaTeX-install-toolbar TeX-install-toolbar) "auctex/tex-bar"
-;;;;;;  "auctex/tex-bar.el" (19853 10569))
+;;;;;;  "auctex/tex-bar.el" (19853 12234))
 ;;; Generated autoloads from auctex/tex-bar.el
 
 (autoload 'TeX-install-toolbar "auctex/tex-bar" "\
@@ -275,7 +275,7 @@ Install toolbar buttons for LaTeX mode.
 ;;;***
 
 ;;;### (autoloads nil "auctex/tex-fold" "auctex/tex-fold.el" (19853
-;;;;;;  10564))
+;;;;;;  12228))
 ;;; Generated autoloads from auctex/tex-fold.el
  (autoload 'TeX-fold-mode "tex-fold" "Minor mode for hiding and revealing macros and environments." t)
 
@@ -284,7 +284,7 @@ Install toolbar buttons for LaTeX mode.
 ;;;***
 
 ;;;### (autoloads (tex-font-setup) "auctex/tex-font" "auctex/tex-font.el"
-;;;;;;  (19853 10564))
+;;;;;;  (19853 12228))
 ;;; Generated autoloads from auctex/tex-font.el
 
 (autoload 'tex-font-setup "auctex/tex-font" "\
@@ -295,7 +295,7 @@ Setup font lock support for TeX.
 ;;;***
 
 ;;;### (autoloads (TeX-texinfo-mode) "auctex/tex-info" "auctex/tex-info.el"
-;;;;;;  (19853 10564))
+;;;;;;  (19853 12228))
 ;;; Generated autoloads from auctex/tex-info.el
 
 (defalias 'Texinfo-mode 'texinfo-mode)
@@ -314,7 +314,7 @@ value of `Texinfo-mode-hook'.
 ;;;***
 
 ;;;### (autoloads (japanese-latex-mode japanese-plain-tex-mode) "auctex/tex-jp"
-;;;;;;  "auctex/tex-jp.el" (19853 10567))
+;;;;;;  "auctex/tex-jp.el" (19853 12232))
 ;;; Generated autoloads from auctex/tex-jp.el
 
 (autoload 'japanese-plain-tex-mode "auctex/tex-jp" "\
@@ -332,14 +332,14 @@ Set `japanese-TeX-mode' to t, and enter `TeX-latex-mode'.
 ;;;***
 
 ;;;### (autoloads nil "auctex/tex-site" "auctex/tex-site.el" (19853
-;;;;;;  10564))
+;;;;;;  12228))
 ;;; Generated autoloads from auctex/tex-site.el
  (require 'tex-site)
 
 ;;;***
 
 ;;;### (autoloads (texmathp-match-switch texmathp) "auctex/texmathp"
-;;;;;;  "auctex/texmathp.el" (19853 10569))
+;;;;;;  "auctex/texmathp.el" (19853 12233))
 ;;; Generated autoloads from auctex/texmathp.el
 
 (autoload 'texmathp "auctex/texmathp" "\
@@ -360,7 +360,7 @@ Limit searched to BOUND.
 ;;;***
 
 ;;;### (autoloads nil "auctex/toolbar-x" "auctex/toolbar-x.el" (19853
-;;;;;;  10568))
+;;;;;;  12232))
 ;;; Generated autoloads from auctex/toolbar-x.el
  (autoload 'toolbarx-install-toolbar "toolbar-x")
 
@@ -392,7 +392,7 @@ file.
 ;;;***
 
 ;;;### (autoloads (css-mode) "css-mode/css-mode" "css-mode/css-mode.el"
-;;;;;;  (19853 10146))
+;;;;;;  (19853 12213))
 ;;; Generated autoloads from css-mode/css-mode.el
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 
@@ -423,7 +423,7 @@ Major mode for editing Haml files.
 ;;;***
 
 ;;;### (autoloads (run-ruby inf-ruby inf-ruby-keys) "inf-ruby/inf-ruby"
-;;;;;;  "inf-ruby/inf-ruby.el" (19853 10142))
+;;;;;;  "inf-ruby/inf-ruby.el" (19853 12208))
 ;;; Generated autoloads from inf-ruby/inf-ruby.el
 
 (autoload 'inf-ruby-keys "inf-ruby/inf-ruby" "\
@@ -457,7 +457,7 @@ of `ruby-program-name').  Runs the hooks `inferior-ruby-mode-hook'
 ;;;### (autoloads (ruby-compilation-this-buffer ruby-compilation-cap
 ;;;;;;  ruby-compilation-rake ruby-compilation-run pcomplete/cap
 ;;;;;;  pcomplete/rake) "ruby-compilation/ruby-compilation" "ruby-compilation/ruby-compilation.el"
-;;;;;;  (19853 10144))
+;;;;;;  (19853 12208))
 ;;; Generated autoloads from ruby-compilation/ruby-compilation.el
 
 (autoload 'pcomplete/rake "ruby-compilation/ruby-compilation" "\
@@ -493,7 +493,7 @@ Run the current buffer through Ruby compilation.
 ;;;***
 
 ;;;### (autoloads (ruby-mode) "ruby-mode/ruby-mode" "ruby-mode/ruby-mode.el"
-;;;;;;  (19853 10137))
+;;;;;;  (19853 12190))
 ;;; Generated autoloads from ruby-mode/ruby-mode.el
 
 (autoload 'ruby-mode "ruby-mode/ruby-mode" "\
@@ -566,7 +566,7 @@ TextMate Emulation Minor Mode
 ;;;;;;  "rhtml/rhtml-navigation.el" "rhtml/rhtml-ruby-hook.el" "rhtml/rhtml-sgml-hacks.el"
 ;;;;;;  "ruby-compilation/ruby-compilation-autoloads.el" "ruby-compilation/ruby-compilation-pkg.el"
 ;;;;;;  "ruby-mode/ruby-mode-autoloads.el" "ruby-mode/ruby-mode-pkg.el"
-;;;;;;  "yaml-mode/yaml-mode.el") (19853 11044 725147))
+;;;;;;  "yaml-mode/yaml-mode.el") (19853 12258 876121))
 
 ;;;***
 

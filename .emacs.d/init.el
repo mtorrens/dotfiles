@@ -81,7 +81,9 @@
 
 ;; Don't make backups
 (setq make-backup-files nil)
+(setq auto-save-list-file-prefix nil)
 (setq auto-save-default nil)
+(setq delete-auto-save-files t)
 
 ;; Deal correctly with newlines
 (setq next-line-add-newlines nil)
