@@ -30,17 +30,20 @@
 ;; Themes path
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-;; Executable path
+;; Executable path (and PATH)
 (push "/usr/local/bin" exec-path)
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 (if (system-type-is-darwin)
-    (push "/usr/local/texbin" exec-path))
+    (progn
+      (push "/usr/texbin" exec-path)
+      (setenv "PATH" (concat "/usr/texbin:" (getenv "PATH")))))
 
 ;; Custom path
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
 ;; .emacs.d bits
-(load-file "~/.emacs.d/packages.el")
+(load "~/.emacs.d/packages.el")
 
 ;; ----------------------------------------------------
 ;; Emacs GUI
