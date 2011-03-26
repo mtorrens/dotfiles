@@ -86,6 +86,7 @@ alias quit=exit
 
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
+alias configstatus='config status --ignore-submodules=dirty'
 
 # Configure Python virtualenv
 export WORKON_HOME=~/Development/Python
