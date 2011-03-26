@@ -1,0 +1,1 @@
+(:ruby-mode "installed" :inf-ruby "installed" :ruby-compilation "installed" :css-mode "installed" :textmate "installed" :rvm "required" :rhtml "installed" :yaml-mode "installed" :el-get "installed" :clevercss "installed" :emacs-textmate "installed" :rhtml-mode "installed" :haml-mode "installed" :sass-mode "installed" :auctex "installed")
