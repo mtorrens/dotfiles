@@ -23,7 +23,7 @@
 (custom-theme-set-faces
  'Railscasts
  '(default ((t (:background "#282828" :foreground "#e6e1dc"))))
- '(cursor ((t (:background "#000000" :foreground "#ffffff"))))
+ '(cursor ((t (:background "#ffffff" :foreground "#000000"))))
  '(region ((t (:background "#5a647e"))))
  '(mode-line ((t (:background "#e6e1dc" :foreground "#323232"))))
  '(mode-line-inactive ((t (:background "#e6e1dc" :foreground "#333435"))))
