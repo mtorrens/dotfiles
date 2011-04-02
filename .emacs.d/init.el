@@ -41,6 +41,14 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+
+;; ----------------------------------------------------
+;; Load all external packages
+
+;; auctex (currently CVS 20110402)
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+
 ;; ----------------------------------------------------
 ;; Emacs GUI
 
