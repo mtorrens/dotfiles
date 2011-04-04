@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
+import sys
 import getpass
 import atom
 import gdata.contacts.data
 import gdata.contacts.client
 import vobject
+import pprint
 
 if __name__ == "__main__":
     password = getpass.getpass('Enter Google password: ')
@@ -177,19 +179,21 @@ if __name__ == "__main__":
             vcard.add('note').value = entry.content.text
         
         if not hasattr(vcard, 'fn'):
-            if vcard.org:
+            if hasattr(vcard, 'org'):
                 vcard.add('fn')
                 vcard.fn.value = vcard.org.value
             else:
-                sys.stderr.write('ERROR: vCard without both name and organization?')
+                sys.stderr.write('ERROR: vCard without both name and organization?\n')
+                pprint.pprint(vcard, sys.stderr)
                 continue
         
         if not hasattr(vcard, 'n'):
-            if vcard.org:
+            if hasattr(vcard, 'org'):
                 vcard.add('n')
                 vcard.n.value = vobject.vcard.Name(vcard.org.value)
             else:
-                sys.stderr.write('ERROR: vCard without both name and organization?')
+                sys.stderr.write('ERROR: vCard without both name and organization?\n')
+                pprint.pprint(vcard, sys.stderr)
                 continue
         
         fp.write(vcard.serialize())
