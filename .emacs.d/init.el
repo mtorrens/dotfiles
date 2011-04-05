@@ -122,3 +122,6 @@
 
 ;; Switch tabs (on the Mac keys)
 
+;; Fullscreen (F11) via Mac/Linux/Windows methods
+(if (fboundp 'ns-toggle-fullscreen)
+    (global-set-key [f11] 'ns-toggle-fullscreen))
