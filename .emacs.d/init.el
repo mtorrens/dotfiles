@@ -6,28 +6,18 @@
 ;; and earlier.
 ;;
 
-;; Utilities for custom configuration on Mac/Linux
-;; Check if system is Darwin/Mac OS X
-(defun system-type-is-darwin ()
-(interactive)
-"Return true if system is darwin-based (Mac OS X)"
-(string-equal system-type "darwin")
-)
-
-;; Check if system is GNU/Linux
-(defun system-type-is-gnu ()
-(interactive)
-"Return true if system is GNU/Linux-based"
-(string-equal system-type "gnu/linux")
-)
-
 ;; Lisp path
-(let ((default-directory "~/.emacs.d/site-lisp/"))
+(let ((default-directory (concat user-emacs-directory "site-lisp/")))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
+;; Local lisp pieces
+(load (concat user-emacs-directory "platforms.el"))
+(load (concat user-emacs-directory "fullscreen.el"))
+
+
 ;; Themes path
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes"))
 
 ;; Executable path (and PATH)
 (push "/usr/local/bin" exec-path)
@@ -38,7 +28,7 @@
       (setenv "PATH" (concat "/usr/texbin:" (getenv "PATH")))))
 
 ;; Custom path
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
 
@@ -123,5 +113,4 @@
 ;; Switch tabs (on the Mac keys)
 
 ;; Fullscreen (F11) via Mac/Linux/Windows methods
-(if (fboundp 'ns-toggle-fullscreen)
-    (global-set-key [f11] 'ns-toggle-fullscreen))
+(global-set-key [f11] 'cp-toggle-fullscreen)
