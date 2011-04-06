@@ -39,6 +39,10 @@
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 
+;; darkroom-mode (currently HG 20100708, patched to use my personal
+;; cp-toggle-fullscreen function)
+(require 'darkroom-mode)
+
 ;; ----------------------------------------------------
 ;; Emacs GUI
 
@@ -112,5 +116,5 @@
 
 ;; Switch tabs (on the Mac keys)
 
-;; Fullscreen (F11) via Mac/Linux/Windows methods
-(global-set-key [f11] 'cp-toggle-fullscreen)
+;; WriteRoom emulation on F11
+(global-set-key [f11] 'darkroom-mode)
