@@ -10,12 +10,13 @@
 (defun new-untitled-buffer ()
   "Opens a new empty buffer"
   (interactive)
-  (let ((buf (generate-new-buffer "Untitled")))
+  (let ((buf (get-buffer-create "Untitled")))
     (switch-to-buffer buf)
-    (funcall (and default-major-mode))
+    (set-buffer-major-mode buf)
     (unless (plist-member (symbol-plist 'buffer-offer-save) 'permanent-local)
       (put 'buffer-offer-save 'permanent-local t))
     (setq buffer-offer-save t)
+    (make-local-variable 'kill-buffer-query-functions)
     (add-hook 'kill-buffer-query-functions
 	      'switch-to-new-buffer-kill-buffer-query-function
 	      nil
@@ -41,5 +42,5 @@
   (save-current-buffer
     (if (get-buffer "Untitled")
 	(kill-buffer "Untitled"))))
-(add-hook 'find-file-hook 'cpence-close-untitled)
+(add-hook 'find-file-hooks 'cpence-close-untitled)
 

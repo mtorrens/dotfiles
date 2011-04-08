@@ -11,11 +11,8 @@
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; Local lisp pieces
+;; Utility code used throughout
 (load (concat user-emacs-directory "platforms.el"))
-(load (concat user-emacs-directory "fullscreen.el"))
-(load (concat user-emacs-directory "untitled.el"))
-
 
 ;; Themes path
 (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes"))
@@ -55,6 +52,13 @@
 (dolist (func '(tabbar-mode tabbar-forward-tab tabbar-forward-group tabbar-backward-tab tabbar-backward-group))
   (autoload func "tabbar" "Tabs at the top of buffers and easy control-tab navigation"))
 (tabbar-mode 1)
+
+;; ----------------------------------------------------
+;; Other parts of my dot-emacs
+
+(load (concat user-emacs-directory "fullscreen.el"))
+(load (concat user-emacs-directory "untitled.el"))
+(if (system-type-is-darwin) (load (concat user-emacs-directory "mac.el")))
 
 ;; ----------------------------------------------------
 ;; Emacs GUI
@@ -109,6 +113,7 @@
 	   (find (aref (buffer-name buffer) 0) " *"))
 	 (buffer-list))))
 
+
 ;; ----------------------------------------------------
 ;; File saving
 
@@ -148,21 +153,12 @@
       (add-hook 'after-init-hook
 		(global-font-lock-mode t))))
 
-;; Highlight current line
-(if window-system
-    (global-hl-line-mode 1))
-
 ;; Set font
 (if window-system
     (set-frame-font "Panic Sans-14:antialias=subpixel"))
 
 ;; ----------------------------------------------------
 ;; Keys
-
-;; Set the OS X command-key to Control
-(if (system-type-is-darwin)
-    (setq mac-command-modifier 'ctrl)
-)
 
 ;; Fix home, end, delete
 (global-set-key [s-left] 'beginning-of-line)
@@ -184,27 +180,52 @@
 (global-set-key [f11] 'darkroom-mode)
 
 ;; ----------------------------------------------------
-;; TeX mode configuration
-(defun cpence-latex-mode-hook ()
+;; Global text mode configuration
+
+;; This should be the right way to do this, even for RTL languages.  Idea
+;; taken from a bad solution on the Emacs mailing list, implementation
+;; adapted from highline.el.
+(defun visual-line-line-range ()
+  (save-excursion
+    (cons (progn (beginning-of-visual-line) (point))
+	  (progn (beginning-of-visual-line 2) (point)))))
+
+(defun cpence-text-mode-hook ()
   (interactive)
   
-  ;; Set output view to call 'open' on Mac
-  (if (system-type-is-darwin)
-      (progn
-	(setq TeX-view-program-list (quote (("open" "open %o"))))
-	(setq TeX-view-program-selection (quote ((output-pdf "open") (output-html "open"))))))
+  ;; Enable soft line wrapping
+  (visual-line-mode t)
   
+  ;; Fix hl-line-mode with visual-line-mode
+  (if (window-system)
+      (progn
+	(hl-line-mode t)
+	(set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)))
+  
+  ;; Rebind keys to work with visual lines
+  (local-set-key [s-left] 'beginning-of-visual-line)
+  (local-set-key [s-right] 'end-of-visual-line)
+  (local-set-key [home] 'beginning-of-visual-line)
+  (local-set-key [end] 'end-of-visual-line)
+)
+(add-hook 'text-mode-hook 'cpence-text-mode-hook)
+
+;; ----------------------------------------------------
+;; TeX mode configuration
+
+(defun cpence-latex-mode-hook ()
+  (interactive)
+
   ;; Add BuildTex script
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex -output-driver='xdvipdfmx -q -E'%(mode)%' %t" TeX-run-LaTeX nil t))
   (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
   (setq TeX-command-default "BuildTeX")
   
-  ;; BuildTex is making PDF files
-  (TeX-PDF-mode 1)
-  
   ;; Curly quotes support
   (font-latex-add-quotes '("“" "”"))
+  
+  ;; BuildTeX is making PDF files
+  (TeX-PDF-mode 1)
 )
-
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
