@@ -118,7 +118,8 @@
   {0.5em}
   {}
 
-\renewcommand{\abstractname}{\sffamily Abstract}
-
+\ifcsname abstractname\endcsname
+  \renewcommand{\abstractname}{\sffamily Abstract}
+\fi
 
 \endinput
