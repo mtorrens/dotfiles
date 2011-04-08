@@ -43,7 +43,10 @@
  '(link ((t (:underline t))))
  '(link-visited ((t (:underline t))))
  '(button ((t (:underline t))))
- '(header-line ((t (:background "#e5e5e5" :foreground "#333333")))))
+ '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
+ '(hl-line ((t (:background "#424445"))))
+ '(show-paren-match-face ((t (:background "#5a647e"))))
+ '(show-paren-mismatch-face ((t (:background "#990000" :foreground "#ffffff")))))
 
 (provide-theme 'Railscasts)
 
