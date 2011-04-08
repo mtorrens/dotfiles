@@ -164,6 +164,17 @@
     (setq mac-command-modifier 'ctrl)
 )
 
+;; Fix home, end, delete
+(global-set-key [s-left] 'beginning-of-line)
+(global-set-key [s-right] 'end-of-line)
+(global-set-key [home] 'beginning-of-line)
+(global-set-key [end] 'end-of-line)
+(global-set-key [kp-delete] 'delete-char)
+
+;; Control-pgup and pgdn
+(global-set-key [C-prior] (lambda()(interactive)(goto-char (point-min))))
+(global-set-key [C-next]  (lambda()(interactive)(goto-char (point-max))))
+
 ;; Set a bunch of things to emulate TextMate/Mac programs
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-{") 'tabbar-backward-tab)
