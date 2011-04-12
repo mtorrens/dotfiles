@@ -58,14 +58,44 @@
   (autoload func "tabbar" "Tabs at the top of buffers and easy control-tab navigation"))
 (tabbar-mode 1)
 
-;; TextMate mode (matching pairs on quotes, parens, and braces)
-(require 'textmate-mode)
+;; TextMate mode (Git 2/22/11)
+(require 'textmate)
+
+;; Autopair mode (SVN 3/13/11)
+(require 'autopair)
+(autopair-global-mode)
 
 ;; Markdown Mode (currently git 20110410, m-m 1.7)
 (autoload 'markdown-mode "markdown-mode.el"
    "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-   (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.markdown" . markdown-mode))
+
+;; Haml mode
+(autoload 'haml-mode "haml-mode.el" "Major mode for editing Haml files" t)
+(add-to-list 'auto-mode-alist '("\\.haml" . haml-mode))
+
+;; RHTML mode
+(autoload 'rhtml-mode "rhtml-mode.el" "Major mode for editing RHTML files" t)
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . rhtml-mode))
+(add-to-list 'auto-mode-alist '("\\.rjs\\'" . rhtml-mode))
+
+;; Yaml mode
+(autoload 'yaml-mode "yaml-mode.el" "Major mode for editing YAML files" t)
+(add-to-list 'auto-mode-alist '("\\.yml" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml" . yaml-mode))
+
+;; Sass mode
+(autoload 'sass-mode "sass-mode.el" "Major mode for editing SASS files" t)
+(add-to-list 'auto-mode-alist '("\\.sass" . sass-mode))
+(add-to-list 'auto-mode-alist '("\\.scss" . sass-mode))
+
+;; Ruby mode
+(add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
 
 ;; ----------------------------------------------------
 ;; Other parts of my dot-emacs
@@ -202,16 +232,19 @@
 (global-set-key (kbd "C-w") 'kill-buffer) ;; FIXME: should this be less interactive?
 (global-set-key (kbd "C-c") 'kill-ring-save)
 (global-set-key (kbd "C-x") 'kill-region)
+(global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "C-z") 'undo)
 
 ;; WriteRoom emulation on F11
 (global-set-key [f11] 'darkroom-mode)
 
+
 ;; ----------------------------------------------------
 ;; Default to 2-space, no-tab tabs
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
+
 
 ;; ----------------------------------------------------
 ;; Global text mode configuration
@@ -272,3 +305,27 @@
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
+;; ----------------------------------------------------
+;; All programming modes
+(defun cpence-language-mode-hook ()
+  (interactive)
+
+  ;; TextMate mode in all code buffers
+  (textmate-mode)
+)
+
+;; There's no "general" mode-hook that handles all of the
+;; programming modes, so we have to set all these hooks
+;; ourselves.
+(add-hook 'c-mode-common-hook 'cpence-language-mode-hook)
+(add-hook 'css-mode-hook 'cpence-language-mode-hook)
+(add-hook 'ruby-mode-hook 'cpence-language-mode-hook)
+(add-hook 'emacs-lisp-mode-hook 'cpence-language-mode-hook)
+(add-hook 'asm-mode-hook 'cpence-language-mode-hook)
+(add-hook 'xml-mode-hook 'cpence-language-mode-hook)
+(add-hook 'html-mode-hook 'cpence-language-mode-hook)
+(add-hook 'haml-mode-hook 'cpence-language-mode-hook)
+(add-hook 'yaml-mode-hook 'cpence-language-mode-hook)
+(add-hook 'javascript-mode-hook 'cpence-language-mode-hook)
+(add-hook 'css-mode-hook 'cpence-language-mode-hook)
+(add-hook 'rhtml-mode-hook 'cpence-language-mode-hook)
