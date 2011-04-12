@@ -46,7 +46,15 @@
  '(header-line ((t (:background "#e5e5e5" :foreground "#333333"))))
  '(hl-line ((t (:background "#424445"))))
  '(show-paren-match-face ((t (:background "#5a647e"))))
- '(show-paren-mismatch-face ((t (:background "#990000" :foreground "#ffffff")))))
+ '(show-paren-mismatch-face ((t (:background "#990000" :foreground "#ffffff"))))
+ '(font-latex-sectioning-0-face ((t (:bold t))))
+ '(font-latex-sectioning-1-face ((t (:bold t))))
+ '(font-latex-sectioning-2-face ((t (:bold t))))
+ '(font-latex-sectioning-3-face ((t (:bold t))))
+ '(font-latex-sectioning-4-face ((t (:bold t))))
+ '(font-latex-sectioning-5-face ((t (:bold t))))
+ '(font-latex-slide-title-face ((t (:bold t))))
+)
 
 (provide-theme 'Railscasts)
 
