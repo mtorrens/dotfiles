@@ -44,6 +44,7 @@ bin/*/*/*.pyc
 !.emacs.d/*/*/*/*/*/*
 !.emacs.d/*/*/*/*/*/*/*
 .emacs.d/recentf
+.emacs.d/recentf~
 *.elc
 
 # Nano

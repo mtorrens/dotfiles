@@ -40,6 +40,11 @@
 ;; ----------------------------------------------------
 ;; Load all external packages
 
+;; YASnippet (currently SVN 20110412)
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory (concat user-emacs-directory "snippets"))
+
 ;; auctex (currently CVS 20110402)
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
@@ -52,6 +57,15 @@
 (dolist (func '(tabbar-mode tabbar-forward-tab tabbar-forward-group tabbar-backward-tab tabbar-backward-group))
   (autoload func "tabbar" "Tabs at the top of buffers and easy control-tab navigation"))
 (tabbar-mode 1)
+
+;; TextMate mode (matching pairs on quotes, parens, and braces)
+(require 'textmate-mode)
+
+;; Markdown Mode (currently git 20110410, m-m 1.7)
+(autoload 'markdown-mode "markdown-mode.el"
+   "Major mode for editing Markdown files" t)
+(setq auto-mode-alist
+   (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
 ;; ----------------------------------------------------
 ;; Other parts of my dot-emacs
@@ -160,6 +174,10 @@
 ;; ----------------------------------------------------
 ;; Keys
 
+;; Push C-x to C-= and C-c to C--
+(global-set-key (kbd "C-=") 'Control-X-prefix)
+(global-set-key (kbd "C--") 'mode-specific-command-prefix)
+
 ;; Fix home, end, delete
 (global-set-key [s-left] 'beginning-of-line)
 (global-set-key [s-right] 'end-of-line)
@@ -173,11 +191,27 @@
 
 ;; Set a bunch of things to emulate TextMate/Mac programs
 (global-set-key (kbd "C-l") 'goto-line)
+(global-set-key (kbd "C-o") 'find-file)
 (global-set-key (kbd "C-{") 'tabbar-backward-tab)
 (global-set-key (kbd "C-}") 'tabbar-forward-tab)
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-S-s") 'save-some-buffers)
+(global-set-key (kbd "C-a") 'mark-whole-buffer)
+(global-set-key (kbd "C-w") 'kill-buffer) ;; FIXME: should this be less interactive?
+(global-set-key (kbd "C-c") 'kill-ring-save)
+(global-set-key (kbd "C-x") 'kill-region)
+(global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
+(global-set-key (kbd "C-z") 'undo)
 
 ;; WriteRoom emulation on F11
 (global-set-key [f11] 'darkroom-mode)
+
+;; ----------------------------------------------------
+;; Default to 2-space, no-tab tabs
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
 
 ;; ----------------------------------------------------
 ;; Global text mode configuration
@@ -192,6 +226,9 @@
 
 (defun cpence-text-mode-hook ()
   (interactive)
+  
+  ;; TextMate mode in all text-based buffers
+  (textmate-mode)
   
   ;; Enable soft line wrapping
   (visual-line-mode t)
@@ -226,6 +263,12 @@
   
   ;; BuildTeX is making PDF files
   (TeX-PDF-mode 1)
+  
+  ;; Bind the TeX building and viewing commands
+  (local-set-key (kbd "C-r") 'TeX-command-master)
+  (local-set-key [f7] 'TeX-command-master)
+  (local-set-key (kbd "C-S-r") 'TeX-view)
+  (local-set-key [f5] 'TeX-view)
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
