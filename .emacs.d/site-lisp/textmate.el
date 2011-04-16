@@ -404,7 +404,7 @@ A place is considered `tab-width' character columns."
 
 ;;;###autoload
 (define-minor-mode textmate-mode "TextMate Emulation Minor Mode"
-  :lighter " mate" :global t :keymap *textmate-mode-map*
+  :global t :keymap *textmate-mode-map*
   (add-hook 'ido-setup-hook 'textmate-ido-fix)
   (textmate-define-comment-line)
   ; activate preferred completion library
