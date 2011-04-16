@@ -44,6 +44,7 @@
 (require 'yasnippet)
 (yas/initialize)
 (yas/load-directory (concat user-emacs-directory "snippets"))
+(add-to-list 'hippie-expand-try-functions-list 'yas/hippie-try-expand)
 
 ;; auctex (currently CVS 20110402)
 (load "auctex.el" nil t t)
@@ -60,6 +61,13 @@
 
 ;; TextMate mode (Git 2/22/11)
 (require 'textmate)
+
+;; Smart-Tab mode (Git 2/26/11)
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+
+;; Smooth Scrolling
+(require 'smooth-scrolling)
 
 ;; Autopair mode (SVN 3/13/11)
 (require 'autopair)
@@ -326,6 +334,13 @@
 
   ;; TextMate mode in all code buffers
   (textmate-mode)
+  
+  ;; Bind return to intending-return in all source modes
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  
+  ;; And bind kill-line to indent-killing-kill-line in
+  ;; all source modes
+  (local-set-key (kbd "C-k") 'kill-and-join-forward)
 )
 
 ;; There's no "general" mode-hook that handles all of the
@@ -334,6 +349,7 @@
 (add-hook 'c-mode-common-hook 'cpence-language-mode-hook)
 (add-hook 'css-mode-hook 'cpence-language-mode-hook)
 (add-hook 'ruby-mode-hook 'cpence-language-mode-hook)
+(add-hook 'rspec-mode-hook 'cpence-language-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'cpence-language-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-language-mode-hook)
 (add-hook 'xml-mode-hook 'cpence-language-mode-hook)
@@ -343,3 +359,32 @@
 (add-hook 'javascript-mode-hook 'cpence-language-mode-hook)
 (add-hook 'css-mode-hook 'cpence-language-mode-hook)
 (add-hook 'rhtml-mode-hook 'cpence-language-mode-hook)
+(add-hook 'python-mode-hook 'cpence-language-mode-hook)
+
+;; In all programming modes, indent code automatically when
+;; pasted
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (member major-mode '(emacs-lisp-mode 
+                                     ruby-mode       rspec-mode
+                                     python-mode     c-mode
+                                     c++-mode        objc-mode
+                                     latex-mode      plain-tex-mode
+                                     css-mode        asm-mode
+                                     xml-mode        html-mode
+                                     haml-mode       js-mode
+                                     css-mode        rhtml-mode))
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
+
+;; When killing a line, strip the indentation characters off
+;; of the front
+(defun kill-and-join-forward (&optional arg)
+  (interactive "P")
+  (if (and (eolp) (not (bolp)))
+      (progn (forward-char 1)
+             (just-one-space 0)
+             (backward-char 1)
+             (kill-line arg))
+    (kill-line arg)))
