@@ -54,6 +54,10 @@
  '(font-latex-sectioning-4-face ((t (:bold t))))
  '(font-latex-sectioning-5-face ((t (:bold t))))
  '(font-latex-slide-title-face ((t (:bold t))))
+ '(tabbar-default ((t (:background "#b4b4b4"))))
+ '(tabbar-unselected ((t (:background "#d6d7d6" :foreground "#000000" :box nil))))
+ '(tabbar-selected ((t (:background "#e7e7e7" :foreground "#000000" :box nil))))
+ '(tabbar-separator ((t (:height 0.7))))
 )
 
 (provide-theme 'Railscasts)
