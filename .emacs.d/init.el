@@ -128,8 +128,9 @@
 (column-number-mode t)
 
 ;; Make the region and cursor act like they should
-(delete-selection-mode t)
+(delete-selection-mode 1)
 (blink-cursor-mode nil)
+(transient-mark-mode 1)
 
 ;; Set the default GUI size
 (if window-system
@@ -156,6 +157,18 @@
 	 (lambda(buffer)
 	   (find (aref (buffer-name buffer) 0) " *"))
 	 (buffer-list))))
+(setq tabbar-tab-label-function
+      (lambda (tab)
+        (let ((label (format "  %s  " (tabbar-tab-value tab))))
+           ;; Unless the tab bar auto scrolls to keep the selected tab
+           ;; visible, shorten the tab label to keep as many tabs as possible
+           ;; in the visible area of the tab bar.
+           (if tabbar-auto-scroll-flag
+               label
+             (tabbar-shorten
+              label (max 1 (/ (window-width)
+                              (length (tabbar-view
+                                       (tabbar-current-tabset))))))))))
 
 
 ;; ----------------------------------------------------
@@ -230,11 +243,12 @@
 (global-set-key (kbd "C-S-s") 'save-some-buffers)
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 (global-set-key (kbd "C-w") 'kill-buffer) ;; FIXME: should this be less interactive?
-(global-set-key (kbd "C-c") 'kill-ring-save)
-(global-set-key (kbd "C-x") 'kill-region)
-(global-set-key (kbd "C-v") 'yank)
+(global-set-key (kbd "C-c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "C-x") 'clipboard-kill-region)
+(global-set-key (kbd "C-v") 'clipboard-yank)
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "C-z") 'undo)
+
 
 ;; WriteRoom emulation on F11
 (global-set-key [f11] 'darkroom-mode)
