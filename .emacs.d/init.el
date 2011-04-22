@@ -71,6 +71,7 @@
 
 ;; Autopair mode (SVN 3/13/11)
 (require 'autopair)
+(setq autopair-autowrap nil)
 (autopair-global-mode)
 
 ;; Markdown Mode (currently git 20110410, m-m 1.7)
@@ -115,6 +116,9 @@
 ;; ----------------------------------------------------
 ;; Emacs GUI
 
+;; Enable the server
+(server-start)
+
 ;; Disable splash screen
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
@@ -149,6 +153,8 @@
 	    (left              . 100)
 	    (top               . 24)
 	    (cursor-type       . bar)
+      (left-fringe       . 0)
+      (right-fringe      . 0)
 	    )
 	  )
 )
@@ -178,6 +184,10 @@
                               (length (tabbar-view
                                        (tabbar-current-tabset))))))))))
 
+;; Set to two-space tabs by default
+(setq-default tab-width 2)
+(setq tab-stop-list '(2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80))
+(setq indent-tabs-mode nil)
 
 ;; ----------------------------------------------------
 ;; File saving
@@ -222,6 +232,12 @@
 (if window-system
     (set-frame-font "Panic Sans-14:antialias=subpixel"))
 
+;; Set hl-line-mode, and fix with visual-line-mode
+(if (window-system)
+    (progn
+      (setq hl-line-range-function 'visual-line-line-range)
+      (global-hl-line-mode t)))
+
 ;; ----------------------------------------------------
 ;; Keys
 
@@ -250,7 +266,7 @@
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-S-s") 'save-some-buffers)
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
-(global-set-key (kbd "C-w") 'kill-buffer) ;; FIXME: should this be less interactive?
+(global-set-key (kbd "C-w") (lambda()(interactive)(kill-buffer (current-buffer))))
 (global-set-key (kbd "C-c") 'clipboard-kill-ring-save)
 (global-set-key (kbd "C-x") 'clipboard-kill-region)
 (global-set-key (kbd "C-v") 'clipboard-yank)
@@ -260,12 +276,6 @@
 
 ;; WriteRoom emulation on F11
 (global-set-key [f11] 'darkroom-mode)
-
-
-;; ----------------------------------------------------
-;; Default to 2-space, no-tab tabs
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
 
 
 ;; ----------------------------------------------------
@@ -288,17 +298,14 @@
   ;; Enable soft line wrapping
   (visual-line-mode t)
   
-  ;; Fix hl-line-mode with visual-line-mode
-  (if (window-system)
-      (progn
-	(hl-line-mode t)
-	(set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)))
-  
   ;; Rebind keys to work with visual lines
   (local-set-key [s-left] 'beginning-of-visual-line)
   (local-set-key [s-right] 'end-of-visual-line)
   (local-set-key [home] 'beginning-of-visual-line)
   (local-set-key [end] 'end-of-visual-line)
+
+  ;; Make the tab key work more normally
+  (setq indent-line-function 'insert-tab)
 )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
 
@@ -328,6 +335,18 @@
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
 ;; ----------------------------------------------------
+;; Markdown mode
+(defun cpence-markdown-mode-hook ()
+  (interactive)
+
+  ;; Actually insert tab characters and newlines, indentation stuff
+  ;; goes crazy in markdown-mode for some reason
+  (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)
+  (define-key markdown-mode-map (kbd "C-m") 'newline)
+)
+(add-hook 'markdown-mode-hook 'cpence-markdown-mode-hook)
+
+;; ----------------------------------------------------
 ;; All programming modes
 (defun cpence-language-mode-hook ()
   (interactive)
@@ -341,17 +360,26 @@
   ;; And bind kill-line to indent-killing-kill-line in
   ;; all source modes
   (local-set-key (kbd "C-k") 'kill-and-join-forward)
+
+  ;; No tabs, only spaces
+  (setq indent-tabs-mode nil)
 )
+
+(defun cpence-tab-stop-four () (interactive) (setq tab-width 4))
 
 ;; There's no "general" mode-hook that handles all of the
 ;; programming modes, so we have to set all these hooks
-;; ourselves.
+;; ourselves.  Change tab stops based on what I like for
+;; a given language (Ruby people all use two, but I like
+;; four for C, Python, other real code).
 (add-hook 'c-mode-common-hook 'cpence-language-mode-hook)
+(add-hook 'c-mode-common-hook 'cpence-tab-stop-four)
 (add-hook 'css-mode-hook 'cpence-language-mode-hook)
 (add-hook 'ruby-mode-hook 'cpence-language-mode-hook)
 (add-hook 'rspec-mode-hook 'cpence-language-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'cpence-language-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-language-mode-hook)
+(add-hook 'asm-mode-hook 'cpence-tab-stop-four)
 (add-hook 'xml-mode-hook 'cpence-language-mode-hook)
 (add-hook 'html-mode-hook 'cpence-language-mode-hook)
 (add-hook 'haml-mode-hook 'cpence-language-mode-hook)
@@ -360,6 +388,7 @@
 (add-hook 'css-mode-hook 'cpence-language-mode-hook)
 (add-hook 'rhtml-mode-hook 'cpence-language-mode-hook)
 (add-hook 'python-mode-hook 'cpence-language-mode-hook)
+(add-hook 'python-mode-hook 'cpence-tab-stop-four)
 
 ;; In all programming modes, indent code automatically when
 ;; pasted
@@ -388,3 +417,28 @@
              (backward-char 1)
              (kill-line arg))
     (kill-line arg)))
+
+
+;; ----------------------------------------------------
+;; C mode
+
+(defun cpence-c-mode-hook ()
+  (interactive)
+
+  ;; Engage automatic-everything mode
+  (c-toggle-auto-state 1)
+
+  ;; Don't indent namespaces, do indent comments
+  (c-set-offset 'innamespace 0)
+  (setq c-comment-only-line-offset 0)
+
+  ;; Set cleanups
+  (add-to-list 'c-cleanup-list 'defun-close-semi)
+  (add-to-list 'c-cleanup-list 'space-before-funcall)
+)
+
+(add-hook 'c-mode-common-hook 'cpence-c-mode-hook)
+
+;; Set indentation options
+(setq-default c-default-style "bsd")
+
