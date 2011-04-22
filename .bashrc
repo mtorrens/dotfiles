@@ -91,4 +91,13 @@ alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 export WORKON_HOME=~/Development/Python
 source /usr/local/Cellar/python/2.7.1/bin/virtualenvwrapper.sh
 
-
+# Alias for OS X's emacsclient if it exists, or whatever one's availble
+# otherwise
+if [ -d /Applications/Emacs.app ]; then
+  EMACSCLIENT=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
+  EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+else
+  EMACSCLIENT=emacsclient
+  EMACS=emacs
+fi
+alias e='$EMACSCLIENT --alternate-editor="$EMACS" -n'
