@@ -795,7 +795,7 @@ Key bindings:
 \\{yas/minor-mode-map}"
   nil
   ;; The indicator for the mode line.
-  " yas"
+  ;;" yas"
   :group 'yasnippet
   (cond (yas/minor-mode
          ;; Reload the trigger key
