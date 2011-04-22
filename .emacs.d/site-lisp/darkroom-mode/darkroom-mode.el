@@ -126,6 +126,7 @@
   (darkroom-remember 'frame-left (frame-parameter nil 'left))
   (darkroom-remember 'frame-top (frame-parameter nil 'top))
   ; - set
+  (tabbar-mode 0)
   (cp-toggle-fullscreen)
   (darkroom-mode-set-enabled t)
   (message (format "darkroom mode enabled on %s" (selected-frame))))
@@ -172,6 +173,7 @@
   (darkroom-mode-update-window)
   ; - restore frame size	 
   (cp-toggle-fullscreen)
+  (tabbar-mode 1)
   (darkroom-mode-recall-frame-size)
   (darkroom-mode-set-enabled nil)
   (message (format "darkroom-mode disabled on %s" (selected-frame)))
