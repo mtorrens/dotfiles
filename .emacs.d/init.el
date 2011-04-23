@@ -6,6 +6,11 @@
 ;; and earlier.
 ;;
 
+;; That's me
+(setq user-full-name "Charles Pence")
+(setq user-mail-address "charles@charlespence.net")
+
+
 ;; Lisp path
 (let ((default-directory (concat user-emacs-directory "site-lisp/")))
   (normal-top-level-add-to-load-path '("."))
@@ -29,16 +34,13 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
-;; Recent files path
-(require 'recentf)
-(setq recentf-save-file "~/.emacs.d/recentf"
-      recentf-max-saved-items 500
-      recentf-menu-items 60)
-(recentf-mode t)
-
 
 ;; ----------------------------------------------------
 ;; Load all external packages
+
+;; Smooth scrolling (Adam Spiers, 20070910)
+(require 'smooth-scrolling)
+(setq smooth-scroll-margin 25)
 
 ;; YASnippet (currently SVN 20110412)
 (require 'yasnippet)
@@ -122,27 +124,16 @@
 ;; Disable splash screen
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
 
 ;; Quick y/n prompts
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Disable menubar if in the terminal
-(if (not window-system) (menu-bar-mode -1) (menu-bar-mode 1))
-
-;; Disable scroll bar, tool bar, fringe, tooltips
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-
-;; Line and column numbers
-(line-number-mode t)
-(column-number-mode t)
-
-;; Make the region and cursor act like they should
-(delete-selection-mode 1)
-(blink-cursor-mode nil)
-(transient-mark-mode 1)
+;; If in the terminal, disable menu bar and enable mouse
+(if (not window-system)
+    (progn
+      (menu-bar-mode -1)
+      (xterm-mouse-mode t)
+    ))
 
 ;; Set the default GUI size
 (if window-system
@@ -153,14 +144,9 @@
 	    (left              . 100)
 	    (top               . 24)
 	    (cursor-type       . bar)
-      (left-fringe       . 0)
-      (right-fringe      . 0)
 	    )
 	  )
 )
-
-;; Show parens
-(show-paren-mode t)
 
 ;; All tabs in one group, and don't show tabs for special Emacs buffers
 (setq tabbar-buffer-groups-function
@@ -184,6 +170,9 @@
                               (length (tabbar-view
                                        (tabbar-current-tabset))))))))))
 
+;; Default to text-mode, not fundamental-mode
+(setq-default major-mode 'text-mode)
+
 ;; Set to two-space tabs by default
 (setq-default tab-width 2)
 (setq tab-stop-list '(2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80))
@@ -191,12 +180,6 @@
 
 ;; ----------------------------------------------------
 ;; File saving
-
-;; Don't make backups
-(setq make-backup-files nil)
-(setq auto-save-list-file-prefix nil)
-(setq auto-save-default nil)
-(setq delete-auto-save-files t)
 
 ;; Save files in UTF-8 unless told otherwise
 (prefer-coding-system 'utf-8)
@@ -209,41 +192,18 @@
 (set-language-environment "UTF-8")
 (set-input-method nil)
 
-;; Deal correctly with newlines
-(setq next-line-add-newlines nil)
-(setq require-final-newline t)
-
 ;; ----------------------------------------------------
 ;; Fonts and Colors
 
 ;; Load color theme
 (load-theme 'Railscasts)
 
-;; Enable maximum font-lock goodness
-(if window-system
-    (progn
-      (setq font-lock-support-mode 'jit-lock-mode)
-      (setq jit-lock-stealth-time 1)
-      (setq font-lock-maximum-decoration t)
-      (add-hook 'after-init-hook
-		(global-font-lock-mode t))))
-
 ;; Set font
 (if window-system
     (set-frame-font "Panic Sans-14:antialias=subpixel"))
 
-;; Set hl-line-mode, and fix with visual-line-mode
-(if (window-system)
-    (progn
-      (setq hl-line-range-function 'visual-line-line-range)
-      (global-hl-line-mode t)))
-
 ;; ----------------------------------------------------
 ;; Keys
-
-;; Push C-x to C-= and C-c to C--
-(global-set-key (kbd "C-=") 'Control-X-prefix)
-(global-set-key (kbd "C--") 'mode-specific-command-prefix)
 
 ;; Fix home, end, delete
 (global-set-key [s-left] 'beginning-of-line)
@@ -267,11 +227,7 @@
 (global-set-key (kbd "C-S-s") 'save-some-buffers)
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 (global-set-key (kbd "C-w") (lambda()(interactive)(kill-buffer (current-buffer))))
-(global-set-key (kbd "C-c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "C-x") 'clipboard-kill-region)
-(global-set-key (kbd "C-v") 'clipboard-yank)
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
-(global-set-key (kbd "C-z") 'undo)
 
 
 ;; WriteRoom emulation on F11
@@ -291,12 +247,15 @@
 
 (defun cpence-text-mode-hook ()
   (interactive)
-  
+
   ;; TextMate mode in all text-based buffers
   (textmate-mode)
   
   ;; Enable soft line wrapping
   (visual-line-mode t)
+
+  ;; Fix hl-line-mode for visual-line-mode
+  (set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)
   
   ;; Rebind keys to work with visual lines
   (local-set-key [s-left] 'beginning-of-visual-line)

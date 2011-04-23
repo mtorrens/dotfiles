@@ -3,7 +3,7 @@
 ;;
 
 ;; I like CMD to be interpreted as CTRL
-(setq mac-command-modifier 'ctrl)
+(setq ns-command-modifier 'ctrl)
 
 ;; Add "open" to the AuCTeX view list
 (setq TeX-view-program-list (quote (("open" "open %o"))))
