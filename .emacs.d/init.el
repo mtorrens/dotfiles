@@ -6,11 +6,6 @@
 ;; and earlier.
 ;;
 
-;; That's me
-(setq user-full-name "Charles Pence")
-(setq user-mail-address "charles@charlespence.net")
-
-
 ;; Lisp path
 (let ((default-directory (concat user-emacs-directory "site-lisp/")))
   (normal-top-level-add-to-load-path '("."))
@@ -141,9 +136,12 @@
 	  '(
 	    (width             . 90)
 	    (height            . 35)
-	    (left              . 100)
+	    (left              . 300)
 	    (top               . 24)
 	    (cursor-type       . bar)
+      (vertical-scroll-bars . nil)
+      (horizontal-scroll-bars . nil)
+      (font              . "Panic Sans-14:antialias=subpixel")
 	    )
 	  )
 )
@@ -173,34 +171,18 @@
 ;; Default to text-mode, not fundamental-mode
 (setq-default major-mode 'text-mode)
 
-;; Set to two-space tabs by default
-(setq-default tab-width 2)
-(setq tab-stop-list '(2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 64 66 68 70 72 74 76 78 80))
-(setq indent-tabs-mode nil)
-
 ;; ----------------------------------------------------
 ;; File saving
 
-;; Save files in UTF-8 unless told otherwise
+;; A few bits of the encoding system cannot be set via Customize
 (prefer-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-(set-language-environment "UTF-8")
-(set-input-method nil)
 
 ;; ----------------------------------------------------
 ;; Fonts and Colors
 
 ;; Load color theme
 (load-theme 'Railscasts)
-
-;; Set font
-(if window-system
-    (set-frame-font "Panic Sans-14:antialias=subpixel"))
 
 ;; ----------------------------------------------------
 ;; Keys
@@ -233,6 +215,16 @@
 ;; WriteRoom emulation on F11
 (global-set-key [f11] 'darkroom-mode)
 
+;; Speedbar on C-p
+(require 'speedbar)
+(defun cpence-toggle-speedbar ()
+  (interactive)
+  (if (frame-live-p (speedbar-current-frame))
+      (speedbar)
+    (progn
+      (speedbar)
+      (other-frame 1))))
+(global-set-key (kbd "C-p") 'cpence-toggle-speedbar)
 
 ;; ----------------------------------------------------
 ;; Global text mode configuration
@@ -324,7 +316,11 @@
   (setq indent-tabs-mode nil)
 )
 
-(defun cpence-tab-stop-four () (interactive) (setq tab-width 4))
+(defun cpence-tab-stop-four ()
+  (interactive)
+  (setq tab-width 4)
+  (setq standard-indent 4)
+)
 
 ;; There's no "general" mode-hook that handles all of the
 ;; programming modes, so we have to set all these hooks
@@ -336,7 +332,6 @@
 (add-hook 'css-mode-hook 'cpence-language-mode-hook)
 (add-hook 'ruby-mode-hook 'cpence-language-mode-hook)
 (add-hook 'rspec-mode-hook 'cpence-language-mode-hook)
-(add-hook 'emacs-lisp-mode-hook 'cpence-language-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-language-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-tab-stop-four)
 (add-hook 'xml-mode-hook 'cpence-language-mode-hook)
@@ -354,8 +349,7 @@
 (dolist (command '(yank yank-pop))
   (eval `(defadvice ,command (after indent-region activate)
            (and (not current-prefix-arg)
-                (member major-mode '(emacs-lisp-mode 
-                                     ruby-mode       rspec-mode
+                (member major-mode '(ruby-mode       rspec-mode
                                      python-mode     c-mode
                                      c++-mode        objc-mode
                                      latex-mode      plain-tex-mode
@@ -400,4 +394,5 @@
 
 ;; Set indentation options
 (setq-default c-default-style "bsd")
+(setq c-basic-offset 4)
 
