@@ -35,7 +35,11 @@
 
 ;; Smooth scrolling (Adam Spiers, 20070910)
 (require 'smooth-scrolling)
-(setq smooth-scroll-margin 25)
+
+;; Word-count mode (Hiroyuki Komatsu, 20031009) and
+;; TeX-wcount mode (Seb James, 20001125)
+(require 'word-count)
+(require 'tex-wcount)
 
 ;; YASnippet (currently SVN 20110412)
 (require 'yasnippet)
@@ -70,6 +74,9 @@
 (require 'autopair)
 (setq autopair-autowrap nil)
 (autopair-global-mode)
+
+;; git-emacs
+(require 'git-emacs)
 
 ;; Markdown Mode (currently git 20110410, m-m 1.7)
 (autoload 'markdown-mode "markdown-mode.el"
@@ -257,6 +264,10 @@
 
   ;; Make the tab key work more normally
   (setq indent-line-function 'insert-tab)
+  
+  ;; Count words
+  (word-count-mode-on)
+  (word-count-set-marker-off)
 )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
 
@@ -282,6 +293,10 @@
   (local-set-key [f7] 'TeX-command-master)
   (local-set-key (kbd "C-S-r") 'TeX-view)
   (local-set-key [f5] 'TeX-view)
+  
+  ;; TeX word counting
+  (word-count-mode-off)
+  (tex-wcount-mode)
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
