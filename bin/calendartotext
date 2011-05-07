@@ -1,9 +1,0 @@
-#!/bin/sh
-# Output to text for the status page
-
-OUTPATH="$HOME/Dropbox/Charles/Documents/Status Page/calendar.inc"
-
-rm -f "$OUTPATH"
-touch "$OUTPATH"
-/usr/local/bin/icalBuddy -nc -n -eep notes,url -b "+ " -ab "+ " -nrd -li 15 eventsToday+14 > $OUTPATH
-
