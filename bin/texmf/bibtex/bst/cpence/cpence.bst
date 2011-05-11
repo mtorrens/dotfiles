@@ -1429,13 +1429,17 @@ FUNCTION {presort}
   if$
   "    "
   *
+  year field.or.null sortify
+  *
+  "    "
+  *
   cite$
   *
   #1 entry.max$ substring$
   'sort.label :=
   sort.label *
-  #1 entry.max$ substring$
-  'sort.key$ :=
+ #1 entry.max$ substring$
+ 'sort.key$ :=
 }
 
 ITERATE {presort}
