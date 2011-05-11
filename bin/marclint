@@ -1,0 +1,16 @@
+use MARC::File::USMARC;
+use MARC::Lint;
+
+my $lint = new MARC::Lint;
+my $filename = shift;
+
+my $file = MARC::File::USMARC->in( $filename );
+while ( my $marc = $file->next() ) {
+    $lint->check_record( $marc );
+
+    # Print the title tag
+    print $marc->title, "\n";
+
+    # Print the errors that were found
+    print join( "\n", $lint->warnings ), "\n";
+} # while
