@@ -1,31 +1,39 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cpvita}[2009/11/11 C. Pence CV Template]
 
-\RequirePackage[letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in,headheight=0in,headsep=0in]{geometry}
+\RequirePackage[letterpaper,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in]{geometry}
 
 \RequirePackage{genmpage}
 \RequirePackage{needspace}
-
-\RequirePackage{lastpage}
-\RequirePackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\cfoot{\thepage\ \textsc{/} \pageref{LastPage}}
-\renewcommand{\headrulewidth}{0pt}
-\setlength{\headheight}{0pt}
-\setlength{\headsep}{0pt}
-
-\RequirePackage[none]{hyphenat}
-
-\RequirePackage{paralist}
-\setlength{\plitemsep}{2pt}
-\setdefaultleftmargin{1em}{2.2em}{1.87em}{1.7em}{1em}{1em}
 
 % Name and contact information
 \newcommand{\name}{My Name}
 \newcommand{\address}{My Address\\Address Line 2\\Address Line 3}
 \newcommand{\phone}{555-555-1212}
 \newcommand{\email}{e@mail.com}
+
+\RequirePackage{lastpage}
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\name \quad | \quad {\footnotesize \email}}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage\ \textsc{/} \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{
+\fancyhf{}
+\fancyfoot[C]{\thepage\ \textsc{/} \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\RequirePackage[none]{hyphenat}
+
+\RequirePackage{paralist}
+\setlength{\plitemsep}{2pt}
+\setdefaultleftmargin{1em}{2.2em}{1.87em}{1.7em}{1em}{1em}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New commands and environments
