@@ -8,8 +8,9 @@ GPGPATH=/usr/local/bin
 PINENTRY=/usr/local/libexec/pinentry-mac.app/Contents/MacOS/pinentry-mac
 
 # Kill off any old GPG-agents to be careful
-killall gpg-agent
+killall gpg-agent 2>&1 >/dev/null
 rm -f $HOME/.gpg-agent-info
+rm -f $HOME/.gnupg/S.gpg-agent*
 
 # Start it up
 $GPGPATH/gpg-agent --daemon --use-standard-socket --pinentry-program $PINENTRY --enable-ssh-support --write-env-file
