@@ -87,6 +87,9 @@ alias quit=exit
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 
+# Dropbox: find all "conflicts", which just show up in the filesystem
+alias db-conflicts='cd Dropbox && find -L . \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
+
 # Configure Python virtualenv
 export WORKON_HOME=~/Development/Python
 source /usr/local/Cellar/python/2.7.1/bin/virtualenvwrapper.sh
