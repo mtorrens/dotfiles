@@ -1,0 +1,16 @@
+#!/bin/sh
+# Back up Mendeley database
+
+# Here's the paths for OS X and Linux
+if [ `uname -s` = "Darwin" ]; then
+  MENDELEY_DIR="$HOME/Library/Application Support/Mendeley Desktop/"
+else
+  MENDELEY_DIR="$HOME/.local/share/data/Mendeley Ltd./Mendeley Desktop/"
+fi
+OUTDIR=$HOME/Dropbox/Charles/Storage
+
+cd "$MENDELEY_DIR"
+tar cvf mendeley-db.tar *
+lzma -9 mendeley-db.tar
+mv mendeley-db.tar.lzma "$OUTDIR"
+
