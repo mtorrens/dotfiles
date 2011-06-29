@@ -1021,8 +1021,9 @@ FUNCTION {mastersthesis}
 
 FUNCTION {misc}
 { output.bibitem
-  format.authors output
+  format.authors "author" output.check
   author format.key output
+  new.block
   format.date output
   new.block
   title howpublished new.block.checkb
