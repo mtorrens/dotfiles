@@ -1,0 +1,35 @@
+#!/bin/bash
+# convert *.ogg files to *.mp3 files
+ 
+function addtag {
+ 
+ARTIST=`cat $1 | sed -e '/^.*ARTIST/!d' -e 's/^.*ARTIST=//'`
+TITLE=`cat $1 | sed -e '/^.*TITLE/!d' -e 's/^.*TITLE=//'`
+DATE=`cat $1 | sed -e '/^.*DATE/!d' -e 's/^.*DATE=//'`
+GENRE=`cat $1 | sed -e '/^.*GENRE/!d' -e 's/^.*GENRE=//'`
+TRACK=`cat $1 | sed -e '/^.*TRACKNUMBER/!d' -e 's/^.*TRACKNUMBER=//'`
+ALBUM=`cat $1 | sed -e '/^.*ALBUM/!d' -e 's/^.*ALBUM=//'`
+ 
+echo "artist: $ARTIST"
+echo "title: $TITLE"
+echo "album: $ALBUM"
+echo "genre: $GENRE"
+echo "date: $DATE"
+echo "track: $TRACK"
+ 
+id3v2 --artist "$ARTIST" --album "$ALBUM" \
+--song "$TITLE" --genre "$GENRE" \
+ --year "$DATE" --track "$TRACK" \
+"$(basename "$1" .tag).mp3"
+ 
+}
+ 
+for a in *.ogg
+do
+ogginfo "$a" > "$(basename "$a" .ogg).tag"
+oggdec -o "$(basename "$a" .ogg).wav" "$a"
+lame -r -s 44.1 --preset standard "$(basename "$a" .ogg).wav" "$(basename "$a" .ogg).mp3"
+addtag "$(basename "$a" .ogg).tag"
+rm "$(basename "$a" .ogg).tag"
+done
+
