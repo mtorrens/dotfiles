@@ -1,0 +1,8 @@
+#!/bin/sh
+
+INFILE=$HOME/bin/texmf/bibtex/bib/library.bib
+OUTFILE=$HOME/bin/texmf/bibtex/bib/mendeley.bib
+
+cp $INFILE $OUTFILE
+sed -i "" -e 's/inbook/incollection/g' $OUTFILE
+
