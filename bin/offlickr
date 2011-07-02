@@ -1,14 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # -*- coding: utf-8 -*-
 # Offlickr
-# Hugo Haas -- mailto:hugo@larve.net -- http://larve.net/people/hugo/
-# Homepage: http://larve.net/people/hugo/2005/12/offlickr/
+# Hugo Haas <hugo@larve.net> -- http://larve.net/people/hugo/
+# Homepage: http://code.google.com/p/offlickr/
 # License: GPLv2
 #
 # Daniel Drucker <dmd@3e.org> contributed:
 #   * wget patch
 #   * backup of videos as well
 #   * updated to Beej's Flickr API version 1.2 (required)
+# 
+# Beraldo Leal <beraldo at beraldoleal.com> contributed:
+#   * Download photos in set with -s and -p option
 
 import sys
 import libxml2
@@ -27,7 +30,8 @@ import logging
 __version__ = '0.22 - 2009-03-20'
 maxTime = '9999999999'
 
-# Gotten from Flickr
+# Gotten from Flickr. the flickrSecret isn't really a secret.
+# see http://markmail.org/message/mcgz7vbfw3lrjtbo
 
 flickrAPIKey = '1391fcd0a9780b247cd6a101272acf71'
 flickrSecret = 'fd221d0336de3b6d'
@@ -170,6 +174,15 @@ class Offlickr:
             return None
         return rsp.photosets[0].photoset
 
+    def getPhotosetPhotos(self, pid):
+        """Returns a list of photos in a photosets"""
+
+        rsp = self.fapi.photosets_getPhotos(api_key=self.__flickrAPIKey,
+                auth_token=self.token, user_id=self.flickrUserId, photoset_id=pid)
+        if self.__testFailure(rsp):
+            return None
+        return rsp.photoset[0].photo
+
     def getPhotosetInfo(self, pid, method):
         """Returns a string containing information about a photoset (in XML)"""
 
@@ -290,6 +303,7 @@ def usage():
     print '\t-o\t\toverwrite photo, even if it already exists'
     print '\t-L\t\tback up human-readable photo locations and permissions to separate files'
     print '\t-s\t\tback up all photosets (time range is ignored)'
+    print '\t-e\t\tback up videos ONLY'
     print '\t-w\t\tuse wget instead of internal Python HTTP library'
     print '\t-c <threads>\tnumber of threads to run to backup photos (default: 1)'
     print '\t-v\t\tverbose output'
@@ -330,6 +344,7 @@ class photoBackupThread(threading.Thread):
         target,
         hash_level,
         getPhotos,
+        getVideosOnly,
         doNotRedownload,
         overwritePhotos,
         ):
@@ -343,6 +358,7 @@ class photoBackupThread(threading.Thread):
         self.target = target
         self.hash_level = hash_level
         self.getPhotos = getPhotos
+        self.getVideosOnly = getVideosOnly
         self.doNotRedownload = doNotRedownload
         self.overwritePhotos = overwritePhotos
         threading.Thread.__init__(self)
@@ -358,6 +374,7 @@ class photoBackupThread(threading.Thread):
             self.offlickr,
             self.doNotRedownload,
             self.getPhotos,
+            self.getVideosOnly,
             self.overwritePhotos,
             )
         self.sem.release()
@@ -373,8 +390,14 @@ def backupPhoto(
     offlickr,
     doNotRedownload,
     getPhotos,
+    getVideosOnly,
     overwritePhotos,
     ):
+
+    [source, isVideo] = offlickr.getOriginalPhoto(id)
+
+    if (getVideosOnly and not isVideo):
+        return
 
     print str(i) + '/' + str(total) + ': ' + id + ': '\
          + title.encode('utf-8')
@@ -410,7 +433,7 @@ def backupPhoto(
 
     if not getPhotos:
         return
-    [source, isVideo] = offlickr.getOriginalPhoto(id)
+
 
     if source == None:
         print 'Oopsie, no photo found'
@@ -418,18 +441,19 @@ def backupPhoto(
 
     # if it's a Video, we cannot trust the format that getInfo told us.
     # we have to make an extra round trip to grab the Content-Disposition
-
+    isPrivateFailure = False
     if isVideo:
         sourceconnection = urllib.urlopen(source)
         try:
             format = sourceconnection.headers['Content-Disposition'].split('.')[-1].rstrip('"')
         except:
-            print 'warning: private videos cannot be backed up due to a Flickr bug'
+            print 'warning: private video %s cannot be backed up due to a Flickr bug' % str(id)
             format = 'privateVideofailure'
             isPrivateFailure = True
 
     filename = id + '.' + format
 
+    isPrivateFailure = False
     if os.path.isfile('%s/%s' % (t_dir, filename))\
          and not overwritePhotos:
         print '%s already downloaded... continuing' % filename
@@ -448,6 +472,7 @@ def backupPhotos(
     dateLo,
     dateHi,
     getPhotos,
+    getVideosOnly,
     doNotRedownload,
     overwritePhotos,
     ):
@@ -484,6 +509,7 @@ def backupPhotos(
                 target,
                 hash_level,
                 getPhotos,
+                getVideosOnly,
                 doNotRedownload,
                 overwritePhotos,
                 )
@@ -499,6 +525,7 @@ def backupPhotos(
                 offlickr,
                 doNotRedownload,
                 getPhotos,
+                getVideosOnly,
                 overwritePhotos,
                 )
 
@@ -552,7 +579,7 @@ def backupLocation(
                       locationPermission)
 
 
-def backupPhotosets(offlickr, target, hash_level):
+def backupPhotosets(threads, offlickr, getPhotos, getVideosOnly, target, hash_level, doNotRedownload, overwritePhotos):
     """Back photosets up"""
 
     photosets = offlickr.getPhotosetList()
@@ -577,15 +604,60 @@ def backupPhotosets(offlickr, target, hash_level):
         if info == None:
             print 'Failed!'
         else:
-            fileWrite(offlickr.dryrun, target_dir(target, hash_level,
+            fileWrite(offlickr.dryrun, target_dir(target + '/sets/' + pid, hash_level,
                       pid), 'set_' + pid + '_info.xml', info)
         photos = offlickr.getPhotosetInfo(pid,
                 offlickr.fapi.photosets_getPhotos)
         if photos == None:
             print 'Failed!'
         else:
-            fileWrite(offlickr.dryrun, target_dir(target, hash_level,
+            fileWrite(offlickr.dryrun, target_dir(target + '/sets/' + pid, hash_level,
                       pid), 'set_' + pid + '_photos.xml', photos)
+      
+        photos = offlickr.getPhotosetPhotos(pid)
+        if photos == None:
+            print 'No photos found in this photoset'
+        else:
+           total = len(photos)
+           print 'Backing up', total, 'photos'
+
+           if threads > 1:
+               concurrentThreads = threading.Semaphore(threads)
+           i = 0
+           for p in photos:
+               i = i + 1
+               photoid = str(int(p['id']))  # Making sure we don't have weird things here
+               if threads > 1:
+                   concurrentThreads.acquire()
+                   downloader = photoBackupThread(
+                       concurrentThreads,
+                       i,
+                       total,
+                       photoid,
+                       p['title'],
+                       offlickr,
+                       target + '/sets/' + pid + '/photos',
+                       hash_level,
+                       getPhotos,
+                       getVideosOnly,
+                       doNotRedownload,
+                       overwritePhotos,
+                       )
+                   downloader.start()
+               else:
+                   backupPhoto(
+                       i,
+                       total,
+                       photoid,
+                       p['title'],
+                       target + '/sets/' + pid + '/photos',
+                       hash_level,
+                       offlickr,
+                       doNotRedownload,
+                       getPhotos,
+                       getVideosOnly,
+                       overwritePhotos,
+                       )
 
 
         # Do we want the picture too?
@@ -609,6 +681,7 @@ def main():
     dateLo = '1'
     dateHi = maxTime
     getPhotos = False
+    getVideosOnly = False
     overwritePhotos = False
     doNotRedownload = False
     target = 'dst'
@@ -624,7 +697,7 @@ def main():
 
     try:
         (opts, args) = getopt.getopt(sys.argv[1:],
-                'hvponNLswf:t:d:i:c:l:', ['help'])
+                'ehvponNLswf:t:d:i:c:l:', ['help'])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -636,6 +709,8 @@ def main():
             flickrUserId = a
         if o == '-p':
             getPhotos = True
+        if o == '-e':
+            getVideosOnly = True
         if o == '-o':
             overwritePhotos = True
         if o == '-n':
@@ -683,7 +758,7 @@ def main():
         )
 
     if photosets:
-        backupPhotosets(offlickr, target, hash_level)
+        backupPhotosets(threads, offlickr, getPhotos, getVideosOnly, target, hash_level, doNotRedownload, overwritePhotos)
     elif photoLocations:
         backupLocation(
             threads,
@@ -703,6 +778,7 @@ def main():
             dateLo,
             dateHi,
             getPhotos,
+            getVideosOnly,
             doNotRedownload,
             overwritePhotos,
             )
