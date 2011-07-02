@@ -1,7 +1,0 @@
-#!/bin/sh
-
-OUTFILE=$HOME/bin/texmf/bibtex/bib/zotero.bib
-
-rm -f "$OUTFILE"
-MOZREPL_TIMEOUT="99999" getBibTeXFromZotero > $OUTFILE
-	
