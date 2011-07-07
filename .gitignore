@@ -34,18 +34,8 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
-# Emacs
-!.emacs.d
-!.emacs.d/*
-!.emacs.d/*/*
-!.emacs.d/*/*/*
-!.emacs.d/*/*/*/*
-!.emacs.d/*/*/*/*/*
-!.emacs.d/*/*/*/*/*/*
-!.emacs.d/*/*/*/*/*/*/*
-.emacs.d/recentf
-.emacs.d/recentf~
-*.elc
+# Ruby
+!.gemrc
 
 # Nano
 !.nanorc
