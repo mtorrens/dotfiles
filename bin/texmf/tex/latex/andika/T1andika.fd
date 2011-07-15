@@ -1,0 +1,3 @@
+\ProvidesFile{T1andika.fd}
+\DeclareFontFamily{T1}{andika}{}
+\DeclareFontShape{T1}{andika}{m}{n}{ <-> AndikaBasic--ec }{}
