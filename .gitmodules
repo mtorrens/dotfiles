@@ -1,3 +1,0 @@
-[submodule "bin/texmf/fonts/opentype/euler-otf"]
-	path = bin/texmf/fonts/opentype/euler-otf
-	url = git://github.com/khaledhosny/euler-otf.git
