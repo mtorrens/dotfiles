@@ -2,7 +2,7 @@
 # Back up my dotfiles to a place where my off-site backup utility
 # will find them.
 
-DOTFILES="${HOME}/Dropbox/Charles/Storage/Monthly/dotfiles"
+DOTFILES="${HOME}/Dropbox/Charles/Storage/Backup/dotfiles"
 
 cp ~/.gitignore $DOTFILES/dotgitignore
 cp ~/.gitmodules $DOTFILES/dotgitmodules

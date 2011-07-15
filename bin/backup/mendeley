@@ -7,10 +7,10 @@ if [ `uname -s` = "Darwin" ]; then
 else
   MENDELEY_DIR="$HOME/.local/share/data/Mendeley Ltd./Mendeley Desktop/"
 fi
-OUTDIR=$HOME/Dropbox/Charles/Storage
+OUTDIR=$HOME/Dropbox/Charles/Storage/Backup
 
 cd "$MENDELEY_DIR"
-tar cvf mendeley-db.tar *
-lzma -9 mendeley-db.tar
-mv mendeley-db.tar.lzma "$OUTDIR"
+tar cvf mendeley.tar *
+lzma -9 mendeley.tar
+mv mendeley.tar.lzma "$OUTDIR"
 
