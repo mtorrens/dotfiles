@@ -1,6 +1,6 @@
 \ProvidesFile{T1gentiumbook.fd}
 \DeclareFontFamily{T1}{gentiumbook}{}
 \DeclareFontShape{T1}{gentiumbook}{m}{n}{ <-> GentiumBookBasic--ec }{}
-\DeclareFontShape{T1}{gentiumbook}{m}{it}{ <-> GentiumBookBasic-Italic-ec }{}
-\DeclareFontShape{T1}{gentiumbook}{bx}{n}{ <-> GentiumBookBasic-Bold-ec }{}
-\DeclareFontShape{T1}{gentiumbook}{bx}{it}{ <-> GentiumBookBasic-BoldItalic-ec }{}
+\DeclareFontShape{T1}{gentiumbook}{m}{it}{ <-> GentiumBookBasic-Italic--ec }{}
+\DeclareFontShape{T1}{gentiumbook}{bx}{n}{ <-> GentiumBookBasic-Bold--ec }{}
+\DeclareFontShape{T1}{gentiumbook}{bx}{it}{ <-> GentiumBookBasic-BoldItalic--ec }{}

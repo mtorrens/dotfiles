@@ -28,20 +28,14 @@
 \RequirePackage{amsmath}
 \RequirePackage{amsthm}
 
-% XeLaTeX
-\RequirePackage{fontspec}
-\RequirePackage{unicode-math}
-
 % Fonts
-\defaultfontfeatures{Ligatures=Common,Mapping=tex-text}
-\setmainfont{Gentium Book Basic}
-\setsansfont[Scale=MatchLowercase,LetterSpace=-1.8]{Lucida Sans}
-\setmonofont[Scale=MatchLowercase]{Droid Sans Mono}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\renewcommand{\rmdefault}{gentiumbook}
+\renewcommand{\sfdefault}{andika}
+\usepackage[euler-digits]{eulervm}
 
-% Math
-\setmathfont{euler.otf}
-% Map italic back to upright, since Euler doesn't have italics
-\setmathfont[range=\mathit/{greek,Greek,latin,Latin}->\mathup]{euler.otf}
+\usepackage{microtype}
 
 % Page
 \ifCPA@geometry
@@ -103,7 +97,7 @@
 
 \RequirePackage[tiny,sf]{titlesec}
 \titleformat{\section}[hang]
-  {\normalsize\bfseries\sffamily}
+  {\normalsize\sffamily}
   {\thesection.}
   {0.5em}
   {}
@@ -113,7 +107,7 @@
   {0.5em}
   {}
 \titleformat{\subsubsection}[hang]
-  {\normalsize\sffamily\itshape}
+  {\normalsize\sffamily}
   {{\upshape\thesubsubsection.}}
   {0.5em}
   {}
