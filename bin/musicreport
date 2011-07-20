@@ -11,7 +11,7 @@ if [ "$1" = "--help" ]; then
 fi
 
 MUSIC_DIR=/Volumes/share/Music/Library
-OUTPUT_DIR=$HOME/Dropbox/Charles/Documents/Website/input/music
+OUTPUT_DIR=$HOME/Development/cpence.github.com/music
 
 
 rm -f $OUTPUT_DIR/*.html
@@ -20,13 +20,43 @@ rm -f $OUTPUT_DIR/*.temp
 
 for album in $MUSIC_DIR/* ; do
   file="$album/`ls "${album}" | grep "ogg$" | head -1`"
-  ogginfo=`ogginfo "$file"`
-  
-  trackartist=`echo "$ogginfo" | grep -i "^[ 	]*artist=" | cut -d = -f 2-`
-  albumartist=`echo "$ogginfo" | grep -i "^[ 	]*albumartist=" | cut -d = -f 2-`
-  album=`echo "$ogginfo" | grep -i "^[ 	]*album=" | cut -d = -f 2-`
-  genre=`echo "$ogginfo" | grep -i "^[ 	]*genre=" | cut -d = -f 2-`
-  mb_albumid=`echo "$ogginfo" | grep -i "^[ 	]*musicbrainz_albumid=" | cut -d = -f 2-`
+  if [[ "$file" = "$album/" ]] ; then
+    file="$album/`ls "${album}" | grep "flac$" | head -1`"
+    
+    if [[ "$file" = "$album/" ]] ; then
+      file="$album/`ls "${album}" | grep "mp3$" | head -1`"
+      if [[ "$file" = "$album/" ]] ; then
+        continue
+      fi
+      
+      echo $file
+      mp3info=`eyeD3 --no-color "$file"`
+      
+      trackartist=`echo "$mp3info" | grep -i "artist: " | sed "s/.*artist: \(.*\)$/\1/"`
+      albumartist=$trackartist
+      album=`echo "$mp3info" | grep -i "album: " | sed "s/album: \(.*\)year:.*$/\1/" | sed "s/[ 	]*$//"`
+      genre=`echo "$mp3info" | grep -i "genre: " | sed "s/.*genre: \(.*\) [(]id .*$/\1/"`
+      mb_albumid=`echo "$mp3info" | sed -n -e "/MusicBrainz Album Id/{n;p;}"`
+    else
+      echo $file
+      flacinfo=`metaflac --list "$file"`
+      
+      trackartist=`echo "$flacinfo" | grep -i " artist=" | cut -d = -f 2-`
+      albumartist=`echo "$flacinfo" | grep -i " albumartist=" | cut -d = -f 2-`
+      album=`echo "$flacinfo" | grep -i " album=" | cut -d = -f 2-`
+      genre=`echo "$flacinfo" | grep -i " genre=" | cut -d = -f 2-`
+      mb_albumid=`echo "$flacinfo" | grep -i " musicbrainz_albumid=" | cut -d = -f 2-`
+    fi
+  else
+    echo $file
+    ogginfo=`vorbiscomment "$file"`
+    
+    trackartist=`echo "$ogginfo" | grep -i "^artist=" | cut -d = -f 2-`
+    albumartist=`echo "$ogginfo" | grep -i "^albumartist=" | cut -d = -f 2-`
+    album=`echo "$ogginfo" | grep -i "^album=" | cut -d = -f 2-`
+    genre=`echo "$ogginfo" | grep -i "^genre=" | cut -d = -f 2-`
+    mb_albumid=`echo "$ogginfo" | grep -i "^musicbrainz_albumid=" | cut -d = -f 2-`
+  fi
   
   if [[ "$genre" = "" ]] ; then
     continue
@@ -45,8 +75,6 @@ for album in $MUSIC_DIR/* ; do
   else
     echo "$artist - $album<br />" >> $genre_tempfile
   fi
-  
-  echo -n .
 done
 
 rm -f $OUTPUT_DIR/index.html
