@@ -94,5 +94,5 @@ alias db-conflicts='cd Dropbox && find -L . \( -path "*.dropbox*" -prune \) -o \
 alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
 
 # Alias for setting a development shell
-alias devshell="export PS1='[\[\e[31;1m\]\u@\h\[\e[0m\] \w]\$ \[\e]2;\u@\h:\w\a\]' && export PATH='/usr/local/dev/bin:/usr/local/dev/sbin:$PATH' && export DYLD_LIBRARY_PATH='/usr/local/dev/lib'"
+alias devshell="export PS1='[\[\e[31;1m\]\u@\h\[\e[0m\] \w]\$ \[\e]2;\u@\h:\w\a\]' && export PATH='/usr/local/dev/bin:/usr/local/dev/sbin:$PATH' && export DYLD_LIBRARY_PATH='/usr/local/dev/lib' && export PKG_CONFIG_PATH='/usr/local/dev/lib/pkgconfig:$PKG_CONFIG_PATH'"
 
