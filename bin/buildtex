@@ -1,8 +1,7 @@
 #!/bin/bash
 
 LATEX_PROG=pdflatex
-LATEX_DRIVER=
-LATEX_PARMS='-shell-escape -interaction=batchmode'
+LATEX_PARMS='-interaction=batchmode'
 
 if [ -z "$#" ]; then
   echo "Usage: buildtex <file>"
@@ -35,7 +34,7 @@ DO_OUTDIR="-output-directory=${OUTDIR}"
 
 ## Run LaTeX on the output file once
 echo -n "First LaTeX execution...    "
-${LATEX_PROG} "${LATEX_DRIVER}" ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
+${LATEX_PROG} ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
 if [ "$?" -ne 0 ]; then
   echo "[FAILED]"
   echo "! LaTeX Error: Failed while executing LaTeX for the first time"
@@ -55,7 +54,7 @@ if grep bibdata "${OUTDIR}/${FILEBASE}.aux" > /dev/null; then
   echo "[OK]"
   
   echo -n "LaTeX after BibTeX (1/2)...    "
-  ${LATEX_PROG} "${LATEX_DRIVER}" ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
+  ${LATEX_PROG} ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
   if [ "$?" -ne 0 ]; then
     echo "[FAILED]"
     echo "! LaTeX Error: Failed while executing LaTeX for the first time after bibtex"
@@ -64,7 +63,7 @@ if grep bibdata "${OUTDIR}/${FILEBASE}.aux" > /dev/null; then
   echo "[OK]"
   
   echo -n "LaTeX after BibTeX (2/2)...    "
-  ${LATEX_PROG} "${LATEX_DRIVER}" ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
+  ${LATEX_PROG} ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
   if [ "$?" -ne 0 ]; then
     echo "[FAILED]"
     echo "! LaTeX Error: Failed while executing LaTeX for the second time after bibtex"
@@ -76,7 +75,7 @@ fi
 
 ## Run LaTeX one more time
 echo -n "Final LaTeX execution...    "
-${LATEX_PROG} "${LATEX_DRIVER}" ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
+${LATEX_PROG} ${LATEX_PARMS} "${DO_OUTDIR}" "${FILEBASE}" 2>&1 >/dev/null
 if [ "$?" -ne 0 ]; then
   echo "[FAILED]"
   echo "! LaTeX Error: Failed while executing LaTeX for the last time"
