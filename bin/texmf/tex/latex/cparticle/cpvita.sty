@@ -39,13 +39,13 @@
 % New commands and environments
 
 % This defines how the name looks
-\newcommand{\bigname}[1]{\begin{center}\addfontfeature{LetterSpace=10.0,WordSpace=3.3}{\LARGE\MakeUppercase{#1}}\end{center}}
+\newcommand{\bigname}[1]{\begin{center}\textls[110]{\LARGE\MakeUppercase{#1}}\end{center}}
 
 % A ressection is a main section (<H1>Section</H1>)
 \newenvironment{ressection}[1]{
   \needspace{40pt}
   \vspace{20pt}
-  \centerline{\Large\addfontfeature{LetterSpace=8.0,WordSpace=1.25}{\MakeUppercase{#1}}}
+  \centerline{\Large\textls[80]{\MakeUppercase{#1}}}
   \begin{compactitem}\vspace{6pt}}
 {\end{compactitem}}
 
