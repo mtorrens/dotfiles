@@ -9,10 +9,8 @@
       '((:name auctex :type elpa)
         (:name word-count
                :type git
-               :url "https://github.com/emacsmirror/word-count.git")
-        (:name tex-wcount
-               :type git
-               :url "https://github.com/emacsmirror/tex-wcount.git")
+               :url "https://github.com/emacsmirror/word-count.git"
+               :features word-count)
         ))
 
 (setq cpence-package-list

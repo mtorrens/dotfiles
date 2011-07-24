@@ -118,6 +118,22 @@
 (global-set-key [kp-end] 'end-of-line)
 (global-set-key [kp-delete] 'delete-char)
 
+;; Add save on C-s, move find to C-f
+(global-set-key (kbd "C-s") 'save-buffer)
+(global-set-key (kbd "C-S-s") 'save-some-buffers)
+(global-set-key (kbd "C-f") 'isearch-forward)
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
+
+;; Set some other comfort keys from other editors
+(global-set-key (kbd "C-a") 'mark-whole-buffer)
+(global-set-key (kbd "C-l") 'goto-line)
+(global-set-key (kbd "C-o") 'find-file)
+(global-set-key (kbd "C-{") 'tabbar-backward-tab)
+(global-set-key (kbd "C-}") 'tabbar-forward-tab)
+(global-set-key (kbd "C-w") (lambda () (interactive) (kill-buffer (current-buffer))))
+(global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
+(global-set-key (kbd "M-q") 'quoted-insert)
+
 
 ;; -------------------------------------
 ;; Tabs
@@ -134,5 +150,29 @@
   
   ;; Enable longlines-mode for text
   (longlines-mode 1)
+  
+  ;; Enable modeline word counting
+  (word-count-mode-on)
+  (word-count-set-marker-off)
 )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
+
+
+(defun cpence-latex-mode-hook ()
+  (interactive)
+  
+  ;; Brief AucTeX configuration
+  (TeX-PDF-mode 1)
+  (font-latex-add-quotes '("“" "”"))
+  
+  ;; Add BuildTex script
+  (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
+  (setq TeX-command-default "BuildTeX")
+  
+  ;; Bind the TeX building and viewing commands
+  (local-set-key (kbd "C-r") 'TeX-command-master)
+  (local-set-key [f7] 'TeX-command-master)
+  (local-set-key (kbd "C-S-r") 'TeX-view)
+  (local-set-key [f5] 'TeX-view)
+)
+(add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
