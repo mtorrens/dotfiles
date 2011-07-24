@@ -50,5 +50,13 @@ bin/*/*/*.pyc
 !.gnupg
 !.gnupg/gpg.conf
 
+# Emacs
+!.emacs.d
+!.emacs.d/*.el
+!.emacs.d/site-lisp
+!.emacs.d/site-lisp/*.el
+!.emacs.d/themes
+!.emacs.d/themes/*.el
+
 # Lastly, ignore all DS_Store files
 *.DS_Store
