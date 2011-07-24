@@ -43,6 +43,7 @@
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+(setq auto-save-list-file-name nil)
 (setq auto-save-list-file-prefix nil)
 
 ;; UTF-8 *everywhere*
@@ -80,6 +81,9 @@
 
 (blink-cursor-mode t)
 (show-paren-mode t)
+(global-hl-line-mode 1)
+(setq search-highlight t)
+(setq query-replace-highlight t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -110,6 +114,8 @@
 
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
+(global-set-key [kp-home] 'beginning-of-line)
+(global-set-key [kp-end] 'end-of-line)
 (global-set-key [kp-delete] 'delete-char)
 
 
