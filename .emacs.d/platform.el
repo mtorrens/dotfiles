@@ -2,6 +2,11 @@
 ;; Platform utilities
 ;;
 
+;; This is an Emacs 24 hack, this function is used in some older packages
+(defun make-local-hook (arg) nil)
+
+
+
 ;; Check if system is Darwin/Mac OS X
 (defun system-type-is-darwin ()
   (interactive)
@@ -37,8 +42,5 @@
       (global-set-key [C-left] 'beginning-of-line)
       (global-set-key [C-right] 'end-of-line)))
 
-
-;; This is an Emacs 24 hack, this function is used in some packages
-(defun make-local-hook (arg) nil)
 
 

@@ -165,14 +165,24 @@
   (TeX-PDF-mode 1)
   (font-latex-add-quotes '("“" "”"))
   
-  ;; Add BuildTex script
-  (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
-  (setq TeX-command-default "BuildTeX")
-  
   ;; Bind the TeX building and viewing commands
   (local-set-key (kbd "C-r") 'TeX-command-master)
   (local-set-key [f7] 'TeX-command-master)
   (local-set-key (kbd "C-S-r") 'TeX-view)
   (local-set-key [f5] 'TeX-view)
+  
+  ;; Add BuildTex script
+  (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
+  (setq TeX-command-default "BuildTeX")
+  
+  ;; Set an OS-appropriate TeX view command
+  (setq TeX-view-program-list '(("Skim" "open \"%s.pdf\"") ("Okular" "okular \"%s.pdf\"")))
+  
+  (if (system-type-is-gnu)
+      (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular"))))
+  (if (system-type-is-darwin)
+      (setq TeX-view-program-selection '((output-pdf "Skim"))))
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
+
+
