@@ -6,7 +6,14 @@
 (require 'el-get)
 
 (setq el-get-sources
-      '((:name auctex :type elpa)))
+      '((:name auctex :type elpa)
+        (:name word-count
+               :type git
+               :url "https://github.com/emacsmirror/word-count.git")
+        (:name tex-wcount
+               :type git
+               :url "https://github.com/emacsmirror/tex-wcount.git")
+        ))
 
 (setq cpence-package-list
       (append
