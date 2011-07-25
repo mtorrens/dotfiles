@@ -42,5 +42,7 @@
       (global-set-key [C-left] 'beginning-of-line)
       (global-set-key [C-right] 'end-of-line)))
 
-
+;; Fix dired on OS X
+(if (system-type-is-darwin)
+    (setq dired-use-ls-dired nil))
 

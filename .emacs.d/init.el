@@ -35,11 +35,16 @@
 
 
 ;; -------------------------------------
-;; File Output
+;; File Input/Output
 
 (require 'recentf)
 (setq recentf-save-file (concat user-emacs-directory "recentf"))
 (recentf-mode 1)
+
+(global-auto-revert-mode 1)
+
+;; Default to text-mode, not fundamental-mode
+(setq-default major-mode 'text-mode)
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -67,14 +72,26 @@
         '(width . 85)
         '(height . 35)
         '(cursor-type . bar)
-        '(line-spacing . 1))
+        '(line-spacing . 1)
+        '(alpha . 100))
        default-frame-alist))
 
+(setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
+
+;; On Mac, you get the top-screen menu bar anyway
+(unless (system-type-is-darwin)
+  (menu-bar-mode -1))
+
+;; Enable mouse and disable menu in console
+(if (not window-system)
+    (progn
+      (menu-bar-mode -1)
+      (xterm-mouse-mode t)))
 
 (set-frame-font "Panic Sans-14")
 (load-theme 'Railscasts)
@@ -87,6 +104,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(line-number-mode t)
 (column-number-mode t)
 
 
@@ -101,8 +119,17 @@
 
 (delete-selection-mode t)
 (transient-mark-mode 1)
+(setq x-select-enable-clipboard t)
 
 (setq fill-column 80)
+
+;; Auto-complete *everything*
+(require 'ido)
+(ido-mode t)
+(setq ido-save-directory-list-file "~/.emacs.d/.ido.last")
+(setq ido-enable-flex-matching t)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-show-dot-for-dired t)
 
 
 ;; -------------------------------------
@@ -111,6 +138,9 @@
 (cua-mode t)
 (setq cua-auto-tabify-rectangles nil)
 (setq cua-keep-region-after-copy t)
+
+(windmove-default-keybindings 'meta)
+(setq windmove-wrap-around t)
 
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
@@ -128,11 +158,18 @@
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-o") 'find-file)
-(global-set-key (kbd "C-{") 'tabbar-backward-tab)
-(global-set-key (kbd "C-}") 'tabbar-forward-tab)
+(global-set-key (kbd "C-{") 'previous-buffer)
+(global-set-key (kbd "C-}") 'next-buffer)
 (global-set-key (kbd "C-w") (lambda () (interactive) (kill-buffer (current-buffer))))
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "M-q") 'quoted-insert)
+(global-set-key (kbd "<C-prior>") (lambda () (interactive) (goto-char (point-min))))
+(global-set-key (kbd "<C-next>") (lambda () (interactive) (goto-char (point-max))))
+
+(global-set-key (kbd "<M-tab>") 'ido-switch-buffer)
+(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
+(global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
+(global-set-key (kbd "C-x B") 'ibuffer)
 
 
 ;; -------------------------------------
@@ -151,6 +188,9 @@
   ;; Enable longlines-mode for text
   (longlines-mode 1)
   
+  ;; Normal TAB key in text editing
+  (setq indent-line-function 'insert-tab)
+  
   ;; Enable modeline word counting
   (word-count-mode-on)
   (word-count-set-marker-off)
@@ -161,15 +201,15 @@
 (defun cpence-latex-mode-hook ()
   (interactive)
   
-  ;; Brief AucTeX configuration
-  (TeX-PDF-mode 1)
-  (font-latex-add-quotes '("“" "”"))
-  
   ;; Bind the TeX building and viewing commands
   (local-set-key (kbd "C-r") 'TeX-command-master)
   (local-set-key [f7] 'TeX-command-master)
   (local-set-key (kbd "C-S-r") 'TeX-view)
   (local-set-key [f5] 'TeX-view)
+  
+  ;; Configure AucTeX
+  (TeX-PDF-mode 1)
+  (font-latex-add-quotes '("“" "”"))
   
   ;; Add BuildTex script
   (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
