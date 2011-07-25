@@ -226,3 +226,97 @@
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
 
+(defun cpence-markdown-mode-hook ()
+  (interactive)
+
+  ;; Actually insert tab characters and newlines, indentation stuff
+  ;; goes crazy in markdown-mode for some reason
+  (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)
+  (define-key markdown-mode-map (kbd "C-m") 'newline)
+)
+(add-hook 'markdown-mode-hook 'cpence-markdown-mode-hook)
+
+
+(defun cpence-code-mode-hook ()
+  (interactive)
+
+  ;; Bind return to intending-return in all source modes
+  (local-set-key (kbd "RET") 'newline-and-indent)
+  
+  ;; And bind kill-line to indent-killing-kill-line in
+  ;; all source modes
+  (local-set-key (kbd "C-k") 'kill-and-join-forward)
+
+  ;; No tabs, only spaces
+  (setq indent-tabs-mode nil)
+)
+
+(defun cpence-tab-stop-four ()
+  (interactive)
+  (setq tab-width 4)
+  (setq standard-indent 4)
+)
+
+;; There's no "general" mode-hook that handles all of the
+;; programming modes, so we have to set all these hooks
+;; ourselves.  Change tab stops to four for heavy-duty
+;; programming languages where I like that sort of thing.
+(add-hook 'c-mode-common-hook 'cpence-code-mode-hook)
+(add-hook 'c-mode-common-hook 'cpence-tab-stop-four)
+(add-hook 'css-mode-hook 'cpence-code-mode-hook)
+(add-hook 'asm-mode-hook 'cpence-code-mode-hook)
+(add-hook 'asm-mode-hook 'cpence-tab-stop-four)
+(add-hook 'xml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'html-mode-hook 'cpence-code-mode-hook)
+(add-hook 'javascript-mode-hook 'cpence-code-mode-hook)
+(add-hook 'python-mode-hook 'cpence-code-mode-hook)
+(add-hook 'python-mode-hook 'cpence-tab-stop-four)
+
+;; In all programming modes, indent code automatically when
+;; pasted
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (member major-mode '(python-mode     c-mode
+                                     c++-mode        objc-mode
+                                     latex-mode      plain-tex-mode
+                                     css-mode        asm-mode
+                                     xml-mode        html-mode
+                                     js-mode         css-mode))
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
+
+;; When killing a line, strip the indentation characters off
+;; of the front
+(defun kill-and-join-forward (&optional arg)
+  (interactive "P")
+  (if (and (eolp) (not (bolp)))
+      (progn (forward-char 1)
+             (just-one-space 0)
+             (backward-char 1)
+             (kill-line arg))
+    (kill-line arg)))
+
+
+;; ----------------------------------------------------
+;; C mode
+
+(defun cpence-c-mode-hook ()
+  (interactive)
+
+  ;; Engage automatic-everything mode
+  (c-toggle-auto-state 1)
+
+  ;; Don't indent namespaces, do indent comments
+  (c-set-offset 'innamespace 0)
+  (setq c-comment-only-line-offset 0)
+
+  ;; Set cleanups
+  (add-to-list 'c-cleanup-list 'defun-close-semi)
+)
+(add-hook 'c-mode-common-hook 'cpence-c-mode-hook)
+
+;; Set indentation options
+(setq-default c-default-style "bsd")
+(setq c-basic-offset 4)
+
