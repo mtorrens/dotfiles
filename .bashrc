@@ -88,7 +88,7 @@ alias quit=exit
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 
 # Dropbox: find all "conflicts", which just show up in the filesystem
-alias db-conflicts='cd Dropbox && find -L . \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
+alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
 
 # Alias for YUI Compressor
 alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
