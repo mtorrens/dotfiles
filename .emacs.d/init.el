@@ -69,8 +69,9 @@
 (setq default-frame-alist
       (append
        (list
-        '(width . 85)
-        '(height . 35)
+        '(width . 130)
+        '(height . 40)
+        '(font . "Panic Sans-14")
         '(cursor-type . bar)
         '(line-spacing . 1)
         '(alpha . 100))
@@ -131,6 +132,26 @@
 (setq ido-use-filename-at-point 'guess)
 (setq ido-show-dot-for-dired t)
 
+;; Speedbar
+(require 'sr-speedbar)
+(setq speedbar-supported-extension-expressions
+    '(".org" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?"
+       ".tex\\(i\\(nfo\\)?\\)?" ".el"
+       ".java" ".p[lm]" ".pm" ".py"  ".s?html"  "Makefile.am" "configure.ac"
+       ".redo" ".m4" ".rb"))
+(setq sr-speedbar-width-x 20)
+(setq sr-speedbar-right-side t)
+
+;; Spelling
+(if (system-type-is-darwin)
+    (progn
+      (setq ispell-local-dictionary-alist
+            '(("en_US"
+               "[a-zA-Z]" "[^a-zA-Z]"
+               "[']" nil
+               ("-d" "/Library/Spelling/en_US") nil utf-8)))
+      (setq ispell-local-dictionary "en_US")))
+
 
 ;; -------------------------------------
 ;; Keys
@@ -147,6 +168,8 @@
 (global-set-key [kp-home] 'beginning-of-line)
 (global-set-key [kp-end] 'end-of-line)
 (global-set-key [kp-delete] 'delete-char)
+
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; Add save on C-s, move find to C-f
 (global-set-key (kbd "C-s") 'save-buffer)
@@ -170,6 +193,11 @@
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
 (global-set-key (kbd "C-x B") 'ibuffer)
+
+;; Actually useful shortcut keys
+(global-set-key (kbd "<f11>")
+                (lambda () (interactive) (find-file "~/Dropbox/Charles/Muse/Index.muse")))
+(global-set-key (kbd "<f12>") 'sr-speedbar-toggle)
 
 
 ;; -------------------------------------
@@ -209,11 +237,6 @@
   
   ;; Configure AucTeX
   (TeX-PDF-mode 1)
-  (font-latex-add-quotes '("“" "”"))
-  
-  ;; Add BuildTex script
-  (add-to-list 'TeX-command-list '("BuildTeX" "~/bin/buildtex %t" TeX-run-LaTeX nil t))
-  (setq TeX-command-default "BuildTeX")
   
   ;; Set an OS-appropriate TeX view command
   (setq TeX-view-program-list '(("Skim" "open \"%s.pdf\"") ("Okular" "okular \"%s.pdf\"")))
@@ -239,9 +262,6 @@
 
 (defun cpence-code-mode-hook ()
   (interactive)
-
-  ;; Bind return to intending-return in all source modes
-  (local-set-key (kbd "RET") 'newline-and-indent)
   
   ;; And bind kill-line to indent-killing-kill-line in
   ;; all source modes
@@ -271,6 +291,7 @@
 (add-hook 'javascript-mode-hook 'cpence-code-mode-hook)
 (add-hook 'python-mode-hook 'cpence-code-mode-hook)
 (add-hook 'python-mode-hook 'cpence-tab-stop-four)
+(add-hook 'emacs-lisp-mode-hook 'cpence-code-mode-hook)
 
 ;; In all programming modes, indent code automatically when
 ;; pasted
@@ -282,7 +303,8 @@
                                      latex-mode      plain-tex-mode
                                      css-mode        asm-mode
                                      xml-mode        html-mode
-                                     js-mode         css-mode))
+                                     js-mode         css-mode
+                                     emacs-lisp-mode))
                 (let ((mark-even-if-inactive transient-mark-mode))
                   (indent-region (region-beginning) (region-end) nil))))))
 
@@ -320,3 +342,10 @@
 (setq-default c-default-style "bsd")
 (setq c-basic-offset 4)
 
+
+;; -------------------------------------
+;; Muse Mode
+
+(setq muse-project-alist
+      '(("Muse" ("~/Dropbox/Charles/Muse" :default "Index")
+         (:base "html" :path "~/Dropbox/Charles/Muse/html"))))

@@ -22,15 +22,23 @@
                         (setq smex-save-file "~/.emacs.d/.smex-items")
                         (global-set-key (kbd "M-x") 'smex)
                         (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
+        (:name muse
+               :after (lambda ()
+                        (require 'muse-mode)
+                        (require 'muse-html)
+                        (require 'muse-wiki)
+                        (require 'muse-project)))
         ))
 
 (setq cpence-package-list
       (append
        '(el-get
-	 yasnippet
-	 magit
-	 markdown-mode
-	 smooth-scrolling)
+         yasnippet
+         magit
+         markdown-mode
+         muse
+         smooth-scrolling
+         sr-speedbar)
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync cpence-package-list)
