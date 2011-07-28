@@ -169,8 +169,6 @@
 (global-set-key [kp-end] 'end-of-line)
 (global-set-key [kp-delete] 'delete-char)
 
-(global-set-key (kbd "RET") 'newline-and-indent)
-
 ;; Add save on C-s, move find to C-f
 (global-set-key (kbd "C-s") 'save-buffer)
 (global-set-key (kbd "C-S-s") 'save-some-buffers)
@@ -186,8 +184,10 @@
 (global-set-key (kbd "C-w") (lambda () (interactive) (kill-buffer (current-buffer))))
 (global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
 (global-set-key (kbd "M-q") 'quoted-insert)
+
 (global-set-key (kbd "<C-prior>") (lambda () (interactive) (goto-char (point-min))))
 (global-set-key (kbd "<C-next>") (lambda () (interactive) (goto-char (point-max))))
+(global-set-key (kbd "C-`") (lambda () (interactive nil) (raise-frame (next-frame))))
 
 (global-set-key (kbd "<M-tab>") 'ido-switch-buffer)
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
@@ -218,11 +218,7 @@
   
   ;; Normal TAB key in text editing
   (setq indent-line-function 'insert-tab)
-  
-  ;; Enable modeline word counting
-  (word-count-mode-on)
-  (word-count-set-marker-off)
-)
+ )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
 
 
@@ -262,7 +258,10 @@
 
 (defun cpence-code-mode-hook ()
   (interactive)
-  
+
+  ;; Newline = indent
+  (local-set-key (kbd "RET") 'newline-and-indent)
+
   ;; And bind kill-line to indent-killing-kill-line in
   ;; all source modes
   (local-set-key (kbd "C-k") 'kill-and-join-forward)

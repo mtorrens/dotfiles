@@ -7,10 +7,6 @@
 
 (setq el-get-sources
       '((:name auctex :type elpa)
-        (:name word-count
-               :type git
-               :url "https://github.com/emacsmirror/word-count.git"
-               :features word-count)
         (:name buffer-move
                :after (lambda ()
                         (global-set-key (kbd "<C-M-up>") 'buf-move-up)
