@@ -46,7 +46,10 @@ export PS1="${PROMPT}${PR_TITLEBAR}"
 
 
 ###############################################################################
-# Configuration for other programs
+# Configuration for other programs/systems
+
+# Nano, please
+export EDITOR=`which nano`
 
 # I don't want a history for less
 export LESSHISTFILE=-
@@ -60,6 +63,13 @@ fi
 # Find Cabal package directory if it's available
 if [ -d "$HOME/Library/Haskell/bin" ]; then
   export PATH="$HOME/Library/Haskell/bin:$PATH"
+fi
+
+# Set some environment variables on Windows
+if [ `uname -o` = "Cygwin" ]; then
+  export TMP=/tmp
+  export TEMP=/tmp
+  export TMPDIR=/tmp
 fi
 
 
