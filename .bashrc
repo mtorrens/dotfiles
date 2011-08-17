@@ -54,22 +54,20 @@ export EDITOR=`which nano`
 # I don't want a history for less
 export LESSHISTFILE=-
 
-# Disable mail checking and resource-fork copying, only on OS X
 if [ `uname -s` = "Darwin" ]; then
+  # Disable mail checking and resource-fork copying, only on OS X
   export MAILPATH=""
   export COPYFILE_DISABLE=true
+elif [ `uname -o` = "Cygwin" ]; then
+  # Set some environment variables on Windows
+  export TMP=/tmp
+  export TEMP=/tmp
+  export TMPDIR=/tmp
 fi
 
 # Find Cabal package directory if it's available
 if [ -d "$HOME/Library/Haskell/bin" ]; then
   export PATH="$HOME/Library/Haskell/bin:$PATH"
-fi
-
-# Set some environment variables on Windows
-if [ `uname -o` = "Cygwin" ]; then
-  export TMP=/tmp
-  export TEMP=/tmp
-  export TMPDIR=/tmp
 fi
 
 
