@@ -108,6 +108,8 @@
 (line-number-mode t)
 (column-number-mode t)
 
+(setq pop-up-windows nil)
+
 
 ;; -------------------------------------
 ;; Load el-get packages
@@ -138,7 +140,8 @@
     '(".org" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?"
        ".tex\\(i\\(nfo\\)?\\)?" ".el"
        ".java" ".p[lm]" ".pm" ".py"  ".s?html"  "Makefile.am" "configure.ac"
-       ".redo" ".m4" ".rb"))
+       ".redo" ".m4" ".rb" ".bib" ".blg" ".log" ".muse"
+       ".css"))
 (setq sr-speedbar-width-x 20)
 (setq sr-speedbar-right-side t)
 
@@ -233,9 +236,10 @@
   
   ;; Configure AucTeX
   (TeX-PDF-mode 1)
+  (setq TeX-save-query nil)
   
   ;; Set an OS-appropriate TeX view command
-  (setq TeX-view-program-list '(("Skim" "open \"%s.pdf\"") ("Okular" "okular \"%s.pdf\"")))
+  (setq TeX-view-program-list '(("Skim" "open %s.pdf") ("Okular" "okular %s.pdf")))
   
   (if (system-type-is-gnu)
       (setq TeX-view-program-selection '((output-pdf "Okular") (output-dvi "Okular"))))
@@ -345,6 +349,13 @@
 ;; -------------------------------------
 ;; Muse Mode
 
+(setq cpence-muse-style-sheet
+      (concat "<link rel=\"stylesheet\" type=\"text/css\""
+              " charset=\"utf-8\" media=\"all\""
+              " href=\"notes.css\" />"))
+(muse-derive-style "cpence-xhtml" "xhtml"
+                   :style-sheet cpence-muse-style-sheet)
+
 (setq muse-project-alist
       '(("Muse" ("~/Dropbox/Charles/Muse" :default "Index")
-         (:base "html" :path "~/Dropbox/Charles/Muse/html"))))
+         (:base "cpence-xhtml" :path "~/Dropbox/Charles/Muse/html"))))
