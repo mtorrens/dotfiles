@@ -38,8 +38,7 @@ do
 done
 
 # Get the random episode
-episode=$(head -1 /dev/urandom | od -N 1 | awk '{ print $2 }')
-episode=$((episode % num_episodes))
+episode=$((`genrand 1 $num_episodes` - 1))
 
 # Figure out which season it's in
 carry=0
