@@ -11,6 +11,7 @@
 # My binary directory containing scripts
 !bin
 !bin/*
+bin/genrand
 !bin/*/*
 !bin/*/*/*
 !bin/*/*/*/*
