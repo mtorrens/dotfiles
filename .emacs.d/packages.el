@@ -22,8 +22,10 @@
                :after (lambda ()
                         (require 'muse-mode)
                         (require 'muse-html)
+                        (require 'muse-latex)
                         (require 'muse-wiki)
-                        (require 'muse-project)))
+                        (require 'muse-project)
+                        (setq muse-colors-autogen-headings nil)))
         ))
 
 (setq cpence-package-list

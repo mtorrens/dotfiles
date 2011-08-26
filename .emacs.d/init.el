@@ -95,7 +95,7 @@
       (xterm-mouse-mode t)))
 
 (set-frame-font "Panic Sans-14")
-(load-theme 'Railscasts)
+(load-theme 'TomorrowNight)
 
 (blink-cursor-mode t)
 (show-paren-mode t)
@@ -237,6 +237,9 @@
   ;; Configure AucTeX
   (TeX-PDF-mode 1)
   (setq TeX-save-query nil)
+  (setq TeX-parse-self t)
+  (setq TeX-auto-save t)
+  (setq TeX-auto-untabify t)
   
   ;; Set an OS-appropriate TeX view command
   (setq TeX-view-program-list '(("Skim" "open %s.pdf") ("Okular" "okular %s.pdf")))
@@ -358,4 +361,5 @@
 
 (setq muse-project-alist
       '(("Muse" ("~/Dropbox/Charles/Muse" :default "Index")
-         (:base "cpence-xhtml" :path "~/Dropbox/Charles/Muse/html"))))
+         (:base "cpence-xhtml" :path "~/Dropbox/Charles/Muse/html")
+         (:base "pdf" :path "~/Dropbox/Charles/Muse/latex"))))
