@@ -26,12 +26,23 @@
                         (require 'muse-wiki)
                         (require 'muse-project)
                         (setq muse-colors-autogen-headings nil)))
+        (:name yasnippet
+               :after (lambda ()
+                        (require 'yasnippet)
+                        (yas/initialize)
+                        (setq yas/root-directory '("~/.emacs.d/snippets"
+                                                   "~/.emacs.d/el-get/yasnippet/snippets"))
+                        (mapc 'yas/load-directory yas/root-directory)))
+        (:name scss-mode
+               :after (lambda ()
+                        (add-to-list 'auto-mode-alist '("\\.scss$" . scss-mode))))
         ))
 
 (setq cpence-package-list
       (append
        '(el-get
-         yasnippet
+         haml-mode
+         yaml-mode
          magit
          markdown-mode
          muse

@@ -273,6 +273,9 @@
   ;; all source modes
   (local-set-key (kbd "C-k") 'kill-and-join-forward)
 
+  ;; Make YASnippet (etc.) work
+  (yas/minor-mode)
+
   ;; No tabs, only spaces
   (setq indent-tabs-mode nil)
 )

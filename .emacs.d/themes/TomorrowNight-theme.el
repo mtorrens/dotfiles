@@ -63,6 +63,8 @@
    `(hl-line ((t (:background ,curline))))
    `(show-paren-match-face ((t (:background ,selection))))
    `(show-paren-mismatch-face ((t (:background ,errorbg :foreground ,errorfg))))
+   `(ido-only-match ((t (:foreground ,green))))
+   `(ido-subdir ((t (:foreground ,red))))
    '(font-latex-sectioning-0-face ((t (:inherit font-latex-sectioning-1-face :height unspecified))))
    '(font-latex-sectioning-1-face ((t (:inherit font-latex-sectioning-2-face :height unspecified))))
    '(font-latex-sectioning-2-face ((t (:inherit font-latex-sectioning-3-face :height unspecified))))
