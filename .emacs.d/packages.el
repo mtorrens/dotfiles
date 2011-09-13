@@ -25,7 +25,8 @@
                         (require 'muse-latex)
                         (require 'muse-wiki)
                         (require 'muse-project)
-                        (setq muse-colors-autogen-headings nil)))
+                        (setq muse-colors-autogen-headings nil)
+                        (setq muse-latex-header "~/.emacs.d/muse-header.tex")))
         (:name yasnippet
                :after (lambda ()
                         (require 'yasnippet)

@@ -136,12 +136,18 @@
 
 ;; Speedbar
 (require 'sr-speedbar)
-(setq speedbar-supported-extension-expressions
-    '(".org" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?"
-       ".tex\\(i\\(nfo\\)?\\)?" ".el"
-       ".java" ".p[lm]" ".pm" ".py"  ".s?html"  "Makefile.am" "configure.ac"
-       ".redo" ".m4" ".rb" ".bib" ".blg" ".log" ".muse"
-       ".css"))
+(speedbar-add-supported-extension ".org")
+(speedbar-add-supported-extension ".muse")
+(speedbar-add-supported-extension ".am")
+(speedbar-add-supported-extension ".ac")
+(speedbar-add-supported-extension ".redo")
+(speedbar-add-supported-extension ".m4")
+(speedbar-add-supported-extension ".bib")
+(speedbar-add-supported-extension ".rb")
+(speedbar-add-supported-extension ".blg")
+(speedbar-add-supported-extension ".log")
+(speedbar-add-supported-extension ".css")
+(speedbar-add-supported-extension ".scss")
 (setq sr-speedbar-width-x 20)
 (setq sr-speedbar-right-side t)
 
