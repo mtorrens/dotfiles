@@ -54,6 +54,7 @@ bin/*/*/*.pyc
 # Emacs
 !.emacs.d
 !.emacs.d/*.el
+!.emacs.d/*.tex
 !.emacs.d/site-lisp
 !.emacs.d/site-lisp/*.el
 !.emacs.d/themes
