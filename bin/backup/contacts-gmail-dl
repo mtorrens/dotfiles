@@ -1,0 +1,11 @@
+#!/bin/sh
+# Back up Google Contacts
+
+OUTDIR="${HOME}/Dropbox/Charles/Storage/Backup"
+
+echo "DOWNLOAD the google.csv file from Google Contacts and place it in the current directory."
+read -p "Press any key to continue..."
+
+mv google.csv contacts.csv
+lzma -9 contacts.csv
+mv contacts.csv.lzma $OUTDIR
