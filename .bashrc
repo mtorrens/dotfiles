@@ -70,6 +70,11 @@ if [ -d "$HOME/Library/Haskell/bin" ]; then
   export PATH="$HOME/Library/Haskell/bin:$PATH"
 fi
 
+# Find RubyGems binaries on OS X
+if [ -d "/Library/Ruby/Gems/1.8/bin/" ]; then
+  export PATH="$PATH:/Library/Ruby/Gems/1.8/bin/"
+fi
+
 
 ###############################################################################
 # Aliases for daily use
