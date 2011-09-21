@@ -65,11 +65,6 @@ elif [ `uname -o` = "Cygwin" ]; then
   export TMPDIR=/tmp
 fi
 
-# Find Cabal package directory if it's available
-if [ -d "$HOME/Library/Haskell/bin" ]; then
-  export PATH="$HOME/Library/Haskell/bin:$PATH"
-fi
-
 # Find RubyGems binaries on OS X
 if [ -d "/Library/Ruby/Gems/1.8/bin/" ]; then
   export PATH="$PATH:/Library/Ruby/Gems/1.8/bin/"
@@ -106,6 +101,13 @@ alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -nam
 # Alias for YUI Compressor
 alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
 
-# Alias for setting a development shell
-alias devshell="export PS1='[\[\e[31;1m\]\u@\h\[\e[0m\] \w]\$ \[\e]2;\u@\h:\w\a\]' && export PATH='/usr/local/dev/bin:/usr/local/dev/sbin:$PATH' && export DYLD_LIBRARY_PATH='/usr/local/dev/lib' && export PKG_CONFIG_PATH='/usr/local/dev/lib/pkgconfig:$PKG_CONFIG_PATH'"
+# RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+  
+# Edit wrapper for emacsclient
+if [[ -d "/Applications/Emacs.app/Contents/MacOS" ]]; then
+  alias edit='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n -c -a /usr/bin/nano'
+else
+  alias edit='emacsclient -n -c -a /usr/bin/nano'
+fi
 
