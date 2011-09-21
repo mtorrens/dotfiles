@@ -1,2 +1,2 @@
 --- 
-gem: -n/usr/local/bin
+custom_shebang: $env bundler_wrapper
