@@ -8,6 +8,11 @@
 
 
 ;; -------------------------------------
+;; Daemon/server options
+(server-start)
+
+
+;; -------------------------------------
 ;; Utility code
 
 (load (concat user-emacs-directory "platform.el"))
@@ -365,10 +370,11 @@
       (concat "<link rel=\"stylesheet\" type=\"text/css\""
               " charset=\"utf-8\" media=\"all\""
               " href=\"notes.css\" />"))
-(muse-derive-style "cpence-xhtml" "xhtml"
+(muse-derive-style "html-cpence" "xhtml"
                    :style-sheet cpence-muse-style-sheet)
 
 (setq muse-project-alist
       '(("Muse" ("~/Dropbox/Charles/Muse" :default "Index")
-         (:base "cpence-xhtml" :path "~/Dropbox/Charles/Muse/html")
+         (:base "html-cpence" :path "~/Dropbox/Charles/Muse/html")
          (:base "pdf" :path "~/Dropbox/Charles/Muse/latex"))))
+
