@@ -51,14 +51,10 @@ bin/*/*/*.pyc
 !.gnupg
 !.gnupg/gpg.conf
 
-# Emacs
-!.emacs.d
-!.emacs.d/*.el
-!.emacs.d/*.tex
-!.emacs.d/site-lisp
-!.emacs.d/site-lisp/*.el
-!.emacs.d/themes
-!.emacs.d/themes/*.el
+# Pianobar
+!.config
+!.config/pianobar
+!.config/pianobar/*
 
 # Lastly, ignore all DS_Store files
 *.DS_Store
