@@ -33,8 +33,6 @@
  % Includes field EID for the sequence/citation number of electronic journals
  %  which is used instead of page numbers.
  %
- % Includes fields ISBN and ISSN.
- %
  % Includes field URL for Internet addresses.
  %
  % Includes field DOI for Digital Object Idenfifiers.
@@ -55,11 +53,8 @@ ENTRY
     editor
     howpublished
     institution
-    isbn
-    issn
     journal
     key
-    month
     note
     number
     organization
@@ -374,24 +369,10 @@ FUNCTION {format.editors}
   if$
 }
 
-FUNCTION {format.isbn}
-{ isbn empty$
-    { "" }
-    { new.block "ISBN " isbn * }
-  if$
-}
-
-FUNCTION {format.issn}
-{ issn empty$
-    { "" }
-    { new.block "ISSN " issn * }
-  if$
-}
-
 FUNCTION {format.url}
 { url empty$
     { "" }
-    { new.block "URL \url{" url * "}" * }
+    { new.block "URL: \url{" url * "}" * }
   if$
 }
 
@@ -525,12 +506,6 @@ FUNCTION {format.date}
     { "empty year in " cite$ * warning$
        pop$ "" }
     'skip$
-  if$
-  month empty$
-    'skip$
-    { month
-      " " * swap$ *
-    }
   if$
   extra.label *
 }
@@ -708,7 +683,11 @@ FUNCTION {format.with.ed.btitle}
     { "" }
     { editor empty$
         { title emphasize }
-        { title emphasize ". " * format.editorsnotfirst * }
+	{ author empty$
+	  { title emphasize }
+          { title emphasize ". " * format.editorsnotfirst * }
+	  if$
+	}
       if$
     }
   if$
@@ -716,8 +695,8 @@ FUNCTION {format.with.ed.btitle}
 
 FUNCTION {empty.misc.check}
 { author empty$ title empty$ howpublished empty$
-  month empty$ year empty$ note empty$
-  and and and and and
+  year empty$ note empty$
+  and and and and
   key empty$ not and
     { "all relevant fields are empty in " cite$ * warning$ }
     'skip$
@@ -832,9 +811,8 @@ FUNCTION {article}
       if$
     }
   if$
-  format.issn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -870,9 +848,8 @@ FUNCTION {book}
     }
   if$
   format.edition output
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -889,9 +866,8 @@ FUNCTION {booklet}
   howpublished address new.block.checkb
   howpublished output
   address output
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -929,9 +905,8 @@ FUNCTION {inbook}
     }
   if$
   format.edition output
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -960,9 +935,8 @@ FUNCTION {incollection}
       format.chapter.pages output
     }
   if$
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -998,9 +972,8 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1020,7 +993,7 @@ FUNCTION {manual}
   organization output
   address output
   format.edition output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1038,7 +1011,7 @@ FUNCTION {mastersthesis}
   "Master's thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1046,15 +1019,15 @@ FUNCTION {mastersthesis}
 
 FUNCTION {misc}
 { output.bibitem
-  format.authors output
+  format.authors "author" output.check
   author format.key output
+  new.block
   format.date output
   new.block
   title howpublished new.block.checkb
   format.title output
   howpublished new.block.checka
   howpublished output
-  format.issn output
   format.url output
   new.block
   note output
@@ -1074,7 +1047,7 @@ FUNCTION {phdthesis}
   "PhD thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1094,9 +1067,8 @@ FUNCTION {proceedings}
   new.sentence
   organization output
   publisher output
-  format.isbn output
   format.doi output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1114,7 +1086,7 @@ FUNCTION {techreport}
   format.tr.number output.nonnull
   institution "institution" output.check
   address output
-  format.url output
+%  format.url output
   new.block
   note output
   fin.entry
@@ -1454,6 +1426,10 @@ FUNCTION {presort}
       if$
     }
   if$
+  "    "
+  *
+  year field.or.null sortify
+  *
   "    "
   *
   cite$

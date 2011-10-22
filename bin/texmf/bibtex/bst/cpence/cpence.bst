@@ -33,8 +33,6 @@
  % Includes field EID for the sequence/citation number of electronic journals
  %  which is used instead of page numbers.
  %
- % Includes fields ISBN and ISSN.
- %
  % Includes field URL for Internet addresses.
  %
  % Works best with the url.sty package of Donald Arseneau.
@@ -47,17 +45,13 @@ ENTRY
     author
     booktitle
     chapter
-    doi
     eid
     edition
     editor
     howpublished
     institution
-    isbn
-    issn
     journal
     key
-    month
     note
     number
     organization
@@ -369,13 +363,6 @@ FUNCTION {format.editors}
         { ", editor" * }
       if$
     }
-  if$
-}
-
-FUNCTION {format.isbn}
-{ isbn empty$
-    { "" }
-    { new.block "ISBN " isbn * }
   if$
 }
 
@@ -698,8 +685,8 @@ FUNCTION {format.with.ed.btitle}
 
 FUNCTION {empty.misc.check}
 { author empty$ title empty$ howpublished empty$
-  month empty$ year empty$ note empty$
-  and and and and and
+  year empty$ note empty$
+  and and and and
   key empty$ not and
     { "all relevant fields are empty in " cite$ * warning$ }
     'skip$
@@ -850,7 +837,6 @@ FUNCTION {book}
     }
   if$
   format.edition output
-%  format.isbn output
 %  format.url output
   new.block
   note output
@@ -868,7 +854,6 @@ FUNCTION {booklet}
   howpublished address new.block.checkb
   howpublished output
   address output
-%  format.isbn output
 %  format.url output
   new.block
   note output
@@ -907,7 +892,6 @@ FUNCTION {inbook}
     }
   if$
   format.edition output
-%  format.isbn output
 %  format.url output
   new.block
   note output
@@ -937,7 +921,6 @@ FUNCTION {incollection}
       format.chapter.pages output
     }
   if$
-%  format.isbn output
 %  format.url output
   new.block
   note output
@@ -974,7 +957,6 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
-%  format.isbn output
 %  format.url output
   new.block
   note output
@@ -1069,7 +1051,6 @@ FUNCTION {proceedings}
   new.sentence
   organization output
   publisher output
-%  format.isbn output
 %  format.url output
   new.block
   note output
