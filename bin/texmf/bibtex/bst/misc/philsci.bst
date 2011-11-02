@@ -975,7 +975,7 @@ FUNCTION {calc.label}
 %
 % save the year for sort processing afterwards (adding a, b, c, etc.)
 %
-  year field.or.null purify$ #-1 #4 substring$
+  year field.or.null
   'label.year :=
 }
 
