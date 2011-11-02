@@ -32,11 +32,14 @@
 \RequirePackage[none]{hyphenat}
 
 \RequirePackage{paralist}
-\setlength{\plitemsep}{2pt}
+\setlength{\plitemsep}{0pt}
 \setdefaultleftmargin{1em}{2.2em}{1.87em}{1.7em}{1em}{1em}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % New commands and environments
+
+\newlength{\datewidth}
+\setlength{\datewidth}{1.1in}
 
 % This defines how the name looks
 \newcommand{\bigname}[1]{\begin{center}\textls[110]{\LARGE\MakeUppercase{#1}}\end{center}}
@@ -50,25 +53,25 @@
 {\end{compactitem}}
 
 % A resitem is a simple list element in a ressection (first level)
-\newcommand{\resitem}[1]{\item #1}
+\newcommand{\resitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdateitem}[2]{\item {#1 \hfill #2}}
+\newcommand{\resdateitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
 
 % A ressubitem is a simple list element in anything but a ressection (second level)
-\newcommand{\ressubitem}[1]{\item #1}
+\newcommand{\ressubitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdatesubitem}[2]{\item {#1 \hfill #2}}
+\newcommand{\resdatesubitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
 
 % A resbigitem is a complex list element for stuff like jobs and education:
 %  Arg 1: Name of company or university
 %  Arg 2: Title
 %  Arg 3: Dates
-\newcommand{\resbigitem}[3]{\item \textbf{#1} \hfill #3
+\newcommand{\resbigitem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\textbf{#1}\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
 
-\nopagebreak[4]
-\textit{#2}}
+% A resmeditem is a resbigitem without the boldness
+\newcommand{\resmeditem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
 
 % This is a list that comes with a resbigitem
 \newenvironment{ressubsec}[3]{\vspace{6pt} \resbigitem{#1}{#2}{#3} \begin{compactitem}}{\end{compactitem}}
