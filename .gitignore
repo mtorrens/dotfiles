@@ -56,5 +56,12 @@ bin/*/*/*.pyc
 !.config/pianobar
 !.config/pianobar/*
 
+# Colordiff
+!.colordiffrc
+
+# SVN
+!.subversion
+!.subversion/config
+
 # Lastly, ignore all DS_Store files
 *.DS_Store
