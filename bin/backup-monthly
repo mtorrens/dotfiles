@@ -2,7 +2,7 @@
 # All my monthly backups, tarring things up for storage where my
 # off-site backup setup can get to them.
 
-~/bin/backup/bookmarks-firefox
+~/bin/backup/bookmarks-chrome
 ~/bin/backup/calendar
 ~/bin/backup/contacts-gmail-dl
 ~/bin/backup/dotfiles

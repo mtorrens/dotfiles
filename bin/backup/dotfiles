@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Back up my dotfiles to a place where my off-site backup utility
 # will find them.
 
@@ -12,11 +12,13 @@ cp ~/.hushlogin $DOTFILES/dothushlogin
 cp ~/.inputrc $DOTFILES/dotinputrc
 cp ~/.profile $DOTFILES/dotprofile
 
+cp ~/.colordiffrc $DOTFILES/dotcolordiffrc
 cp ~/.nanorc $DOTFILES/dotnanorc
 cp ~/.hgrc $DOTFILES/dothgrc
 cp ~/.gemrc $DOTFILES/dotgemrc
 cp ~/.gtkrc-2.0 $DOTFILES/dotgtkrc-2.0
 cp ~/.gnupg/gpg.conf $DOTFILES/gpg.conf
+cp ~/.gitconfig $DOTFILES/dotgitconfig
 
 rm -rf $DOTFILES/dotprivate
 cp -Rf ~/.private $DOTFILES/dotprivate
@@ -24,6 +26,14 @@ cp -Rf ~/.private $DOTFILES/dotprivate
 rm -rf $DOTFILES/dotssh
 cp -Rf ~/.ssh $DOTFILES/dotssh
 
-rm -rf $DOTFILES/dotemacs.d
-cp -Rf ~/.emacs.d $DOTFILES/dotemacs.d
+rm -rf $DOTFILES/dotsubversion
+mkdir $DOTFILES/dotsubversion
+cp ~/.subversion/{config,servers} $DOTFILES/dotsubversion
+
+rm -rf $DOTFILES/dotconfig
+mkdir $DOTFILES/dotconfig
+cp -Rf ~/.config/pianobar $DOTFILES/dotconfig/pianobar
+
+rm -rf $DOTFILES/bin
+cp -Rf ~/bin $DOTFILES/bin
 
