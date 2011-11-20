@@ -5,7 +5,8 @@
 % Options
 \define@boolkey{cparticle.sty}[CPA@]{geometry}[true]{}
 \define@boolkey{cparticle.sty}[CPA@]{hyperlink}[true]{}
-\presetkeys{cparticle.sty}{geometry=true,hyperlink=true}{}
+\define@boolkey{cparticle.sty}[CPA@]{blacklinks}[false]{}
+\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false}{}
 \ProcessOptionsX
 
 % Include hyperref, some of my bibliography styles use it
@@ -18,9 +19,13 @@
     citecolor=black,
     linkcolor=black,
     filecolor=black,
-    menucolor=black,
-    urlcolor=blue
+    menucolor=black
   }
+  \ifCPA@blacklinks
+  \hypersetup{urlcolor=black}
+  \else
+  \hypersetup{urlcolor=blue}
+  \fi
 \fi
 
 % AMS
