@@ -6,7 +6,8 @@
 \define@boolkey{cparticle.sty}[CPA@]{geometry}[true]{}
 \define@boolkey{cparticle.sty}[CPA@]{hyperlink}[true]{}
 \define@boolkey{cparticle.sty}[CPA@]{blacklinks}[false]{}
-\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false}{}
+\define@boolkey{cparticle.sty}[CPA@]{doublespace}[false]{}
+\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false,doublespace=false}{}
 \ProcessOptionsX
 
 % Include hyperref, some of my bibliography styles use it
@@ -44,17 +45,26 @@
 
 % Page
 \ifCPA@geometry
-  \usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+  \ifCPA@doublespace
+    \usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+  \else
+    \usepackage[letterpaper,hmargin=1.5in,vmargin=1in]{geometry}
+  \fi
 \fi
 
 % Spacing
 \frenchspacing
+
+\ifCPA@doublespace
+
 \RequirePackage{setspace}
 \RequirePackage{calc}
 \newlength{\cpaskip}
 \newcounter{cpatemp}
 
 \usepackage{printlen}
+
+\AtBeginDocument{\doublespacing}
 
 \renewenvironment{quote}{%
 \list{}{\rightmargin\leftmargin}%
@@ -72,14 +82,21 @@
 \list{}{\rightmargin#2\leftmargin#1}\setstretch{1.0}\item[]}
 \def\endchangemargin{\endlist\setstretch{\cpastretch}\vspace{-\cpaskip}}
 
+\fi
+
 \setlength{\parindent}{2\baselineskip}
 
 
 % Bibliography
-\usepackage{natbib}
+\RequirePackage{ragged2e}
+\RequirePackage{natbib}
 \setcitestyle{authoryear,round,sort}
 \let\cite=\citet
-\renewcommand{\bibsection}{\section*{\bibname}\setstretch{1.0}}
+\ifCPA@doublespace
+  \renewcommand{\bibsection}{\section*{\bibname}\setstretch{1.0}\RaggedRight}
+\else
+  \renewcommand{\bibsection}{\section*{\bibname}\RaggedRight}
+\fi
 
 % Footnotes
 \RequirePackage{hanging}
@@ -102,10 +119,11 @@
 
 \RequirePackage[tiny,sf]{titlesec}
 \titleformat{\section}[hang]
-  {\normalsize\sffamily}
+  {\large\sffamily}
   {\thesection.}
   {0.5em}
   {}
+\titlespacing*{\section}{0pt}{\baselineskip}{0.84\baselineskip}
 \titleformat{\subsection}[hang]
   {\normalsize\sffamily}
   {\thesubsection.}
