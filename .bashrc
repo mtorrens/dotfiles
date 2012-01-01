@@ -103,7 +103,8 @@ alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-  
+alias allruby='rvm 1.8.7,1.9.2,1.9.3,ree,rbx,jruby do'
+
 # Edit wrapper for emacsclient
 if [[ -d "/Applications/Emacs.app/Contents/MacOS" ]]; then
   alias edit='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n -c -a /usr/bin/nano'
