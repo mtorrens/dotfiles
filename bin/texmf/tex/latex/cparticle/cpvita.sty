@@ -5,12 +5,14 @@
 
 \RequirePackage{genmpage}
 \RequirePackage{needspace}
+\RequirePackage{calc}
 
 % Name and contact information
 \newcommand{\name}{My Name}
 \newcommand{\address}{My Address\\Address Line 2\\Address Line 3}
 \newcommand{\phone}{555-555-1212}
 \newcommand{\email}{e@mail.com}
+\newcommand{\web}{http://web.com}
 
 \RequirePackage{lastpage}
 \RequirePackage{fancyhdr}
@@ -56,22 +58,22 @@
 \newcommand{\resitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdateitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
+\newcommand{\resdateitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
 
 % A ressubitem is a simple list element in anything but a ressection (second level)
 \newcommand{\ressubitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdatesubitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
+\newcommand{\resdatesubitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
 
 % A resbigitem is a complex list element for stuff like jobs and education:
 %  Arg 1: Name of company or university
 %  Arg 2: Title
 %  Arg 3: Dates
-\newcommand{\resbigitem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\textbf{#1}\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
+\newcommand{\resbigitem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright \textbf{#1}\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
 
 % A resmeditem is a resbigitem without the boldness
-\newcommand{\resmeditem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{#1\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
+\newcommand{\resmeditem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
 
 % This is a list that comes with a resbigitem
 \newenvironment{ressubsec}[3]{\vspace{6pt} \resbigitem{#1}{#2}{#3} \begin{compactitem}}{\end{compactitem}}
