@@ -7,7 +7,9 @@
 \define@boolkey{cparticle.sty}[CPA@]{hyperlink}[true]{}
 \define@boolkey{cparticle.sty}[CPA@]{blacklinks}[false]{}
 \define@boolkey{cparticle.sty}[CPA@]{doublespace}[false]{}
-\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false,doublespace=false}{}
+\define@boolkey{cparticle.sty}[CPA@]{sfheads}[true]{}
+\define@boolkey{cparticle.sty}[CPA@]{smallheads}[false]{}
+\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false,doublespace=false,sfheads=true,smallheads=false}{}
 \ProcessOptionsX
 
 % Include hyperref, some of my bibliography styles use it
@@ -42,6 +44,7 @@
 \usepackage[euler-digits]{eulervm}
 
 \usepackage{microtype}
+\usepackage{ellipsis}
 
 % Page
 \ifCPA@geometry
@@ -117,26 +120,37 @@
 % Section Headers
 \newcommand{\runinhead}[1]{\emph{#1.}\hspace{1em}}
 
-\RequirePackage[tiny,sf]{titlesec}
+\ifCPA@sfheads
+  \RequirePackage[tiny,sf]{titlesec}
+  \newcommand{\cpahfamily}{\sffamily}
+\else
+  \RequirePackage[tiny]{titlesec}
+  \newcommand{\cpahfamily}{}
+\fi
+\ifCPA@smallheads
+  \newcommand{\cpahbig}{\normalsize}
+\else
+  \newcommand{\cpahbig}{\large}
+\fi
 \titleformat{\section}[hang]
-  {\large\sffamily}
+  {\cpahbig\cpahfamily}
   {\thesection.}
   {0.5em}
   {}
 \titlespacing*{\section}{0pt}{\baselineskip}{0.84\baselineskip}
 \titleformat{\subsection}[hang]
-  {\normalsize\sffamily}
+  {\normalsize\cpahfamily}
   {\thesubsection.}
   {0.5em}
   {}
 \titleformat{\subsubsection}[hang]
-  {\normalsize\sffamily}
+  {\normalsize\cpahfamily}
   {{\upshape\thesubsubsection.}}
   {0.5em}
   {}
 
 \ifcsname abstractname\endcsname
-  \renewcommand{\abstractname}{\sffamily Abstract}
+  \renewcommand{\abstractname}{\cpahfamily Abstract}
 \fi
 
 \endinput
