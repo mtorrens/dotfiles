@@ -48,8 +48,13 @@ export PS1="${PROMPT}${PR_TITLEBAR}"
 ###############################################################################
 # Configuration for other programs/systems
 
-# Nano, please
-export EDITOR=`which nano`
+# Nano, unless I have TextMate
+if [ -e '/usr/local/bin/mate' ]; then
+  export EDITOR="mate -w"
+  export GIT_EDITOR="mate --name 'Git Commit Message' -w -l 1"
+else
+  export EDITOR=nano
+fi
 
 # I don't want a history for less
 export LESSHISTFILE=-
@@ -101,9 +106,9 @@ alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -nam
 # Alias for YUI Compressor
 alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
 
-# RVM
+# RVM (eventually add rbx)
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-alias allruby='rvm 1.8.7,1.9.2,1.9.3,ree,rbx,jruby do'
+alias allruby='rvm 1.8.7,1.9.2,1.9.3,ree,jruby do'
 
 # Edit wrapper for emacsclient
 if [[ -d "/Applications/Emacs.app/Contents/MacOS" ]]; then
