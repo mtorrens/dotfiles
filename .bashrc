@@ -70,11 +70,6 @@ elif [ `uname -o` = "Cygwin" ]; then
   export TMPDIR=/tmp
 fi
 
-# Find RubyGems binaries on OS X
-if [ -d "/Library/Ruby/Gems/1.8/bin/" ]; then
-  export PATH="$PATH:/Library/Ruby/Gems/1.8/bin/"
-fi
-
 
 ###############################################################################
 # Aliases for daily use
@@ -103,17 +98,17 @@ alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 # Dropbox: find all "conflicts", which just show up in the filesystem
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
 
-# Alias for YUI Compressor
-alias yuicomp='java -jar ~/bin/yuicompressor-2.4.6.jar'
+# rbenv if installed
+if which rbenv > /dev/null; then
+  eval "$(rbenv init -)"
 
-# RVM (eventually add rbx)
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-alias allruby='rvm 1.8.7,1.9.2,1.9.3,ree,jruby do'
-
-# Edit wrapper for emacsclient
-if [[ -d "/Applications/Emacs.app/Contents/MacOS" ]]; then
-  alias edit='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -n -c -a /usr/bin/nano'
-else
-  alias edit='emacsclient -n -c -a /usr/bin/nano'
+  function allruby()
+  {
+    for ruby in `rbenv versions --bare`; do
+      rbenv shell $ruby
+      $@
+      rbenv shell --unset
+    done
+  }
 fi
 
