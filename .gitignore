@@ -56,9 +56,6 @@ bin/*/*/*.pyc
 !.config/pianobar
 !.config/pianobar/*
 
-# Colordiff
-!.colordiffrc
-
 # SVN
 !.subversion
 !.subversion/config
