@@ -14,5 +14,5 @@ wget https://www.rememberthemilk.com/icalendar/cpence/ -O todo.ics
 release_private_file .wgetrc
 
 # Compress and save to backup directory
-bzip2 -9 todo.ics
-mv todo.ics.bz2 ${HOME}/Dropbox/Charles/Storage/Backup/
+lzma -9 todo.ics
+mv todo.ics.lzma ${HOME}/Dropbox/Charles/Storage/Backup/
