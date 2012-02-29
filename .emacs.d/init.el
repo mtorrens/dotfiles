@@ -58,6 +58,11 @@
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
 
 ;; -------------------------------------
+;; Magit
+(add-to-list 'load-path "~/.emacs.d/packages/magit.git")
+(require 'magit)
+
+;; -------------------------------------
 ;; CSS mode
 (autoload 'css-mode "css-mode-1.0" nil t)
 (add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
