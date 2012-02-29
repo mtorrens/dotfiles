@@ -16,3 +16,6 @@
 [submodule ".emacs.d/packages/magit.git"]
 	path = .emacs.d/packages/magit.git
 	url = https://github.com/magit/magit.git
+[submodule ".emacs.d/packages/yasnippet.git"]
+	path = .emacs.d/packages/yasnippet.git
+	url = https://github.com/capitaomorte/yasnippet.git

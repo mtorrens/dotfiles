@@ -41,6 +41,17 @@
 (add-to-list 'load-path "~/.emacs.d/packages")
 
 ;; -------------------------------------
+;; Magit
+(add-to-list 'load-path "~/.emacs.d/packages/magit.git")
+(require 'magit)
+
+;; -------------------------------------
+;; YASnippet
+(add-to-list 'load-path "~/.emacs.d/packages/yasnippet.git")
+(require 'yasnippet)
+(yas/global-mode 1)
+
+;; -------------------------------------
 ;; Deft mode
 (add-to-list 'load-path "~/.emacs.d/packages/deft.git")
 (require 'deft)
@@ -56,11 +67,6 @@
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-
-;; -------------------------------------
-;; Magit
-(add-to-list 'load-path "~/.emacs.d/packages/magit.git")
-(require 'magit)
 
 ;; -------------------------------------
 ;; CSS mode
