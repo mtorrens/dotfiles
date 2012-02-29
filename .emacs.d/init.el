@@ -5,17 +5,24 @@
 (push "/usr/texbin" exec-path)
 
 ;; -------------------------------------
+;; Definitely required packages
+(cua-mode t)
+(require 'cl)
+(require 'saveplace)
+(require 'uniquify)
+(require 'ansi-color)
+(require 'recentf)
+
+;; -------------------------------------
 ;; General Emacs configuration
 (setq default-frame-alist
       '((width . 115)
         (height . 40)
         (cursor-type . bar)))
 
-(setq make-backup-files nil)
-(setq auto-save-default nil)
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
-(setq inhibit-startup-message t)
+(setq-default save-place t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -27,10 +34,53 @@
 (column-number-mode t)
 (set-fringe-style -1)
 (tooltip-mode -1)
+(recentf-mode 1)
+(menu-bar-mode -1)
+(ido-mode t)
+(mouse-wheel-mode t)
 
-(cua-mode t)
-(transient-mark-mode 1)
-(setq cua-keep-region-after-copy t)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+(setq make-backup-files nil
+      auto-save-default nil
+      inhibit-startup-message t
+      visible-bell t
+      echo-keystrokes 0.1
+      font-lock-maximum-decoration t
+      transient-mark-mode t
+      color-theme-is-global t
+      delete-by-moving-to-trash t
+      uniquify-buffer-name-style 'forward
+      xterm-mouse-mode t
+      save-place-file "~/.emacs.d/places"
+      ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point t
+      ido-max-prospects 10
+      cua-keep-region-after-copy t)
+
+(defun recentf-ido-find-file () 
+  "Find a recent file using Ido." 
+  (interactive) 
+  (let* ((file-assoc-list 
+          (mapcar (lambda (x) 
+                    (cons (file-name-nondirectory x) 
+                          x)) 
+                  recentf-list)) 
+         (filename-list 
+          (remove-duplicates (mapcar #'car file-assoc-list) 
+                             :test #'string=)) 
+         (filename (ido-completing-read "Choose recent file: " 
+                                        filename-list 
+                                        nil 
+                                        t))) 
+    (when filename 
+      (find-file (cdr (assoc filename 
+                             file-assoc-list)))))) 
+(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
 
 ;; -------------------------------------
 ;; Theme and fonts
@@ -44,6 +94,9 @@
 ;; Magit
 (add-to-list 'load-path "~/.emacs.d/packages/magit.git")
 (require 'magit)
+(add-to-list 'auto-mode-alist '("COMMIT_EDITMSG$" . diff-mode))
+(set-face-foreground 'magit-diff-add "green3")
+(set-face-foreground 'magit-diff-del "red3")
 
 ;; -------------------------------------
 ;; YASnippet
@@ -86,6 +139,7 @@
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rb\\'" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.ru\\'" . ruby-mode))
+(add-to-list 'completion-ignored-extensions ".rbc")
 
 ;; -------------------------------------
 ;; YAML mode
@@ -101,6 +155,18 @@
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . rhtml-mode))
 (add-to-list 'auto-mode-alist '("\\.rjs\\'" . rhtml-mode))
 
+;; -------------------------------------
+;; JS2 mode
+(add-to-list 'load-path "~/.emacs.d/packages/js2-mode.git/")
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js\\(on\\)?$" . js2-mode))
+
+;; -------------------------------------
+;; Python mode
+(add-to-list 'load-path "~/.emacs.d/packages/python-mode.git/")
+(autoload 'python-mode "python-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ;; -------------------------------------
 ;; Custom variables block

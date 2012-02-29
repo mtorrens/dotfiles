@@ -39,6 +39,7 @@ bin/*/*/*.pyc
 !.emacs.d
 !.emacs.d/*
 .emacs.d/auto-save-list
+.emacs.d/places
 !.emacs.d/*/*
 !.emacs.d/*/*/*
 !.emacs.d/*/*/*/*
