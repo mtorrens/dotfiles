@@ -35,6 +35,16 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
+# Emacs
+!.emacs.d
+!.emacs.d/*
+.emacs.d/auto-save-list
+!.emacs.d/*/*
+!.emacs.d/*/*/*
+!.emacs.d/*/*/*/*
+!.emacs.d/*/*/*/*/*
+!.emacs.d/*/*/*/*/*/*
+
 # Ruby
 !.gemrc
 
