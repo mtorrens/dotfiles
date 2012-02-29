@@ -148,7 +148,7 @@
 \typeout{Use Packages}
 \RequirePackage{xkeyval}
 \RequirePackage{calc}
-\RequirePackage[cmyk]{xcolor}
+\RequirePackage[rgb]{xcolor}
 \RequirePackage{tikz}
 \RequirePackage{pgf}
 \RequirePackage{ifthen}
@@ -335,7 +335,7 @@
 %% Store all poster options in variables of the form \baposter@option
 %% choose-keys also store the index in \baposter@optionnr
 %% choose-keys typically also assign a function
-\definecolor{baposter@silver}{cmyk}{0,0,0,0.7}
+\definecolor{baposter@silver}{RGB}{109,110,113}
 \define@boolkey[ba]{poster}[baposter@]{grid}                 [false]       {}
 \define@boolkey[ba]{poster}[baposter@]{eyecatcher}           [true]        {}
 \define@cmdkey [ba]{poster}[baposter@]{headerheight}         [0.1\textheight]{}
