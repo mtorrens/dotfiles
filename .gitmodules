@@ -28,3 +28,9 @@
 [submodule ".emacs.d/packages/textmate.el.git"]
 	path = .emacs.d/packages/textmate.el.git
 	url = https://github.com/defunkt/textmate.el
+[submodule ".emacs.d/packages/zenburn-emacs.git"]
+	path = .emacs.d/packages/zenburn-emacs.git
+	url = https://github.com/bbatsov/zenburn-emacs.git
+[submodule ".emacs.d/packages/fill-column-indicator.git"]
+	path = .emacs.d/packages/fill-column-indicator.git
+	url = https://github.com/alpaker/Fill-Column-Indicator.git

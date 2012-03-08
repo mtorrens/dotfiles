@@ -38,7 +38,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/zenburn-emacs.git")
 (load-theme 'zenburn)
 
 (setq-default save-place t)
@@ -226,6 +226,7 @@
 (define-key *textmate-mode-map* [(control shift up)] 'textmate-column-up-with-select)
 (define-key *textmate-mode-map* [(control shift down)] 'textmate-column-down-with-select)
 
+
 ;; -------------------------------------
 ;; Magit
 
@@ -260,6 +261,12 @@
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+;; -------------------------------------
+;; Fill Column Indicator mode
+
+(add-to-list 'load-path "~/.emacs.d/packages/fill-column-indicator.git")
+(autoload 'fci-mode "fill-column-indicator" nil t)
 
 ;; -------------------------------------
 ;; AUCTeX
@@ -418,6 +425,9 @@
   ;; And bind kill-line to indent-killing-kill-line in
   ;; all source modes
   (local-set-key (kbd "C-k") 'kill-and-join-forward)
+
+  ;; Show me the fill column
+  (fci-mode 1)
 )
 
 (defun cpence-tab-stop-four ()
@@ -454,7 +464,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("d6a00ef5e53adf9b6fe417d2b4404895f26210c52bb8716971be106550cea257" default)))
+ '(custom-safe-themes (quote ("5727ad01be0a0d371f6e26c72f2ef2bafdc483063de26c88eaceea0674deb3d9" default)))
  '(safe-local-variable-values (quote ((encoding . utf-8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
