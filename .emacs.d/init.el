@@ -38,8 +38,8 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/solarized.git/")
-(load-theme 'solarized-light t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/")
+(load-theme 'zenburn)
 
 (setq-default save-place t)
 
@@ -62,12 +62,12 @@
 (cua-mode t)
 (delete-selection-mode t)
 
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2
+              indent-tabs-mode nil
+              fill-column 80)
 
 (setq transient-mark-mode t
       x-select-enable-clipboard t
-      fill-column 80
       cua-keep-region-after-copy t)
 
 
@@ -134,6 +134,18 @@
       (global-set-key [C-left] 'beginning-of-line)
       (global-set-key [C-right] 'end-of-line)))
 
+;; Let me bind C-[, I promise my keyboard has an ESC key
+;; Thanks to http://superuser.com/questions/173851/linux-remap-ctrl-key
+(define-key key-translation-map [?\C-\[] [(control left_bracket)])
+(define-key key-translation-map [escape] [?\e])
+(define-key function-key-map [escape] nil)
+(define-key function-key-map [?\e] nil)
+(when (boundp 'local-function-key-map)
+  (defun remove-escape-from-local-function-key-map ()
+    (define-key local-function-key-map [?\e] nil)
+    (define-key local-function-key-map [escape] nil))
+  (add-hook 'term-setup-hook 'remove-escape-from-local-function-key-map))
+
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
 (global-set-key [kp-home] 'beginning-of-line)
@@ -144,7 +156,7 @@
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 (global-set-key (kbd "C-l") 'goto-line)
 (global-set-key (kbd "C-o") 'find-file)
-(global-set-key (kbd "C-O") 'recentf-ido-find-file)
+(global-set-key (kbd "C-S-o") 'recentf-ido-find-file)
 (global-set-key (kbd "C-{") 'previous-buffer)
 (global-set-key (kbd "C-}") 'next-buffer)
 (global-set-key (kbd "C-w") (lambda () (interactive) (kill-buffer (current-buffer))))
@@ -196,6 +208,25 @@
 
 
 ;; -------------------------------------
+;; Textmate minor mode
+
+(add-to-list 'load-path "~/.emacs.d/packages/textmate.el.git")
+(require 'textmate)
+(textmate-mode)
+
+;; Redefine these to hit ctrl or cmd
+(define-key *textmate-mode-map* [(control return)] 'textmate-next-line)
+(define-key *textmate-mode-map* [(control left_bracket)] 'textmate-shift-left)
+(define-key *textmate-mode-map* [(control right_bracket)] 'textmate-shift-right)
+(define-key *textmate-mode-map* [(meta /)] 'comment-or-uncomment-region-or-line)
+(define-key *textmate-mode-map* [(control t)] 'textmate-goto-file)
+(define-key *textmate-mode-map* [(control shift t)] 'textmate-goto-symbol)
+(define-key *textmate-mode-map* [(control up)] 'textmate-column-up)
+(define-key *textmate-mode-map* [(control down)] 'textmate-column-down)
+(define-key *textmate-mode-map* [(control shift up)] 'textmate-column-up-with-select)
+(define-key *textmate-mode-map* [(control shift down)] 'textmate-column-down-with-select)
+
+;; -------------------------------------
 ;; Magit
 
 (add-to-list 'load-path "~/.emacs.d/packages/magit.git")
@@ -229,6 +260,19 @@
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+;; -------------------------------------
+;; AUCTeX
+
+(add-to-list 'load-path "~/.emacs.d/packages/auctex-11.86")
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(add-to-list 'completion-ignored-extensions ".aux")
+(add-to-list 'completion-ignored-extensions ".ent")
+(add-to-list 'completion-ignored-extensions ".toc")
+(add-to-list 'completion-ignored-extensions ".bbl")
+(add-to-list 'completion-ignored-extensions ".blg")
+(add-to-list 'completion-ignored-extensions ".fdb_latexmk")
 
 ;; -------------------------------------
 ;; CSS mode
@@ -332,12 +376,15 @@
   (local-set-key [f5] 'TeX-view)
   
   (TeX-PDF-mode 1)
-  (setq TeX-save-query nil)
-  (setq TeX-parse-self t)
-  (setq TeX-auto-save t)
-  (setq TeX-auto-untabify t)
-  (setq TeX-view-program-list '(("Open" "open %s.pdf")))
-  (setq TeX-view-program-selection '((output-pdf "Open")))
+  (setq TeX-save-query nil
+        TeX-parse-self t
+        TeX-auto-save t
+        TeX-auto-untabify t
+        TeX-command-default "Latexmk"
+        TeX-view-program-list '(("Open" "open %s.pdf"))
+        TeX-view-program-selection '((output-pdf "Open")))
+  (push '("Latexmk" "latexmk -f -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
+        TeX-command-list)
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
@@ -407,6 +454,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("d6a00ef5e53adf9b6fe417d2b4404895f26210c52bb8716971be106550cea257" default)))
  '(safe-local-variable-values (quote ((encoding . utf-8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

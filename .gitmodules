@@ -7,9 +7,6 @@
 [submodule ".emacs.d/packages/rhtml.git"]
 	path = .emacs.d/packages/rhtml.git
 	url = https://github.com/eschulte/rhtml.git
-[submodule ".emacs.d/packages/solarized.git"]
-	path = .emacs.d/packages/solarized.git
-	url = https://github.com/sellout/emacs-color-theme-solarized.git
 [submodule ".emacs.d/packages/yaml-mode.git"]
 	path = .emacs.d/packages/yaml-mode.git
 	url = https://github.com/yoshiki/yaml-mode.git
@@ -28,3 +25,6 @@
 [submodule ".emacs.d/packages/haml-mode.git"]
 	path = .emacs.d/packages/haml-mode.git
 	url = https://github.com/nex3/haml-mode.git
+[submodule ".emacs.d/packages/textmate.el.git"]
+	path = .emacs.d/packages/textmate.el.git
+	url = https://github.com/defunkt/textmate.el
