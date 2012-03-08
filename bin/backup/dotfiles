@@ -12,13 +12,13 @@ cp ~/.hushlogin $DOTFILES/dothushlogin
 cp ~/.inputrc $DOTFILES/dotinputrc
 cp ~/.profile $DOTFILES/dotprofile
 
-cp ~/.colordiffrc $DOTFILES/dotcolordiffrc
 cp ~/.nanorc $DOTFILES/dotnanorc
 cp ~/.hgrc $DOTFILES/dothgrc
 cp ~/.gemrc $DOTFILES/dotgemrc
 cp ~/.gtkrc-2.0 $DOTFILES/dotgtkrc-2.0
 cp ~/.gnupg/gpg.conf $DOTFILES/gpg.conf
 cp ~/.gitconfig $DOTFILES/dotgitconfig
+cp ~/.gdbinit $DOTFILES/dotgdbinit
 
 rm -rf $DOTFILES/dotprivate
 cp -Rf ~/.private $DOTFILES/dotprivate
@@ -37,3 +37,5 @@ cp -Rf ~/.config/pianobar $DOTFILES/dotconfig/pianobar
 rm -rf $DOTFILES/bin
 cp -Rf ~/bin $DOTFILES/bin
 
+rm -rf $DOTFILES/dotemacs.d
+cp -Rf ~/.emacs.d $DOTFILES/dotemacs.d
