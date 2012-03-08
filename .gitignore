@@ -47,6 +47,9 @@ bin/*/*/*.pyc
 !.emacs.d/*/*/*/*/*
 !.emacs.d/*/*/*/*/*/*
 
+# Seriously, no compiled elisp
+*.elc
+
 # Ruby
 !.gemrc
 
