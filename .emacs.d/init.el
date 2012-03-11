@@ -1,5 +1,22 @@
 
 ;; -------------------------------------
+;; Custom variables block
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("c86f25be4f9d7fa880bd23fe388bd126deed110aaa51f84ed74a5e232391db05" default)))
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; -------------------------------------
 ;; Add a bunch of paths
 
 (push "/usr/local/bin" exec-path)
@@ -65,6 +82,28 @@
 (setq-default tab-width 2
               indent-tabs-mode nil
               fill-column 80)
+
+(defun set-tab-stop-width (width)
+  "Set all tab stops to WIDTH in current buffer.
+    
+   This updates `tab-stop-list', but not `tab-width'.
+    
+   By default, `indent-for-tab-command' uses tabs to indent, see
+   `indent-tabs-mode'."
+  (interactive "nTab width: ")
+  (let* ((max-col (car (last tab-stop-list)))
+         ;; If width is not a factor of max-col,
+         ;; then max-col could be reduced with each call.
+         (n-tab-stops (/ max-col width)))
+    (set (make-local-variable 'tab-stop-list)
+         (mapcar (lambda (x) (* width x))
+                 (number-sequence 1 n-tab-stops)))
+    ;; So preserve max-col, by adding to end.
+    (unless (zerop (% max-col width))
+      (setcdr (last tab-stop-list)
+              (list max-col)))))
+
+(set-tab-stop-width 2)
 
 (setq transient-mark-mode t
       x-select-enable-clipboard t
@@ -320,6 +359,13 @@
 (add-to-list 'auto-mode-alist '("\\.rjs\\'" . rhtml-mode))
 
 ;; -------------------------------------
+;; Cucumber feature mode
+
+(add-to-list 'load-path "~/.emacs.d/packages/cucumber.el.git/")
+(autoload 'feature-mode "feature-mode" nil t)
+(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+
+;; -------------------------------------
 ;; JS2 mode
 
 (add-to-list 'load-path "~/.emacs.d/packages/js2-mode.git/")
@@ -433,6 +479,7 @@
 (defun cpence-tab-stop-four ()
   (interactive)
   (setq tab-width 4)
+  (set-tab-stop-width 4)
   (setq standard-indent 4)
 )
 
@@ -455,20 +502,3 @@
 (add-hook 'yaml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'cpence-code-mode-hook)
 
-
-;; -------------------------------------
-;; Custom variables block
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("5727ad01be0a0d371f6e26c72f2ef2bafdc483063de26c88eaceea0674deb3d9" default)))
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

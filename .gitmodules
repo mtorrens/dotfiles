@@ -34,3 +34,6 @@
 [submodule ".emacs.d/packages/fill-column-indicator.git"]
 	path = .emacs.d/packages/fill-column-indicator.git
 	url = https://github.com/alpaker/Fill-Column-Indicator.git
+[submodule ".emacs.d/packages/cucumber.el.git"]
+	path = .emacs.d/packages/cucumber.el.git
+	url = https://github.com/michaelklishin/cucumber.el.git
