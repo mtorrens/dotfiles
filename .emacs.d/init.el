@@ -44,6 +44,7 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 (mouse-wheel-mode t)
+(require 'smooth-scrolling)
 
 (set-fringe-style -1)
 
@@ -102,8 +103,6 @@
     (unless (zerop (% max-col width))
       (setcdr (last tab-stop-list)
               (list max-col)))))
-
-(set-tab-stop-width 2)
 
 (setq transient-mark-mode t
       x-select-enable-clipboard t
@@ -224,14 +223,20 @@
 
 (global-set-key [f1] 'eshell)
 
+(defun cpence-eshell-mode-hook ()
+  (interactive)
+  (define-key eshell-mode-map "\C-a" 'eshell-bol)
+  ;; FIXME: this doesn't work, what's the right way?
+  ;;(hl-line-mode 0)
+)
+
 (eval-after-load 'esh-opt
   '(progn
      (require 'em-cmpl)
      (require 'em-prompt)
      (require 'em-term)
      (setenv "PAGER" "cat")
-     (add-hook 'eshell-mode-hook ;; for some reason this needs to be a hook
-               '(lambda () (define-key eshell-mode-map "\C-a" 'eshell-bol)))
+     (add-hook 'eshell-mode-hook 'cpence-eshell-mode-hook)
      (add-to-list 'eshell-visual-commands "ssh")
      (add-to-list 'eshell-visual-commands "tail")
      (add-to-list 'eshell-command-completions-alist
@@ -417,6 +422,7 @@
   (interactive)
   (longlines-mode 1)
   (setq indent-line-function 'insert-tab)
+  (set-tab-stop-width 2)
 )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
 
