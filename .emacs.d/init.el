@@ -7,8 +7,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("c86f25be4f9d7fa880bd23fe388bd126deed110aaa51f84ed74a5e232391db05" default)))
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
+ '(custom-safe-themes (quote ("25a134a97056ac53168641b47caeb4e9db3cda54bd89a486bae768965f9f51af" default)))
+ '(safe-local-variable-values (quote ((longlines-mode) (encoding . utf-8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -56,8 +56,8 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/zenburn-emacs.git")
-(load-theme 'zenburn)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/railscasts-theme")
+(load-theme 'railscasts)
 
 (setq-default save-place t)
 
@@ -216,6 +216,8 @@
 (global-set-key (kbd "C-f") 'isearch-forward)
 (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
 
+;; Fill-paragraph is useful sometimes
+(global-set-key (kbd "C-p") 'fill-paragraph)
 
 
 ;; -------------------------------------
@@ -311,6 +313,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/fill-column-indicator.git")
 (autoload 'fci-mode "fill-column-indicator" nil t)
+(setq fci-rule-color "#2B2B2B")
 
 ;; -------------------------------------
 ;; AUCTeX
@@ -324,6 +327,7 @@
 (add-to-list 'completion-ignored-extensions ".bbl")
 (add-to-list 'completion-ignored-extensions ".blg")
 (add-to-list 'completion-ignored-extensions ".fdb_latexmk")
+(setq font-latex-fontify-sectioning 'color)
 
 ;; -------------------------------------
 ;; CSS mode
@@ -428,6 +432,10 @@
 
 (defun cpence-latex-mode-hook ()
   (interactive)
+
+  ;; Patch up some variables
+  (make-local-variable 'indent-line-function)
+  (setq indent-line-function 'LaTeX-indent-line)
   
   (local-set-key (kbd "C-r") 'TeX-command-master)
   (local-set-key [f7] 'TeX-command-master)
