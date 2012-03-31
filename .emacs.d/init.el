@@ -108,6 +108,9 @@
       x-select-enable-clipboard t
       cua-keep-region-after-copy t)
 
+(require 'autopair)
+(autopair-global-mode)
+
 
 ;; -------------------------------------
 ;; File writing
@@ -436,6 +439,11 @@
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'LaTeX-indent-line)
+
+  ;; Fix autopair mode
+  (set (make-local-variable 'autopair-handle-action-fns)
+       (list #'autopair-default-handle-action
+             #'autopair-latex-mode-paired-delimiter-action))
   
   (local-set-key (kbd "C-r") 'TeX-command-master)
   (local-set-key [f7] 'TeX-command-master)
