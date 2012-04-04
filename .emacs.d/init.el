@@ -108,8 +108,8 @@
       x-select-enable-clipboard t
       cua-keep-region-after-copy t)
 
+;; We enable this buffer-by-buffer
 (require 'autopair)
-(autopair-global-mode)
 
 
 ;; -------------------------------------
@@ -405,6 +405,9 @@
 (defun cpence-c-mode-hook ()
   (interactive)
 
+  ;; Electric-C mode supersedes autopairs
+  (autopair-mode -1)
+
   ;; Engage automatic-everything mode
   (c-toggle-auto-state 1)
 
@@ -418,8 +421,9 @@
 (add-hook 'c-mode-common-hook 'cpence-c-mode-hook)
 
 ;; Set indentation options
-(setq-default c-default-style "bsd")
-(setq c-basic-offset 4)
+(require 'google-c-style)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
 
 ;; -------------------------------------
@@ -427,6 +431,7 @@
 
 (defun cpence-text-mode-hook ()
   (interactive)
+  (autopair-mode)
   (longlines-mode 1)
   (setq indent-line-function 'insert-tab)
   (set-tab-stop-width 2)
@@ -436,6 +441,9 @@
 (defun cpence-latex-mode-hook ()
   (interactive)
 
+  ;; Autopair
+  (autopair-mode)
+  
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'LaTeX-indent-line)
@@ -465,7 +473,7 @@
 
 (defun cpence-markdown-mode-hook ()
   (interactive)
-
+  
   ;; Actually insert tab characters and newlines, indentation stuff
   ;; goes crazy in markdown-mode for some reason
   (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)
@@ -487,6 +495,9 @@
 (defun cpence-code-mode-hook ()
   (interactive)
 
+  ;; Autopair in most code modes
+  (autopair-mode)
+  
   ;; Newline = indent
   (local-set-key (kbd "RET") 'newline-and-indent)
 
@@ -498,27 +509,16 @@
   (fci-mode 1)
 )
 
-(defun cpence-tab-stop-four ()
-  (interactive)
-  (setq tab-width 4)
-  (set-tab-stop-width 4)
-  (setq standard-indent 4)
-)
-
 ;; There's no "general" mode-hook that handles all of the
 ;; programming modes, so we have to set all these hooks
-;; ourselves.  Change tab stops to four for heavy-duty
-;; programming languages where I like that sort of thing.
+;; ourselves.
 (add-hook 'c-mode-common-hook 'cpence-code-mode-hook)
-(add-hook 'c-mode-common-hook 'cpence-tab-stop-four)
 (add-hook 'html-mode-hook 'cpence-code-mode-hook)
 (add-hook 'css-mode-hook 'cpence-code-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-code-mode-hook)
-(add-hook 'asm-mode-hook 'cpence-tab-stop-four)
 (add-hook 'xml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'js2-mode-hook 'cpence-code-mode-hook)
 (add-hook 'python-mode-hook 'cpence-code-mode-hook)
-(add-hook 'python-mode-hook 'cpence-tab-stop-four)
 (add-hook 'ruby-mode-hook 'cpence-code-mode-hook)
 (add-hook 'rhtml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'yaml-mode-hook 'cpence-code-mode-hook)
