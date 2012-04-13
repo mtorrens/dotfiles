@@ -54,7 +54,8 @@
  '(font-latex-bold-face ((t (:foreground nil :weight bold))))
  '(font-latex-italic-face ((t (:foreground nil :slant italic))))
  '(font-latex-string-face ((t (:foreground "#A5C261"))))
- '(font-latex-warning ((t (:inherit font-lock-warning))))
+ '(font-latex-warning ((t (:inherit font-lock-warning-face))))
+ '(font-latex-slide-title-face ((t (:inherit font-lock-type-face :weight normal :height 1.0))))
 
  ;; ido
  '(ido-only-match ((t (:foreground "#A5C261"))))

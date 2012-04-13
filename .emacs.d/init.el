@@ -7,7 +7,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("25a134a97056ac53168641b47caeb4e9db3cda54bd89a486bae768965f9f51af" default)))
+ '(custom-safe-themes (quote ("6ab477f0e0150622dfe4e8d193f226df15497f688cfa8bfc1909580eb5d81dff" default)))
  '(safe-local-variable-values (quote ((longlines-mode) (encoding . utf-8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
