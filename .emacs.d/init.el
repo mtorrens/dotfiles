@@ -480,6 +480,8 @@
   ;; goes crazy in markdown-mode for some reason
   (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)
   (define-key markdown-mode-map (kbd "C-m") 'newline)
+
+  (set-tab-stop-width 4)
 )
 (add-hook 'markdown-mode-hook 'cpence-markdown-mode-hook)
 
