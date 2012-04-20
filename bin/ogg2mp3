@@ -17,9 +17,9 @@ echo "genre: $GENRE"
 echo "date: $DATE"
 echo "track: $TRACK"
  
-id3v2 --artist "$ARTIST" --album "$ALBUM" \
---song "$TITLE" --genre "$GENRE" \
- --year "$DATE" --track "$TRACK" \
+eyeD3 --artist="$ARTIST" --album="$ALBUM" \
+--title="$TITLE" --genre="$GENRE" \
+ --year="$DATE" --track="$TRACK" \
 "$(basename "$1" .tag).mp3"
  
 }
