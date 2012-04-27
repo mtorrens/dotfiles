@@ -8,7 +8,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes (quote ("6ab477f0e0150622dfe4e8d193f226df15497f688cfa8bfc1909580eb5d81dff" default)))
- '(safe-local-variable-values (quote ((longlines-mode) (encoding . utf-8)))))
+ '(safe-local-variable-values (quote ((encoding . utf-8)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -51,7 +51,6 @@
 (blink-cursor-mode t)
 (line-number-mode t)
 (column-number-mode t)
-(global-hl-line-mode t)
 (show-paren-mode t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -77,7 +76,6 @@
 ;; -------------------------------------
 ;; Editing
 
-(cua-mode t)
 (delete-selection-mode t)
 
 (setq-default tab-width 2
@@ -105,11 +103,52 @@
               (list max-col)))))
 
 (setq transient-mark-mode t
-      x-select-enable-clipboard t
-      cua-keep-region-after-copy t)
+      x-select-enable-clipboard t)
 
 ;; We enable this buffer-by-buffer
 (require 'autopair)
+
+
+;; -------------------------------------
+;; Visual-line-mode with a wrap column
+(defvar visual-wrap-column nil)
+
+(defun set-visual-wrap-column (new-wrap-column &optional buffer)
+  "Force visual line wrap at NEW-WRAP-COLUMN in BUFFER (defaults
+    to current buffer) by setting the right-hand margin on every
+    window that displays BUFFER.  A value of NIL or 0 for
+    NEW-WRAP-COLUMN disables this behavior."
+  (interactive (list (read-number "New visual wrap column, 0 to disable: " (or visual-wrap-column fill-column 0))))
+  (if (and (numberp new-wrap-column)
+           (zerop new-wrap-column))
+      (setq new-wrap-column nil))
+  (with-current-buffer (or buffer (current-buffer))
+    (visual-line-mode t)
+    (set (make-local-variable 'visual-wrap-column) new-wrap-column)
+    (add-hook 'window-configuration-change-hook 'update-visual-wrap-column nil t)
+    (let ((windows (get-buffer-window-list)))
+      (while windows
+        (when (window-live-p (car windows))
+          (with-selected-window (car windows)
+            (update-visual-wrap-column)))
+        (setq windows (cdr windows))))))
+
+(defun update-visual-wrap-column ()
+  (if (not visual-wrap-column)
+      (set-window-margins nil nil)
+    (let* ((current-margins (window-margins))
+           (right-margin (or (cdr current-margins) 0))
+           (current-width (window-width))
+           (current-available (+ current-width right-margin)))
+      (if (<= current-available visual-wrap-column)
+          (set-window-margins nil (car current-margins))
+        (set-window-margins nil (car current-margins)
+                            (- current-available visual-wrap-column))))))
+
+(defun visual-line-line-range ()
+  (save-excursion
+    (cons (progn (vertical-motion 0) (point))
+          (progn (vertical-motion 1) (point)))))
 
 
 ;; -------------------------------------
@@ -168,59 +207,28 @@
 ;; -------------------------------------
 ;; Global key bindings
 
-;; On Mac OS X, turn Command into Ctrl
+;; On Mac OS X, turn Command into Super
 (if (string-equal system-type "darwin")
     (progn
-      (setq ns-command-modifier 'control)
-      (global-set-key [C-left] 'beginning-of-line)
-      (global-set-key [C-right] 'end-of-line)))
+      (setq ns-command-modifier 'super)))
 
-;; Let me bind C-[, I promise my keyboard has an ESC key
-;; Thanks to http://superuser.com/questions/173851/linux-remap-ctrl-key
-(define-key key-translation-map [?\C-\[] [(control left_bracket)])
-(define-key key-translation-map [escape] [?\e])
-(define-key function-key-map [escape] nil)
-(define-key function-key-map [?\e] nil)
-(when (boundp 'local-function-key-map)
-  (defun remove-escape-from-local-function-key-map ()
-    (define-key local-function-key-map [?\e] nil)
-    (define-key local-function-key-map [escape] nil))
-  (add-hook 'term-setup-hook 'remove-escape-from-local-function-key-map))
-
-(global-set-key [home] 'beginning-of-line)
-(global-set-key [end] 'end-of-line)
-(global-set-key [kp-home] 'beginning-of-line)
-(global-set-key [kp-end] 'end-of-line)
+;; Fix home and end on Mac OS X
+(global-set-key [home] 'beginning-of-visual-line)
+(global-set-key [end] 'end-of-visual-line)
+(global-set-key [kp-home] 'beginning-of-visual-line)
+(global-set-key [kp-end] 'end-of-visual-line)
 (global-set-key [kp-delete] 'delete-char)
+(if (string-equal system-type "darwin")
+    (progn
+      (global-set-key [s-left] 'beginning-of-visual-line)
+      (global-set-key [s-right] 'end-of-visual-line)))
 
-;; Set some other comfort keys from other editors
-(global-set-key (kbd "C-a") 'mark-whole-buffer)
-(global-set-key (kbd "C-l") 'goto-line)
-(global-set-key (kbd "C-o") 'find-file)
-(global-set-key (kbd "C-S-o") 'recentf-ido-find-file)
-(global-set-key (kbd "C-{") 'previous-buffer)
-(global-set-key (kbd "C-}") 'next-buffer)
-(global-set-key (kbd "C-w") (lambda () (interactive) (kill-buffer (current-buffer))))
-(global-set-key (kbd "C-q") 'save-buffers-kill-terminal)
-(global-set-key (kbd "M-q") 'quoted-insert)
-
-(global-set-key (kbd "<C-prior>") (lambda () (interactive) (goto-char (point-min))))
-(global-set-key (kbd "<C-next>") (lambda () (interactive) (goto-char (point-max))))
-(global-set-key (kbd "C-`") (lambda () (interactive nil) (raise-frame (next-frame))))
-
-(global-set-key (kbd "<M-tab>") 'ido-switch-buffer)
+;; Enable ido buffer switching
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-(global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
 (global-set-key (kbd "C-x B") 'ibuffer)
 
-;; Add save on C-s, move find to C-f
-(global-set-key (kbd "C-s") 'save-buffer)
-(global-set-key (kbd "C-S-s") 'save-some-buffers)
-(global-set-key (kbd "C-f") 'isearch-forward)
-(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
-
-;; Fill-paragraph is useful sometimes
-(global-set-key (kbd "C-p") 'fill-paragraph)
+;; Enable recent file opening (I don't use find-file-read-only)
+(global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
 
 
 ;; -------------------------------------
@@ -231,8 +239,6 @@
 (defun cpence-eshell-mode-hook ()
   (interactive)
   (define-key eshell-mode-map "\C-a" 'eshell-bol)
-  ;; FIXME: this doesn't work, what's the right way?
-  ;;(hl-line-mode 0)
 )
 
 (eval-after-load 'esh-opt
@@ -254,6 +260,62 @@
       eshell-save-history-on-exit t
       eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'"
       eshell-directory-name "~/.emacs.d/eshell")
+
+
+;; -------------------------------------
+;; Org-mode
+
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+
+(global-set-key [f12] (lambda () (interactive) (org-agenda nil "n")))
+(global-set-key (kbd "<S-f12>") (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/todo.org")))
+
+(setq org-directory "~/Dropbox/Charles/Personal/Org/")
+(setq org-agenda-files '("~/Dropbox/Charles/Personal/Org/"))
+(setq org-default-notes-file (concat org-directory "todo.org"))
+
+(setq org-log-done 'time
+      org-use-fast-todo-selection t
+      org-M-RET-may-split-line nil
+      org-agenda-ndays 7
+      org-agenda-show-all-dates t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-start-on-weekday nil
+      org-agenda-skip-additional-timestamps-same-entry nil
+      org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9)))
+      org-refile-use-outline-path 'file
+      org-outline-path-complete-in-steps t
+      org-refile-allow-creating-parent-nodes (quote confirm)
+      org-completion-use-ido t
+      calenar-date-mode 'iso)
+
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+              (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)"))))
+
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "#DA4939" :weight bold)
+              ("NEXT" :foreground "#6D9CBE" :weight bold)
+              ("DONE" :foreground "#A5C261" :weight bold)
+              ("WAITING" :foreground "#CC7833" :weight bold)
+              ("CANCELLED" :foreground "#FFC66D" :weight bold))))
+
+(setq org-agenda-custom-commands
+      '(("n" "Agenda and next actions"
+         ((agenda "")
+          (todo "NEXT")))))
+
+(defun cpence-org-mode-hook ()
+  (interactive)
+
+  ;; Patch up some variables
+  (make-local-variable 'indent-line-function)
+  (setq indent-line-function 'org-indent-line-function)
+)
+(add-hook 'org-mode-hook 'cpence-org-mode-hook)
 
 
 ;; -------------------------------------
@@ -434,7 +496,13 @@
 (defun cpence-text-mode-hook ()
   (interactive)
   (autopair-mode)
-  (longlines-mode 1)
+
+  (hl-line-mode)
+  (set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)
+
+  (visual-line-mode)
+  (set-visual-wrap-column 82)
+
   (setq indent-line-function 'insert-tab)
   (set-tab-stop-width 2)
 )
@@ -454,11 +522,6 @@
   (set (make-local-variable 'autopair-handle-action-fns)
        (list #'autopair-default-handle-action
              #'autopair-latex-mode-paired-delimiter-action))
-  
-  (local-set-key (kbd "C-r") 'TeX-command-master)
-  (local-set-key [f7] 'TeX-command-master)
-  (local-set-key (kbd "C-S-r") 'TeX-view)
-  (local-set-key [f5] 'TeX-view)
   
   (TeX-PDF-mode 1)
   (setq TeX-save-query nil
@@ -499,8 +562,9 @@
 (defun cpence-code-mode-hook ()
   (interactive)
 
-  ;; Autopair in most code modes
+  ;; Autopair and hl-line
   (autopair-mode)
+  (hl-line-mode)
   
   ;; Newline = indent
   (local-set-key (kbd "RET") 'newline-and-indent)
