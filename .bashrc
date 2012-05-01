@@ -111,5 +111,7 @@ if which rbenv > /dev/null; then
       rbenv shell --unset
     done
   }
+  
+  export RBXOPT=-X19
 fi
 
