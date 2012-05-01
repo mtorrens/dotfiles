@@ -11,7 +11,7 @@ if [ "$1" = "--help" ]; then
 fi
 
 MUSIC_DIR=/Volumes/share/Music/Library
-OUTPUT_DIR=$HOME/Development/cpence.github.com/music
+OUTPUT_DIR=$HOME/Dropbox/Public/Music
 
 
 rm -f $OUTPUT_DIR/*.html
