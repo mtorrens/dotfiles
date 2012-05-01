@@ -284,6 +284,7 @@
       org-agenda-skip-scheduled-if-done t
       org-agenda-start-on-weekday nil
       org-agenda-skip-additional-timestamps-same-entry nil
+      org-agenda-window-setup 'current-window
       org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9)))
       org-refile-use-outline-path 'file
