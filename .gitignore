@@ -38,9 +38,7 @@ bin/*/*/*.pyc
 # Emacs
 !.emacs.d
 !.emacs.d/*
-.emacs.d/auto-save-list
-.emacs.d/bookmarks
-.emacs.d/places
+.emacs.d/cache
 .emacs.d/eshell
 !.emacs.d/*/*
 !.emacs.d/*/*/*

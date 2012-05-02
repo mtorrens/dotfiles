@@ -70,7 +70,7 @@
       query-replace-highlight t
       uniquify-buffer-name-style 'forward
       color-theme-is-global t
-      save-place-file "~/.emacs.d/places")
+      save-place-file "~/.emacs.d/cache/places")
 
 
 ;; -------------------------------------
@@ -104,9 +104,6 @@
 
 (setq transient-mark-mode t
       x-select-enable-clipboard t)
-
-;; We enable this buffer-by-buffer
-(require 'autopair)
 
 
 ;; -------------------------------------
@@ -176,14 +173,14 @@
 
 (require 'recentf)
 (recentf-mode 1)
-(setq recentf-exclude '(".ido.last" "~$"))
+(setq recentf-exclude '("ido.last" "~$"))
 
 (ido-mode t)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
       ido-use-filename-at-point 'guess
-      ido-max-prospects 10)
+      ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
 
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
@@ -231,6 +228,8 @@
 ;; Enable recent file opening (I don't use find-file-read-only)
 (global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
 
+;; Go-to-line should be easy
+(global-set-key "\C-xg" 'goto-line)
 
 ;; -------------------------------------
 ;; Eshell
@@ -293,7 +292,8 @@
       org-outline-path-complete-in-steps t
       org-refile-allow-creating-parent-nodes (quote confirm)
       org-completion-use-ido t
-      calenar-date-mode 'iso)
+      calenar-date-mode 'iso
+      bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -450,9 +450,6 @@
 (defun cpence-c-mode-hook ()
   (interactive)
 
-  ;; Electric-C mode supersedes autopairs
-  (autopair-mode -1)
-
   ;; Engage automatic-everything mode
   (c-toggle-auto-state 1)
 
@@ -478,7 +475,6 @@
 
 (defun cpence-text-mode-hook ()
   (interactive)
-  (autopair-mode)
 
   (hl-line-mode)
   (set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)
@@ -494,18 +490,10 @@
 (defun cpence-latex-mode-hook ()
   (interactive)
 
-  ;; Autopair
-  (autopair-mode)
-  
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'LaTeX-indent-line)
 
-  ;; Fix autopair mode
-  (set (make-local-variable 'autopair-handle-action-fns)
-       (list #'autopair-default-handle-action
-             #'autopair-latex-mode-paired-delimiter-action))
-  
   (TeX-PDF-mode 1)
   (setq TeX-save-query nil
         TeX-parse-self t
@@ -545,8 +533,7 @@
 (defun cpence-code-mode-hook ()
   (interactive)
 
-  ;; Autopair and hl-line
-  (autopair-mode)
+  ;; Highlight current line
   (hl-line-mode)
   
   ;; Newline = indent
