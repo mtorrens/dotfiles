@@ -322,26 +322,6 @@
 
 
 ;; -------------------------------------
-;; Textmate minor mode
-
-(add-to-list 'load-path "~/.emacs.d/packages/textmate.el.git")
-(require 'textmate)
-(textmate-mode)
-
-;; Redefine these to hit ctrl or cmd
-(define-key *textmate-mode-map* [(control return)] 'textmate-next-line)
-(define-key *textmate-mode-map* [(control left_bracket)] 'textmate-shift-left)
-(define-key *textmate-mode-map* [(control right_bracket)] 'textmate-shift-right)
-(define-key *textmate-mode-map* [(meta /)] 'comment-or-uncomment-region-or-line)
-(define-key *textmate-mode-map* [(control t)] 'textmate-goto-file)
-(define-key *textmate-mode-map* [(control shift t)] 'textmate-goto-symbol)
-(define-key *textmate-mode-map* [(control up)] 'textmate-column-up)
-(define-key *textmate-mode-map* [(control down)] 'textmate-column-down)
-(define-key *textmate-mode-map* [(control shift up)] 'textmate-column-up-with-select)
-(define-key *textmate-mode-map* [(control shift down)] 'textmate-column-down-with-select)
-
-
-;; -------------------------------------
 ;; Magit
 
 (add-to-list 'load-path "~/.emacs.d/packages/magit.git")
