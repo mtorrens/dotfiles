@@ -176,6 +176,7 @@
 
 (require 'recentf)
 (recentf-mode 1)
+(setq recentf-exclude '(".ido.last" "~$"))
 
 (ido-mode t)
 (setq ido-enable-prefix nil
@@ -270,6 +271,7 @@
 
 (global-set-key [f12] (lambda () (interactive) (org-agenda nil "n")))
 (global-set-key (kbd "<S-f12>") (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/todo.org")))
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq org-directory "~/Dropbox/Charles/Personal/Org/")
 (setq org-agenda-files '("~/Dropbox/Charles/Personal/Org/"))
