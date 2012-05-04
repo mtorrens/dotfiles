@@ -3,7 +3,6 @@
 # off-site backup setup can get to them.
 
 ~/bin/backup/bookmarks-chrome
-~/bin/backup/calendar
 ~/bin/backup/contacts-gmail-dl
 ~/bin/backup/dotfiles
 ~/bin/backup/mendeley
