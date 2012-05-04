@@ -16,10 +16,20 @@
       wl-temporary-file-directory "~/Dropbox/Charles/Mail/"
       wl-icon-directory "~/.emacs.d/packages/wl/icons/"
 
+      ;; I won't much use refile in the family account, but when I do it's
+      ;; probably to put a message into the Hold folder.
       wl-refile-rule-alist '(
                              (("To" "Cc" "Delivered-To")
-                              ("julia\.and@charlespence\.net" . ".Family/all_mail")
+                              ("julia\.and@charlespence\.net" . ".Family/hold")
                               ("." . ".Personal/storage/2012")))
+
+      ;; For offlineimap with GMail, we just want to delete the messages outright,
+      ;; not trash them.
+      wl-dispose-folder-alist '(("\.Family" . remove)
+                                ("\.Personal" . trash))
+
+      ;; Don't check the storage folders unless I tell you to do it manually.
+      wl-auto-uncheck-folder-list '("\.Personal/storage")
       )
 
 ;; Invert behaviour of with and without argument replies. (AKA: Default to

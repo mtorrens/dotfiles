@@ -4,6 +4,7 @@ PERSONAL {
   .Personal/outbox
   .Personal/drafts
   .Personal/sent
+  .Personal/trash
 
   .Personal/lists
   .Personal/action

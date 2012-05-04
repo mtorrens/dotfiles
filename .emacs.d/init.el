@@ -327,7 +327,8 @@
       org-completion-use-ido t
       org-attach-method 'cp
       calenar-date-mode 'iso
-      bookmark-default-file "~/.emacs.d/cache/bookmarks")
+      bookmark-default-file "~/.emacs.d/cache/bookmarks"
+      org-id-locations-file "~/.emacs.d/cache/org-id-locations")
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
