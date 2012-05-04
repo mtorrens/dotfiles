@@ -263,13 +263,44 @@
 
 
 ;; -------------------------------------
+;; W3M / Wanderlust
+
+(add-to-list 'load-path "~/.emacs.d/packages/apel")
+(add-to-list 'load-path "~/.emacs.d/packages/flim")
+(add-to-list 'load-path "~/.emacs.d/packages/semi")
+(add-to-list 'load-path "~/.emacs.d/packages/wl")
+(add-to-list 'load-path "~/.emacs.d/packages/w3m")
+
+(setq browse-url-browser-function 'w3m-browse-url)
+(require 'w3m-load)
+(require 'mime-w3m)
+
+(setq w3m-use-cookies t
+      mime-w3m-safe-url-regexp nil)
+
+;; Fix W3M's silly keys
+(define-key w3m-mode-map [left] 'backward-char)
+(define-key w3m-mode-map [right] 'forward-char)
+(define-key w3m-mode-map [up] 'previous-line)
+(define-key w3m-mode-map [down] 'next-line)
+(define-key w3m-minor-mode-map [left] 'backward-char)
+(define-key w3m-minor-mode-map [right] 'forward-char)
+(define-key w3m-minor-mode-map [up] 'previous-line)
+(define-key w3m-minor-mode-map [down] 'next-line)
+
+(autoload 'wl "wl" "Wanderlust" t)
+(global-set-key [f12] 'wl)
+
+
+;; -------------------------------------
 ;; Org-mode
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 (global-set-key "\C-cl" 'org-store-link)
 
-(global-set-key [f12] (lambda () (interactive) (org-agenda nil "n")))
-(global-set-key (kbd "<S-f12>") (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/todo.org")))
+(global-set-key [f11] (lambda () (interactive) (org-agenda nil "n")))
+(global-set-key [f9] (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/")))
+(global-set-key [f10] 'org-agenda)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq org-directory "~/Dropbox/Charles/Personal/Org/")
@@ -292,6 +323,7 @@
       org-outline-path-complete-in-steps t
       org-refile-allow-creating-parent-nodes (quote confirm)
       org-completion-use-ido t
+      org-attach-method 'cp
       calenar-date-mode 'iso
       bookmark-default-file "~/.emacs.d/cache/bookmarks")
 
@@ -308,8 +340,10 @@
 
 (setq org-agenda-custom-commands
       '(("n" "Agenda and next actions"
-         ((agenda "")
-          (todo "NEXT")))))
+         ((todo "NEXT")
+          (agenda "")))
+        ("P" "Timestamped items in the past"
+         ((tags "TIMESTAMP<=\"<now>\"")))))
 
 (defun cpence-org-mode-hook ()
   (interactive)
