@@ -290,6 +290,8 @@
 
 (autoload 'wl "wl" "Wanderlust" t)
 (global-set-key [f12] 'wl)
+(setq wl-init-file "~/.emacs.d/wl.el"
+      wl-folders-file "~/.emacs.d/folders")
 
 
 ;; -------------------------------------
