@@ -2,6 +2,7 @@
 
 (setq elmo-maildir-folder-path "~/Dropbox/Charles/Mail/"
       elmo-archive-folder-path "~/Dropbox/Charles/Mail/"
+      elmo-lost+found-folder ".Personal/lost+found"
 
       wl-from "Charles Pence <charles@charlespence.net>"
       wl-forward-subject-prefix "Fwd: "
