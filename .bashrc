@@ -48,15 +48,8 @@ export PS1="${PROMPT}${PR_TITLEBAR}"
 ###############################################################################
 # Configuration for other programs/systems
 
-# Nano, unless I have TextMate
-if [ -e '/usr/local/bin/mate' ]; then
-  export EDITOR="mate -w"
-  export GIT_EDITOR="mate --name 'Git Commit Message' -w -l 1"
-else
-  export EDITOR=nano
-fi
-
-# I don't want a history for less
+export EDITOR=nano
+export MAILDIR=$HOME/Dropbox/Charles/Mail/
 export LESSHISTFILE=-
 
 if [ `uname -s` = "Darwin" ]; then
