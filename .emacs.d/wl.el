@@ -1,4 +1,5 @@
 ; -*- Mode: Emacs-Lisp; -*- 
+(require 'elmo-search)
 
 (setq elmo-maildir-folder-path "~/Dropbox/Charles/Mail/"
       elmo-archive-folder-path "~/Dropbox/Charles/Mail/"
@@ -31,7 +32,31 @@
 
       ;; Don't check the storage folders unless I tell you to do it manually.
       wl-auto-uncheck-folder-list '("\.Personal/storage")
+
+      ;; Set all the headers
+      ;; ignore  all fields
+      wl-message-ignored-field-list '("^.*:")
+      wl-message-visible-field-list '("^To:"
+                                      "^Cc:"
+                                      "^From:"
+                                      "^Subject:"
+                                      "^Date:")
+      wl-message-sort-field-list '("^From:"
+                                   "^To:"
+                                   "^Cc:"
+                                   "^Date:"
+                                   "^Subject:")
       )
+
+;; Enable mu search
+(elmo-search-register-engine
+ 'mu 'local-file
+ :prog "mu"
+ :args '("find" pattern "-o" "plain" "-f" "l")
+ :charset 'utf-8)
+
+(setq elmo-search-default-engine 'mu
+      wl-default-spec "[")
 
 ;; Invert behaviour of with and without argument replies. (AKA: Default to
 ;; reply-to-author, rather than reply-all.)

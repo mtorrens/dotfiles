@@ -276,7 +276,9 @@
 (require 'mime-w3m)
 
 (setq w3m-use-cookies t
-      mime-w3m-safe-url-regexp nil)
+      mime-w3m-safe-url-regexp nil
+      w3m-default-display-inline-images t
+      w3m-toggle-inline-images-permanently nil)
 
 ;; Fix W3M's silly keys
 (define-key w3m-mode-map [left] 'backward-char)
