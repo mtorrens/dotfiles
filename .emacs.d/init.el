@@ -42,21 +42,19 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (tooltip-mode -1)
-(menu-bar-mode -1)
 (mouse-wheel-mode t)
 (require 'smooth-scrolling)
 
 (set-fringe-style -1)
 
 (blink-cursor-mode t)
-(line-number-mode t)
-(column-number-mode t)
 (show-paren-mode t)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/railscasts-theme")
-(load-theme 'railscasts)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")
+(load-theme 'tomorrow-night)
+(require 'rainbow-mode)
 
 (setq-default save-place t)
 
@@ -71,6 +69,50 @@
       uniquify-buffer-name-style 'forward
       color-theme-is-global t
       save-place-file "~/.emacs.d/cache/places")
+
+
+;; -------------------------------------
+;; Window settings
+
+(line-number-mode t)
+(column-number-mode t)
+
+(add-hook 'emacs-lisp-mode-hook (lambda() (setq mode-name "el")))
+(add-hook 'org-mode-hook (lambda() (setq mode-name "Org")))
+
+(setq cp-mode-line-filename
+      (list
+       '(:eval (propertize "%b" 'face 'font-lock-string-face
+                           'help-echo (buffer-file-name)))
+       '(:eval (when (buffer-modified-p)
+                 (propertize "*" 'face 'font-lock-variable-name-face
+                             'help-echo "Buffer has been modified")))
+       " "))
+
+(setq cp-mode-line-position
+      (list
+       "("
+       (propertize "%02l" 'face 'font-lock-builtin-face) ","
+       (propertize "%02c" 'face 'font-lock-builtin-face)
+       ") "))
+
+(setq global-mode-string '(wl-modeline-biff-status
+                           wl-modeline-biff-state-on
+                           wl-modeline-biff-state-off))
+
+(setq cp-mode-line-time
+      (list
+       '(:eval (propertize (format-time-string "%H:%M")
+                           'help-echo (concat (format-time-string "%c; ")
+                                              (emacs-uptime "Uptime: %hh"))))))
+
+(setq-default mode-line-format (list " "
+                                     cp-mode-line-filename
+                                     cp-mode-line-position
+                                     "%M "
+                                     cp-mode-line-time
+                                     " %-"
+                                     ))
 
 
 ;; -------------------------------------
@@ -108,6 +150,7 @@
 
 ;; -------------------------------------
 ;; Visual-line-mode with a wrap column
+
 (defvar visual-wrap-column nil)
 
 (defun set-visual-wrap-column (new-wrap-column &optional buffer)
@@ -231,6 +274,18 @@
 ;; Go-to-line should be easy
 (global-set-key "\C-xg" 'goto-line)
 
+
+;; -------------------------------------
+;; Dired
+
+(require 'ls-lisp)
+(setq ls-lisp-use-insert-directory-program nil)
+
+(require 'dired-details)
+(setq dired-details-hidden-string "")
+(dired-details-install)
+
+
 ;; -------------------------------------
 ;; Eshell
 
@@ -337,11 +392,11 @@
               (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)"))))
 
 (setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "#DA4939" :weight bold)
-              ("NEXT" :foreground "#6D9CBE" :weight bold)
-              ("DONE" :foreground "#A5C261" :weight bold)
-              ("WAITING" :foreground "#CC7833" :weight bold)
-              ("CANCELLED" :foreground "#FFC66D" :weight bold))))
+      (quote (("TODO" :foreground "#CC6666" :weight bold)
+              ("NEXT" :foreground "#81A2BE" :weight bold)
+              ("DONE" :foreground "#B5BD68" :weight bold)
+              ("WAITING" :foreground "#DE935F" :weight bold)
+              ("CANCELLED" :foreground "#F0C674" :weight bold))))
 
 (setq org-agenda-custom-commands
       '(("n" "Agenda and next actions"

@@ -14,7 +14,12 @@
       wl-queue-folder ".Personal/outbox"
       wl-fcc ".Personal/sent"
       wl-fcc-force-as-read t
-      
+
+      wl-biff-check-folder-list '(".Personal/inbox" ".Personal/lists"
+                                  ".Family/inbox")
+      wl-biff-check-interval 600
+      wl-mode-line-display-priority-list '(title)
+
       wl-temporary-file-directory "~/Dropbox/Charles/Mail/"
       wl-icon-directory "~/.emacs.d/packages/wl/icons/"
 
