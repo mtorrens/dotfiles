@@ -1,27 +1,13 @@
 
 ;; -------------------------------------
-;; Custom variables block
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("6ab477f0e0150622dfe4e8d193f226df15497f688cfa8bfc1909580eb5d81dff" default)))
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;; -------------------------------------
 ;; Add a bunch of paths
 
 (push "/usr/local/bin" exec-path)
 (push "/usr/texbin" exec-path)
 (setenv "PATH" (mapconcat (lambda (dir) (or dir ".")) exec-path ":"))
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 
 ;; This path is used by lots of different things
 (add-to-list 'load-path "~/.emacs.d/packages")

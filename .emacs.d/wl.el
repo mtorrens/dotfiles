@@ -13,12 +13,22 @@
       wl-trash-folder ".Personal/trash"
       wl-queue-folder ".Personal/outbox"
       wl-fcc ".Personal/sent"
+      wl-summary-showto-folder-regexp "\..*/sent.*"
       wl-fcc-force-as-read t
 
       wl-biff-check-folder-list '(".Personal/inbox" ".Personal/lists"
                                   ".Family/inbox")
       wl-biff-check-interval 600
       wl-mode-line-display-priority-list '(title)
+
+      ssl-certificate-verification-policy 1
+      wl-smtp-connection-type 'starttls
+      wl-smtp-posting-port 587
+      wl-smtp-authenticate-type "plain"
+      wl-smtp-posting-user "charles@charlespence.net"
+      wl-smtp-posting-server "smtp.gmail.com"
+      mime-edit-split-message nil
+      wl-draft-reply-buffer-style 'keep
 
       wl-temporary-file-directory "~/Dropbox/Charles/Mail/"
       wl-icon-directory "~/.emacs.d/packages/wl/icons/"
@@ -38,8 +48,13 @@
       ;; Don't check the storage folders unless I tell you to do it manually.
       wl-auto-uncheck-folder-list '("\.Personal/storage")
 
+      ;; Set up the summary buffer
+      wl-summary-line-format "%T%P%1@ %t%[%20(%c %f%) %] %50(%s%) %h:%m %M/%D/%Y"
+      wl-summary-width 110
+      wl-thread-insert-opened t
+      wl-thread-open-reading-thread t
+      
       ;; Set all the headers
-      ;; ignore  all fields
       wl-message-ignored-field-list '("^.*:")
       wl-message-visible-field-list '("^To:"
                                       "^Cc:"
@@ -52,6 +67,15 @@
                                    "^Date:"
                                    "^Subject:")
       )
+
+;; Sort appropriately
+(defun wl-summary-overview-entity-compare-by-rdate (x y)
+  (not (wl-summary-overview-entity-compare-by-date x y)))
+(add-to-list 'wl-summary-sort-specs 'rdate)
+
+(defun cp-wl-summary-sort-hook ()
+  (wl-summary-rescan "rdate"))
+(add-hook 'wl-summary-prepared-hook 'cp-wl-summary-sort-hook)
 
 ;; Enable mu search
 (elmo-search-register-engine
