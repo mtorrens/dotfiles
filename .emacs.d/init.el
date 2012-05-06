@@ -332,9 +332,48 @@
 (define-key w3m-minor-mode-map [down] 'next-line)
 
 (autoload 'wl "wl" "Wanderlust" t)
+(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
+(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+(autoload 'wl-user-agent-compose "wl-draft" "Compose with Wanderlust." t)
+
 (global-set-key [f12] 'wl)
 (setq wl-init-file "~/.emacs.d/wl.el"
       wl-folders-file "~/.emacs.d/folders")
+
+;; Use wanderlust for default compose-mail
+(if (boundp 'mail-user-agent)
+    (setq mail-user-agent 'wl-user-agent))
+(if (fboundp 'define-mail-user-agent)
+    (define-mail-user-agent
+      'wl-user-agent
+      'wl-user-agent-compose
+      'wl-draft-send
+      'wl-draft-kill
+      'mail-send-hook))
+
+(require 'octet)
+(octet-mime-setup)
+
+
+;; -------------------------------------
+;; BBDB
+
+(add-to-list 'load-path "~/.emacs.d/packages/bbdb-2.35")
+
+(require 'bbdb-autoloads)
+(bbdb-initialize)
+(bbdb-insinuate-w3)
+
+(setq bbdb-file "~/Dropbox/Charles/Personal/Addresses"
+      bbdb-offer-save 1
+      bbdb-use-pop-up nil
+      bbdb-always-add-address nil
+      bbdb/mail-auto-create-p nil
+      bbdb-completion-type nil
+      bbdb-complete-name-allow-cycling t
+      bbdb-message-caching-enabled t
+      bbdb-use-alternate-names t
+      bbdb-elided-display t)
 
 
 ;; -------------------------------------

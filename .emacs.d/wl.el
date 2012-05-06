@@ -6,6 +6,10 @@
       elmo-lost+found-folder ".Personal/lost+found"
 
       wl-from "Charles Pence <charles@charlespence.net>"
+      wl-user-mail-address-list '("charles@charlespence.net"
+                                  "cpence@nd.edu"
+                                  "cpence@gmail.com")
+      
       wl-forward-subject-prefix "Fwd: "
 
       wl-default-folder ".Personal/inbox"
@@ -18,7 +22,8 @@
 
       wl-biff-check-folder-list '(".Personal/inbox" ".Personal/lists"
                                   ".Family/inbox")
-      wl-biff-check-interval 600
+      wl-biff-check-interval 60
+      wl-biff-use-idle-timer t
       wl-mode-line-display-priority-list '(title)
 
       ssl-certificate-verification-policy 1
@@ -98,4 +103,14 @@
         ("Mail-Followup-To" ("Mail-Followup-To") nil ("Newsgroups"))
         ("Reply-To" ("Reply-To") ("To" "Cc" "From") ("Newsgroups"))
         ("From" ("From") ("To" "Cc") ("Newsgroups"))))
+
+;; Link up the BBDB
+(require 'bbdb-wl)
+(bbdb-wl-setup)
+(require 'mime-bbdb)
+
+(add-hook 'wl-mail-setup-hook 'bbdb-insinuate-sendmail)
+
+;; Auto-mail-check
+(add-hook 'wl-init-hook 'wl-biff-start)
 
