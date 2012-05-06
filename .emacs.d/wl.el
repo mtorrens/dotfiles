@@ -32,11 +32,16 @@
       wl-smtp-authenticate-type "plain"
       wl-smtp-posting-user "charles@charlespence.net"
       wl-smtp-posting-server "smtp.gmail.com"
+      
       mime-edit-split-message nil
+      default-mime-charset-for-write 'utf-8
+      default-mime-charset 'utf-8
       wl-draft-reply-buffer-style 'keep
 
       wl-temporary-file-directory "~/Dropbox/Charles/Mail/"
       wl-icon-directory "~/.emacs.d/packages/wl/icons/"
+      wl-highlight-body-too t
+      wl-use-highlight-mouse-line nil
 
       ;; I won't much use refile in the family account, but when I do it's
       ;; probably to put a message into the Hold folder.

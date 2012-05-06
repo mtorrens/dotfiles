@@ -27,4 +27,5 @@ PERSONAL {
 FAMILY {
   .Family/inbox
   .Family/hold
+  .Family/all_mail
 }
