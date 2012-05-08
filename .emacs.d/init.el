@@ -18,6 +18,8 @@
 
 (require 'saveplace)
 (require 'uniquify)
+(require 'swbuff)
+(require 'swbuff-x)
 
 (setq default-frame-alist
       '((width . 115)
@@ -58,13 +60,13 @@
 
 
 ;; -------------------------------------
-;; Window settings
+;; Modeline
 
 (line-number-mode t)
 (column-number-mode t)
 
 (add-hook 'emacs-lisp-mode-hook (lambda() (setq mode-name "el")))
-(add-hook 'org-mode-hook (lambda() (setq mode-name "Org")))
+(add-hook 'dired-mode-hook (lambda() (setq mode-name "Dir")))
 
 (setq cp-mode-line-filename
       (list
@@ -74,6 +76,12 @@
                  (propertize "*" 'face 'font-lock-variable-name-face
                              'help-echo "Buffer has been modified")))
        " "))
+
+(setq cp-mode-line-mode
+      (list
+       "["
+       '(:eval (propertize mode-name 'face 'font-lock-constant-face))
+       "] "))
 
 (setq cp-mode-line-position
       (list
@@ -94,6 +102,7 @@
 
 (setq-default mode-line-format (list " "
                                      cp-mode-line-filename
+                                     cp-mode-line-mode
                                      cp-mode-line-position
                                      "%M "
                                      cp-mode-line-time
@@ -253,6 +262,8 @@
 ;; Enable ido buffer switching
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 (global-set-key (kbd "C-x B") 'ibuffer)
+(global-set-key [C-tab] 'swbuff-switch-to-next-buffer)
+(global-set-key [C-S-tab] 'swbuff-switch-to-previous-buffer)
 
 ;; Enable recent file opening (I don't use find-file-read-only)
 (global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
@@ -312,7 +323,6 @@
 (add-to-list 'load-path "~/.emacs.d/packages/wl")
 (add-to-list 'load-path "~/.emacs.d/packages/w3m")
 
-(setq browse-url-browser-function 'w3m-browse-url)
 (require 'w3m-load)
 (require 'mime-w3m)
 
@@ -330,6 +340,14 @@
 (define-key w3m-minor-mode-map [right] 'forward-char)
 (define-key w3m-minor-mode-map [up] 'previous-line)
 (define-key w3m-minor-mode-map [down] 'next-line)
+
+;; External browser support (use Mac OS X's "open" command or "xdg-open")
+(if (string-equal system-type "darwin")
+    (setq browse-url-generic-program "open")
+  (setq browse-url-generic-program "xdg-open"))
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-new-window-flag t)
+
 
 (autoload 'wl "wl" "Wanderlust" t)
 (autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
@@ -365,10 +383,13 @@
 (bbdb-insinuate-w3)
 
 (setq bbdb-file "~/Dropbox/Charles/Personal/Addresses"
+      bbdb-default-country "USA"
+      bbdb-default-area-code nil
       bbdb-offer-save 1
       bbdb-use-pop-up nil
       bbdb-always-add-address nil
       bbdb/mail-auto-create-p nil
+      bbdb/news-auto-create-p nil
       bbdb-completion-type nil
       bbdb-complete-name-allow-cycling t
       bbdb-message-caching-enabled t
@@ -432,6 +453,8 @@
 
 (defun cpence-org-mode-hook ()
   (interactive)
+
+  (setq mode-name "Org")
 
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
@@ -595,6 +618,8 @@
 (defun cpence-text-mode-hook ()
   (interactive)
 
+  (setq mode-name "txt")
+
   (hl-line-mode)
   (set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)
 
@@ -628,6 +653,8 @@
 
 (defun cpence-markdown-mode-hook ()
   (interactive)
+
+  (setq mode-name "md")
   
   ;; Actually insert tab characters and newlines, indentation stuff
   ;; goes crazy in markdown-mode for some reason

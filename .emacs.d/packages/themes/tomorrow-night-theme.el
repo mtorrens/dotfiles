@@ -73,8 +73,9 @@
  '(ido-subdir ((t (:foreground "#CC6666"))))
 
  ;; org
- '(org-agenda-date-today ((t (:inherit font-lock-preprocessor-face :foreground nil :weight bold))))
+ '(org-agenda-date-today ((t (:inherit font-lock-constant-face :foreground nil :weight bold))))
  '(org-agenda-date ((t (:inherit font-lock-builtin-face :foreground nil))))
+ '(org-agenda-date-weekend ((t (:inherit font-lock-preprocessor-face :foreground nil))))
  '(org-agenda-structure ((t (:inherit font-lock-comment-face :foreground nil))))
  '(org-archived ((t (:inherit default :foreground nil :weight bold))))
  '(org-date ((t (:inherit font-lock-builtin-face :foreground nil))))
