@@ -1,0 +1,52 @@
+
+;; Default window settings
+(setq default-frame-alist
+      '((width . 115)
+        (height . 40)
+        (cursor-type . bar)
+        (font . "Meslo LG M-13")))
+
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(tooltip-mode -1)
+(set-fringe-style -1)
+(blink-cursor-mode t)
+
+
+;; Color theme, with rainbow-mode for editing the theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")
+(load-theme 'tomorrow-night)
+(require 'rainbow-mode)
+
+
+;; Save buffer positions
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file "~/.emacs.d/cache/places")
+
+
+;; Make buffer names unique when there's multiple identical filenames
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+
+;; Scrolling
+(mouse-wheel-mode t)
+(require 'smooth-scrolling)
+
+
+;; Various other variables for highlighting and decorating things in
+;; useful and nonobtrusive ways
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(show-paren-mode t)
+
+(setq inhibit-startup-message t
+      inhibit-splash-screen t
+      visible-bell t
+      echo-keystrokes 0.1
+      font-lock-maximum-decoration t
+      xterm-mouse-mode t
+      search-highlight t
+      query-replace-highlight t
+      confirm-kill-emacs 'y-or-n-p)

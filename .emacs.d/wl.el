@@ -5,6 +5,9 @@
       elmo-archive-folder-path "~/Dropbox/Charles/Mail/"
       elmo-lost+found-folder ".Personal/lost+found"
 
+      elmo-passwd-life-time nil
+      elmo-passwd-alist-file-name "~/.private/elmo-passwd.gpg"
+
       wl-from "Charles Pence <charles@charlespence.net>"
       wl-user-mail-address-list '("charles@charlespence.net"
                                   "cpence@nd.edu"

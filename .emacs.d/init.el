@@ -1,6 +1,6 @@
 
 ;; -------------------------------------
-;; Add a bunch of paths
+;; Load all the bits where the real action happens
 
 (push "~/bin" exec-path)
 (push "/usr/local/bin" exec-path)
@@ -11,460 +11,32 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
 
-;; This path is used by lots of different things
+;; This path is used by lots of different single-file packages
 (add-to-list 'load-path "~/.emacs.d/packages")
 
+;; Visual/GUI settings
+(load "~/.emacs.d/init.d/visual.el")
+(load "~/.emacs.d/init.d/modeline.el")
+(load "~/.emacs.d/init.d/visual-line-mode.el")
 
-;; -------------------------------------
-;; Window settings
+;; File editing/writing settings
+(load "~/.emacs.d/init.d/editing.el")
 
-(require 'saveplace)
-(require 'uniquify)
-(require 'swbuff)
-(require 'swbuff-x)
-
-(setq default-frame-alist
-      '((width . 115)
-        (height . 40)
-        (cursor-type . bar)
-        (font . "Meslo LG M-13")))
-
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(mouse-wheel-mode t)
-(require 'smooth-scrolling)
-
-(set-fringe-style -1)
-
-(blink-cursor-mode t)
-(show-paren-mode t)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")
-(load-theme 'tomorrow-night)
-(require 'rainbow-mode)
-
-(setq-default save-place t)
-
-(setq inhibit-startup-message t
-      inhibit-splash-screen t
-      visible-bell t
-      echo-keystrokes 0.1
-      font-lock-maximum-decoration t
-      xterm-mouse-mode t
-      search-highlight t
-      query-replace-highlight t
-      uniquify-buffer-name-style 'forward
-      color-theme-is-global t
-      save-place-file "~/.emacs.d/cache/places"
-      confirm-kill-emacs 'y-or-n-p)
-
-
-;; -------------------------------------
-;; Modeline
-
-(line-number-mode t)
-(column-number-mode t)
-
-(add-hook 'emacs-lisp-mode-hook (lambda() (setq mode-name "el")))
-(add-hook 'dired-mode-hook (lambda() (setq mode-name "Dir")))
-
-(setq cp-mode-line-filename
-      (list
-       '(:eval (propertize "%b" 'face 'font-lock-string-face
-                           'help-echo (buffer-file-name)))
-       '(:eval (when (buffer-modified-p)
-                 (propertize "*" 'face 'font-lock-variable-name-face
-                             'help-echo "Buffer has been modified")))
-       " "))
-
-(setq cp-mode-line-mode
-      (list
-       "["
-       '(:eval (propertize mode-name 'face 'font-lock-constant-face))
-       "] "))
-
-(setq cp-mode-line-position
-      (list
-       "("
-       (propertize "%02l" 'face 'font-lock-builtin-face) ","
-       (propertize "%02c" 'face 'font-lock-builtin-face)
-       ") "))
-
-(setq global-mode-string '(wl-modeline-biff-status
-                           wl-modeline-biff-state-on
-                           wl-modeline-biff-state-off))
-
-(setq cp-mode-line-time
-      (list
-       '(:eval (propertize (format-time-string "%H:%M")
-                           'help-echo (concat (format-time-string "%c; ")
-                                              (emacs-uptime "Uptime: %hh"))))))
-
-(setq-default mode-line-format (list " "
-                                     cp-mode-line-filename
-                                     cp-mode-line-mode
-                                     cp-mode-line-position
-                                     "%M "
-                                     cp-mode-line-time
-                                     " %-"
-                                     ))
-
-
-;; -------------------------------------
-;; Editing
-
-(delete-selection-mode t)
-
-(setq-default tab-width 2
-              indent-tabs-mode nil
-              fill-column 80)
-
-(defun set-tab-stop-width (width)
-  "Set all tab stops to WIDTH in current buffer.
-    
-   This updates `tab-stop-list', but not `tab-width'.
-    
-   By default, `indent-for-tab-command' uses tabs to indent, see
-   `indent-tabs-mode'."
-  (interactive "nTab width: ")
-  (let* ((max-col (car (last tab-stop-list)))
-         ;; If width is not a factor of max-col,
-         ;; then max-col could be reduced with each call.
-         (n-tab-stops (/ max-col width)))
-    (set (make-local-variable 'tab-stop-list)
-         (mapcar (lambda (x) (* width x))
-                 (number-sequence 1 n-tab-stops)))
-    ;; So preserve max-col, by adding to end.
-    (unless (zerop (% max-col width))
-      (setcdr (last tab-stop-list)
-              (list max-col)))))
-
-(setq transient-mark-mode t
-      x-select-enable-clipboard t)
-
-
-;; -------------------------------------
-;; Visual-line-mode with a wrap column
-
-(defvar visual-wrap-column nil)
-
-(defun set-visual-wrap-column (new-wrap-column &optional buffer)
-  "Force visual line wrap at NEW-WRAP-COLUMN in BUFFER (defaults
-    to current buffer) by setting the right-hand margin on every
-    window that displays BUFFER.  A value of NIL or 0 for
-    NEW-WRAP-COLUMN disables this behavior."
-  (interactive (list (read-number "New visual wrap column, 0 to disable: " (or visual-wrap-column fill-column 0))))
-  (if (and (numberp new-wrap-column)
-           (zerop new-wrap-column))
-      (setq new-wrap-column nil))
-  (with-current-buffer (or buffer (current-buffer))
-    (visual-line-mode t)
-    (set (make-local-variable 'visual-wrap-column) new-wrap-column)
-    (add-hook 'window-configuration-change-hook 'update-visual-wrap-column nil t)
-    (let ((windows (get-buffer-window-list)))
-      (while windows
-        (when (window-live-p (car windows))
-          (with-selected-window (car windows)
-            (update-visual-wrap-column)))
-        (setq windows (cdr windows))))))
-
-(defun update-visual-wrap-column ()
-  (if (not visual-wrap-column)
-      (set-window-margins nil nil)
-    (let* ((current-margins (window-margins))
-           (right-margin (or (cdr current-margins) 0))
-           (current-width (window-width))
-           (current-available (+ current-width right-margin)))
-      (if (<= current-available visual-wrap-column)
-          (set-window-margins nil (car current-margins))
-        (set-window-margins nil (car current-margins)
-                            (- current-available visual-wrap-column))))))
-
-(defun visual-line-line-range ()
-  (save-excursion
-    (cons (progn (vertical-motion 0) (point))
-          (progn (vertical-motion 1) (point)))))
-
-
-;; -------------------------------------
-;; File writing
-
-(global-auto-revert-mode 1)
-
-(setq make-backup-files nil
-      auto-save-default nil
-      auto-save-list-file-name nil
-      auto-save-list-file-prefix nil
-      delete-by-moving-to-trash t)
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-
-
-;; -------------------------------------
-;; Auto-completion, with recent file support
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-exclude '("ido.last" "~$"))
-
-(ido-mode t)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point 'guess
-      ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
-
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let* ((file-assoc-list
-          (mapcar (lambda (x)
-                    (cons (file-name-nondirectory x)
-                          x))
-                  recentf-list))
-         (filename-list
-          (remove-duplicates (mapcar #'car file-assoc-list)
-                             :test #'string=))
-         (filename (ido-completing-read "Choose recent file: "
-                                        filename-list
-                                        nil
-                                        t)))
-    (when filename
-      (find-file (cdr (assoc filename
-                             file-assoc-list))))))
-
-
-;; -------------------------------------
 ;; Global key bindings
+(load "~/.emacs.d/init.d/keys.el")
 
-;; On Mac OS X, turn Command into Super
-(if (string-equal system-type "darwin")
-    (progn
-      (setq ns-command-modifier 'super)))
+;; This is used by several of the below
+(require 'todochiku)
 
-;; Fix home and end on Mac OS X
-(global-set-key [home] 'beginning-of-visual-line)
-(global-set-key [end] 'end-of-visual-line)
-(global-set-key [kp-home] 'beginning-of-visual-line)
-(global-set-key [kp-end] 'end-of-visual-line)
-(global-set-key [kp-delete] 'delete-char)
-(if (string-equal system-type "darwin")
-    (progn
-      (global-set-key [s-left] 'beginning-of-visual-line)
-      (global-set-key [s-right] 'end-of-visual-line)))
-
-;; Enable ido buffer switching
-(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-(global-set-key (kbd "C-x B") 'ibuffer)
-(global-set-key [C-tab] 'swbuff-switch-to-next-buffer)
-(global-set-key [C-S-tab] 'swbuff-switch-to-previous-buffer)
-
-;; Enable recent file opening (I don't use find-file-read-only)
-(global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
-
-;; Go-to-line should be easy
-(global-set-key "\C-xg" 'goto-line)
-
-
-;; -------------------------------------
-;; Dired
-
-(require 'ls-lisp)
-(setq ls-lisp-use-insert-directory-program nil)
-
-(require 'dired-details)
-(setq dired-details-hidden-string "")
-(dired-details-install)
-
-
-;; -------------------------------------
-;; Eshell
-
-(global-set-key [f1] 'eshell)
-
-(defun cpence-eshell-mode-hook ()
-  (interactive)
-  (define-key eshell-mode-map "\C-a" 'eshell-bol)
-)
-
-(eval-after-load 'esh-opt
-  '(progn
-     (require 'em-cmpl)
-     (require 'em-prompt)
-     (require 'em-term)
-     (setenv "PAGER" "cat")
-     (add-hook 'eshell-mode-hook 'cpence-eshell-mode-hook)
-     (add-to-list 'eshell-visual-commands "ssh")
-     (add-to-list 'eshell-visual-commands "tail")
-     (add-to-list 'eshell-command-completions-alist
-                  '("gunzip" "gz\\'"))
-     (add-to-list 'eshell-command-completions-alist
-                  '("tar" "\\(\\.tar|\\.tgz\\|\\.tar\\.gz\\|\\.tar\\.bz2\\)\\'"))
-     (add-to-list 'eshell-output-filter-functions 'eshell-handle-ansi-color)))
-
-(setq eshell-cmpl-cycle-completions nil
-      eshell-save-history-on-exit t
-      eshell-cmpl-dir-ignore "\\`\\(\\.\\.?\\|CVS\\|\\.svn\\|\\.git\\)/\\'"
-      eshell-directory-name "~/.emacs.d/eshell")
-
-
-;; -------------------------------------
-;; W3M / Wanderlust
-
-(add-to-list 'load-path "~/.emacs.d/packages/apel")
-(add-to-list 'load-path "~/.emacs.d/packages/flim")
-(add-to-list 'load-path "~/.emacs.d/packages/semi")
-(add-to-list 'load-path "~/.emacs.d/packages/wl")
-(add-to-list 'load-path "~/.emacs.d/packages/w3m")
-
-(require 'w3m-load)
-(require 'mime-w3m)
-
-(setq w3m-use-cookies t
-      mime-w3m-safe-url-regexp nil
-      w3m-default-display-inline-images t
-      w3m-toggle-inline-images-permanently nil)
-
-;; Fix W3M's silly keys
-(define-key w3m-mode-map [left] 'backward-char)
-(define-key w3m-mode-map [right] 'forward-char)
-(define-key w3m-mode-map [up] 'previous-line)
-(define-key w3m-mode-map [down] 'next-line)
-(define-key w3m-minor-mode-map [left] 'backward-char)
-(define-key w3m-minor-mode-map [right] 'forward-char)
-(define-key w3m-minor-mode-map [up] 'previous-line)
-(define-key w3m-minor-mode-map [down] 'next-line)
-
-;; External browser support (use Mac OS X's "open" command or "xdg-open")
-(if (string-equal system-type "darwin")
-    (setq browse-url-generic-program "open")
-  (setq browse-url-generic-program "xdg-open"))
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-new-window-flag t)
-
-
-(autoload 'wl "wl" "Wanderlust" t)
-(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
-(autoload 'wl-user-agent-compose "wl-draft" "Compose with Wanderlust." t)
-
-(global-set-key [f12] 'wl)
-(setq wl-init-file "~/.emacs.d/wl.el"
-      wl-folders-file "~/.emacs.d/folders")
-
-;; Use wanderlust for default compose-mail
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-    (define-mail-user-agent
-      'wl-user-agent
-      'wl-user-agent-compose
-      'wl-draft-send
-      'wl-draft-kill
-      'mail-send-hook))
-
-(require 'octet)
-(octet-mime-setup)
-
-
-;; -------------------------------------
-;; BBDB
-
-(add-to-list 'load-path "~/.emacs.d/packages/bbdb-2.35")
-
-(require 'bbdb-autoloads)
-(bbdb-initialize)
-(bbdb-insinuate-w3)
-
-(setq bbdb-file "~/Dropbox/Charles/Personal/Addresses"
-      bbdb-default-country "USA"
-      bbdb-default-area-code nil
-      bbdb-offer-save 1
-      bbdb-use-pop-up nil
-      bbdb-always-add-address nil
-      bbdb/mail-auto-create-p nil
-      bbdb/news-auto-create-p nil
-      bbdb-completion-type nil
-      bbdb-complete-name-allow-cycling t
-      bbdb-message-caching-enabled t
-      bbdb-use-alternate-names t
-      bbdb-elided-display t)
-
-
-;; -------------------------------------
-;; Org-mode
-
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(global-set-key "\C-cl" 'org-store-link)
-
-(global-set-key [f11] (lambda () (interactive) (org-agenda nil "n")))
-(global-set-key [f9] (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/Agenda/")))
-(global-set-key [f10] 'org-agenda)
-(global-set-key (kbd "C-c a") 'org-agenda)
-
-(setq org-directory "~/Dropbox/Charles/Personal/Org/")
-(setq org-agenda-files '("~/Dropbox/Charles/Personal/Org/Agenda/"))
-(setq org-default-notes-file (concat org-directory "Agenda/Inbox.org"))
-
-(setq org-log-done 'time
-      org-use-fast-todo-selection t
-      org-M-RET-may-split-line nil
-      org-agenda-ndays 7
-      org-agenda-show-all-dates t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-start-on-weekday nil
-      org-agenda-skip-additional-timestamps-same-entry nil
-      org-agenda-window-setup 'current-window
-      org-refile-targets (quote ((nil :maxlevel . 9)
-                                 (org-agenda-files :maxlevel . 9)))
-      org-refile-use-outline-path 'file
-      org-outline-path-complete-in-steps t
-      org-refile-allow-creating-parent-nodes (quote confirm)
-      org-completion-use-ido t
-      org-attach-method 'cp
-      calenar-date-mode 'iso
-      bookmark-default-file "~/.emacs.d/cache/bookmarks"
-      org-id-locations-file "~/.emacs.d/cache/org-id-locations")
-
-(setq org-todo-keywords
-      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)"))))
-
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "#CC6666" :weight bold)
-              ("NEXT" :foreground "#81A2BE" :weight bold)
-              ("DONE" :foreground "#B5BD68" :weight bold)
-              ("WAITING" :foreground "#DE935F" :weight bold)
-              ("CANCELLED" :foreground "#F0C674" :weight bold))))
-
-(setq org-agenda-custom-commands
-      '(("n" "Agenda and next actions"
-         ((todo "NEXT")
-          (agenda "")))
-        ("P" "Timestamped items in the past"
-         ((tags "TIMESTAMP<=\"<now>\"")))))
-
-(defun cpence-org-mode-hook ()
-  (interactive)
-
-  (setq mode-name "Org")
-
-  ;; Patch up some variables
-  (make-local-variable 'indent-line-function)
-  (setq indent-line-function 'org-indent-line-function)
-)
-(add-hook 'org-mode-hook 'cpence-org-mode-hook)
-
+;; Package configurations
+(load "~/.emacs.d/init.d/ido.el")
+(load "~/.emacs.d/init.d/dired.el")
+(load "~/.emacs.d/init.d/eshell.el")
+(load "~/.emacs.d/init.d/w3m.el")
+(load "~/.emacs.d/init.d/wl.el")
+(load "~/.emacs.d/init.d/bbdb.el")
+(load "~/.emacs.d/init.d/org.el")
+(load "~/.emacs.d/init.d/jabber.el")
 
 ;; -------------------------------------
 ;; Magit
@@ -506,7 +78,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/fill-column-indicator.git")
 (autoload 'fci-mode "fill-column-indicator" nil t)
-(setq fci-rule-color "#2B2B2B")
+(setq fci-rule-color "#282A2E")
 
 ;; -------------------------------------
 ;; AUCTeX
@@ -633,8 +205,6 @@
 
 (defun cpence-text-mode-hook ()
   (interactive)
-
-  (setq mode-name "txt")
 
   (hl-line-mode)
   (set (make-local-variable 'hl-line-range-function) 'visual-line-line-range)

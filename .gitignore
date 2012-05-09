@@ -39,7 +39,6 @@ bin/*/*/*.pyc
 !.emacs.d
 !.emacs.d/*
 .emacs.d/cache
-.emacs.d/eshell
 !.emacs.d/*/*
 !.emacs.d/*/*/*
 !.emacs.d/*/*/*/*
