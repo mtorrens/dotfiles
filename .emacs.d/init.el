@@ -2,9 +2,11 @@
 ;; -------------------------------------
 ;; Add a bunch of paths
 
+(push "~/bin" exec-path)
 (push "/usr/local/bin" exec-path)
 (push "/usr/texbin" exec-path)
-(setenv "PATH" (mapconcat (lambda (dir) (or dir ".")) exec-path ":"))
+(setenv "PATH" (mapconcat (lambda (dir) (expand-file-name (or dir ".")))
+                          exec-path path-separator))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
@@ -25,7 +27,7 @@
       '((width . 115)
         (height . 40)
         (cursor-type . bar)
-        (font . "Panic Sans-13")))
+        (font . "Meslo LG M-13")))
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -56,7 +58,8 @@
       query-replace-highlight t
       uniquify-buffer-name-style 'forward
       color-theme-is-global t
-      save-place-file "~/.emacs.d/cache/places")
+      save-place-file "~/.emacs.d/cache/places"
+      confirm-kill-emacs 'y-or-n-p)
 
 
 ;; -------------------------------------
@@ -404,13 +407,13 @@
 (global-set-key "\C-cl" 'org-store-link)
 
 (global-set-key [f11] (lambda () (interactive) (org-agenda nil "n")))
-(global-set-key [f9] (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/")))
+(global-set-key [f9] (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/Agenda/")))
 (global-set-key [f10] 'org-agenda)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq org-directory "~/Dropbox/Charles/Personal/Org/")
-(setq org-agenda-files '("~/Dropbox/Charles/Personal/Org/"))
-(setq org-default-notes-file (concat org-directory "todo.org"))
+(setq org-agenda-files '("~/Dropbox/Charles/Personal/Org/Agenda/"))
+(setq org-default-notes-file (concat org-directory "Agenda/Inbox.org"))
 
 (setq org-log-done 'time
       org-use-fast-todo-selection t
@@ -484,9 +487,9 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/deft.git")
 (require 'deft)
-(setq deft-extension "md")
-(setq deft-directory "~/Dropbox/Charles/Notes")
-(setq deft-text-mode 'markdown-mode)
+(setq deft-extension "org")
+(setq deft-directory (concat org-directory "Notes/"))
+(setq deft-text-mode 'org-mode)
 (setq deft-use-filename-as-title t)
 (global-set-key [f2] 'deft)
 
@@ -517,7 +520,20 @@
 (add-to-list 'completion-ignored-extensions ".bbl")
 (add-to-list 'completion-ignored-extensions ".blg")
 (add-to-list 'completion-ignored-extensions ".fdb_latexmk")
-(setq font-latex-fontify-sectioning 'color)
+
+(setq TeX-save-query nil
+      TeX-parse-self t
+      TeX-auto-save t
+      TeX-auto-untabify t
+      TeX-command-default "Latexmk"
+      TeX-view-program-list '(("Open" "open %s.pdf"))
+      TeX-view-program-selection '((output-pdf "Open"))
+      font-latex-fontify-sectioning 'color
+      TeX-command-list '(
+                         ("Latexmk" "latexmk -f -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("XeLatexmk" "latexmk -f -pdf -xelatex %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("View" "%V" TeX-run-discard-or-function t t :help "Run Viewer")
+                         ("Clean" "latexmk -c %s" TeX-run-command nil t :help "Delete generated intermediate files")))
 
 ;; -------------------------------------
 ;; CSS mode
@@ -638,16 +654,8 @@
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'LaTeX-indent-line)
 
-  (TeX-PDF-mode 1)
-  (setq TeX-save-query nil
-        TeX-parse-self t
-        TeX-auto-save t
-        TeX-auto-untabify t
-        TeX-command-default "Latexmk"
-        TeX-view-program-list '(("Open" "open %s.pdf"))
-        TeX-view-program-selection '((output-pdf "Open")))
-  (push '("Latexmk" "latexmk -f -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
-        TeX-command-list)
+  (TeX-PDF-mode-on)
+  (setq TeX-command-default "Latexmk")
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
