@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: XeTeX article skeleton
+# key: xearticleskel
+# --
+
+\documentclass[12pt]{article}
+\usepackage{cpxearticle}
+
+\begin{document}
+$0
+\end{document}
+
+%%% Local Variables:
+%%% TeX-command-default: "XeLatexmk"
+%%% End:

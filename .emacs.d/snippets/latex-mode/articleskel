@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Article skeleton
+# key: articleskel
+# --
+
+\documentclass[12pt]{article}
+\usepackage{cparticle}
+
+\begin{document}
+$0
+\end{document}
