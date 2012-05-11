@@ -6,11 +6,44 @@
 
 
 ;; Turn on IDO, with flexible matching and whatnot
-(ido-mode t)
+(ido-mode 'both)
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
       ido-create-new-buffer 'always
-      ido-save-directory-list-file "~/.emacs.d/cache/ido.last")
+      ido-save-directory-list-file "~/.emacs.d/cache/ido.last"
+      ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
+                           "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
+      ido-ignore-files (append ido-ignore-files
+                               (list
+                                ".*\\.org_archive$"
+                                ".*\\.fdb_latexmk$"
+                                ".*\\.pdf$"
+                                ".*\\.toc$"
+                                ".*\\.blg$"
+                                ".*\\.aux$"
+                                ".*\\.dvi$"
+                                ".*\\.ps$"
+                                ".*\\.eps$"
+                                ".*\\.nav$"
+                                ".*\\.fls$"
+                                ".*\\.out$"
+                                ".*\\.png$"
+                                ".*\\.jpg$"
+                                ".*\\.DS_Store$"))
+      ido-case-fold t
+      ido-enable-last-directory-history t
+      ido-max-work-directory-list 30
+      ido-use-filename-at-point nil
+      ido-use-url-at-point nil
+      confirm-nonexistent-file-or-buffer nil)
+
+
+;; increase minibuffer size when ido completion is active
+(add-hook 'ido-minibuffer-setup-hook 
+          (function
+           (lambda ()
+             (make-local-variable 'resize-minibuffer-window-max-height)
+             (setq resize-minibuffer-window-max-height 1))))
 
 
 ;; A great function for looking through the recent-files list using IDO

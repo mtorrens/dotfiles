@@ -6,7 +6,9 @@
         (cursor-type . bar)
         (font . "Meslo LG M-13")))
 
-(scroll-bar-mode -1)
+(scroll-bar-mode 1)
+(set-scroll-bar-mode 'right)
+
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (set-fringe-style -1)
@@ -35,10 +37,16 @@
 (require 'smooth-scrolling)
 
 
+;; Fix the minibuffer
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq enable-recursive-minibuffers t
+      max-mini-window-height .25
+      minibuffer-scroll-window nil
+      resize-mini-windows nil)
+
+
 ;; Various other variables for highlighting and decorating things in
 ;; useful and nonobtrusive ways
-(fset 'yes-or-no-p 'y-or-n-p)
-
 (show-paren-mode t)
 
 (setq inhibit-startup-message t

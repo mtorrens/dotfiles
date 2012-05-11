@@ -2,13 +2,15 @@
 ;; Org-mode
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
-(global-set-key [f11] (lambda () (interactive) (org-agenda nil "n")))
-(global-set-key [f9] (lambda () (interactive) (find-file "~/Dropbox/Charles/Personal/Org/Agenda/")))
+(global-set-key (kbd "<f11>") (lambda () (interactive) (org-agenda nil "n")))
+(global-set-key (kbd "S-<f11>") 'org-capture)
 
-(global-set-key [f10] 'org-agenda)
+(global-set-key (kbd "<f10>") (lambda () (interactive) (ido-find-file-in-dir "~/Dropbox/Charles/Org/Agenda")))
+(global-set-key (kbd "S-<f10>") (lambda () (interactive) (find-file "~/Dropbox/Charles/Org/Agenda/Inbox.org")))
+
+(global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
-
-(global-set-key "\C-cl" 'org-store-link)
+(global-set-key (kbd "C-c b") 'org-iswitchb)
 
 (setq org-directory "~/Dropbox/Charles/Org/")
 (setq org-agenda-files '("~/Dropbox/Charles/Org/Agenda/"))
@@ -17,6 +19,7 @@
 (setq org-log-done 'time
       org-use-fast-todo-selection t
       org-M-RET-may-split-line nil
+      org-support-shift-select 'always
       org-agenda-ndays 7
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t
@@ -53,6 +56,17 @@
         ("P" "Timestamped items in the past"
          ((tags "TIMESTAMP<=\"<now>\"")))))
 
+
+;; Capture templates
+(setq org-capture-templates
+      '(("t" "todo" entry (file (concat org-directory "Agenda/Inbox.org"))
+         "* TODO %?")
+        ("n" "next action" entry (file (concat org-directory "Agenda/Inbox.org"))
+         "* NEXT %?")
+        ("c" "calendar item" entry (file (concat org-directory "Agenda/Inbox.org"))
+         "* %?\n  %^T")))
+
+
 ;; Export settings
 (setq org-export-latex-classes
       '(("cp-org-article"
@@ -75,6 +89,22 @@
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'org-indent-line-function)
+
+  ;; N.B. Do /not/ enable flyspell-mode here!  It overrides a few things
+  ;; that are really important, like C-c $ for archive, and it makes it
+  ;; unbearably slow to start up an agenda buffer.
 )
 (add-hook 'org-mode-hook 'cpence-org-mode-hook)
+
+
+;; Deft mode for Org-mode notes
+(add-to-list 'load-path "~/.emacs.d/packages/deft.git")
+(require 'deft)
+
+(setq deft-extension "org")
+(setq deft-directory (concat org-directory "Notes/"))
+(setq deft-text-mode 'org-mode)
+(setq deft-use-filename-as-title t)
+
+(global-set-key [f2] 'deft)
 

@@ -16,7 +16,6 @@
 
 ;; Visual/GUI settings
 (load "~/.emacs.d/init.d/visual.el")
-(load "~/.emacs.d/init.d/modeline.el")
 (load "~/.emacs.d/init.d/visual-line-mode.el")
 
 ;; File editing/writing settings
@@ -27,6 +26,7 @@
 
 ;; This is used by several of the below
 (require 'todochiku)
+(setq todochiku-icons-directory "~/.emacs.d/packages/todochiku-icons")
 
 ;; Package configurations
 (load "~/.emacs.d/init.d/ido.el")
@@ -37,6 +37,7 @@
 (load "~/.emacs.d/init.d/bbdb.el")
 (load "~/.emacs.d/init.d/org.el")
 (load "~/.emacs.d/init.d/jabber.el")
+(load "~/.emacs.d/init.d/yasnippet.el")
 
 ;; -------------------------------------
 ;; Magit
@@ -47,23 +48,7 @@
 (set-face-foreground 'magit-diff-add "green3")
 (set-face-foreground 'magit-diff-del "red3")
 
-;; -------------------------------------
-;; YASnippet
-
-(add-to-list 'load-path "~/.emacs.d/packages/yasnippet.git")
-(require 'yasnippet)
-(yas/global-mode 1)
-
-;; -------------------------------------
-;; Deft mode
-
-(add-to-list 'load-path "~/.emacs.d/packages/deft.git")
-(require 'deft)
-(setq deft-extension "org")
-(setq deft-directory (concat org-directory "Notes/"))
-(setq deft-text-mode 'org-mode)
-(setq deft-use-filename-as-title t)
-(global-set-key [f2] 'deft)
+(global-set-key [f6] 'magit-status)
 
 ;; -------------------------------------
 ;; Markdown mode
@@ -224,8 +209,12 @@
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'LaTeX-indent-line)
 
+  ;; Make sure these stay set right
   (TeX-PDF-mode-on)
   (setq TeX-command-default "Latexmk")
+
+  ;; Check spelling
+  (flyspell-mode 1)
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
@@ -286,3 +275,7 @@
 (add-hook 'yaml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'cpence-code-mode-hook)
 
+
+;; Set up the modeline last, so we override all the crazy things other
+;; packages do to global-mode-string
+(load "~/.emacs.d/init.d/modeline.el")

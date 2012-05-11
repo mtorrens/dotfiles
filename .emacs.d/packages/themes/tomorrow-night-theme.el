@@ -45,8 +45,11 @@
 
  ;; isearch
  '(isearch ((t (:background "#373B41"))))
- '(isearch-fail ((t (:backgrond "#DF5F5F" :foreground "#CED2CF"))))
+ '(isearch-fail ((t (:background "#DF5F5F" :foreground "#CED2CF"))))
 
+ ;; flyspell
+ '(flyspell-incorrect ((t (:foreground "#DF5F5F" :underline t :weight normal))))
+ 
  ;; external
  
  ;; auctex
@@ -71,6 +74,21 @@
  ;; ido
  '(ido-only-match ((t (:foreground "#B5BD68"))))
  '(ido-subdir ((t (:foreground "#CC6666"))))
+
+ ;; jabber
+ '(jabber-chat-prompt-local ((t (:foreground "#81A2BE" :weight normal))))
+ '(jabber-chat-prompt-foreign ((t (:foreground "#CC6666" :weight normal))))
+ '(jabber-chat-prompt-system ((t (:foreground "#B5BD68" :weight normal))))
+ '(jabber-chat-error ((t (:background "#DF5F5F" :foreground "#CED2CF" :weight bold))))
+ '(jabber-rare-time-face ((t (:foreground "#B5BD68" :weight normal :underline t))))
+ '(jabber-activity-face ((t (:foreground "#81A2BE" :weight normal))))
+ '(jabber-activity-personal-face ((t (:foreground "#81A2BE" :weight normal))))
+ '(jabber-roster-user-chatty ((t (:foreground "#8ABEB7" :weight bold))))
+ '(jabber-roster-user-online ((t (:foreground "#81A2BE" :weight normal))))
+ '(jabber-roster-user-away ((t (:foreground "#B5BD68" :slant italic))))
+ '(jabber-roster-user-xa ((t (:foreground "#B5BD68" :slant italic))))
+ '(jabber-roster-user-dnd ((t (:foreground "#DE935F" :slant italic))))
+ '(jabber-roster-user-offline ((t (:foreground "#373B41" :slant italic))))
 
  ;; org
  '(org-agenda-date-today ((t (:inherit font-lock-constant-face :foreground nil :weight bold))))

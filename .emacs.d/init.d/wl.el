@@ -24,3 +24,9 @@
 
 (require 'octet)
 (octet-mime-setup)
+
+
+;; Wrap message buffers automatically when writing and reading
+(add-hook 'mime-view-mode-hook '(lambda() (visual-line-mode t)))
+
+

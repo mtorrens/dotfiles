@@ -2,6 +2,8 @@
 ;; Enable these so line and column numbers get updated appropriately
 (line-number-mode t)
 (column-number-mode t)
+(setq line-number-display-limit nil
+      line-number-display-limit-width 99999999)
 
 
 ;; Shorten some of the mode names
@@ -34,9 +36,12 @@
        (propertize "%02c" 'face 'font-lock-builtin-face)
        ") "))
 
-(setq global-mode-string '(wl-modeline-biff-status
-                           wl-modeline-biff-state-on
-                           wl-modeline-biff-state-off))
+;; Hook some other packages into the modeline
+;;(require 'jabber-modeline)
+(setq global-mode-string '((wl-modeline-biff-status
+                            wl-modeline-biff-state-on
+                            wl-modeline-biff-state-off)
+                           (:eval jabber-activity-mode-string)))
 
 (setq cp-mode-line-time
       (list

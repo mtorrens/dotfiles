@@ -24,6 +24,7 @@
 (global-set-key [C-S-tab] 'swbuff-switch-to-previous-buffer)
 
 
-;; Go-to-line should be easy
-(global-set-key "\C-xg" 'goto-line)
+;; Some really common global keys I want to Just Work
+(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-z") 'undo)
 
