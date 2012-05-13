@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Scan a folder containing:
 #   Movie (year)/Movie.nfo
 # subolders, and produce an HTML file with links to each movie in IMDB.
