@@ -5,6 +5,11 @@
 (setq line-number-display-limit nil
       line-number-display-limit-width 99999999)
 
+;; Set up the time display
+(setq display-time-24hr-format t
+      display-time-default-load-average nil)
+(display-time-mode t)
+
 
 ;; Shorten some of the mode names
 (add-hook 'emacs-lisp-mode-hook (lambda() (setq mode-name "el")))
@@ -37,23 +42,15 @@
        ") "))
 
 ;; Hook some other packages into the modeline
-;;(require 'jabber-modeline)
 (setq global-mode-string '((wl-modeline-biff-status
                             wl-modeline-biff-state-on
                             wl-modeline-biff-state-off)
-                           (:eval jabber-activity-mode-string)))
-
-(setq cp-mode-line-time
-      (list
-       '(:eval (propertize (format-time-string "%H:%M")
-                           'help-echo (concat (format-time-string "%c; ")
-                                              (emacs-uptime "Uptime: %hh"))))))
+                           (t jabber-activity-mode-string)
+                           display-time-string))
 
 (setq-default mode-line-format (list " "
                                      cp-mode-line-filename
                                      cp-mode-line-mode
                                      cp-mode-line-position
-                                     "%M "
-                                     cp-mode-line-time
-                                     " %-"
+                                     "%M %-"
                                      ))

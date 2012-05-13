@@ -1,5 +1,12 @@
 
 ;; Org-mode
+(add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09")
+(add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09-contrib")
+
+(require 'org-install)
+(require 'org-capture)
+(require 'org-contacts)
+
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 (global-set-key (kbd "<f11>") (lambda () (interactive) (org-agenda nil "n")))
@@ -8,13 +15,16 @@
 (global-set-key (kbd "<f10>") (lambda () (interactive) (ido-find-file-in-dir "~/Dropbox/Charles/Org/Agenda")))
 (global-set-key (kbd "S-<f10>") (lambda () (interactive) (find-file "~/Dropbox/Charles/Org/Agenda/Inbox.org")))
 
+(global-set-key (kbd "S-<f12>") 'org-contacts)
+
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c b") 'org-iswitchb)
 
 (setq org-directory "~/Dropbox/Charles/Org/")
-(setq org-agenda-files '("~/Dropbox/Charles/Org/Agenda/"))
 (setq org-default-notes-file (concat org-directory "Agenda/Inbox.org"))
+(setq org-agenda-files '("~/Dropbox/Charles/Org/Agenda/"))
+(setq org-contacts-files '("~/Dropbox/Charles/Personal/Contacts.org"))
 
 (setq org-log-done 'time
       org-use-fast-todo-selection t
@@ -59,12 +69,14 @@
 
 ;; Capture templates
 (setq org-capture-templates
-      '(("t" "todo" entry (file (concat org-directory "Agenda/Inbox.org"))
+      '(("t" "Todo Item" entry (file (concat org-directory "Agenda/Inbox.org"))
          "* TODO %?")
-        ("n" "next action" entry (file (concat org-directory "Agenda/Inbox.org"))
+        ("n" "Next Action" entry (file (concat org-directory "Agenda/Inbox.org"))
          "* NEXT %?")
-        ("c" "calendar item" entry (file (concat org-directory "Agenda/Inbox.org"))
-         "* %?\n  %^T")))
+        ("e" "Calendar Event" entry (file (concat org-directory "Agenda/Inbox.org"))
+         "* %?\n  %^T")
+        ("c" "Contacts" entry (file "~/Dropbox/Charles/Personal/Contacts.org")
+         "* %(org-contacts-template-wl-name)\n  :PROPERTIES:\n  :EMAIL: %(org-contacts-template-wl-email)\n  :END:")))
 
 
 ;; Export settings
@@ -104,7 +116,6 @@
 (setq deft-extension "org")
 (setq deft-directory (concat org-directory "Notes/"))
 (setq deft-text-mode 'org-mode)
-(setq deft-use-filename-as-title t)
 
 (global-set-key [f2] 'deft)
 

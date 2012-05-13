@@ -40,6 +40,7 @@
       default-mime-charset-for-write 'utf-8
       default-mime-charset 'utf-8
       wl-draft-reply-buffer-style 'keep
+      mime-save-directory "~/Downloads"
 
       wl-temporary-file-directory "~/Dropbox/Charles/Mail/"
       wl-icon-directory "~/.emacs.d/packages/wl/icons/"
@@ -70,6 +71,7 @@
       ;; Set all the headers
       wl-message-ignored-field-list '("^.*:")
       wl-message-visible-field-list '("^To:"
+                                      "^X-Forwarded-For:"
                                       "^Cc:"
                                       "^From:"
                                       "^Subject:"
@@ -112,12 +114,11 @@
         ("Reply-To" ("Reply-To") ("To" "Cc" "From") ("Newsgroups"))
         ("From" ("From") ("To" "Cc") ("Newsgroups"))))
 
-;; Link up the BBDB
-(require 'bbdb-wl)
-(bbdb-wl-setup)
-(require 'mime-bbdb)
-
-(add-hook 'wl-mail-setup-hook 'bbdb-insinuate-sendmail)
+;; Link up Org-contacts
+(add-hook 'wl-mail-setup-hook
+          (function
+           (lambda ()
+             (define-key (current-local-map) "\M-\t" 'org-contacts-complete-name))))
 
 ;; Auto-mail-check
 (add-hook 'wl-init-hook 'wl-biff-start)
