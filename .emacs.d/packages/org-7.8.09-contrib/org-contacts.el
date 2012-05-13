@@ -178,6 +178,7 @@ If both match values are nil, return all contacts."
 
 (defun org-contacts-complete-name (&optional start)
   "Complete text at START with a user name and email."
+  (interactive)
   (let* ((end (point))
          (start (or start
                     (save-excursion

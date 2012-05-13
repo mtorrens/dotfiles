@@ -24,7 +24,8 @@
 ;; Global key bindings
 (load "~/.emacs.d/init.d/keys.el")
 
-;; This is used by several of the below
+;; These are used by several of the below
+(require 'filladapt)
 (require 'todochiku)
 (setq todochiku-icons-directory "~/.emacs.d/packages/todochiku-icons")
 
@@ -32,9 +33,7 @@
 (load "~/.emacs.d/init.d/ido.el")
 (load "~/.emacs.d/init.d/dired.el")
 (load "~/.emacs.d/init.d/eshell.el")
-(load "~/.emacs.d/init.d/w3m.el")
-(load "~/.emacs.d/init.d/wl.el")
-(load "~/.emacs.d/init.d/bbdb.el")
+(load "~/.emacs.d/init.d/mu4e.el")
 (load "~/.emacs.d/init.d/org.el")
 (load "~/.emacs.d/init.d/jabber.el")
 (load "~/.emacs.d/init.d/yasnippet.el")

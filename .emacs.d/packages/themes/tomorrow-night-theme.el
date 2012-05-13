@@ -1,160 +1,190 @@
 (deftheme tomorrow-night
   "Tomorrow Night theme")
 
-(custom-theme-set-faces
- 'tomorrow-night
 
- ;; Faces that aren't really "customized"
- '(bold ((t (:bold t))))
- '(bold-italic ((t (:italic t :bold t))))
- '(button ((t (:underine t))))
- '(italic ((t (:italic t))))
- '(underline ((t (:underline t))))
+(let ( (tn-fg "#C5C8C6")
+       (tn-bg "#1D1F21")
+       (tn-cursor "#AEAFAD")
+       (tn-curline "#282A2E")
+       (tn-selection "#373B41")
+       (tn-lowlight "#969896")
+       (tn-green "#B5BD68")
+       (tn-purple "#B294BB")
+       (tn-blue "#81A2BE")
+       (tn-red "#CC6666")
+       (tn-yellow "#F0C674")
+       (tn-orange "#DE935F")
+       (tn-aqua "#8ABEB7")
+       (tn-error-bg "#DF5F5F")
+       (tn-error-fg "#CED1CF")
+       )
 
- ;; The basics
- '(default ((t (:foreground "#C5C8C6" :background "#1D1F21"))))
- '(cursor ((t (:foreground "#AEAFAD"))))
- '(highlight ((t (:background "#282A2E"))))
- '(region ((t (:background "#373B41"))))
- '(fringe ((t (:background "#282A2E"))))
- '(vertical-border ((t (:foreground "#373B41"))))
-
- ;; Modeline
- '(modeline ((t (:background "#2A2A2A" :foreground "#C5C8C6"))))
- '(modeline-buffer-id ((t (:background "#2A2A2A" :foreground "#C5C8C6"))))
- '(modeline-mousable ((t (:background "#2A2A2A" :foreground "#C5C8C6"))))
- '(modeline-mousable-minor-mode ((t (:background "#2A2A2A" :foreground "#C5C8C6"))))
-
- ;; Minibuffer
- '(minibuffer-prompt ((t (:foreground "#B5BD68"))))
-
- ;; font-lock
- '(font-lock-comment-face ((t (:foreground "#969896"))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#969896"))))
- '(font-lock-doc-string-face ((t (:foreground "#969896"))))
- '(font-lock-string-face ((t (:foreground "#B5BD68"))))
- '(font-lock-keyword-face ((t (:foreground "#B294BB"))))
- '(font-lock-builtin-face ((t (:foreground "#81A2BE"))))
- '(font-lock-function-name-face ((t (:foreground "#81A2BE"))))
- '(font-lock-variable-name-face ((t (:foreground "#CC6666"))))
- '(font-lock-type-face ((t (:foreground "#F0C674"))))
- '(font-lock-constant-face ((t (:foreground "#DE935F"))))
- '(font-lock-preprocessor-face ((t (:foreground "#8ABEB7"))))
- '(font-lock-warning-face ((t (:background "#DF5F5F" :foreground "#CED1CF"))))
- '(c-annotation-face ((t (:inherit font-lock-constant-face))))
-
- ;; isearch
- '(isearch ((t (:background "#373B41"))))
- '(isearch-fail ((t (:background "#DF5F5F" :foreground "#CED2CF"))))
-
- ;; flyspell
- '(flyspell-incorrect ((t (:foreground "#DF5F5F" :underline t :weight normal))))
- 
- ;; external
- 
- ;; auctex
- '(font-latex-bold-face ((t (:foreground nil :weight bold))))
- '(font-latex-italic-face ((t (:foreground nil :slant italic))))
- '(font-latex-string-face ((t (:foreground "#B5BD68"))))
- '(font-latex-warning ((t (:inherit font-lock-warning-face))))
- '(font-latex-slide-title-face ((t (:inherit font-lock-type-face :weight normal :height 1.0))))
-
- ;; eshell
- '(eshell-prompt ((t (:inherit font-lock-string-face :foreground nil))))
- '(eshell-ls-archive ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(eshell-ls-backup ((t (:inherit font-lock-comment-face :foreground nil))))
- '(eshell-ls-clutter ((t (:inherit font-lock-comment-face :foreground nil))))
- '(eshell-ls-directory ((t (:inherit font-lock-builtin-face :foreground nil :weight bold))))
- '(eshell-ls-executable ((t (:inherit font-lock-string-face :foreground nil :weight bold))))
- '(eshell-ls-missing ((t (:inherit font-lock-warning-face :foreground nil))))
- '(eshell-ls-product ((t (:inherit font-lock-comment-face :foreground nil))))
- '(eshell-ls-special ((t (:inherit font-lock-string-face :foreground nil))))
- '(eshell-ls-symlink ((t (:inherit font-lock-preprocessor-face :foreground nil))))
-
- ;; ido
- '(ido-only-match ((t (:foreground "#B5BD68"))))
- '(ido-subdir ((t (:foreground "#CC6666"))))
-
- ;; jabber
- '(jabber-chat-prompt-local ((t (:foreground "#81A2BE" :weight normal))))
- '(jabber-chat-prompt-foreign ((t (:foreground "#CC6666" :weight normal))))
- '(jabber-chat-prompt-system ((t (:foreground "#B5BD68" :weight normal))))
- '(jabber-chat-error ((t (:background "#DF5F5F" :foreground "#CED2CF" :weight bold))))
- '(jabber-rare-time-face ((t (:foreground "#B5BD68" :weight normal :underline t))))
- '(jabber-activity-face ((t (:foreground "#81A2BE" :weight normal))))
- '(jabber-activity-personal-face ((t (:foreground "#81A2BE" :weight normal))))
- '(jabber-roster-user-chatty ((t (:foreground "#8ABEB7" :weight bold))))
- '(jabber-roster-user-online ((t (:foreground "#81A2BE" :weight normal))))
- '(jabber-roster-user-away ((t (:foreground "#B5BD68" :slant italic))))
- '(jabber-roster-user-xa ((t (:foreground "#B5BD68" :slant italic))))
- '(jabber-roster-user-dnd ((t (:foreground "#DE935F" :slant italic))))
- '(jabber-roster-user-offline ((t (:foreground "#373B41" :slant italic))))
-
- ;; org
- '(org-agenda-date-today ((t (:inherit font-lock-constant-face :foreground nil :weight bold))))
- '(org-agenda-date ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-agenda-date-weekend ((t (:inherit font-lock-preprocessor-face :foreground nil))))
- '(org-agenda-structure ((t (:inherit font-lock-comment-face :foreground nil))))
- '(org-archived ((t (:inherit default :foreground nil :weight bold))))
- '(org-date ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-deadline-announce ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(org-done ((t (:inherit font-lock-string-face :bold t :foreground nil))))
- '(org-formula ((t (:inherit font-lock-type-face :foreground nil))))
- '(org-headline-done ((t (:inherit font-lock-string-face :foreground nil))))
- '(org-hide ((t (:foreground "#1D1F21"))))
- '(org-level-1 ((t (:inherit font-lock-constant-face :foreground nil))))
- '(org-level-2 ((t (:inherit font-lock-type-face :foreground nil))))
- '(org-level-3 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-level-4 ((t (:inherit font-lock-preprocessor-face :foreground nil))))
- '(org-level-5 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-level-6 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-level-7 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-level-8 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-link ((t (:inherit font-lock-type-face :foreground nil :underline t))))
- '(org-scheduled ((t (:inherit font-lock-string-face :foreground nil))))
- '(org-scheduled-previously ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(org-scheduled-today ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(org-special-keyword ((t (:inherit font-lock-type-face :foreground nil))))
- '(org-table ((t (:inherit font-lock-string-face :foreground nil))))
- '(org-tag ((t (:bold t :weight bold))))
- '(org-time-grid ((t (:inherit font-lock-constant-face :foreground nil))))
- '(org-todo ((t (:bold t :weight bold :inherit font-lock-variable-name-face :foreground nil))))
- '(org-upcoming-deadline ((t (:inherit font-lock-keyword-face))))
- '(org-warning ((t (:bold t :weight bold :inherit font-lock-variable-name-face :foreground nil))))
-
- ;; show-paren-mode
- '(show-paren-match ((t (:background "#373B41"))))
- '(show-paren-mismatch ((t (:background "#DF5F5F"))))
-
- ;; wl (wanderlust)
- '(wl-highlight-action-argument-face ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-folder-few-face ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-folder-many-face ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-folder-path-face ((t (:inherit font-lock-constant-face :foreground nil))))
- '(wl-highlight-folder-unread-face ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-folder-zero-face ((t (:inherit default :foreground nil))))
- '(wl-highlight-folder-unknown-face ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-message-citation-header ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-message-cited-text-1 ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-message-cited-text-2 ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-cited-text-3 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-message-cited-text-4 ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-message-header-contents-face ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-headers-face ((t (:inherit font-lock-variable-name-face :foreground nil))))
- '(wl-highlight-message-important-header-contents ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-header-contents ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-important-header-contents2 ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-signature ((t (:inherit font-lock-string-face :foreground nil))))
- '(wl-highlight-message-unimportant-header-contents ((t (:foreground "#373B41"))))
- '(wl-highlight-summary-answered-face ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-summary-disposed-face ((t (:foreground "#373B41"
-                                                       :slant italic))))
- '(wl-highlight-summary-new-face ((t (:inherit font-lock-builtin-face :foreground nil))))
- '(wl-highlight-summary-normal-face ((t (:inherit default :foreground nil))))
- '(wl-highlight-summary-thread-top-face ((t (:inherit font-lock-type-face :foreground nil))))
- '(wl-highlight-thread-indent-face ((t (:foreground "#B294BB"))))
- '(wl-highlight-summary-refiled-face ((t (:foreground "#373B41"))))
- '(wl-highlight-summary-displaying-face ((t (:underline t :weight bold))))
-)
+  (custom-theme-set-faces
+   'tomorrow-night
+   
+   ;; Faces that aren't really "customized"
+   '(bold ((t (:bold t))))
+   '(bold-italic ((t (:italic t :bold t))))
+   '(button ((t (:underine t))))
+   '(italic ((t (:italic t))))
+   '(underline ((t (:underline t))))
+   
+   ;; The basics
+   `(default ((t (:foreground ,tn-fg :background ,tn-bg))))
+   `(cursor ((t (:foreground ,tn-cursor))))
+   `(highlight ((t (:background ,tn-curline))))
+   `(region ((t (:background ,tn-selection))))
+   `(fringe ((t (:background ,tn-curline))))
+   `(vertical-border ((t (:foreground ,tn-selection))))
+   
+   ;; Modeline
+   `(modeline ((t (:background ,tn-curline :foreground ,tn-fg))))
+   `(modeline-buffer-id ((t (:background ,tn-curline :foreground ,tn-fg))))
+   `(modeline-mousable ((t (:background ,tn-curline :foreground ,tn-fg))))
+   `(modeline-mousable-minor-mode ((t (:background ,tn-curline :foreground ,tn-fg))))
+   
+   ;; Minibuffer
+   `(minibuffer-prompt ((t (:foreground ,tn-green))))
+   
+   ;; font-lock
+   `(font-lock-comment-face ((t (:foreground ,tn-lowlight))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,tn-lowlight))))
+   `(font-lock-doc-string-face ((t (:foreground ,tn-lowlight))))
+   `(font-lock-string-face ((t (:foreground ,tn-green))))
+   `(font-lock-keyword-face ((t (:foreground ,tn-purple))))
+   `(font-lock-builtin-face ((t (:foreground ,tn-blue))))
+   `(font-lock-function-name-face ((t (:foreground ,tn-blue))))
+   `(font-lock-variable-name-face ((t (:foreground ,tn-red))))
+   `(font-lock-type-face ((t (:foreground ,tn-yellow))))
+   `(font-lock-constant-face ((t (:foreground ,tn-orange))))
+   `(font-lock-preprocessor-face ((t (:foreground ,tn-aqua))))
+   `(font-lock-warning-face ((t (:background ,tn-error-bg :foreground ,tn-error-fg))))
+   `(c-annotation-face ((t (:foreground ,tn-lowlight))))
+   
+   ;; isearch
+   `(isearch ((t (:background ,tn-selection))))
+   `(isearch-fail ((t (:background ,tn-error-bg :foreground ,tn-error-fg))))
+   
+   ;; flyspell
+   `(flyspell-incorrect ((t (:foreground ,tn-error-bg :underline t :weight normal))))
+   
+   ;; external
+   
+   ;; auctex
+   '(font-latex-bold-face ((t (:foreground nil :weight bold))))
+   '(font-latex-italic-face ((t (:foreground nil :slant italic))))
+   `(font-latex-string-face ((t (:foreground ,tn-green))))
+   `(font-latex-warning ((t (:background ,tn-error-bg :foreground ,tn-error-fg))))
+   `(font-latex-slide-title-face ((t (:foreground ,tn-yellow :weight normal :height 1.0))))
+   
+   ;; eshell
+   `(eshell-prompt ((t (:foreground ,tn-green))))
+   `(eshell-ls-archive ((t (:foreground ,tn-red))))
+   `(eshell-ls-backup ((t (:foreground ,tn-lowlight))))
+   `(eshell-ls-clutter ((t (:foreground ,tn-lowlight))))
+   `(eshell-ls-directory ((t (:foreground ,tn-blue :weight bold))))
+   `(eshell-ls-executable ((t (:foreground ,tn-green :weight bold))))
+   `(eshell-ls-missing ((t (:foreground ,tn-error-fg :background ,tn-error-bg))))
+   `(eshell-ls-product ((t (:foreground ,tn-lowlight))))
+   `(eshell-ls-special ((t (:foreground ,tn-green))))
+   `(eshell-ls-symlink ((t (:foreground ,tn-aqua))))
+   
+   ;; ido
+   `(ido-only-match ((t (:foreground ,tn-green))))
+   `(ido-subdir ((t (:foreground ,tn-red))))
+   
+   ;; jabber
+   `(jabber-chat-prompt-local ((t (:foreground ,tn-blue :weight normal))))
+   `(jabber-chat-prompt-foreign ((t (:foreground ,tn-red :weight normal))))
+   `(jabber-chat-prompt-system ((t (:foreground ,tn-green :weight normal))))
+   `(jabber-chat-error ((t (:background ,tn-error-bg :foreground ,tn-error-fg :weight bold))))
+   `(jabber-rare-time-face ((t (:foreground ,tn-green :weight normal :underline t))))
+   `(jabber-activity-face ((t (:foreground ,tn-blue :weight normal))))
+   `(jabber-activity-personal-face ((t (:foreground ,tn-blue :weight normal))))
+   `(jabber-roster-user-chatty ((t (:foreground ,tn-aqua :weight bold))))
+   `(jabber-roster-user-online ((t (:foreground ,tn-aqua :weight normal))))
+   `(jabber-roster-user-away ((t (:foreground ,tn-green :slant italic))))
+   `(jabber-roster-user-xa ((t (:foreground ,tn-purple :slant italic))))
+   `(jabber-roster-user-dnd ((t (:foreground ,tn-orange :slant italic))))
+   `(jabber-roster-user-offline ((t (:foreground ,tn-selection :slant italic))))
+   
+   ;; message mode
+   `(message-cited-text ((t (:foreground ,tn-lowlight))))
+   `(message-header-name ((t (:foreground ,tn-green))))
+   `(message-header-other ((t (:foreground ,tn-green))))
+   `(message-header-to ((t (:foreground ,tn-blue :weight normal))))
+   `(message-header-from ((t (:foreground ,tn-aqua))))
+   `(message-header-cc ((t (:foreground ,tn-blue))))
+   `(message-header-bcc ((t (:foreground ,tn-blue))))
+   `(message-header-subject ((t (:foreground ,tn-aqua))))
+   `(message-header-xheader ((t (:foreground ,tn-green))))
+   `(message-mml ((t (:foreground ,tn-green))))
+   `(message-separator ((t (:foreground ,tn-lowlight))))
+   
+   ;; org
+   `(org-agenda-date-today ((t (:foreground ,tn-orange :weight bold))))
+   `(org-agenda-date ((t (:foreground ,tn-blue))))
+   `(org-agenda-date-weekend ((t (:foreground ,tn-aqua))))
+   `(org-agenda-structure ((t (:foreground ,tn-lowlight))))
+   '(org-archived ((t (:inherit default :foreground nil :weight bold))))
+   `(org-date ((t (:foreground ,tn-blue))))
+   `(org-deadline-announce ((t (:foreground ,tn-red))))
+   `(org-done ((t (:bold t :foreground ,tn-green))))
+   `(org-formula ((t (:foreground ,tn-yellow))))
+   `(org-headline-done ((t (:foreground ,tn-green))))
+   `(org-hide ((t (:foreground ,tn-bg))))
+   `(org-level-1 ((t (:foreground ,tn-orange))))
+   `(org-level-2 ((t (:foreground ,tn-yellow))))
+   `(org-level-3 ((t (:foreground ,tn-blue))))
+   `(org-level-4 ((t (:foreground ,tn-aqua))))
+   `(org-level-5 ((t (:foreground ,tn-purple))))
+   `(org-level-6 ((t (:foreground ,tn-red))))
+   `(org-level-7 ((t (:foreground ,tn-orange))))
+   `(org-level-8 ((t (:foreground ,tn-yellow))))
+   `(org-link ((t (:foreground ,tn-yellow :underline t))))
+   `(org-scheduled ((t (:foreground ,tn-green))))
+   `(org-scheduled-previously ((t (:foreground ,tn-red))))
+   `(org-scheduled-today ((t (:foreground ,tn-blue))))
+   `(org-special-keyword ((t (:foreground ,tn-yellow))))
+   `(org-table ((t (:foreground ,tn-green))))
+   '(org-tag ((t (:bold t :weight bold))))
+   `(org-time-grid ((t (:foreground ,tn-orange))))
+   `(org-todo ((t (:bold t :weight bold :foreground ,tn-red))))
+   `(org-upcoming-deadline ((t (:foreground ,tn-purple))))
+   `(org-warning ((t (:bold t :weight bold :foreground ,tn-red))))
+   
+   ;; show-paren-mode
+   `(show-paren-match ((t (:background ,tn-selection))))
+   `(show-paren-mismatch ((t (:background ,tn-error-bg))))
+   
+   ;; wl (wanderlust)
+   `(wl-highlight-action-argument-face ((t (:foreground ,tn-red))))
+   `(wl-highlight-folder-few-face ((t (:foreground ,tn-red))))
+   `(wl-highlight-folder-many-face ((t (:foreground ,tn-red))))
+   `(wl-highlight-folder-path-face ((t (:foreground ,tn-orange))))
+   `(wl-highlight-folder-unread-face ((t (:foreground ,tn-blue))))
+   '(wl-highlight-folder-zero-face ((t (:inherit default :foreground nil))))
+   `(wl-highlight-folder-unknown-face ((t (:foreground ,tn-blue))))
+   `(wl-highlight-message-citation-header ((t (:foreground ,tn-red))))
+   `(wl-highlight-message-cited-text-1 ((t (:foreground ,tn-red))))
+   `(wl-highlight-message-cited-text-2 ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-cited-text-3 ((t (:foreground ,tn-blue))))
+   `(wl-highlight-message-cited-text-4 ((t (:foreground ,tn-blue))))
+   `(wl-highlight-message-header-contents-face ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-headers-face ((t (:foreground ,tn-red))))
+   `(wl-highlight-message-important-header-contents ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-header-contents ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-important-header-contents2 ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-signature ((t (:foreground ,tn-green))))
+   `(wl-highlight-message-unimportant-header-contents ((t (:foreground ,tn-selection))))
+   `(wl-highlight-summary-answered-face ((t (:foreground ,tn-blue))))
+   `(wl-highlight-summary-disposed-face ((t (:foreground ,tn-selection :slant italic))))
+   `(wl-highlight-summary-new-face ((t (:foreground ,tn-blue))))
+   '(wl-highlight-summary-normal-face ((t (:inherit default :foreground nil))))
+   `(wl-highlight-summary-thread-top-face ((t (:foreground ,tn-yellow))))
+   `(wl-highlight-thread-indent-face ((t (:foreground ,tn-purple))))
+   `(wl-highlight-summary-refiled-face ((t (:foreground ,tn-selection))))
+   '(wl-highlight-summary-displaying-face ((t (:underline t :weight bold))))
+   ))
 
 (provide-theme 'tomorrow-night)
