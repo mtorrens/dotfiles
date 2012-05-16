@@ -120,3 +120,8 @@
 
 (global-set-key [f2] 'deft)
 
+
+;; Google Maps integration (awesome)
+(add-to-list 'load-path "~/.emacs.d/packages/google-maps.git")
+(require 'google-maps)
+(require 'org-location-google-maps)

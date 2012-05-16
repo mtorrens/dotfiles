@@ -34,3 +34,6 @@
 [submodule ".emacs.d/packages/color-theme-solarized.git"]
 	path = .emacs.d/packages/color-theme-solarized.git
 	url = https://github.com/sellout/emacs-color-theme-solarized.git
+[submodule ".emacs.d/packages/google-maps.git"]
+	path = .emacs.d/packages/google-maps.git
+	url = git://git.naquadah.org/google-maps.git
