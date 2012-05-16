@@ -31,3 +31,6 @@
 [submodule ".emacs.d/packages/cucumber.el.git"]
 	path = .emacs.d/packages/cucumber.el.git
 	url = https://github.com/michaelklishin/cucumber.el.git
+[submodule ".emacs.d/packages/color-theme-solarized.git"]
+	path = .emacs.d/packages/color-theme-solarized.git
+	url = https://github.com/sellout/emacs-color-theme-solarized.git
