@@ -44,10 +44,16 @@
       mu4e-user-mail-address-regexp "charles@charlespence\.net\\|cpence@nd\.edu\\|cpence@gmail.com\\|cpence@princeton\.edu"
 
       mu4e-html2text-command "pandoc -f html -t org"
-      mu4e-view-wraplines t
       mu4e-view-fields '(:from :to :cc :subject :date :attachments)
 
       mail-user-agent 'mu4e-user-agent)
+
+
+;; Wrap mail buffers with longlines-mode; I don't want fill-region to be
+;; applied as is mu4e's default behavior
+(defadvice mu4e-view (after add-longlines-mode activate)
+  "Turn on longlines mode in mail view buffers after loading."
+  (longlines-mode 1))
 
 
 ;; Enable org-contacts
@@ -62,7 +68,7 @@
 (setq message-send-mail-function 'smtpmail-send-it
       starttls-use-gnutls t
       smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "charles@charlespence.net" nil))
       smtpmail-default-smtp-server "smtp.gmail.com"
       smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587)
+      smtpmail-smtp-service 587
+      auth-sources (list (expand-file-name "~/.private/authinfo.gpg")))

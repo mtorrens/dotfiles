@@ -151,7 +151,7 @@
    `(org-time-grid ((t (:foreground ,tn-orange))))
    `(org-todo ((t (:bold t :weight bold :foreground ,tn-red))))
    `(org-upcoming-deadline ((t (:foreground ,tn-purple))))
-   `(org-warning ((t (:bold t :weight bold :foreground ,tn-red))))
+   `(org-warning ((t (:bold t :weight bold :foreground ,tn-red :inherit nil))))
    
    ;; show-paren-mode
    `(show-paren-match ((t (:background ,tn-selection))))

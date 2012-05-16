@@ -11,13 +11,6 @@
 (display-time-mode t)
 
 
-;; Shorten some of the mode names
-(add-hook 'emacs-lisp-mode-hook (lambda() (setq mode-name "el")))
-(add-hook 'dired-mode-hook (lambda() (setq mode-name "Dir")))
-(add-hook 'org-mode-hook (lambda() (setq mode-name "Org")))
-(add-hook 'text-mode-hook (lambda() (setq mode-name "txt")))
-
-
 ;; Tweak out the modeline
 (setq cp-mode-line-filename
       (list
@@ -28,10 +21,33 @@
                              'help-echo "Buffer has been modified")))
        " "))
 
+;; Shorten lots of mode names
+(defvar cp-mode-shorten-alist
+  '(("Fundamental" . "")
+    ("Emacs-Lisp" . "el")
+    ("Lisp Interaction" . "eli")
+    ("Org-mode" . "Org")
+    ("Org-Agenda.*" . "OrgA")
+    ("Dired" . "Dir")
+    ("Text" . "txt")
+    ("\\(La\\)?TeX.*" . "TeX")
+    ("jabber-chat" . "jc")
+    ("jabber-roster" . "jr")
+    ("Ruby" . "rb")
+    ("mu4e:main" . "m4m")
+    ("mu4e:headers" . "m4h")
+    ("mu4e:view" . "m4v")
+    ("mu4e:compose" . "m4c")))
+
+(defun cp-get-short-mode-name ()
+  (or
+   (assoc-default (format-mode-line mode-name) cp-mode-shorten-alist 'string-match)
+   (format-mode-line mode-name)))
+
 (setq cp-mode-line-mode
       (list
        "["
-       '(:eval (propertize mode-name 'face 'font-lock-constant-face))
+       '(:eval (propertize (cp-get-short-mode-name) 'face 'font-lock-constant-face))
        "] "))
 
 (setq cp-mode-line-position
@@ -42,10 +58,8 @@
        ") "))
 
 ;; Hook some other packages into the modeline
-(setq global-mode-string '((wl-modeline-biff-status
-                            wl-modeline-biff-state-on
-                            wl-modeline-biff-state-off)
-                           (t jabber-activity-mode-string)
+(setq global-mode-string '((t jabber-activity-mode-string)
+                           " "
                            display-time-string))
 
 (setq-default mode-line-format (list " "

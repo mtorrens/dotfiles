@@ -28,10 +28,6 @@
 (setq jabber-chat-buffer-format "Jabber: %n"
       jabber-roster-buffer "Jabber: Roster")
 
-;; Nice mode names
-(add-hook 'jabber-chat-mode-hook (lambda () (setq mode-name "jc")))
-(add-hook 'jabber-roster-mode-hook (lambda () (setq mode-name "jr")))
-
 ;; Nice buffer nicks
 (setq jabber-activity-make-string
       (lambda (jid) (concat " [" (jabber-activity-make-string-default jid) "]")))
@@ -48,10 +44,17 @@
 (if (featurep 'todochiku) (add-hook 'jabber-alert-message-hooks 'cp-jabber-todochiku-notify))
 
 
-;; Get the secrets file and load Jabber
+;; Get the secrets file and load Jabber, or just pull up the Roster buffer
+;; if Jabber's already been started.
 (defun cp-start-jabber ()
   (interactive)
-  (require 'secrets "~/.private/secrets.el.gpg")
-  (jabber-connect-all))
+  (or
+   (get-buffer "Jabber: Roster")
+   (progn
+     (require 'secrets "~/.private/secrets.el.gpg")
+     (jabber-connect-all))
+   )
+  (switch-to-buffer "Jabber: Roster"))
 (define-key jabber-global-keymap "\C-c" 'cp-start-jabber)
 (global-set-key [f9] 'cp-start-jabber)
+(global-set-key (kbd "S-<f9>") 'jabber-disconnect)

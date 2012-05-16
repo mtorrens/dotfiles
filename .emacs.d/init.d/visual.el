@@ -17,6 +17,7 @@
 
 ;; Color theme, with rainbow-mode for editing the theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/packages/color-theme-solarized.git")
 (load-theme 'tomorrow-night)
 (require 'rainbow-mode)
 

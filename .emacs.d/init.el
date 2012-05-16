@@ -20,6 +20,7 @@
 
 ;; File editing/writing settings
 (load "~/.emacs.d/init.d/editing.el")
+(load "~/.emacs.d/init.d/printing.el")
 
 ;; Global key bindings
 (load "~/.emacs.d/init.d/keys.el")
@@ -196,7 +197,6 @@
   (visual-line-mode)
   (set-visual-wrap-column 82)
 
-  (setq indent-line-function 'insert-tab)
   (set-tab-stop-width 2)
 )
 (add-hook 'text-mode-hook 'cpence-text-mode-hook)
