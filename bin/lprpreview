@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if type "xdg-open" &> /dev/null; then
+  open_prog='xdg-open'
+elif type "start" &> /dev/null; then
+  open_prog='start'
+else
+  open_prog='open'
+fi
+
+pdf_file="`basename "$1" .ps`.pdf"
+ps2pdf "$1" "$pdf_file"
+$open_prog "$pdf_file"
