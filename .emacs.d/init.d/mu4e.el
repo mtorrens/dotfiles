@@ -30,6 +30,7 @@
                                ("/Personal/action" . ?a)
                                ("/Personal/archive" . ?x)
                                ("/Personal/storage/2012" . ?s)
+                               ("/Personal/sent" . ?t)
                                ("/Personal/drafts" . ?d)
                                ("/Personal/trash" . ?t)
                                ("/Family/inbox" . ?f)
@@ -42,6 +43,7 @@
       user-mail-address "charles@charlespence.net"
       user-full-name "Charles Pence"
       mu4e-user-mail-address-regexp "charles@charlespence\.net\\|cpence@nd\.edu\\|cpence@gmail.com\\|cpence@princeton\.edu"
+      message-kill-buffer-on-exit t
 
       mu4e-html2text-command "pandoc -f html -t org"
       mu4e-view-fields '(:from :to :cc :subject :date :attachments)
