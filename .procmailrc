@@ -1,0 +1,40 @@
+PATH=/usr/bin:/usr/local/bin
+MAILDIR=$HOME/Dropbox/Charles/Mail/Personal/
+DEFAULT=$HOME/Dropbox/Charles/Mail/Personal/inbox/
+LOGFILE=/dev/null
+SHELL=/bin/bash
+
+# Filter sent items from GMail, marking as read
+:0
+* ^From.*cpence@gmail\.com|\
+  ^From.*cpence@nd\.edu|\
+  ^From.*charles@charlespence\.net
+{
+  foldername=sent
+  
+  :0 c
+  $foldername/
+
+  :0 ai
+  * LASTFOLDER ?? ()\/[^/]+^^
+  |mv "$LASTFOLDER" "$MAILDIR/sent/cur/$MATCH:2,S"
+}
+
+# Filter lists
+:0:
+* ^To:.*PSA@listserv\.umkc\.edu|\
+  ^To:.*ptb-announcements@googlegroups\.com|\
+  ^To:.*PHILOS-L@liverpool\.ac\.uk|\
+  ^To:.*HOPOS-L@listserv\.vt\.edu|\
+  ^To:.*philosophy-updates@googlegroups\.com|\
+  ^From.*philevents@philpapers\.org|\
+  ^Subject:.*\[PhilUpdates\].*
+lists/
+
+# Filter ExtraSpam directly to /dev/null
+:0
+* ^To:.*bitbucket@charlespence\.net|\
+  ^From.*l\.mpence@textnow\.me|\
+  ^From.*l\.mpence@yahoo\.com
+/dev/null
+

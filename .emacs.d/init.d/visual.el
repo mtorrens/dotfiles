@@ -14,6 +14,8 @@
 (set-fringe-style -1)
 (blink-cursor-mode t)
 
+(setq ns-pop-up-frames nil)
+
 
 ;; Color theme, with rainbow-mode for editing the theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")

@@ -1,6 +1,6 @@
 
 ;; mu4e
-(add-to-list 'load-path "~/.emacs.d/packages/mu4e-0.9.8.4")
+(add-to-list 'load-path "~/.emacs.d/packages/mu4e.git")
 (require 'mu4e)
 (require 'org-mu4e)
 
@@ -45,6 +45,7 @@
       mu4e-user-mail-address-regexp "charles@charlespence\.net\\|cpence@nd\.edu\\|cpence@gmail.com\\|cpence@princeton\.edu"
       message-kill-buffer-on-exit t
 
+      mu4e-split-view nil
       mu4e-html2text-command "pandoc -f html -t org"
       mu4e-view-fields '(:from :to :cc :subject :date :attachments)
 

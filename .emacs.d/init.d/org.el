@@ -31,6 +31,7 @@
       org-use-fast-todo-selection t
       org-M-RET-may-split-line nil
       org-support-shift-select 'always
+      org-agenda-buffer-name "Org: Agenda"
       org-agenda-ndays 7
       org-agenda-show-all-dates t
       org-agenda-skip-deadline-if-done t

@@ -48,6 +48,9 @@ bin/*/*/*.pyc
 # Seriously, no compiled elisp
 *.elc
 
+# Procmail
+!.procmailrc
+
 # Ruby
 !.gemrc
 

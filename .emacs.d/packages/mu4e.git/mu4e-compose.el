@@ -48,7 +48,7 @@
 the From: address.)"
   :type 'string
   :group 'mu4e-compose)
- 
+
 (defcustom mu4e-sent-messages-behavior 'sent
   "Determines what mu4e does with sent messages - this is a symbol
 which can be either:
@@ -60,6 +60,13 @@ or 'delete, since GMail already takes care of keeping copies in the
 sent folder."
   :type 'symbol
   :safe 'symbolp
+  :group 'mu4e-compose)
+
+
+(defcustom mu4e-compose-keep-self-cc nil
+  "Non-nil means your e-mail address is kept on the CC list when
+replying to messages."
+  :type 'boolean
   :group 'mu4e-compose)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -147,7 +154,6 @@ e-mail addresses. If LST is nil, returns nil."
     (downcase (or (cdr cell2) ""))))
 
 
-
 (defun mu4e~compose-create-to-lst (origmsg)
   "Create a list of address for the To: in a new message, based on
 the original message ORIGMSG. If the Reply-To address is set, use
@@ -182,8 +188,9 @@ the original message ORIGMSG, and whether it's a reply-all."
 		    (mu4e~compose-create-to-lst origmsg)))
 		cc-lst))
 	    ;; finally, we need to remove ourselves from the cc-list
+	    ;; unless mu4e-compose-keep-self-cc is non-nil
 	    (cc-lst
-	      (if (null user-mail-address)
+	      (if (or mu4e-compose-keep-self-cc (null user-mail-address))
 		cc-lst
 		(delete-if
 		  (lambda (cc-cell)
@@ -215,8 +222,9 @@ nil, function returns nil."
     (if user-full-name
       (format "%s <%s>" user-full-name user-mail-address)
       (format "%s" user-mail-address))))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun mu4e~compose-insert-mail-header-separator ()
   "Insert `mail-header-separator' in the first empty line of the
 message. message-mode needs this line to know where the headers end
@@ -229,11 +237,11 @@ separator is never written to file. Also see
     ;; search for the first empty line
     (if (search-forward-regexp (concat "^$"))
       (replace-match
-	(propertize mail-header-separator 'read-only t 'intangible t))
+	(concat (propertize mail-header-separator 'read-only t 'intangible t)))
       ;; no empty line? then append one
       (progn
 	(goto-char (point-max))
-	(insert (concat "\n" mail-header-separator "\n"))))))
+	(insert (concat "\n" mail-header-separator))))))
 
 (defun mu4e~compose-remove-mail-header-separator ()
   "Remove `mail-header-separator; we do this before saving a
@@ -243,7 +251,8 @@ never hits the disk. Also see `mu4e~compose-insert-mail-header-separator."
     (goto-char (point-min))
     ;; remove the --text follows this line-- separator
     (when (search-forward-regexp (concat "^" mail-header-separator))
-      (replace-match ""))))
+      (let ((inhibit-read-only t))
+	(replace-match "")))))
 
 (defun mu4e~compose-user-wants-reply-all (origmsg)
   "Ask user whether she wants to reply to *all* recipients if there
@@ -297,7 +306,7 @@ You can append flags."
       (mu4e~compose-header "References"
 	(mu4e~compose-refererences-construct origmsg))
       (mu4e~compose-common-construct)
-      
+
       (when old-msgid
 	(mu4e~compose-header "In-reply-to" (format "<%s>" old-msgid)))
 
@@ -423,7 +432,7 @@ needed, set the Fcc header, and register the handler function."
     (use-local-map mu4e-compose-mode-map)
     (message-hide-headers)
     (make-local-variable 'message-default-charset)
-    
+
     ;; if the default charset is not set, use UTF-8
     (unless message-default-charset
       (setq message-default-charset 'utf-8))
@@ -487,18 +496,18 @@ or `mu4e~compose-newmsg-construct'. The editing buffer is using
 Gnus' `message-mode'."
   (unless mu4e-maildir       (error "mu4e-maildir not set"))
   (unless mu4e-drafts-folder (error "mu4e-drafts-folder not set"))
-  (let ((draft
+  (let ((inhibit-read-only t)
+	 (draft
 	  (if (member compose-type '(reply forward new))
 	    (mu4e~compose-open-new-draft-file compose-type original-msg)
 	    (if (eq compose-type 'edit)
 	      (plist-get original-msg :path)
 	      (error "unsupported compose-type %S" compose-type)))))
     (find-file draft)
-    (mu4e-compose-mode)
     ;; insert mail-header-separator, which is needed by message mode to separate
     ;; headers and body. will be removed before saving to disk
     (mu4e~compose-insert-mail-header-separator)
-    
+    (insert "\n") ;; insert a newline after header separator
     ;; include files -- e.g. when forwarding a message with attachments,
     ;; we take those from the original.
     (save-excursion
@@ -512,14 +521,17 @@ Gnus' `message-mode'."
       (when message-signature
 	(message-insert-signature)))
     
-    ;; setup the fcc-stuff, if needed 
+    ;; set compose mode -- so now hooks can run
+    (mu4e-compose-mode)
+    
+    ;; setup the fcc-stuff, if needed
     (add-hook 'message-send-hook
       (lambda ()
 	;; for safety, always save the draft before sending
 	(set-buffer-modified-p t)
 	(save-buffer)
 	(mu4e~setup-fcc-maybe)) nil t)
-    
+
     ;; when the message has been sent.
     (add-hook 'message-sent-hook
       (lambda ()
@@ -529,10 +541,11 @@ Gnus' `message-mode'."
   ;; buffer is not user-modified yet
   (mu4e~compose-set-friendly-buffer-name compose-type)
   (set-buffer-modified-p nil)
+
   ;; now jump to some use positions, and start writing that mail!
   (if (member compose-type '(new forward))
     (message-goto-to)
-    (message-goto-body))) 
+    (message-goto-body)))
 
 
 (defun mu4e-sent-handler (docid path)
@@ -650,7 +663,7 @@ message."
   ;; create a new draft message 'resetting' (as below) is not actually needed in
   ;; this case, but let's prepare for the re-edit case as well
   (mu4e~compose-handler 'new)
-  
+
   (when (message-goto-to) ;; reset to-address, if needed
     (message-delete-line))
   (message-add-header (concat "To: " to "\n"))
@@ -659,7 +672,7 @@ message."
     (message-delete-line))
   (message-add-header (concat "Subject: " subject "\n"))
 
-  ;; add any other headers specified 
+  ;; add any other headers specified
   (when other-headers
     (message-add-header other-headers))
 
