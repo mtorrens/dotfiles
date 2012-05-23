@@ -38,6 +38,7 @@
 (load "~/.emacs.d/init.d/org.el")
 (load "~/.emacs.d/init.d/jabber.el")
 (load "~/.emacs.d/init.d/yasnippet.el")
+(load "~/.emacs.d/init.d/code.el")
 
 ;; -------------------------------------
 ;; Magit
@@ -182,7 +183,7 @@
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-;; H files should be in C++
+;; H files should be in C++ by default
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;; -------------------------------------
@@ -271,6 +272,7 @@
 (add-hook 'python-mode-hook 'cpence-code-mode-hook)
 (add-hook 'ruby-mode-hook 'cpence-code-mode-hook)
 (add-hook 'rhtml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'haml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'yaml-mode-hook 'cpence-code-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'cpence-code-mode-hook)
 
