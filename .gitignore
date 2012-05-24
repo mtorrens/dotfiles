@@ -48,6 +48,9 @@ bin/*/*/*.pyc
 # Seriously, no compiled elisp
 *.elc
 
+# Personal spelling dictionary
+!.hunspell_en_US
+
 # Procmail
 !.procmailrc
 
