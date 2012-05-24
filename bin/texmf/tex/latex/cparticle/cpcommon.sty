@@ -119,7 +119,7 @@
   \newcommand{\cpahfamily}{\sffamily}
 \else
   \RequirePackage[tiny]{titlesec}
-  \newcommand{\cpahfamily}{}
+  \newcommand{\cpahfamily}{\bfseries}
 \fi
 \ifCPA@smallheads
   \newcommand{\cpahbig}{\normalsize}
@@ -141,6 +141,11 @@
   {\normalsize\cpahfamily}
   {{\upshape\thesubsubsection.}}
   {0.5em}
+  {}
+\titleformat{\paragraph}[runin]
+  {\normalsize\cpahfamily}
+  {}
+  {0pt}
   {}
 
 \ifcsname abstractname\endcsname
