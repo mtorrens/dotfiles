@@ -4,7 +4,12 @@
 
 DOTFILES="${HOME}/Dropbox/Charles/Storage/Backup/dotfiles"
 
+cp ~/.gitconfig $DOTFILES/dotgitconfig
 cp ~/.gitignore $DOTFILES/dotgitignore
+cp ~/.gitmodules $DOTFILES/dotgitmodules
+
+rm -rf $DOTFILES/bin
+cp -Rf ~/bin $DOTFILES/bin
 
 cp ~/.bashrc $DOTFILES/dotbashrc
 cp ~/.bash_profile $DOTFILES/dotbash_profile
@@ -12,13 +17,25 @@ cp ~/.hushlogin $DOTFILES/dothushlogin
 cp ~/.inputrc $DOTFILES/dotinputrc
 cp ~/.profile $DOTFILES/dotprofile
 
+rm -rf $DOTFILES/dotemacs.d
+cp -Rf ~/.emacs.d $DOTFILES/dotemacs.d
+
+cp ~/.hunspell_en_US $DOTFILES/dothunspell_en_US
+cp ~/.procmailrc $DOTFILES/dotprocmailrc
+cp ~/.gemrc $DOTFILES/dotgemrc
 cp ~/.nanorc $DOTFILES/dotnanorc
 cp ~/.hgrc $DOTFILES/dothgrc
-cp ~/.gemrc $DOTFILES/dotgemrc
-cp ~/.procmailrc $DOTFILES/dotprocmailrc
 cp ~/.gtkrc-2.0 $DOTFILES/dotgtkrc-2.0
 cp ~/.gnupg/gpg.conf $DOTFILES/gpg.conf
-cp ~/.gitconfig $DOTFILES/dotgitconfig
+
+rm -rf $DOTFILES/dotconfig
+mkdir $DOTFILES/dotconfig
+cp -Rf ~/.config/pianobar $DOTFILES/dotconfig/pianobar
+
+rm -rf $DOTFILES/dotsubversion
+mkdir $DOTFILES/dotsubversion
+cp ~/.subversion/{config,servers} $DOTFILES/dotsubversion
+
 cp ~/.gdbinit $DOTFILES/dotgdbinit
 
 rm -rf $DOTFILES/dotprivate
@@ -26,17 +43,3 @@ cp -Rf ~/.private $DOTFILES/dotprivate
 
 rm -rf $DOTFILES/dotssh
 cp -Rf ~/.ssh $DOTFILES/dotssh
-
-rm -rf $DOTFILES/dotsubversion
-mkdir $DOTFILES/dotsubversion
-cp ~/.subversion/{config,servers} $DOTFILES/dotsubversion
-
-rm -rf $DOTFILES/dotconfig
-mkdir $DOTFILES/dotconfig
-cp -Rf ~/.config/pianobar $DOTFILES/dotconfig/pianobar
-
-rm -rf $DOTFILES/bin
-cp -Rf ~/bin $DOTFILES/bin
-
-rm -rf $DOTFILES/dotemacs.d
-cp -Rf ~/.emacs.d $DOTFILES/dotemacs.d
