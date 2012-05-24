@@ -1,6 +1,0 @@
-Emacs-jabber when shipped via git doesn't include any version of its
-autoload files, nor does it ship hexrgb.el in the right place, nor does
-it fill in a random version file that it needs.  But if you run configure
-and make, you get a dirty git commit.  Here's a few simple hacks such
-that all you need to do is drop in the git checkout, (require 'jabber),
-and roll.

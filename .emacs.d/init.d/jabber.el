@@ -1,9 +1,8 @@
 
 ;; Emacs-Jabber
-(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber.git")
-(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber-hacks")
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber-0.8.91")
 
-(require 'jabber)
+(require 'jabber-autoloads)
 (add-hook 'jabber-chat-mode-hook 'goto-address)
 (add-hook 'jabber-chat-mode-hook 'turn-on-flyspell)
 
