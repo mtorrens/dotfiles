@@ -88,9 +88,9 @@
       TeX-view-program-selection '((output-pdf "Open"))
       font-latex-fontify-sectioning 'color
       TeX-command-list '(
-                         ("Latexmk" "latexmk -f -pdf %s" TeX-run-command nil t :help "Run Latexmk on file")
-                         ("XeLatexmk" "latexmk -f -pdf -xelatex %s" TeX-run-command nil t :help "Run Latexmk on file")
-                         ("View" "%V" TeX-run-discard-or-function t t :help "Run Viewer")
+                         ("Latexmk" "latexmk -pdf -ps- -dvi- -pdflatex='pdflatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("XeLatexmk" "latexmk -pdf -ps- -dvi- -pdflatex='xelatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("View" "%V" TeX-run-discard-or-function nil t :help "Run Viewer")
                          ("Clean" "latexmk -c %s" TeX-run-command nil t :help "Delete generated intermediate files")))
 
 ;; -------------------------------------
@@ -159,6 +159,13 @@
 (add-to-list 'load-path "~/.emacs.d/packages/haml-mode.git/")
 (autoload 'haml-mode "haml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode))
+
+;; ----------------------------------------------------
+;; CMake mode
+
+(require 'cmake-mode)
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt$" . cmake-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake$" . cmake-mode))
 
 ;; ----------------------------------------------------
 ;; C mode
@@ -264,6 +271,7 @@
 ;; programming modes, so we have to set all these hooks
 ;; ourselves.
 (add-hook 'c-mode-common-hook 'cpence-code-mode-hook)
+(add-hook 'cmake-mode-hook 'cpence-code-mode-hook)
 (add-hook 'html-mode-hook 'cpence-code-mode-hook)
 (add-hook 'css-mode-hook 'cpence-code-mode-hook)
 (add-hook 'asm-mode-hook 'cpence-code-mode-hook)

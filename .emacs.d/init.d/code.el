@@ -81,7 +81,8 @@ default of make -k"
                                     'cp-compile-todochiku-notify))
 
 ;; Since I'm setting the command intelligently, don't confirm it
-(setq compilation-read-command nil)
+(setq compilation-read-command nil
+      compilation-scroll-output t)
 
 ;; Set the compilation command for languages in which it makes sense (C, ASM,
 ;; Ruby), and also for a few things that are always bundled with those
