@@ -1,8 +1,9 @@
 
 ;; Emacs-Jabber
-(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber-0.8.91")
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber.git")
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-jabber-hacks")
 
-(require 'jabber-autoloads)
+(require 'jabber)
 (add-hook 'jabber-chat-mode-hook 'goto-address)
 
 ;; Disable debugging output (switch these on if trouble)

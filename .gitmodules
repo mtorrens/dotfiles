@@ -37,3 +37,6 @@
 [submodule ".emacs.d/packages/google-maps.git"]
 	path = .emacs.d/packages/google-maps.git
 	url = git://git.naquadah.org/google-maps.git
+[submodule ".emacs.d/packages/emacs-jabber.git"]
+	path = .emacs.d/packages/emacs-jabber.git
+	url = git://emacs-jabber.git.sourceforge.net/gitroot/emacs-jabber/emacs-jabber
