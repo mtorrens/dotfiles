@@ -5,11 +5,15 @@
 
 (require 'jabber)
 (add-hook 'jabber-chat-mode-hook 'goto-address)
+(add-hook 'jabber-chat-mode-hook 'turn-on-flyspell)
 
 ;; Disable debugging output (switch these on if trouble)
 (setq fsm-debug nil
       jabber-debug-keep-process-buffers nil
       jabber-debug-log-xml nil)
+
+;; Do a variety of things automagically
+(setq jabber-auto-reconnect t)
 
 ;; Disable avatars
 (setq jabber-vcard-avatars-retrieve nil

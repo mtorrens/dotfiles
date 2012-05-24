@@ -12,7 +12,8 @@
       ido-create-new-buffer 'always
       ido-save-directory-list-file "~/.emacs.d/cache/ido.last"
       ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-                           "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
+                           "^\*compilation" "^\*GTAGS" "^session\.*" "^\*Minibuf"
+                           "^\*mu4e-proc" "^\*code-conv" "^\*Echo")
       ido-ignore-files (append ido-ignore-files
                                (list
                                 ".*\\.org_archive$"
@@ -29,7 +30,8 @@
                                 ".*\\.out$"
                                 ".*\\.png$"
                                 ".*\\.jpg$"
-                                ".*\\.DS_Store$"))
+                                ".*\\.DS_Store$"
+                                ".*\\.gz$"))
       ido-case-fold t
       ido-enable-last-directory-history t
       ido-max-work-directory-list 30

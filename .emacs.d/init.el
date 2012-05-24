@@ -223,6 +223,8 @@
 
   ;; Check spelling
   (flyspell-mode 1)
+  (local-set-key (kbd "<f7>") 'ispell-buffer)
+  (local-set-key (kbd "S-<f7>") 'ispell-word)
 )
 (add-hook 'LaTeX-mode-hook 'cpence-latex-mode-hook)
 
