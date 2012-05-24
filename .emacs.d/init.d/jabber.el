@@ -4,7 +4,6 @@
 
 (require 'jabber-autoloads)
 (add-hook 'jabber-chat-mode-hook 'goto-address)
-(add-hook 'jabber-chat-mode-hook 'turn-on-flyspell)
 
 ;; Disable debugging output (switch these on if trouble)
 (setq fsm-debug nil
