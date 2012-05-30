@@ -34,10 +34,10 @@
     ("jabber-chat" . "jc")
     ("jabber-roster" . "jr")
     ("Ruby" . "rb")
-    ("mu4e:main" . "m4m")
-    ("mu4e:headers" . "m4h")
-    ("mu4e:view" . "m4v")
-    ("mu4e:compose" . "m4c")))
+    ("mu4e.main" . "m4m")
+    ("mu4e.headers" . "m4h")
+    ("mu4e.view" . "m4v")
+    ("mu4e.compose" . "m4c")))
 
 (defun cp-get-short-mode-name ()
   (or
