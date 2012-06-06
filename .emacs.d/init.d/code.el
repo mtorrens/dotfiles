@@ -98,3 +98,51 @@ default of make -k"
 ;; Bind a nice global key
 (global-set-key (kbd "<f7>") 'compile)
 
+
+;; -------------------------------------
+;; Mode hook for all code modes
+
+;; When killing a line, strip the indentation characters off
+;; of the front
+(defun kill-and-join-forward (&optional arg)
+  (interactive "P")
+  (if (and (eolp) (not (bolp)))
+      (progn (forward-char 1)
+             (just-one-space 0)
+             (backward-char 1)
+             (kill-line arg))
+    (kill-line arg)))
+
+(defun cpence-code-mode-hook ()
+  (interactive)
+
+  ;; Highlight current line
+  (hl-line-mode)
+  
+  ;; Newline = indent
+  (local-set-key (kbd "RET") 'newline-and-indent)
+
+  ;; And bind kill-line to indent-killing-kill-line in
+  ;; all source modes
+  (local-set-key (kbd "C-k") 'kill-and-join-forward)
+
+  ;; Show me the fill column
+  (fci-mode 1)
+)
+
+;; There's no "general" mode-hook that handles all of the
+;; programming modes, so we have to set all these hooks
+;; ourselves.
+(add-hook 'c-mode-common-hook 'cpence-code-mode-hook)
+(add-hook 'cmake-mode-hook 'cpence-code-mode-hook)
+(add-hook 'html-mode-hook 'cpence-code-mode-hook)
+(add-hook 'css-mode-hook 'cpence-code-mode-hook)
+(add-hook 'asm-mode-hook 'cpence-code-mode-hook)
+(add-hook 'xml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'js2-mode-hook 'cpence-code-mode-hook)
+(add-hook 'python-mode-hook 'cpence-code-mode-hook)
+(add-hook 'ruby-mode-hook 'cpence-code-mode-hook)
+(add-hook 'rhtml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'haml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'yaml-mode-hook 'cpence-code-mode-hook)
+(add-hook 'emacs-lisp-mode-hook 'cpence-code-mode-hook)

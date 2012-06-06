@@ -24,6 +24,12 @@
 (require 'rainbow-mode)
 
 
+;; Fill Column Indicator mode
+(add-to-list 'load-path "~/.emacs.d/packages/fill-column-indicator.git")
+(autoload 'fci-mode "fill-column-indicator" nil t)
+(setq fci-rule-color "#282A2E")
+
+
 ;; Save buffer positions
 (require 'saveplace)
 (setq-default save-place t)
