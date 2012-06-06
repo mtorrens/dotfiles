@@ -71,8 +71,6 @@
 (defun cpence-markdown-mode-hook ()
   (interactive)
 
-  (setq mode-name "md")
-  
   ;; Actually insert tab characters and newlines, indentation stuff
   ;; goes crazy in markdown-mode for some reason
   (define-key markdown-mode-map (kbd "<tab>") 'tab-to-tab-stop)

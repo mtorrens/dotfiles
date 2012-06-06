@@ -30,6 +30,7 @@
     ("Org-Agenda.*" . "OrgA")
     ("Dired" . "Dir")
     ("Text" . "txt")
+    ("Markdown" . "md")
     ("\\(La\\)?TeX.*" . "TeX")
     ("jabber-chat" . "jc")
     ("jabber-roster" . "jr")
