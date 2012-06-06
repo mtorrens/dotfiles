@@ -40,6 +40,9 @@
 (load "~/.emacs.d/init.d/jabber.el")
 
 (load "~/.emacs.d/init.d/text.el")
+(load "~/.emacs.d/init.d/markdown.el")
+(load "~/.emacs.d/init.d/auctex.el")
+
 (load "~/.emacs.d/init.d/yasnippet.el")
 (load "~/.emacs.d/init.d/codemodes.el")
 (load "~/.emacs.d/init.d/code.el")
