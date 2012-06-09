@@ -26,6 +26,7 @@
 (load "~/.emacs.d/init.d/keys.el")
 
 ;; These are used by several of the below
+(require 'cl)
 (require 'filladapt)
 (require 'todochiku)
 (setq todochiku-icons-directory "~/.emacs.d/packages/todochiku-icons")
