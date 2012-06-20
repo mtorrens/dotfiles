@@ -25,11 +25,12 @@
 ;; Utility functions used in the mu4e
 
 ;;; Code:
+(eval-when-compile (byte-compile-disable-warning 'cl-functions))
 (require 'cl)
+
 (require 'html2text)
 (require 'mu4e-vars)
 (require 'doc-view)
-
 
 (defcustom mu4e-html2text-command nil
   "Shell command that converts HTML from stdin into plain text on
@@ -69,25 +70,6 @@ dir already existed, or has been created, nil otherwise."
   (message "%s" (apply 'mu4e-format frm args)))
 
 
-(defun mu4e~read-option-normalize-list (options)
-  "Turn a list OPTIONS into normal-form for `mu4e-read-option'."
-  ;; transform options into 'normal-form', so that in case an option has 'nil
-  ;; for CHAR, it's replaced by the first letter of OPTIONSTRING (and that char
-  ;; is eaten off OPTIONSTR. If RESULT is nil, replace it by CHAR
-  (map 'list
-    (lambda (option)
-      (if (nth 1 option)
-	(list
-	  (nth 0 option)
-	  (nth 1 option)
-	  (or (nth 2 option) (nth 1 option))) ;
-	(list
-	  (substring (nth 0 option) 1)    ;; chop off first char
-	  (string-to-char (nth 0 option)) ;; first char as shortcut
-	  (or (nth 2 option) (nth 1 option)
-	    (string-to-char (nth 0 option))))))
-    options))
-
 (defun mu4e~read-char-choice (prompt choices)
   "Compatiblity wrapper for `read-char-choice', which is emacs-24
 only."
@@ -104,15 +86,12 @@ describes a multiple-choice question to the user, OPTIONS describe
 the options, and is a list of cells describing particular
 options. Cells have the following structure:
 
-   (OPTIONSTRING CHAR [RESULT])
+   (OPTIONSTRING . RESULT)
 
- where CHAR is a short-cut character for the
-option, and OPTIONSTRING is a non-empty string describing the
-option. If CHAR is nil or not-specified, the first character of the
-optionstring is used.
-
-If RESULT is provide, this will be returned if the user presses the
-corresponding CHAR; otherwise, CHAR is returned.
+ where OPTIONSTRING is a non-empty string describing the
+ option. The first character of OPTIONSTRING is used as the
+ shortcut, and obviously all shortcuts must be different, so you
+ can prefix the string with an uniquifying character.
 
 The options are provided as a list for the user to choose from;
 user can then choose by typing CHAR.  Example:
@@ -120,31 +99,32 @@ user can then choose by typing CHAR.  Example:
               '((\"Monkey\" ?m) (\"Gnu\" ?g) (\"platipus\")))
 User now will be presented with a list:
    \"Choose an animal: [m]Monkey, [g]Gnu, [p]latipus\"."
-  (let* ((options (mu4e~read-option-normalize-list options))
-	  (prompt (mu4e-format "%s" prompt))
+  (let* ((prompt (mu4e-format "%s" prompt))
 	  (chosen)
 	  (optionsstr
 	    (mapconcat
 	      (lambda (option)
-		(let* ((descr (car option))
-		      (kar (and (cdr option) (cadr option))))
-		;; handle the empty kar case
-		(unless kar
-		  (setq ;; eat first kar from descr; use it as kar
-		    kar   (string-to-char descr)
-		    descr (substring descr 1)))
-		(concat
-		  "[" (propertize (make-string 1 kar)
-			'face 'mu4e-highlight-face) "]"
-		  descr))) options ", "))
+		(when (consp (cdr option))
+		  (error (concat "Please use the new format for options/actions; "
+			   "see the manual")))
+		(let* ((kar (substring (car option) 0 1))
+			(val (cdr option)))
+		  (concat
+		    "[" (propertize kar 'face 'mu4e-highlight-face) "]"
+		    (substring (car option) 1))))
+	      options ", "))
 	  (response
 	    (mu4e~read-char-choice
 	      (concat prompt optionsstr
 		" [" (propertize "C-g" 'face 'mu4e-highlight-face) " to quit]")
-	      (map 'list (lambda(elm) (nth 1 elm)) options))) ;; the allowable chars
+	      ;; the allowable chars
+	      (map 'list (lambda(elm) (string-to-char (car elm))) options)))
 	  (chosen
-	    (find-if (lambda (option) (eq response (nth 1 option))) options)))
-    (nth 2 chosen)))
+	    (find-if
+	      (lambda (option) (eq response (string-to-char (car option))))
+	      options)))
+    (unless chosen (error "%S not found" response))
+    (cdr chosen)))
 
 
 (defun mu4e~get-maildirs-1 (path &optional mdir)
@@ -172,16 +152,21 @@ paths."
 		       (mu4e~get-maildirs-1 path (concat mdir "/" dir)))))
     maildirs))
 
+(defvar mu4e~maildir-list nil "Cached list of maildirs.")
 
 (defun mu4e-get-maildirs (path)
   "Get maildirs under path, recursively, as a list of relative
 paths (ie., /archive, /sent etc.). Most of the work is done in
-`mu4e-get-maildirs-1'."
-  (sort (mu4e~get-maildirs-1 path)
-    (lambda (m1 m2)
-      (when (string= m1 "/")
-	-1 ;; '/' comes first
-	(compare-strings m1 0 nil m2 0 nil t)))))
+`mu4e-get-maildirs-1'. Note, these results are /cached/, so the
+list of maildirs will not change until you restart mu4e."
+  (unless mu4e~maildir-list
+    (setq mu4e~maildir-list
+      (sort (mu4e~get-maildirs-1 path)
+	(lambda (m1 m2)
+	  (when (string= m1 "/")
+	    -1 ;; '/' comes first
+	    (compare-strings m1 0 nil m2 0 nil t))))))
+  mu4e~maildir-list)
 
 
 (defun mu4e-ask-maildir (prompt)
@@ -428,7 +413,6 @@ A message plist looks something like:
  :in-reply-to \"6BDC23465F79238203498230942D81EE81AF0114E4E74@123213.mail.example.com\"
  :body-txt \"Hi Tom, ...\"
 \)).
-
 Some  notes on the format:
 - The address fields are lists of pairs (NAME . EMAIL), where NAME can be nil.
 - The date is in format emacs uses in `current-time'
@@ -465,7 +449,7 @@ point in eiter the headers buffer or the view buffer."
   "Get the most recent query or nil if there is none."
   (when (buffer-live-p mu4e~headers-buffer)
     (with-current-buffer mu4e~headers-buffer
-      mu4e~headers-query-present)))
+      mu4e~headers-last-query)))
 
 (defun mu4e-select-other-view ()
   "When the headers view is selected, select the message view (if
@@ -616,9 +600,18 @@ FUNC (if non-nil) afterwards."
   "Stop the mu4e session."
   (when mu4e-update-timer
     (cancel-timer mu4e-update-timer)
-    (setq mu4e-update-timer nil))
+    (setq
+      mu4e-update-timer nil
+      mu4e~maildir-list nil))
   (mu4e~proc-kill)
-  (kill-buffer))
+  ;; kill all main/view/headers buffer
+  (mapcar
+    (lambda (buf)
+      (with-current-buffer buf
+	(when (member major-mode '(mu4e-headers-mode mu4e-view-mode mu4e-main-mode))
+	  (kill-buffer))))
+    (buffer-list)))
+
 
 (defvar mu4e-update-timer nil
   "*internal* The mu4e update timer.")
@@ -718,6 +711,42 @@ mu4e logs some of its internal workings to a log-buffer. See
     (unless (buffer-live-p buf)
       (error "No debug log available"))
     (switch-to-buffer buf)))
+
+
+
+(defun mu4e-split-ranges-to-numbers (str n)
+  "Convert STR containing attachment numbers into a list of numbers.
+STR is a string; N is the highest possible number in the list.
+This includes expanding e.g. 3-5 into 3,4,5.  If the letter
+\"a\" ('all')) is given, that is expanded to a list with numbers [1..n]."
+  (let ((str-split (split-string str))
+	 beg end list)
+    (dolist (elem str-split list)
+      ;; special number "a" converts into all attachments 1-N.
+      (when (equal elem "a")
+	(setq elem (concat "1-" (int-to-string n))))
+      (if (string-match "\\([0-9]+\\)-\\([0-9]+\\)" elem)
+	;; we have found a range A-B, which needs converting
+	;; into the numbers A, A+1, A+2, ... B.
+	(progn
+	  (setq beg (string-to-number (match-string 1 elem))
+	    end (string-to-number (match-string 2 elem)))
+	  (while (<= beg end)
+	    (add-to-list 'list beg 'append)
+	    (setq beg (1+ beg))))
+	;; else just a number
+	(add-to-list 'list (string-to-number elem) 'append)))
+    ;; Check that all numbers are valid.
+    (mapc
+      #'(lambda (x)
+	  (cond
+	    ((> x n)
+	      (error "Attachment %d bigger than maximum (%d)" x n))
+	    ((< x 1)
+	      (error "Attachment number must be greater than 0 (%d)" x))))
+      list)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar mu4e-imagemagick-identify "identify"
@@ -725,21 +754,57 @@ mu4e logs some of its internal workings to a log-buffer. See
 
 (defun mu4e-display-image (imgpath &optional maxwidth)
   "Display image IMG at point; optionally specify
-MAXWIDTH. Function tries to use imagemagick if available; otherwise
-MAXWIDTH is ignored."
-  (when
-    (let*
-      ((identify (and maxwidth (executable-find mu4e-imagemagick-identify)))
-	(props (and identify (shell-command-to-string
-			       (format "%s -format '%%w' %s"
-				 identify (shell-quote-argument imgpath)))))
-	(width (and props (string-to-number props)))
-	(img
-	      (if (> (or width 0) (or maxwidth 0))
-		(create-image imgpath 'imagemagick nil :width maxwidth)
-		(create-image imgpath 'imagemagick))))
+MAXWIDTH. Function tries to use imagemagick if available (ie.,
+emacs was compiled with inmagemagick support); otherwise MAXWIDTH
+is ignored."
+  (let* ((have-im (and (fboundp 'imagemagick-types)
+		    (imagemagick-types))) ;; hmm, should check for specific type
+	  (identify (and have-im maxwidth
+		      (executable-find mu4e-imagemagick-identify)))
+	  (props (and identify (shell-command-to-string
+				 (format "%s -format '%%w' %s"
+				   identify (shell-quote-argument imgpath)))))
+	  (width (and props (string-to-number props)))
+	  (img (if have-im
+		 (if (> (or width 0) (or maxwidth 0))
+		   (create-image imgpath 'imagemagick nil :width maxwidth)
+		   (create-image imgpath 'imagemagick))
+		 (create-image imgpath))))
+    ;;(message "DISPLAY: %S %S" imgpath img)
+    (when img
       (newline)
       (insert-image img imgpath nil t))))
+
+
+(defun mu4e-quit-buffer ()
+  "Bury the current buffer (and delete all windows displaying it)."
+  (interactive)
+  (let ((buf (current-buffer)))
+    (walk-windows
+      ;; kill any window that:
+      ;; a) displays the current buffer
+      ;; b) is not the only win
+      (lambda (win)
+	(when (eq (window-buffer win) (current-buffer))
+	  (unless (one-window-p t)
+	    (delete-window win)))) nil t)
+    ;; if current buffer is still here, bury it
+    (when (eq buf (current-buffer))
+      (bury-buffer))))
+
+
+(defun mu4e-hide-other-mu4e-buffers ()
+  "Bury mu4e-buffers (main, headers, view) (and delete all windows
+displaying it). Do _not_ bury the current buffer, though."
+  (interactive)
+  (let ((curbuf (current-buffer)))
+    (walk-windows
+      (lambda (win)
+	(with-current-buffer (window-buffer win)
+	  (unless (eq curbuf (current-buffer))
+	    (when (member major-mode '(mu4e-headers-mode mu4e-view-mode mu4e-main-mode))
+	      (unless (one-window-p t)
+		(delete-window win)))))) nil t)))
 
 
 (provide 'mu4e-utils)

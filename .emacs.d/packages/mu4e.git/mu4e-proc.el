@@ -31,10 +31,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; internal vars
 
-(defvar mu4e~proc-buf nil "Buffer for results data.")
-(defconst mu4e~proc-name "*mu4e-proc*" "Name of the server process, buffer.")
-(defvar mu4e~proc-process nil "The mu-server process")
-
+(defvar mu4e~proc-buf nil
+  "Buffer (string) for data received from
+the backend.")
+(defconst mu4e~proc-name " *mu4e-proc*"
+  "Name of the server process, buffer.")
+(defvar mu4e~proc-process nil
+  "The mu-server process.")
 
 ;; dealing with the length cookie that precedes expressions
 (defconst mu4e~cookie-pre "\376"
@@ -88,7 +91,9 @@ the length (in hex).")
 
 (defun mu4e~proc-is-running ()
   "Whether the mu process is running."
-  (and mu4e~proc-process (eq (process-status mu4e~proc-process) 'run)))
+  (and mu4e~proc-process
+    (memq (process-status mu4e~proc-process)
+      '(run open listen connect stop))))
 
 
 (defun mu4e~proc-eat-sexp-from-buf ()
@@ -297,19 +302,26 @@ terminates."
 
 (defun mu4e~proc-remove (docid)
   "Remove message identified by docid.
- The results are reporter through either (:update ... ) or (:error
-) sexp, which are handled my `mu4e-error-func', respectively."
+The results are reporter through either (:update ... ) or (:error)
+sexp, which are handled my `mu4e-error-func', respectively."
   (mu4e~proc-send-command "remove docid:%d" docid))
 
-(defun mu4e~proc-find (query &optional maxnum)
-  "Start a database query for QUERY, (optionally) getting up to
-MAXNUM results. For each result found, a function is called,
-depending on the kind of result. The variables `mu4e-error-func'
-contain the function that will be called for, resp., a
-message (header row) or an error."
+(defun mu4e~proc-find (query threads sortfield revert maxnum)
+  "Start a database query for QUERY. If THREADS is non-nil, show
+results in threaded fasion, SORTFIELD is a symmbol describing the
+field to sort by (or nil); see `mu4e~headers-sortfield-choices'. If
+REVERT is non-nil, sort Z->A instead of A->Z. MAXNUM determines the
+maximum number of results to return, or nil for 'unlimited'. For
+each result found, a function is called, depending on the kind of
+result. The variables `mu4e-error-func' contain the function that
+will be called for, resp., a message (header row) or an error."
   (mu4e~proc-send-command
-    "find query:\"%s\"%s" query
-    (if maxnum (format " maxnum:%d" maxnum) "")))
+    "find query:\"%s\" threads:%s sortfield:%s reverse:%s maxnum:%d"
+    query
+    (if threads "true" "false")
+    (format "%S" sortfield)
+    (if revert "true" "false")
+    (if maxnum maxnum -1)))
 
 (defun mu4e~proc-move (docid-or-msgid &optional maildir flags)
   "Move message identified by DOCID-OR-MSGID. At least one of

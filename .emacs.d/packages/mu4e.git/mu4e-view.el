@@ -36,6 +36,8 @@
 ;; we prefer the improved fill-region
 (require 'filladapt nil 'noerror)
 (require 'comint)
+
+(eval-when-compile (byte-compile-disable-warning 'cl-functions))
 (require 'cl)
 
 ;; the message view
@@ -97,8 +99,8 @@ buffer."
   :group 'mu4e-view)
 
 (defvar mu4e-view-actions
-  '( ("capture message" ?c mu4e-action-capture-message)
-     ("view as pdf"     ?p mu4e-action-view-as-pdf))
+  '( ("capture message" . mu4e-action-capture-message)
+     ("view as pdf"     . mu4e-action-view-as-pdf))
   "List of actions to perform on messages in view mode. The actions
 are of the form:
    (NAME SHORTCUT FUNC)
@@ -108,9 +110,9 @@ where:
 * FUNC is a function which receives a message plist as an argument.")
 
 (defvar mu4e-view-attachment-actions
-  '( ("open-with" ?w mu4e-view-open-attachment-with)
-     ("in-emacs"  ?e mu4e-view-open-attachment-emacs)
-     ("pipe"      ?| mu4e-view-pipe-attachment))
+  '( ("wopen-with" . mu4e-view-open-attachment-with)
+     ("ein-emacs"  . mu4e-view-open-attachment-emacs)
+     ("|pipe"      . mu4e-view-pipe-attachment))
   "List of actions to perform on message attachments. The actions
 are of the form:
    (NAME SHORTCUT FUNC)
@@ -284,7 +286,7 @@ is nil, and otherwise open it."
       (interactive)
       (if is-open
 	(mu4e-view-open-attachment msg attachnum)
-	(mu4e-view-save-attachment msg attachnum)))))
+	(mu4e-view-save-attachment-single msg attachnum)))))
 
 (defun mu4e~view-construct-attachments (msg)
   "Display attachment information; the field looks like something like:
@@ -348,15 +350,15 @@ is nil, and otherwise open it."
   (setq mu4e-view-mode-map
     (let ((map (make-sparse-keymap)))
 
-      (define-key map "q" 'mu4e-view-kill-buffer-and-window)
+      (define-key map "q" 'mu4e-quit-buffer)
 
       ;; note, 'z' is by-default bound to 'bury-buffer'
       ;; but that's not very useful in this case
-      (define-key map "z" 'mu4e-view-kill-buffer-and-window)
+      (define-key map "z" 'mu4e-quit-buffer)
 
       (define-key map "s" 'mu4e-headers-search)
-      (define-key map "S" 'mu4e-view-headers-search-edit)
-      (define-key map "/" 'mu4e-view-headers-search-narrow)
+      (define-key map "S" 'mu4e-view-search-edit)
+      (define-key map "/" 'mu4e-view-search-narrow)
 
       (define-key map (kbd "<M-left>")  'mu4e-headers-query-prev)
       (define-key map (kbd "<M-right>") 'mu4e-headers-query-next)
@@ -447,7 +449,7 @@ is nil, and otherwise open it."
 	(define-key map [menu-bar headers] (cons "View" menumap))
 
 	(define-key menumap [quit-buffer]
-	  '("Quit view" . mu4e-view-kill-buffer-and-window))
+	  '("Quit view" . mu4e-quit-buffer))
 	(define-key menumap [display-help] '("Help" . mu4e-display-manual))
 
 	(define-key menumap [sepa0] '("--"))
@@ -640,13 +642,17 @@ number them so they can be opened using `mu4e-view-go-to-url'."
 
 
 (defmacro mu4e~view-in-headers-context (&rest body)
-  "Evaluate BODY in the current headers buffer."
+  "Evaluate BODY in the current headers buffer, with moved to the
+current message."
   `(progn
      (unless '(buffer-live-p mu4e~view-headers-buffer)
        (error "no headers buffer available."))
-     (with-current-buffer mu4e~view-headers-buffer
-       ,@body)))
-
+     (let* ((docid (mu4e-field-at-point :docid)))
+       (with-current-buffer mu4e~view-headers-buffer
+	 (if (and docid (mu4e~headers-goto-docid docid))
+	   ,@body
+	   (error "Cannot find corresponding message in headers
+	     buffer."))))))
 
 (defun mu4e-view-headers-next(&optional n)
   "Move point to the next message header in the headers buffer
@@ -694,20 +700,6 @@ citations."
     mu4e~view-lines-wrapped nil
     mu4e~view-cited-hidden nil))
 
-(defun mu4e-view-kill-buffer-and-window ()
-  "Quit the message view and return to the headers."
-  (interactive)
-  (when (buffer-live-p mu4e~view-buffer)
-    (with-current-buffer mu4e~view-buffer
-      (if (fboundp 'window-parent) ;; window-parent is an emacs24ism
-	(if (window-parent)
-	  (kill-buffer-and-window)
-	  (kill-buffer))
-	;; emacs23 hack: trial and error
-	(condition-case nil
-	  (kill-buffer-and-window)
-	  (kill-buffer))))))
-
 (defun mu4e-view-action (&optional msg)
   "Ask user for some action to apply on MSG (or message-at-point,
 if nil), then do it. The actions are specified in
@@ -739,29 +731,36 @@ all messages in the thread at point in the headers view."
   (mu4e~view-in-headers-context
     (mu4e-headers-mark-subthread)))
 
-(defun mu4e-view-search-narrow (search-all)
+(defun mu4e-view-search-narrow ()
   "Run `mu4e-headers-search-narrow' in the headers buffer."
-  (interactive "P")
+  (interactive)
   (mu4e~view-in-headers-context
-    (mu4e-headers-search-narrow nil search-all)))
+    (mu4e-headers-search-narrow nil)))
 
-(defun mu4e-view-search-edit (search-all)
+(defun mu4e-view-search-edit ()
   "Run `mu4e-headers-search-edit' in the headers buffer."
-  (interactive "P")
+  (interactive)
   (mu4e~view-in-headers-context
-    (mu4e-headers-search-edit search-all)))
+    (mu4e-headers-search-edit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; attachment handling
-(defun mu4e~view-get-attach-num (prompt msg)
+(defun mu4e~view-get-attach-num (prompt msg &optional multi)
   "Ask the user with PROMPT for an attachment number for MSG, and
   ensure it is valid. The number is [1..n] for attachments
-  [0..(n-1)] in the message."
-  (let* ((count (hash-table-count mu4e~view-attach-map)))
+  [0..(n-1)] in the message. If MULTI is nil, return the number for
+  the attachment; otherwise (MULTI is non-nil), accept ranges of
+  attachment numbers, as per `mu4e-split-ranges-to-numbers', and
+  return the corresponding string."
+  (let* ((count (hash-table-count mu4e~view-attach-map)) (def))
     (when (zerop count) (error "No attachments for this message"))
-    (if (= count 1)
-      (read-number (mu4e-format "%s: " prompt) 1)
-      (read-number (mu4e-format "%s (1-%d): " prompt count)))))
+    (if (not multi)
+      (if (= count 1)
+	(read-number (mu4e-format "%s: " prompt) 1)
+	(read-number (mu4e-format "%s (1-%d): " prompt count)))
+      (progn
+	(setq def (if (= count 1) "1" (format "1-%d" count)))
+	(read-string (mu4e-format "%s (default %s): " prompt def) nil nil def)))))
 
 (defun mu4e~view-get-attach (msg attnum)
   "Return the attachment plist in MSG corresponding to attachment
@@ -773,7 +772,7 @@ number ATTNUM."
       (plist-get msg :parts))))
 
 
-(defun mu4e-view-save-attachment (&optional msg attnum)
+(defun mu4e-view-save-attachment-single (&optional msg attnum)
   "Save attachment number ATTNUM (or ask if nil) from MSG (or
 message-at-point if nil) to disk."
   (interactive)
@@ -795,6 +794,32 @@ message-at-point if nil) to disk."
     (mu4e~proc-extract
       'save (plist-get msg :docid) index path)))
 
+(defun mu4e-view-save-attachment-multi (&optional msg)
+  "Offer to save multiple email attachments from the current message.
+Default is to save all messages, [1..n], where n is the number of
+attachments.  You can type multiple values separated by space, e.g.
+  1 3-6 8
+will save attachments 1,3,4,5,6 and 8.
+
+Furthermore, there is a shortcut \"a\" which so means all
+attachments, but as this is the default, you may not need it."
+  (interactive)
+  (let* ((msg (or msg (mu4e-message-at-point)))
+	 (attachstr (mu4e~view-get-attach-num
+		      "Attachment number range (or 'a' for 'all')" msg t))
+	  (count (hash-table-count mu4e~view-attach-map))
+	  (attachnums (mu4e-split-ranges-to-numbers attachstr count)))
+    (dolist (num attachnums)
+      (mu4e-view-save-attachment-single msg num))))
+
+(defun mu4e-view-save-attachment (&optional multi)
+  "Offer to save attachment(s). If MULTI (prefix-argument) is nil,
+save a single one, otherwise, offer to save a range of
+attachments."
+  (interactive "P")
+  (if multi
+    (mu4e-view-save-attachment-multi)
+    (mu4e-view-save-attachment-single)))
 
 (defun mu4e-view-open-attachment (&optional msg attnum)
   "Open attachment number ATTNUM (or ask if nil) from MSG (or
@@ -808,7 +833,7 @@ message-at-point if nil)."
     (mu4e~proc-extract 'open (plist-get msg :docid) index)))
 
 
-(defun mu4e~temp-action (docid index what &optional param)
+(defun mu4e~view-temp-action (docid index what &optional param)
   "Open attachment INDEX for message with DOCID, and invoke
 ACTION."
   (interactive)
@@ -827,7 +852,7 @@ user for it."
 		   (mu4e-format "Shell command to open it with: ")
 		   nil 'mu4e~view-open-with-hist)))
 	  (index (plist-get att :index)))
-    (mu4e~temp-action (plist-get msg :docid) index "open-with" cmd)))
+    (mu4e~view-temp-action (plist-get msg :docid) index "open-with" cmd)))
 
 (defvar mu4e~view-pipe-hist nil
   "History list for the pipe argument.")
@@ -843,7 +868,7 @@ PIPECMD is nil, ask user for it."
 		       nil
 		       'mu4e~view-pipe-hist)))
 	  (index (plist-get att :index)))
-    (mu4e~temp-action (plist-get msg :docid) index "pipe" pipecmd)))
+    (mu4e~view-temp-action (plist-get msg :docid) index "pipe" pipecmd)))
 
 
 (defun mu4e-view-open-attachment-emacs (msg attachnum)
@@ -851,7 +876,7 @@ PIPECMD is nil, ask user for it."
   (interactive)
   (let* ((att (mu4e~view-get-attach msg attachnum))
 	  (index (plist-get att :index)))
-    (mu4e~temp-action (plist-get msg :docid) index "emacs")))
+    (mu4e~view-temp-action (plist-get msg :docid) index "emacs")))
 
 
 (defun mu4e-view-attachment-action (&optional msg)
@@ -879,8 +904,7 @@ attachments) in response to a (mu4e~proc-extract 'temp ... )."
       (start-process "*mu4e-open-with-proc*" "*mu4e-open-with*" param path))
     ((string= what "pipe")
       ;; 'param' will be the pipe command, path the infile for this
-      (mu4e-process-file-through-pipe path
-	(shell-quote-argument param)))
+      (mu4e-process-file-through-pipe path param))
     ((string= what "emacs")
       (find-file path)
       ;; make the buffer read-only since it usually does not make
