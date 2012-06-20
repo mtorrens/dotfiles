@@ -1,4 +1,16 @@
 
+;; Holidays should be configured *before* we get Org mode set up
+(require 'holidays)
+(setq holiday-other-holidays '(
+                               (holiday-fixed 2 2 "Darwin Day")
+                               ))
+(setq calendar-holidays (append holiday-general-holidays
+                                holiday-local-holidays
+                                holiday-other-holidays
+                                holiday-christian-holidays
+                                holiday-solar-holidays))
+
+
 ;; Org-mode
 (add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09")
 (add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09-contrib")
