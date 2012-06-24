@@ -40,6 +40,12 @@
       confirm-nonexistent-file-or-buffer nil)
 
 
+;; Give me my spacebar back
+(defun ido-my-keys ()
+  (define-key ido-completion-map " " 'self-insert-command))
+(add-hook 'ido-setup-hook 'ido-my-keys)
+
+
 ;; increase minibuffer size when ido completion is active
 (add-hook 'ido-minibuffer-setup-hook 
           (function
