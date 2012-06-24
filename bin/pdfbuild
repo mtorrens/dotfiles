@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$1" == "-xelatex" ]; then
+  file=$2
+  latexmk -output-directory=.auctex -pdf -ps- -dvi- -pdflatex='xelatex -interaction=nonstopmode %O %S' $file
+  ret=$?
+else
+  file=$1
+  latexmk -output-directory=.auctex -pdf -ps- -dvi- -pdflatex='pdflatex -interaction=nonstopmode %O %S' $file
+  ret=$?
+fi
+
+pdf=".auctex/$file.pdf"
+
+if [ -f $pdf ]; then
+  cp $pdf .
+fi
+
+exit $ret

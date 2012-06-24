@@ -15,14 +15,17 @@
 (setq TeX-save-query nil
       TeX-parse-self t
       TeX-auto-save t
+      TeX-auto-local ".auctex/"
       TeX-auto-untabify t
       TeX-command-default "Latexmk"
       TeX-view-program-list '(("Open" "open %s.pdf"))
       TeX-view-program-selection '((output-pdf "Open"))
       font-latex-fontify-sectioning 'color
       TeX-command-list '(
-                         ("Latexmk" "latexmk -pdf -ps- -dvi- -pdflatex='pdflatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
-                         ("XeLatexmk" "latexmk -pdf -ps- -dvi- -pdflatex='xelatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
+;;                         ("Latexmk" "latexmk -pdf -ps- -dvi- -pdflatex='pdflatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
+;;                         ("XeLatexmk" "latexmk -pdf -ps- -dvi- -pdflatex='xelatex -interaction=nonstopmode %%O %%S' %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("Latexmk" "pdfbuild %s" TeX-run-command nil t :help "Run Latexmk on file")
+                         ("XeLatexmk" "pdfbuild -xelatex %s" TeX-run-command nil t :help "Run Latexmk on file with Xelatex")
                          ("View" "%V" TeX-run-discard-or-function nil t :help "Run Viewer")
                          ("Clean" "latexmk -c %s" TeX-run-command nil t :help "Delete generated intermediate files")))
 
