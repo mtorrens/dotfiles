@@ -119,6 +119,10 @@
   ;; N.B. Do /not/ enable flyspell-mode here!  It overrides a few things
   ;; that are really important, like C-c $ for archive, and it makes it
   ;; unbearably slow to start up an agenda buffer.
+
+  (require 'typopunct)
+  (typopunct-change-language 'english)
+  (typopunct-mode 1)
 )
 (add-hook 'org-mode-hook 'cpence-org-mode-hook)
 
