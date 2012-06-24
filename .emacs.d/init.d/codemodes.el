@@ -2,6 +2,8 @@
 ;; All the various modes for different programming languages
 ;; -------------------------------------
 
+(load-file "~/.emacs.d/packages/graphviz-dot-mode.el")
+
 ;; -------------------------------------
 ;; Magit
 
