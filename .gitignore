@@ -23,6 +23,9 @@ bin/genrand
 # Ignore my Mendeley-generated BibTeX file
 bin/texmf/bibtex/bib
 
+# Ignore AuCTeX generated files
+.auctex
+
 # Ignore compiled python in all directories
 bin/*.pyc
 bin/*/*.pyc
