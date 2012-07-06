@@ -25,24 +25,44 @@ Welcome to mu4e!
 later, built on top of the mu e-mail search engine. mu4e is optimized
 for fast handling of large amounts of e-mail.
 
+   Some of the features include:
+
+   * Fully search-based: there are no folders, only queries
+
+   * Fully documented, with example configurations
+
+   * UI optimized for speed with quick key strokes for common actions
+
+   * Asynchronous: heavy actions never block emacs
+
+   * Rich-text e-mails using org-mode (experimental)
+
+   * Address auto-completion based on your messages - no need for
+     managing address books
+
+   * Extendable using your own custom actions
+
    This manual goes through the installation of mu4e, discusses the
 basic configuration, and explains its daily use. It also shows how you
-can customize mu4e for your needs.
+can customize mu4e for your needs. At the end of the manual, there are
+some example configurations, which should help you to get up to speed
+quickly.
 
-   At the end of the manual, there are some example configurations,
-which should help you to get up to speed quickly.
+   Also note the *Note FAQ - Frequently Anticipated Questions::, and
+the section on *Note Known issues / missing features::, which may save
+you some time.
 
-   This manual has been updated for mu/mu4e version _0.9.8.5-dev4_.
+   This manual has been updated for mu/mu4e version _0.9.8.5_.
 
 * Menu:
 
-* Introduction:: How it all begins
-* Getting started:: Setting thinsg up
+* Introduction:: How it all began
+* Getting started:: Setting things up
 * Running mu4e:: Daily use
-* Searching:: Some more details about queries and searching
-* Marking:: Marking messages
+* Searching:: Some more background on searching/queries
+* Marking:: Marking messages and performing actions
 * Actions:: Defining and using custom actions
-* Interaction with other tools:: Integrating mu4e
+* Interaction with other tools:: mu4e and the rest of the world
 * Example configuration:: Some examples to set you up quickly
 * FAQ - Frequently Anticipated Questions:: Common questions and answers
 * Known issues / missing features:: mu4e is not perfect yet
@@ -58,13 +78,13 @@ File: mu4e.info,  Node: Introduction,  Next: Getting started,  Prev: Top,  Up: T
 1 Introduction
 **************
 
-Let's get started!
+Welcome to mu4e!
 
 * Menu:
 
 * Why another e-mail client?::
 * Other mail clients::
-* What mu4e does and does not do::
+* What mu4e does not do::
 
 
 File: mu4e.info,  Node: Why another e-mail client?,  Next: Other mail clients,  Up: Introduction
@@ -72,18 +92,25 @@ File: mu4e.info,  Node: Why another e-mail client?,  Next: Other mail clients,  
 1.1 Why another e-mail client?
 ==============================
 
-I'm not sure the world _needs_ yet another e-mail client, but maybe _I_
-do! I (the author) spend a _lot_ of time, professionally and privately,
-dealing with e-mail messdae and therefore, having an efficient e-mail
-client is essential for me. Since none of the existing ones worked the
-way I wanted, I created my own.
+Fair question.
 
-   While having been created for such selfish reasons, mu4e tries hard
-to be as useful as possible for all its users - suggestions are very
-welcome and are acted upon.
+   I'm not sure the world _needs_ yet another e-mail client, but perhaps
+_I_ do! I (the author) spend a _lot_ of time, professionally and
+privately, dealing with e-mail messdae and therefore, having an
+efficient e-mail client is essential for me. Since none of the existing
+ones worked the way I wanted, I created my own.
+
+   As emacs is such an integral part of my workflow, it made a lot of
+sense to integrate my e-mail client with it. And as I already had
+written an e-mail search engine (mu), it seemed only logical to use
+that as a basis.
+
+   Even though I created mu4e for such selfish reasons, mu4e tries hard
+to be as useful as possible for _all_ its users - suggestions are very
+welcome and many have already made it to mu4e.
 
 
-File: mu4e.info,  Node: Other mail clients,  Next: What mu4e does and does not do,  Prev: Why another e-mail client?,  Up: Introduction
+File: mu4e.info,  Node: Other mail clients,  Next: What mu4e does not do,  Prev: Why another e-mail client?,  Up: Introduction
 
 1.2 Other mail clients
 ======================
@@ -94,11 +121,11 @@ different from those programs.
 
    mu4e's mail handling (deleting, moving etc.) is inspired by
 _Wanderlust_(4) (another emacs-based e-mail client), mutt(5) and dired,
-while it takes some cues from _Gmail_.
+while it also takes some cues from _Gmail_.
 
    mu4e tries to keep all the 'state' in your maildirs, so you can
-easily switch between clients, synchronize over IMAP or backup with
-rsync - if you delete the database, you won't lose any information.
+easily switch between clients, synchronize over IMAP, backup with rsync
+and so on. If you delete the database, you won't lose any information.
 
    ---------- Footnotes ----------
 
@@ -113,10 +140,10 @@ rsync - if you delete the database, you won't lose any information.
    (5) `http://www.mutt.org/'
 
 
-File: mu4e.info,  Node: What mu4e does and does not do,  Prev: Other mail clients,  Up: Introduction
+File: mu4e.info,  Node: What mu4e does not do,  Prev: Other mail clients,  Up: Introduction
 
-1.3 What mu4e does and does not do
-==================================
+1.3 What mu4e does not do
+=========================
 
 mu and mu4e do _not_ deal with getting your e-mail messages from a mail
 server. That task is delegated to other tools, such as offlineimap(1),
@@ -180,9 +207,12 @@ Debian or Ubuntu system, you can get these with:
 
      sudo apt-get install libgmime-2.4-dev libxapian-dev
      # emacs if you don't have it yet, mu4e works with GNU-Emacs 23 and 24
+     # emacs 24 works better; it may be available as 'emacs-snapshot'
      sudo apt-get install emacs23
      # optional
      sudo apt-get install guile-2.0-dev html2text xdg-utils
+     # optional: only needed for msg2pdf
+     sudo apt-get install libwebkit-dev
 
    Using a release-tarball (as avaiable from GoogleCode(1),
 Installation follows the normal sequence:
@@ -194,7 +224,7 @@ Installation follows the normal sequence:
 
    Alternatively, if you build from the git repository, or use a
 tarball like the ones that github produces, the instructions are
-slightly different (and require you to have the autotools installed):
+slightly different (and require you to have autotools installed):
 
      # get from git, or from a github tarball
      $ cd mu-<version>
@@ -456,6 +486,7 @@ up correctly, and then show you the mu4e main view.
 	* toggle [m]ail sending mode (direct)
 	* [f]lush queued mail
 
+        * [A]bout mu4e
         * [H]elp
 	* [q]uit mu4e
 ----------------------------------------------------------------------------
@@ -504,6 +535,8 @@ Finally, there are some _Misc_ (miscellaneous) actions:
      offline), and [f]lush queued mail will flush any queued mail. This
      item is visible only if you have actually set up mail-queuing.
      *Note Queuing mail::.
+
+   * [A]bout mu4e will give some general information about mu4e.
 
    * [H]elp will show help information for this view.
 
@@ -606,6 +639,9 @@ U            unmark *all* messages
 %            mark based on a regular expression
 T,t          mark whole thread, subthread
 
+*            deferred mark (decide what to mark for later)
+#            resolve deferred marks
+
 x            execute actions for the marked messages
 
 composition
@@ -656,10 +692,10 @@ affects the sort order.
 
    You can change the sort order with M-x mu4e-headers-change-sorting or
 <O>, and you can toggle threading on/off using M-x
-mu4e-headers-toggle-threading or <P>. For both of these functions, if
-you provide a prefix argument (<C-u>), the current search is updated
-immediately using the new parameters. You can toggle full-search (*Note
-Searching::) using M-x mu4e-headers-toggle-full-search or <Q>.
+mu4e-headers-toggle-threading or <P>. For both of these functions,
+unless you provide a prefix argument (<C-u>), the current search is
+updated immediately using the new parameters. You can toggle full-search
+(*Note Searching::) using M-x mu4e-headers-toggle-full-search or <Q>.
 
    If you want to change the defaults for these settings, you can use
 the variables `mu4e-headers-sortfield' and `mu4e-headers-show-threads'.
@@ -793,10 +829,15 @@ menu, or by using the keyboard; the default bindings are:
 
 
 key          description
----          -----------
+==============================================================
 n,p          go to next, previous message
 y            select the headers view (if it's visible)
 
+RET          scroll down
+M-RET        open URL at point / attachment at point
+
+searching
+---------
 s            search
 e            edit last query
 /            narrow the search
@@ -807,23 +848,32 @@ j            jump to maildir
 M-left       previous query
 M-right      next query
 
-C-+,C--      increase / decrease the number of headers shown
-
-a            execute some action on the message
-
+marking
+-------
 d            mark for moving to the trash folder
 DEL,D        mark for immediate deletion
 m            mark for moving to another maildir folder
 +,-          mark for flagging/unflagging
+o,r          mark message as unread, read
+
 u            unmark message at point
+U            unmark *all* messages
+
 %            mark based on a regular expression
 T,t          mark whole thread, subthread
 
+SPC          deferred mark (decide what to mark for later)
+*            resolve deferred marks
+
+x            execute actions for the marked messages
+
+composition
+-----------
 R,F,C        reply/forward/compose
 E            edit (only allowed for draft messages)
 
-.            show the raw message view. 'q' takes you back.
-
+actions
+-------
 g            go to (visit) numbered URL (using `browse-url')
              (or: <mouse-2> or RET with point on url)
 e            extract (save) attachment (asks for number)
@@ -831,10 +881,17 @@ e            extract (save) attachment (asks for number)
              C-u e will extract multiple attachments
 o            open attachment (asks for number)
              (or: <S-mouse-2> or S-RET with point on attachment)
-A            execute some action on an attachment
+
+a            execute some custom action on the message
+A            execute some custom action on an attachment
+
+misc
+----
 w            toggle line wrapping
 h            toggle showing cited parts
 
+.            show the raw message view. 'q' takes you back.
+C-+,C--      increase / decrease the number of headers shown
 H            get help
 q,z          leave the message view
 
@@ -902,7 +959,7 @@ on attachments, which you can specify with
      to get an overview of the changes, using the diffstat program. You
      can use something like: A | 1 RET diffstat -b RET.
 
-   * emacs (<e>): open the attachment in your running emacs . For
+   * emacs (<e>): open the attachment in your running emacs. For
      example, if you receive some text file you'd like to open in emacs:
      A e 1 RET.
 
@@ -1007,7 +1064,50 @@ your configuration:
 
      (setq message-kill-buffer-on-exit t)
 
-3.4.2 Queuing mail
+3.4.2 Address autocompletion
+----------------------------
+
+Since mu/mu4e version 0.9.8.5, there is support for autocompleting
+addresses using <TAB> when composing e-mail messages. As the source for
+the addresses to complete, mu4e uses the e-mail addresses in its
+database - addresses you sent messages to or received messages from.
+_Note:_ auto-completion should work with emacs versions 23.2 and later.
+
+   Address auto-completion is enabled by default, using the variable
+mu4e-compose-complete-addresses.
+
+3.4.3 Limiting the number of addresses for autocompletion
+---------------------------------------------------------
+
+If you have a lot of mail, especially from mailing lists and the like,
+there will be _many_ e-mail adresses, most of which are unlikely to be
+useful when auto-completing. For example, consider e-mail addresses in
+five year old mailing lists posts.
+
+   So, mu4e attempts to limit the number of e-mail addresses in the
+completion pool by filter the ones that are most likely to be relevant.
+The following variables are available to tune this:
+
+   * `mu4e-compose-complete-only-personal' - when set to t, only
+     consider addresses that were seen in _personal_ messages - that is,
+     messages in which one of my e-mail addresses was seen in one of
+     the address fields. This is to exclude mailing list posts. You can
+     define what is considered 'my e-mail address' using
+     `mu4e-my-email-addresses', a list of e-mail address (defaults to
+     (user-mail-address)), and when indexing from the command line, the
+     -my-address parameter for mu index.
+
+   * `mu4e-compose-complete-only-after' - only consider e-mail
+     addresses seen after some date. Parameter is a string, parseable by
+     `org-parse-time-string'. This excludes very old e-mail addresses.
+     The default is "2010-01-01", i.e., only consider e-mail addresses
+     used since the start of 2010.
+
+   * `mu4e-compose-complete-ignore-address-regexp' - a regular
+     expression to filter out other 'junk' e-mail addresses; defaults
+     to noreply.
+
+3.4.4 Queuing mail
 ------------------
 
 If you cannot send mail directly, for example because you are currently
@@ -1297,6 +1397,7 @@ Message view::.
 * What to mark for::
 * Executing the marks::
 * Leaving the headers buffer::
+* Custom mark functions::
 * Some marking examples::
 
 
@@ -1339,16 +1440,22 @@ apply to messages:
 | unflag       | -           | remove 'flagged' mark    |
 | read         | r           | mark as read             |
 | unread       | o           | marks as unread          |
+| deferred     | *           | mark now, decide later   |
 | unmark       | u           | remove mark at point     |
-| remove all   | U           | remove all marks         |
+| unmark all   | U           | remove all marks         |
 
-   After marking a header for something, the leftmost columns shows a
-character (same as the keybinding) to remind you what you marked it
-with. Next to that, mu4e displays the name of the mark, on top of the
-beginning of the header line. This latter display is informative, but
-if you often mark many (thousands) messages, this may slow down things
-significantly(1). For this reason, you can disable this by setting
-`mu4e-headers-show-target' to `nil'.
+   After marking a header for something, the left-most columns shows a
+character to remind you what you marked it with. Next to that, mu4e
+displays the name of the mark, on top of the beginning of the header
+line. This latter display is informative, but if you often mark many
+(thousands) messages, this may slow down things significantly(1). For
+this reason, you can disable this by setting `mu4e-headers-show-target'
+to `nil'.
+
+   deferred is a special kind of mark; you can use it to mark some
+messages, and then decide later what mark to use for them. At any time,
+you can set the actual mark with `mu4e-mark-resolve-deferred-marks'
+(<#>), or mu4e will ask you for it when you execute the marks (<x>).
 
    ---------- Footnotes ----------
 
@@ -1365,7 +1472,7 @@ After you have marked some messages, you can execute them with <x>
 (`mu4e-mark-execute-all').
 
 
-File: mu4e.info,  Node: Leaving the headers buffer,  Next: Some marking examples,  Prev: Executing the marks,  Up: Marking
+File: mu4e.info,  Node: Leaving the headers buffer,  Next: Custom mark functions,  Prev: Executing the marks,  Up: Marking
 
 5.4 Leaving the headers buffer
 ==============================
@@ -1376,9 +1483,53 @@ the value of the variable `mu4e-headers-leave-behavior' - see its
 documentation.
 
 
-File: mu4e.info,  Node: Some marking examples,  Prev: Leaving the headers buffer,  Up: Marking
+File: mu4e.info,  Node: Custom mark functions,  Next: Some marking examples,  Prev: Leaving the headers buffer,  Up: Marking
 
-5.5 Some marking examples
+5.5 Custom mark functions
+=========================
+
+Sometimes, the built-in functions to mark messages may not be
+sufficient for your needs. For this, mu4e offers an easy way to define
+your own custom mark functions. You can choose one of the custom marker
+functions using <&> in *Note Headers view:: and *Note Message view::.
+
+   Custom mark functions should be appended to the list
+`mu4e-headers-custom-markers'. Each of the elements of this list
+('markers') is a list with three (or two) elements:
+   * The name of the marker - as short string describing this marker.
+     The first character of this string will also be its shortcut, so
+     these should be unique.
+
+   * a predicate function taking two arguments msg and param- first,
+     msg, which is the message plist (see *Note The message
+     s-expression::); second is a parameter provided by the third of
+     the marker elements (next item). The predicate function should
+     return non-nil if the messages matches.
+
+   * (optionally) a function that is evaluated once, and its result is
+     passed as a parameter to the predicate function. This is useful to
+     ask for user-input.
+
+   So, let's look at an example: suppose we want to match all messages
+that have more than _n_ recipients. We could do it like this:
+
+     (add-to-list 'mu4e-headers-custom-markers
+       '("More than n recipients"
+           (lambda (msg n) (> (+ (length (mu4e-msg-field msg :to))
+                                 (length (mu4e-msg-field msg :cc))) n))
+           (lambda () (read-number "Match messages with more recipients than: "))) t)
+
+   After evaluating this, pressing <&> should let you choose the custom
+marker function, and ask you for the parameters.
+
+   As you can see, it's not very hard to define simple functions to
+match messages. There are some more examples in the defaults for
+`mu4e-headers-custom-markers'; see `mu4e-headers.el'.
+
+
+File: mu4e.info,  Node: Some marking examples,  Prev: Custom mark functions,  Up: Marking
+
+5.6 Some marking examples
 =========================
 
 Let's look at some examples, assuming the default key-bindings.
@@ -1409,12 +1560,14 @@ or applying an attachment with a source code patch.
 for actions on attachments. In the following, we'll gives some examples
 of defining actions.
 
-   Note, the format of the actions has changed slightly since version
-0.9.8.4; mu4e warns you if you use the old format still. The older
-format was: `(DESCRIPTION SHORTCUT [VALUE])', while the new format is a
-cons-cell, `(DESCRIPTION . VALUE)'; see below for some examples. If
-your shortcut is not also the first character of the description,
-simply prefix the description with that character.
+   Note, the format of the actions has changed since version 0.9.8.4,
+and you must change your configuration to use the new format; mu4e
+warns you when you are using the old format.
+
+   The older format was: `(DESCRIPTION SHORTCUT [VALUE])', while the new
+format is a cons-cell, `(DESCRIPTION . VALUE)'; see below for some
+examples. If your shortcut is not also the first character of the
+description, simply prefix the description with that character.
 
 6.0.1 Functions for actions
 ---------------------------
@@ -1437,7 +1590,7 @@ like:
 actions, either `mu4e-headers-actions', `mu4e-view-actions' or
 `mu4e-view-attachment-actions'.
 
-   Let's now look at some simple examples.
+   Let's take a at some simple examples.
 
 6.0.2 Example: adding an action in the headers view
 ---------------------------------------------------
@@ -1577,8 +1730,8 @@ elsewhere - both are typically bound to `C-c C-o'.
 
 File: mu4e.info,  Node: Rich-text messages with org-mode,  Next: Maintaining an address-book with org-contacts,  Prev: Creating org-mode links,  Up: Interaction with other tools
 
-7.3 Rich-text messages with org-mode
-====================================
+7.3 Rich-text messages with org-mode (EXPERIMENTAL)
+===================================================
 
 org-mode has some nice facilities for editing texts - creating lists,
 tables, mathematical formulae etc. In addition, it can convert them to
@@ -1628,7 +1781,11 @@ File: mu4e.info,  Node: Maintaining an address-book with org-contacts,  Next: Ge
 7.4 Maintaining an address-book with org-contacts
 =================================================
 
-To manage your addresses using org-mode, there is org-contacts(1).
+Note, mu4e supports built-in address autocompletion; *Note Address
+autocompletion::, and that is the recommended way to do this.
+
+   However, it is also possible to manage your addresses with org-mode,
+using org-contacts(1).
 
    mu4e-actions defines a useful action (*Note Actions::) for this to
 add a contact based on the From:-address in the current mail (current
@@ -1637,12 +1794,13 @@ like:
 
      (setq mu4e-org-contacts-file  <full-path-to-your-org-contacts-file>)
      (add-to-list 'mu4e-headers-actions
-       '("org-contact-add" ?o mu4e-action-add-org-contact) t)
+       '("org-contact-add" . mu4e-action-add-org-contact) t)
      (add-to-list 'mu4e-view-actions
-       '("org-contact-add" ?o mu4e-action-add-org-contact) t)
+       '("org-contact-add" . mu4e-action-add-org-contact) t)
 
    After this, you should be able to add contacts using <a o> in the
 headers view and the message view, using the org-capture mechanism.
+Note, the <o> is because of the first character of org-contact-add.
 
    ---------- Footnotes ----------
 
@@ -1674,10 +1832,11 @@ sauron-msg () {
         fi
     fi
     if test -n "x$DBUS_SESSION_BUS_ADDRESS"; then
-        dbus-send --session                 \
-            --dest="org.gnu.Emacs"        \
-            "/org/gnu/Emacs/Sauron"                \
-            "org.gnu.Emacs.Sauron.AddMsgEvent"      \
+        dbus-send --session                          \
+            --dest="org.gnu.Emacs"                   \
+            --type=method_call                       \
+            "/org/gnu/Emacs/Sauron"                  \
+            "org.gnu.Emacs.Sauron.AddMsgEvent"       \
             string:shell uint32:3 string:"$1"
     fi
 }
@@ -2010,12 +2169,19 @@ to see what is going on.
 
      (require 'smtpmail)
      (setq message-send-mail-function 'smtpmail-send-it
-           starttls-use-gnutls t
-           smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-           smtpmail-auth-credentials '(("smtp.gmail.com" 587 "USERNAME@gmail.com" nil))
-           smtpmail-default-smtp-server "smtp.gmail.com"
-           smtpmail-smtp-server "smtp.gmail.com"
-           smtpmail-smtp-service 587)
+        starttls-use-gnutls t
+        smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+        smtpmail-auth-credentials '(("smtp.gmail.com" 587 "USERNAME@gmail.com" nil))
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587)
+
+     ;; alternatively, for emacs-24 you can use:
+     ;;(setq message-send-mail-function 'smtpmail-send-it
+     ;;     smtpmail-stream-type 'starttls
+     ;;     smtpmail-default-smtp-server "smtp.gmail.com"
+     ;;     smtpmail-smtp-server "smtp.gmail.com"
+     ;;     smtpmail-smtp-service 587)
 
      ;; don't keep message buffers around
      (setq message-kill-buffer-on-exit t)
@@ -2048,8 +2214,8 @@ and their answers.
      certain regular expression.
 
    * _How can I use BBDB?_ Currently, there is no built-in for address
-     management with BBDB; instead, we recommend *Note Maintaining an
-     address-book with org-contacts:: for now.
+     management with BBDB; instead, we recommend using mu4e's built-in
+     *Note Address autocompletion::.
 
    * _mu4e seems to return a mere subset of all matches - how can I get
      all?_. Indeed, for speed reasons (and because, if you are like the
@@ -2123,9 +2289,6 @@ not there (yet), and the author can use it as a todo-list.
    * _No support for crypto when reading mail_. Currently, you cannot
      conveniently read encrypted mail or check signatures. For outgoing
      messages, it should work though, using the built-in mechanisms.
-
-   * _mu4e gets confused when there are multiple windows showing the
-     headers._. Yes - don't do that.
 
    * _The key-bindings are _somewhat_ hard-coded_ That is, the main
      menu assumes the default key-bindings, as do the
@@ -2804,81 +2967,83 @@ permit their use in free software.
 
 Tag Table:
 Node: Top637
-Node: Introduction1978
-Node: Why another e-mail client?2214
-Node: Other mail clients2864
-Ref: Other mail clients-Footnote-13636
-Ref: Other mail clients-Footnote-23669
-Ref: Other mail clients-Footnote-33712
-Ref: Other mail clients-Footnote-43748
-Ref: Other mail clients-Footnote-53784
-Node: What mu4e does and does not do3815
-Ref: What mu4e does and does not do-Footnote-14759
-Ref: What mu4e does and does not do-Footnote-24793
-Ref: What mu4e does and does not do-Footnote-34833
-Node: Getting started4870
-Node: Installation5391
-Ref: Installation-Footnote-17292
-Ref: Installation-Footnote-27346
-Node: Getting mail7452
-Node: Indexing your messages8948
-Ref: Indexing your messages-Footnote-110418
-Node: Basic configuration10535
-Node: Folders10936
-Node: Sending mail11643
-Node: Running mu4e13510
-Node: Main view15275
-Node: Headers view18030
-Ref: Marking messages22089
-Ref: Sort order and threading23135
-Ref: Headers view-Footnote-126608
-Ref: Headers view-Footnote-226711
-Node: Message view26759
-Ref: Viewing images inline31234
-Ref: Message view-Footnote-134540
-Ref: Message view-Footnote-234759
-Ref: Message view-Footnote-334807
-Node: Editor view34849
-Ref: Queuing mail36614
-Node: Searching37743
-Node: Queries38679
-Node: Bookmarks40264
-Ref: Bookmarks-Footnote-142829
-Node: Maildir searches42872
-Node: Other search functionality44917
-Node: Marking46718
-Node: Selecting messages for marking47252
-Node: What to mark for48054
-Ref: What to mark for-Footnote-149443
-Node: Executing the marks49540
-Node: Leaving the headers buffer49805
-Node: Some marking examples50214
-Node: Actions50824
-Node: Interaction with other tools55521
-Node: Setting the default emacs mail program56082
-Node: Creating org-mode links56656
-Node: Rich-text messages with org-mode57600
-Ref: Rich-text messages with org-mode-Footnote-159414
-Node: Maintaining an address-book with org-contacts59473
-Ref: Maintaining an address-book with org-contacts-Footnote-160508
-Node: Getting new mail notifications with Sauron60569
-Ref: Getting new mail notifications with Sauron-Footnote-162135
-Node: Speedbar support62278
-Node: Citations with mu-cite63257
-Node: Attaching files with dired64066
-Node: Example configuration65367
-Node: Minimal configuration65699
-Node: Longer configuration66673
-Node: Gmail configuration69344
-Node: FAQ - Frequently Anticipated Questions73598
-Node: Known issues / missing features76987
-Node: How it works78206
-Node: High-level overview78600
-Node: mu server80097
-Node: Reading from the server81133
-Node: The message s-expression83403
-Ref: The message s-expression-Footnote-186521
-Node: Logging and debugging86708
-Node: GNU Free Documentation License87771
+Node: Introduction2623
+Node: Why another e-mail client?2848
+Node: Other mail clients3763
+Ref: Other mail clients-Footnote-14538
+Ref: Other mail clients-Footnote-24571
+Ref: Other mail clients-Footnote-34614
+Ref: Other mail clients-Footnote-44650
+Ref: Other mail clients-Footnote-54686
+Node: What mu4e does not do4717
+Ref: What mu4e does not do-Footnote-15634
+Ref: What mu4e does not do-Footnote-25668
+Ref: What mu4e does not do-Footnote-35708
+Node: Getting started5745
+Node: Installation6266
+Ref: Installation-Footnote-18314
+Ref: Installation-Footnote-28368
+Node: Getting mail8474
+Node: Indexing your messages9970
+Ref: Indexing your messages-Footnote-111440
+Node: Basic configuration11557
+Node: Folders11958
+Node: Sending mail12665
+Node: Running mu4e14532
+Node: Main view16297
+Node: Headers view19141
+Ref: Marking messages23296
+Ref: Sort order and threading24342
+Ref: Headers view-Footnote-127819
+Ref: Headers view-Footnote-227922
+Node: Message view27970
+Ref: Viewing images inline32890
+Ref: Message view-Footnote-136195
+Ref: Message view-Footnote-236414
+Ref: Message view-Footnote-336462
+Node: Editor view36504
+Ref: Address autocompletion38289
+Ref: Queuing mail40321
+Node: Searching41450
+Node: Queries42386
+Node: Bookmarks43971
+Ref: Bookmarks-Footnote-146536
+Node: Maildir searches46579
+Node: Other search functionality48624
+Node: Marking50425
+Node: Selecting messages for marking50985
+Node: What to mark for51787
+Ref: What to mark for-Footnote-153487
+Node: Executing the marks53584
+Node: Leaving the headers buffer53849
+Node: Custom mark functions54258
+Node: Some marking examples56290
+Node: Actions56895
+Node: Interaction with other tools61649
+Node: Setting the default emacs mail program62210
+Node: Creating org-mode links62784
+Node: Rich-text messages with org-mode63728
+Ref: Rich-text messages with org-mode-Footnote-165572
+Node: Maintaining an address-book with org-contacts65631
+Ref: Maintaining an address-book with org-contacts-Footnote-166890
+Node: Getting new mail notifications with Sauron66951
+Ref: Getting new mail notifications with Sauron-Footnote-168595
+Node: Speedbar support68738
+Node: Citations with mu-cite69717
+Node: Attaching files with dired70526
+Node: Example configuration71827
+Node: Minimal configuration72159
+Node: Longer configuration73133
+Node: Gmail configuration75804
+Node: FAQ - Frequently Anticipated Questions80338
+Node: Known issues / missing features83718
+Node: How it works84830
+Node: High-level overview85224
+Node: mu server86721
+Node: Reading from the server87757
+Node: The message s-expression90027
+Ref: The message s-expression-Footnote-193145
+Node: Logging and debugging93332
+Node: GNU Free Documentation License94395
 
 End Tag Table

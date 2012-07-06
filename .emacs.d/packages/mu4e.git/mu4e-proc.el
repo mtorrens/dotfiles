@@ -77,7 +77,7 @@ the length (in hex).")
 (defun mu4e~proc-kill ()
   "Kill the mu server process."
   (let* ((buf (get-buffer mu4e~proc-name))
-	  (proc (and buf (get-buffer-process buf))))
+	  (proc (and (buffer-live-p buf) (get-buffer-process buf))))
     (when proc
       (let ((delete-exited-processes t))
 	;; the mu server signal handler will make it quit after 'quit'
@@ -213,10 +213,15 @@ The server output is as follows:
 	      (plist-get sexp :docid)
 	      (plist-get sexp :path)))
 
-	  ;; receive a pong message
+	  ;; received a pong message
 	  ((plist-get sexp :pong)
 	    (funcall mu4e-pong-func
 	      (plist-get sexp :version) (plist-get sexp :doccount)))
+
+	  ;; received a contacts message
+	  ((plist-get sexp :contacts)
+	    (funcall mu4e-contacts-func
+	      (plist-get sexp :contacts)))
 
 	  ;; something got moved/flags changed
 	  ((plist-get sexp :update)
@@ -278,7 +283,7 @@ terminates."
 	  ((eq code 11)
 	    (mu4e-message "Database is locked by another process"))
 	  ((eq code 19)
-	    (mu4e-message "Database empty or non-existent; try indexing some messages"))
+	    (mu4e-message "Database empty; try indexing some messages"))
 	  (t (mu4e-message "mu server process ended with exit code %d" code))))
       (t
 	(mu4e-message "Something bad happened to the mu server process")))))
@@ -366,10 +371,18 @@ or (:error ) sexp, which are handled my `mu4e-update-func' and
       idparam (or flagstr "") (or path ""))))
 
 
-(defun mu4e~proc-index (path)
+
+(defun mu4e~proc-index (path my-addresses)
   "Update the message database for filesystem PATH, which should
-point to some maildir directory structure."
-  (mu4e~proc-send-command "index path:\"%s\"" path))
+point to some maildir directory structure. MY-ADDRESSES is a
+list of my email addresses (see e.g. `mu4e-my-email-addresses')."
+  (let ((addrs
+	  (when my-addresses
+	    (mapconcat 'identity my-addresses ","))))
+    (if addrs
+      (mu4e~proc-send-command "index path:\"%s\" my-addresses:%s"
+	path addrs)
+      (mu4e~proc-send-command "index path:\"%s\"" path))))
 
 (defun mu4e~proc-add (path maildir)
   "Add the message at PATH to the database, with MAILDIR set to the
@@ -432,6 +445,16 @@ mean:
   "Sends a ping to the mu server, expecting a (:pong ...) in
 response."
   (mu4e~proc-send-command "ping"))
+
+(defun mu4e~proc-contacts (personal after)
+  "Sends the contacts command to the mu server, expecting
+a (:contacts (<list>)) in response. If PERSONAL is non-nil, only
+get personal contacts, if AFTER is non-nil, get only contacts
+seen AFTER (the time_t value)."
+  (mu4e~proc-send-command
+    "contacts personal:%s after:%d"
+    (if personal "true" "false")
+    (or after 0)))
 
 (defun mu4e~proc-view (docid-or-msgid &optional images)
   "Get one particular message based on its DOCID-OR-MSGID (keyword

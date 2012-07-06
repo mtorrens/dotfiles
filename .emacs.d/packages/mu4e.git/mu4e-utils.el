@@ -30,7 +30,9 @@
 
 (require 'html2text)
 (require 'mu4e-vars)
+(require 'mu4e-about)
 (require 'doc-view)
+(require 'org) ;; for org-parse-time-string
 
 (defcustom mu4e-html2text-command nil
   "Shell command that converts HTML from stdin into plain text on
@@ -40,7 +42,6 @@ recommended you use \"html2text -utf8 -width 72\"."
   :type 'string
   :group 'mu4e-view
   :safe 'stringp)
-
 
 (defcustom mu4e-view-prefer-html nil
   "Whether to base the body display on the HTML-version of the
@@ -60,15 +61,15 @@ dir already existed, or has been created, nil otherwise."
       (mu4e~proc-mkdir dir))
     (t nil)))
 
-
 (defun mu4e-format (frm &rest args)
   "Create [mu4e]-prefixed string based on format FRM and ARGS."
   (concat "[" mu4e-logo "] "  (apply 'format frm args)))
 
 (defun mu4e-message (frm &rest args)
-  "Like `message', but prefixed with mu4e."
-  (message "%s" (apply 'mu4e-format frm args)))
-
+  "Like `message', but prefixed with mu4e. If we're waiting for
+user-input, don't show anyhting."
+  (unless (waiting-for-user-input-p)
+    (message "%s" (apply 'mu4e-format frm args))))
 
 (defun mu4e~read-char-choice (prompt choices)
   "Compatiblity wrapper for `read-char-choice', which is emacs-24
@@ -96,15 +97,19 @@ options. Cells have the following structure:
 The options are provided as a list for the user to choose from;
 user can then choose by typing CHAR.  Example:
   (mu4e-read-option \"Choose an animal: \"
-              '((\"Monkey\" ?m) (\"Gnu\" ?g) (\"platipus\")))
-User now will be presented with a list:
-   \"Choose an animal: [m]Monkey, [g]Gnu, [p]latipus\"."
+              '((\"Monkey\" . monkey) (\"Gnu\" . gnu) (\"xMoose\" . moose)))
+
+User now will be presented with a list: \"Choose an animal:
+   [M]onkey, [G]nu, [x]Moose\".
+
+Function will return the cdr of the list element."
   (let* ((prompt (mu4e-format "%s" prompt))
 	  (chosen)
 	  (optionsstr
 	    (mapconcat
 	      (lambda (option)
-		(when (consp (cdr option))
+		;; try to detect old-style options, and warn
+		(when (characterp (car-safe (cdr-safe option)))
 		  (error (concat "Please use the new format for options/actions; "
 			   "see the manual")))
 		(let* ((kar (substring (car option) 0 1))
@@ -325,8 +330,6 @@ http://cr.yp.to/proto/maildir.html "
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-
 (defun mu4e-display-size (size)
   "Get a string representation of SIZE (in bytes)."
   (cond
@@ -369,8 +372,19 @@ function prefers the text part, but this can be changed by setting
 		  (buffer-string)))
 	      (t ;; otherwise, an empty body
 		""))))
-    ;; and finally, remove some crap from the remaining string.
-    (replace-regexp-in-string "[ ]" " " body nil nil nil)))
+    ;; and finally, remove some crap from the remaining string; it seems
+    ;; esp. outlook lies about its encoding (ie., it says 'iso-8859-1' but
+    ;; really it's 'windows-1252'), thus giving us these funky chars. here, we
+    ;; either remove them, or replace with 'what-was-meant' (heuristically)
+    (with-temp-buffer
+      (insert body)
+      (goto-char (point-min))
+      (while (re-search-forward "[ ]" nil t)
+	(replace-match
+	  (cond
+	    ((string= (match-string 0) "") "'")
+	    (t		                       ""))))
+      (buffer-string))))
 
 
 
@@ -510,9 +524,11 @@ process."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconst mu4e-update-buffer-name "*mu4e-update*"
-  "*internal* Name of the buffer for message retrieval / database
-  updating.")
+(defconst mu4e~update-buffer-name "*mu4e-update*"
+  "Name of the buffer for message retrieval/database updating.")
+
+(defconst mu4e~update-buffer-height 8
+  "Height of the mu4e message retrieval/update buffer.")
 
 (defun mu4e-update-mail-show-window ()
   "Try to retrieve mail (using the user-provided shell command),
@@ -521,9 +537,13 @@ split-window."
   (interactive)
   (unless mu4e-get-mail-command
     (error "`mu4e-get-mail-command' is not defined"))
-  (let ((buf (get-buffer-create mu4e-update-buffer-name))
-	 (win
-	   (split-window (selected-window)
+  ;; delete any old update buffer
+  (when (buffer-live-p mu4e~update-buffer-name)
+    (with-current-buffer mu4e~update-buffer-name
+      (kill-buffer-and-window)))
+  ;; create a new one
+  (let ((buf (get-buffer-create mu4e~update-buffer-name))
+	 (win (split-window (selected-window)
 	     (- (window-height (selected-window)) 8))))
     (with-selected-window win
       (switch-to-buffer buf)
@@ -533,11 +553,30 @@ split-window."
       (mu4e-update-mail buf))))
 
 
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; start and stopping
+(defun mu4e~fill-contacts (contacts)
+  "We receive a list of contacts, which each contact of the form
+     (:name NAME :mail EMAIL)
+and fill the list `mu4e~contacts-for-completion' with it, with
+each element looking like
+    name <email>
+This is used by the completion function in mu4e-compose."
+  (let ((lst))
+    (dolist (contact contacts)
+      (let ((name (plist-get contact :name))
+	     (mail (plist-get contact :mail)))
+	(when mail
+	  (unless ;; ignore some address ('noreply' etc.)
+	    (and mu4e-compose-complete-ignore-address-regexp
+	      (string-match mu4e-compose-complete-ignore-address-regexp mail))
+	  (add-to-list 'lst
+	    (if name (format "%s <%s>" name mail) mail))))))
+    (setq mu4e~contacts-for-completion lst)
+    (mu4e-message "Contacts received: %d"
+      (length mu4e~contacts-for-completion))))
+
 
 (defun mu4e~check-requirements ()
   "Check for the settings required for running mu4e."
@@ -579,6 +618,7 @@ FUNC (if non-nil) afterwards."
       ;; better to check for specific features
       (unless (>= emacs-major-version 23)
 	(error "Emacs >= 23.x is required for mu4e"))
+
       ;; set up the 'pong' handler func
       (lexical-let ((func func))
 	(setq mu4e-pong-func
@@ -593,8 +633,17 @@ FUNC (if non-nil) afterwards."
 		  0 mu4e-update-interval 'mu4e-update-mail)))
 	    (mu4e-message "Started mu4e with %d message%s in store"
 	      doccount (if (= doccount 1) "" "s")))))
-	  ;; send the ping
-	  (mu4e~proc-ping)))
+      ;; send the ping
+      (mu4e~proc-ping)
+      ;; get the address list
+      (when mu4e-compose-complete-addresses
+	(setq mu4e-contacts-func 'mu4e~fill-contacts)
+	(mu4e~proc-contacts
+	  mu4e-compose-complete-only-personal
+	  (when mu4e-compose-complete-only-after
+	    (float-time
+	      (apply 'encode-time
+		(org-parse-time-string mu4e-compose-complete-only-after))))))))
 
 (defun mu4e~stop ()
   "Stop the mu4e session."
@@ -638,15 +687,15 @@ processing takes part in the background, unless buf is non-nil."
 		;; sadly, fetchmail returns '1' when there is no mail; this is
 		;; not really an error of course, but it's hard to distinguish
 		;; from a genuine error
-		(maybe-error (or (not (eq status 'exit)) (/= code 0))))
+		(maybe-error (or (not (eq status 'exit)) (/= code 0)))
+		(buf (process-buffer proc)))
 	  (message nil)
 	  ;; there may be an error, give the user up to 5 seconds to check
 	  (when maybe-error
 	    (sit-for 5))
-	  (mu4e~proc-index mu4e-maildir)
-	  (let ((buf (process-buffer proc)))
-	    (when (buffer-live-p buf)
-	      (kill-buffer buf))))))))
+	  (mu4e~proc-index mu4e-maildir mu4e-my-email-addresses)
+	  (when (buffer-live-p buf)
+	    (kill-buffer buf)))))))
 
 
 
@@ -693,6 +742,8 @@ either 'to-server, 'from-server or 'misc. This function is meant for debugging."
 	      (beginning-of-line)
 	      (delete-region (point-min) (point)))))))))
 
+
+
 (defun mu4e-toggle-logging ()
   "Toggle between enabling/disabling debug-mode (in debug-mode,
 mu4e logs some of its internal workings to a log-buffer. See
@@ -704,6 +755,8 @@ mu4e logs some of its internal workings to a log-buffer. See
     (if mu4e-debug "enabled" "disabled"))
   (mu4e-log 'misc "logging enabled"))
 
+
+
 (defun mu4e-show-log ()
   "Visit the mu4e debug log."
   (interactive)
@@ -711,7 +764,6 @@ mu4e logs some of its internal workings to a log-buffer. See
     (unless (buffer-live-p buf)
       (error "No debug log available"))
     (switch-to-buffer buf)))
-
 
 
 (defun mu4e-split-ranges-to-numbers (str n)
@@ -776,35 +828,48 @@ is ignored."
       (insert-image img imgpath nil t))))
 
 
-(defun mu4e-quit-buffer ()
-  "Bury the current buffer (and delete all windows displaying it)."
-  (interactive)
-  (let ((buf (current-buffer)))
-    (walk-windows
-      ;; kill any window that:
-      ;; a) displays the current buffer
-      ;; b) is not the only win
-      (lambda (win)
-	(when (eq (window-buffer win) (current-buffer))
-	  (unless (one-window-p t)
-	    (delete-window win)))) nil t)
-    ;; if current buffer is still here, bury it
-    (when (eq buf (current-buffer))
-      (bury-buffer))))
-
 
 (defun mu4e-hide-other-mu4e-buffers ()
   "Bury mu4e-buffers (main, headers, view) (and delete all windows
 displaying it). Do _not_ bury the current buffer, though."
   (interactive)
   (let ((curbuf (current-buffer)))
-    (walk-windows
-      (lambda (win)
+    ;; note: 'walk-windows' does not seem to work correctly when modifying
+    ;; windows; therefore, the doloops here
+    (dolist (frame (frame-list))
+      (dolist (win (window-list frame nil))
 	(with-current-buffer (window-buffer win)
 	  (unless (eq curbuf (current-buffer))
-	    (when (member major-mode '(mu4e-headers-mode mu4e-view-mode mu4e-main-mode))
+	    (when (member major-mode '(mu4e-headers-mode mu4e-view-mode))
 	      (unless (one-window-p t)
-		(delete-window win)))))) nil t)))
+		(delete-window win))))))) nil t))
+
+
+(defun mu4e-get-time-date (prompt)
+  "Determine the emacs time value for the time/date entered by user
+  after PROMPT. Formats are all that are accepted by
+  `parse-time-string'."
+  (let ((timestr (read-string (mu4e-format "%s" prompt))))
+    (apply 'encode-time (org-parse-time-string timestr))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconst mu4e~main-about-buffer-name "*mu4e-about*"
+  "Name for the mu4e-about buffer.")
+
+(defun mu4e-about ()
+  "Show a buffer with the mu4e-about text."
+  (interactive)
+  (with-current-buffer
+    (get-buffer-create mu4e~main-about-buffer-name)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (insert mu4e-about)
+      (org-mode)))
+  (switch-to-buffer mu4e~main-about-buffer-name)
+  (setq buffer-read-only t)
+  (local-set-key "q" 'bury-buffer)
+  (goto-char (point-min)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 (provide 'mu4e-utils)

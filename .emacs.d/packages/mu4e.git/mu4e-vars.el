@@ -75,10 +75,20 @@ mu4e."
   :group 'mu4e
   :safe 'stringp)
 
-(defvar mu4e-user-mail-address-regexp "$^"
+(defcustom mu4e-user-mail-address-regexp "$^"
   "Regular expression matching the user's mail address(es). This is
 used to distinguish ourselves from others, e.g. when replying and
-in :from-or-to headers. By default, match nothing.")
+in :from-or-to headers. By default, match nothing."
+  :type 'string
+  :group 'mu4e
+  :safe 'stringp)
+
+(defcustom mu4e-my-email-addresses `(,user-mail-address)
+  "List of e-mail addresses to consider 'my email addresses',
+ie. addresses whose presence in an email imply that it is a
+personal message. This is used when indexing messages."
+  :type '(string)
+  :group 'mu4e)
 
 (defvar mu4e-date-format-long "%c"
   "Date format to use in the message view, in the format of
@@ -111,6 +121,41 @@ symbol 'horizontal: split horizontally (headers on top) * a symbol
 else: don't split (show either headers or messages, not both) Also
 see `mu4e-headers-visible-lines' and
 `mu4e-headers-visible-columns'.")
+
+;; completion; we put them here rather than in mu4e-compose, as mu4e-utils needs
+;; the variables.
+
+(defgroup mu4e-compose nil
+  "Message-composition related settings."
+  :group 'mu4e)
+
+;; address completion
+(defcustom mu4e-compose-complete-addresses t
+  "Whether to do auto-completion of e-mail addresses."
+  :type 'boolean
+  :group 'mu4e-compose)
+
+(defcustom mu4e-compose-complete-only-personal nil
+  "Whether to consider only 'personal' e-mail addresses,
+i.e. addresses from messages where user was explicitly in one of
+the address fields (this excludes mailing list messages)."
+  :type 'boolean
+  :group 'mu4e-compose)
+
+(defcustom mu4e-compose-complete-only-after "2010-01-01"
+  "Consider only contacts last seen after this date. Date must be a
+  string, in a format parseable by `org-parse-time-string'. This
+  excludes really old contacts. Set to nil to not have any
+  time-based restriction."
+  :type 'string
+  :group 'mu4e-compose)
+
+(defcustom mu4e-compose-complete-ignore-address-regexp "noreply"
+  "Ignore any e-mail addresses for completion if they match this
+regexp."
+  :type 'string
+  :group 'mu4e-compose)
+
 
 
 ;; Folders
@@ -368,6 +413,10 @@ view). Most fields should be self-explanatory. A special one is
 
 (defvar mu4e~view-msg nil "The message being viewed in view mode.")
 
+(defvar mu4e~contacts-for-completion nil
+  "List of contacts (ie. 'name <e-mail>'),
+used by the completion functions in mu4e-compose, and filled when
+mu4e starts.")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -432,6 +481,10 @@ the server process.")
 (defvar mu4e-pong-func 'mu4e~default-handler
   "A function called for each (:pong type ....) sexp received from
 the server process.")
+
+(defvar mu4e-contacts-func 'mu4e~default-handler
+  "A function called for each (:contacts (<list-of-contacts>) sexp
+received from the server process.")
 
 (defvar mu4e-temp-func 'mu4e~default-handler
   "A function called for each (:temp <file> <cookie>) sexp received

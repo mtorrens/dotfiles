@@ -38,24 +38,37 @@ Welcome to @t{mu4e}!
 later, built on top of the @t{mu} e-mail search engine. @t{mu4e} is optimized
 for fast handling of large amounts of e-mail.
 
+Some of the features include:
+
+@itemize
+@item Fully search-based: there are no folders, only queries
+@item Fully documented, with example configurations
+@item UI optimized for speed with quick key strokes for common actions
+@item Asynchronous: heavy actions never block @t{emacs}
+@item Rich-text e-mails using @t{org-mode} (experimental)
+@item Address auto-completion based on your messages -- no need for managing address books
+@item Extendable using your own custom actions
+@end itemize
+
 This manual goes through the installation of @t{mu4e}, discusses the basic
 configuration, and explains its daily use. It also shows how you can customize
-@t{mu4e} for your needs.
+@t{mu4e} for your needs. At the end of the manual, there are some example
+configurations, which should help you to get up to speed quickly.
 
-At the end of the manual, there are some example configurations, which should
-help you to get up to speed quickly.
+Also note the @xref{FAQ - Frequently Anticipated Questions}, and the section
+on @xref{Known issues / missing features}, which may save you some time.
 
 This manual has been updated for @t{mu}/@t{mu4e} version
 @emph{@value{mu4e-version}}.
 
 @menu
-* Introduction:: How it all begins
-* Getting started:: Setting thinsg up
+* Introduction:: How it all began
+* Getting started:: Setting things up
 * Running mu4e:: Daily use
-* Searching:: Some more details about queries and searching
-* Marking:: Marking messages
+* Searching:: Some more background on searching/queries
+* Marking:: Marking messages and performing actions
 * Actions:: Defining and using custom actions
-* Interaction with other tools:: Integrating mu4e
+* Interaction with other tools:: mu4e and the rest of the world
 * Example configuration:: Some examples to set you up quickly
 * FAQ - Frequently Anticipated Questions:: Common questions and answers
 * Known issues / missing features:: mu4e is not perfect yet
@@ -69,26 +82,32 @@ Appendices
 @node Introduction
 @chapter Introduction
 
-Let's get started!
+Welcome to @t{mu4e}!
 
 @menu
 * Why another e-mail client?::
 * Other mail clients::
-* What mu4e does and does not do::
+* What mu4e does not do::
 @end menu
 
 @node Why another e-mail client?
 @section Why another e-mail client?
 
-I'm not sure the world @emph{needs} yet another e-mail client, but maybe
+Fair question.
+
+I'm not sure the world @emph{needs} yet another e-mail client, but perhaps
 @emph{I} do! I (the author) spend a @emph{lot} of time, professionally and
 privately, dealing with e-mail messdae and therefore, having an efficient
 e-mail client is essential for me. Since none of the existing ones worked the
 way I wanted, I created my own.
 
-While having been created for such selfish reasons, @t{mu4e} tries hard to be
-as useful as possible for all its users - suggestions are very welcome and are
-acted upon.
+As @t{emacs} is such an integral part of my workflow, it made a lot of sense
+to integrate my e-mail client with it. And as I already had written an e-mail
+search engine (@t{mu}), it seemed only logical to use that as a basis.
+
+Even though I created @t{mu4e} for such selfish reasons, @t{mu4e} tries hard
+to be as useful as possible for @emph{all} its users - suggestions are very
+welcome and many have already made it to @t{mu4e}.
 
 @node Other mail clients
 @section Other mail clients
@@ -102,14 +121,14 @@ user-interface is quite different from those programs.
 @t{mu4e}'s mail handling (deleting, moving etc.) is inspired by
 @emph{Wanderlust}@footnote{@url{http://www.gohome.org/wl/}} (another
 emacs-based e-mail client), @t{mutt}@footnote{@url{http://www.mutt.org/}} and
-@t{dired}, while it takes some cues from @emph{Gmail}.
+@t{dired}, while it also takes some cues from @emph{Gmail}.
 
 @t{mu4e} tries to keep all the 'state' in your maildirs, so you can easily
-switch between clients, synchronize over @abbr{IMAP} or backup with @t{rsync}
--- if you delete the database, you won't lose any information.
+switch between clients, synchronize over @abbr{IMAP}, backup with @t{rsync}
+and so on. If you delete the database, you won't lose any information.
 
-@node What mu4e does and does not do
-@section What mu4e does and does not do
+@node What mu4e does not do
+@section What mu4e does not do
 
 @t{mu} and @t{mu4e} do @emph{not} deal with getting your e-mail messages from
 a mail server. That task is delegated to other tools, such as
@@ -162,9 +181,12 @@ Ubuntu system, you can get these with:
 @example
 sudo apt-get install libgmime-2.4-dev libxapian-dev
 # emacs if you don't have it yet, mu4e works with GNU-Emacs 23 and 24
+# emacs 24 works better; it may be available as 'emacs-snapshot'
 sudo apt-get install emacs23
 # optional
 sudo apt-get install guile-2.0-dev html2text xdg-utils
+# optional: only needed for msg2pdf
+sudo apt-get install libwebkit-dev
 @end example
 
 Using a release-tarball (as avaiable from
@@ -180,7 +202,7 @@ $ sudo make install
 
 Alternatively, if you build from the git repository, or use a tarball like the
 ones that @t{github} produces, the instructions are slightly different (and
-require you to have the autotools installed):
+require you to have @t{autotools} installed):
 
 @example
 # get from git, or from a github tarball
@@ -200,8 +222,8 @@ You may need to restart @t{emacs}.
 
 There is @emph{experimental} support for using the @t{emacs} customization
 system in @t{mu4e}, but for now, we recommend setting the values
-manually. Please refer to @ref{Example configuration} for a couple of examples
-of this.
+manually. Please refer to @ref{Example configuration} for a couple of
+examples of this.
 
 @node Getting mail
 @section Getting mail
@@ -424,6 +446,7 @@ This looks something like the following:
 	* toggle [m]ail sending mode (direct)
 	* [f]lush queued mail
 
+        * [A]bout mu4e
         * [H]elp
 	* [q]uit mu4e
 ----------------------------------------------------------------------------
@@ -467,6 +490,7 @@ database; @pxref{Indexing your messages}. See @ref{Getting mail} for details.
 mail directly, and queuing it first (for example, when you are offline), and
 @t{[f]lush queued mail} will flush any queued mail. This item is visible only
 if you have actually set up mail-queuing. @ref{Queuing mail}.
+@item @t{[A]bout mu4e} will give some general information about @t{mu4e}.
 @item @t{[H]elp} will show help information for this view.
 @item Finally, @t{[q]uit mu4e} will quit @t{mu4e}.
 @end itemize
@@ -556,10 +580,13 @@ m            mark for moving to another maildir folder
 o,r          mark message as unread, read
 
 u            unmark message at point
-U            unmark *all* messages 
+U            unmark *all* messages
 
 %            mark based on a regular expression
 T,t          mark whole thread, subthread
+
+*            deferred mark (decide what to mark for later)
+#            resolve deferred marks
 
 x            execute actions for the marked messages
 
@@ -612,8 +639,8 @@ affects the sort order.
 
 You can change the sort order with @t{M-x mu4e-headers-change-sorting} or
 @key{O}, and you can toggle threading on/off using @t{M-x
-mu4e-headers-toggle-threading} or @key{P}. For both of these functions, if you
-provide a prefix argument (@key{C-u}), the current search is updated
+mu4e-headers-toggle-threading} or @key{P}. For both of these functions, unless
+you provide a prefix argument (@key{C-u}), the current search is updated
 immediately using the new parameters. You can toggle full-search
 (@ref{Searching}) using @t{M-x mu4e-headers-toggle-full-search} or @key{Q}.
 
@@ -646,7 +673,6 @@ include the previously captured message as an attachment, using
 
 The file @file{mu4e-actions.el} in the @t{mu4e} source distribution contains a
 number of example actions.
- 
 
 @subsection Split view
 
@@ -738,10 +764,15 @@ or by using the keyboard; the default bindings are:
 
 @verbatim
 key          description
----          -----------
+==============================================================
 n,p          go to next, previous message
 y            select the headers view (if it's visible)
 
+RET          scroll down
+M-RET        open URL at point / attachment at point
+
+searching
+---------
 s            search
 e            edit last query
 /            narrow the search
@@ -752,23 +783,32 @@ j            jump to maildir
 M-left       previous query
 M-right      next query
 
-C-+,C--      increase / decrease the number of headers shown
-
-a            execute some action on the message
-
+marking
+-------
 d            mark for moving to the trash folder
 DEL,D        mark for immediate deletion
 m            mark for moving to another maildir folder
 +,-          mark for flagging/unflagging
+o,r          mark message as unread, read
+
 u            unmark message at point
+U            unmark *all* messages
+
 %            mark based on a regular expression
 T,t          mark whole thread, subthread
 
+SPC          deferred mark (decide what to mark for later)
+*            resolve deferred marks
+
+x            execute actions for the marked messages
+
+composition
+-----------
 R,F,C        reply/forward/compose
 E            edit (only allowed for draft messages)
 
-.            show the raw message view. 'q' takes you back.
-
+actions
+-------
 g            go to (visit) numbered URL (using `browse-url')
              (or: <mouse-2> or RET with point on url)
 e            extract (save) attachment (asks for number)
@@ -776,10 +816,17 @@ e            extract (save) attachment (asks for number)
              C-u e will extract multiple attachments
 o            open attachment (asks for number)
              (or: <S-mouse-2> or S-RET with point on attachment)
-A            execute some action on an attachment
+
+a            execute some custom action on the message
+A            execute some custom action on an attachment
+
+misc
+----
 w            toggle line wrapping
 h            toggle showing cited parts
 
+.            show the raw message view. 'q' takes you back.
+C-+,C--      increase / decrease the number of headers shown
 H            get help
 q,z          leave the message view
 @end verbatim
@@ -848,8 +895,8 @@ Gimp.
 see the results. Suppose you receive a patch file, and would like to get an
 overview of the changes, using the @t{diffstat} program. You can use something
 like: @t{A | 1 RET diffstat -b RET}.
-@item @t{emacs} (@key{e}): open the attachment in your running @t{emacs}
-. For example, if you receive some text file you'd like to open in @t{emacs}:
+@item @t{emacs} (@key{e}): open the attachment in your running @t{emacs}. For
+example, if you receive some text file you'd like to open in @t{emacs}:
 @t{A e 1 RET}.
 @end itemize
 
@@ -945,6 +992,47 @@ configuration:
 (setq message-kill-buffer-on-exit t)
 @end lisp
 
+@subsection Address autocompletion
+@anchor{Address autocompletion}
+
+Since @t{mu}/@t{mu4e} version 0.9.8.5, there is support for autocompleting
+addresses using @key{TAB} when composing e-mail messages. As the source for
+the addresses to complete, @t{mu4e} uses the e-mail addresses in its database
+-- addresses you sent messages to or received messages from. @emph{Note:}
+auto-completion should work with emacs versions 23.2 and later.
+
+Address auto-completion is enabled by default, using the variable
+@t{mu4e-compose-complete-addresses}.
+
+@subsection Limiting the number of addresses for autocompletion
+
+If you have a lot of mail, especially from mailing lists and the like, there
+will be @emph{many} e-mail adresses, most of which are unlikely to be useful
+when auto-completing. For example, consider e-mail addresses in five year old
+mailing lists posts.
+
+So, @t{mu4e} attempts to limit the number of e-mail addresses in the
+completion pool by filter the ones that are most likely to be relevant. The
+following variables are available to tune this:
+
+@itemize
+@item @code{mu4e-compose-complete-only-personal} - when set to @t{t},
+only consider addresses that were seen in @emph{personal} messages -- that is,
+messages in which one of my e-mail addresses was seen in one of the address
+fields. This is to exclude mailing list posts. You can define what is
+considered 'my e-mail address' using @code{mu4e-my-email-addresses}, a list of
+e-mail address (defaults to @t{(user-mail-address)}), and when indexing from
+the command line, the @t{--my-address} parameter for @t{mu index}.
+@item @code{mu4e-compose-complete-only-after} - only consider e-mail
+addresses seen after some date. Parameter is a string, parseable by
+@code{org-parse-time-string}. This excludes very old e-mail addresses. The
+default is @t{"2010-01-01"}, i.e., only consider e-mail addresses used since
+the start of 2010.
+@item @code{mu4e-compose-complete-ignore-address-regexp} - a regular expression to
+filter out other 'junk' e-mail addresses; defaults to @t{noreply}.
+@end itemize
+
+
 @subsection Queuing mail
 @anchor{Queuing mail}
 
@@ -994,7 +1082,7 @@ By default, queries return up to @code{mu4e-search-results-limit} (default:
 bit. Sometimes, you may want to show @emph{all} results; you can enable this
 with @t{M-x mu4e-headers-toggle-full-search}, or by customizing the variable
 @code{mu4e-headers-full-search}. This applies to all search commands.
-  
+
 You can also influence the sort order and whether threads are shown or not;
 see @ref{Sort order and threading}.
 
@@ -1215,6 +1303,7 @@ Marking can happen in both the @ref{Headers view} and the @ref{Message view}.
 * What to mark for::
 * Executing the marks::
 * Leaving the headers buffer::
+* Custom mark functions::
 * Some marking examples::
 @end menu
 
@@ -1251,18 +1340,23 @@ apply to messages:
 | unflag       | -           | remove 'flagged' mark    |
 | read         | r           | mark as read             |
 | unread       | o           | marks as unread          |
+| deferred     | *           | mark now, decide later   |
 | unmark       | u           | remove mark at point     |
-| remove all   | U           | remove all marks         |
+| unmark all   | U           | remove all marks         |
 @end verbatim
-  
-After marking a header for something, the leftmost columns shows a character
-(same as the keybinding) to remind you what you marked it with. Next to that,
-@t{mu4e} displays the name of the mark, on top of the beginning of the header
-line. This latter display is informative, but if you often mark many
-(thousands) messages, this may slow down things significantly@footnote{this
-uses an emacs feature called @emph{overlays}, which are slow when used a lot
-in a buffer}. For this reason, you can disable this by setting
-@code{mu4e-headers-show-target} to @code{nil}.
+
+After marking a header for something, the left-most columns shows a character
+to remind you what you marked it with. Next to that, @t{mu4e} displays the
+name of the mark, on top of the beginning of the header line. This latter
+display is informative, but if you often mark many (thousands) messages, this
+may slow down things significantly@footnote{this uses an emacs feature called
+@emph{overlays}, which are slow when used a lot in a buffer}. For this reason,
+you can disable this by setting @code{mu4e-headers-show-target} to @code{nil}.
+
+@t{deferred} is a special kind of mark; you can use it to mark some messages,
+and then decide later what mark to use for them. At any time, you can set the
+actual mark with @code{mu4e-mark-resolve-deferred-marks} (@key{#}), or
+@t{mu4e} will ask you for it when you execute the marks (@key{x}).
 
 @node Executing the marks
 @section Executing the marks
@@ -1276,6 +1370,48 @@ After you have marked some messages, you can execute them with @key{x}
 When you quit the buffer (for example, but doing a new search) with marks being
 present, @t{mu4e} asks you what to do with them, depending on the value of the
 variable @code{mu4e-headers-leave-behavior} -- see its documentation.
+
+@node Custom mark functions
+@section Custom mark functions
+
+Sometimes, the built-in functions to mark messages may not be sufficient for
+your needs. For this, @t{mu4e} offers an easy way to define your own custom
+mark functions. You can choose one of the custom marker functions using
+@key{&} in @ref{Headers view} and @ref{Message view}.
+
+Custom mark functions should be appended to the list
+@code{mu4e-headers-custom-markers}. Each of the elements of this list
+('markers') is a list with three (or two) elements:
+@itemize
+@item The name of the marker - as short string describing this marker. The
+first character of this string will also be its shortcut, so these should be
+unique.
+@item a predicate function taking two arguments @t{msg} and @t{param}- first,
+@t{msg}, which is the message
+plist (see @ref{The message s-expression}); second is a parameter provided by
+the third of the marker elements (next item). The predicate function should
+return non-nil if the messages matches.
+@item (optionally) a function that is evaluated once, and its result is passed as a
+parameter to the predicate function. This is useful to ask for user-input.
+@end itemize
+
+So, let's look at an example: suppose we want to match all messages that have
+more than @emph{n} recipients. We could do it like this:
+
+@lisp
+(add-to-list 'mu4e-headers-custom-markers
+  '("More than n recipients"
+      (lambda (msg n) (> (+ (length (mu4e-msg-field msg :to))
+                            (length (mu4e-msg-field msg :cc))) n))
+      (lambda () (read-number "Match messages with more recipients than: "))) t)
+@end lisp
+
+After evaluating this, pressing @key{&} should let you choose the custom
+marker function, and ask you for the parameters.
+
+As you can see, it's not very hard to define simple functions to match
+messages. There are some more examples in the defaults for
+`mu4e-headers-custom-markers'; see @file{mu4e-headers.el}.
 
 @node Some marking examples
 @section Some marking examples
@@ -1291,6 +1427,7 @@ press @key{% + s hello RET}. Note, the menu system helps you here; all you
 need to remember is @key{%} for @code{mu4e-headers-mark-pattern}.
 @end itemize
 
+
 @node Actions
 @chapter Actions
 
@@ -1304,12 +1441,14 @@ You can invoke the actions with @key{a} for actions on messages, and @key{A}
 for actions on attachments. In the following, we'll gives some examples of
 defining actions.
 
-Note, the format of the actions has changed slightly since version 0.9.8.4;
-@t{mu4e} warns you if you use the old format still. The older format was:
-@code{(DESCRIPTION SHORTCUT [VALUE])}, while the new format is a cons-cell,
-@code{(DESCRIPTION . VALUE)}; see below for some examples. If your shortcut is
-not also the first character of the description, simply prefix the description
-with that character.
+Note, the format of the actions has changed since version 0.9.8.4, and you
+must change your configuration to use the new format; @t{mu4e} warns you when
+you are using the old format.
+
+The older format was: @code{(DESCRIPTION SHORTCUT [VALUE])}, while the new
+format is a cons-cell, @code{(DESCRIPTION . VALUE)}; see below for some
+examples. If your shortcut is not also the first character of the description,
+simply prefix the description with that character.
 
 @subsection Functions for actions
 
@@ -1334,7 +1473,7 @@ After you have defined your function, you can add it to the list of actions,
 either @code{mu4e-headers-actions}, @code{mu4e-view-actions} or
 @code{mu4e-view-attachment-actions}.
 
-Let's now look at some simple examples.
+Let's take a at some simple examples.
 
 @subsection Example: adding an action in the headers view
 
@@ -1353,7 +1492,7 @@ Suppose we would like to inspect the number of recipients for a message in the
 @end lisp
 
 After activating this, @key{a n} in the headers view will show the number of
-recipients for the message at point. 
+recipients for the message at point.
 
 @subsection Example: adding an action in the message view
 
@@ -1398,9 +1537,9 @@ To help a bit with this, all functions and variables in @t{mu4e} marked for
 letters, so they will only appear at the end of completion buffers and the
 like.
 
-Functions that start with @t{mu4e-view-} and @t{mu4e-headers-} should be called
-only from that particular context (the message view and the headers view,
-respectively).
+Functions that start with @t{mu4e-view-} and @t{mu4e-headers-} should be
+called only from that particular context (the message view and the headers
+view, respectively).
 
 @subsection Example actions
 
@@ -1466,7 +1605,7 @@ org-agenda-open-link} in agenda buffers, or @t{M-x org-open-at-point}
 elsewhere - both are typically bound to @kbd{C-c C-o}.
 
 @node Rich-text messages with org-mode
-@section Rich-text messages with org-mode
+@section Rich-text messages with org-mode (EXPERIMENTAL)
 
 @t{org-mode} has some nice facilities for editing texts -- creating lists,
 tables, mathematical formulae etc. In addition, it can convert them to
@@ -1512,7 +1651,10 @@ mode-switching between @t{org-mode} and @t{mu4e-compose-mode} is
 @node Maintaining an address-book with org-contacts
 @section Maintaining an address-book with org-contacts
 
-To manage your addresses using @t{org-mode}, there is
+Note, @t{mu4e} supports built-in address autocompletion; @ref{Address
+autocompletion}, and that is the recommended way to do this.
+
+However, it is also possible to manage your addresses with @t{org-mode}, using
 @t{org-contacts}@footnote{@url{http://julien.danjou.info/software/org-contacts.el}}.
 
 @t{mu4e-actions} defines a useful action (@ref{Actions}) for this to add a
@@ -1522,13 +1664,14 @@ view). To enable this, add to your configuration something like:
 @lisp
 (setq mu4e-org-contacts-file  <full-path-to-your-org-contacts-file>)
 (add-to-list 'mu4e-headers-actions
-  '("org-contact-add" ?o mu4e-action-add-org-contact) t)
+  '("org-contact-add" . mu4e-action-add-org-contact) t)
 (add-to-list 'mu4e-view-actions
-  '("org-contact-add" ?o mu4e-action-add-org-contact) t)
+  '("org-contact-add" . mu4e-action-add-org-contact) t)
 @end lisp
 
 After this, you should be able to add contacts using @key{a o} in the headers
-view and the message view, using the @t{org-capture} mechanism.
+view and the message view, using the @t{org-capture} mechanism. Note, the
+@key{o} is because of the first character of @t{org-contact-add}.
 
 @node Getting new mail notifications with Sauron
 @section Getting new mail notifications with Sauron
@@ -1555,10 +1698,11 @@ sauron-msg () {
         fi
     fi
     if test -n "x$DBUS_SESSION_BUS_ADDRESS"; then
-        dbus-send --session                 \
-            --dest="org.gnu.Emacs"        \
-            "/org/gnu/Emacs/Sauron"                \
-            "org.gnu.Emacs.Sauron.AddMsgEvent"      \
+        dbus-send --session                          \
+            --dest="org.gnu.Emacs"                   \
+            --type=method_call                       \
+            "/org/gnu/Emacs/Sauron"                  \
+            "org.gnu.Emacs.Sauron.AddMsgEvent"       \
             string:shell uint32:3 string:"$1"
     fi
 }
@@ -1882,12 +2026,19 @@ Now, let's make a @t{mu4e} configuration for this:
 
 (require 'smtpmail)
 (setq message-send-mail-function 'smtpmail-send-it
-      starttls-use-gnutls t
-      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.gmail.com" 587 "USERNAME@@gmail.com" nil))
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587)
+   starttls-use-gnutls t      
+   smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+   smtpmail-auth-credentials '(("smtp.gmail.com" 587 "USERNAME@@gmail.com" nil))
+   smtpmail-default-smtp-server "smtp.gmail.com"
+   smtpmail-smtp-server "smtp.gmail.com"
+   smtpmail-smtp-service 587)
+
+;; alternatively, for emacs-24 you can use:
+;;(setq message-send-mail-function 'smtpmail-send-it
+;;     smtpmail-stream-type 'starttls
+;;     smtpmail-default-smtp-server "smtp.gmail.com"      
+;;     smtpmail-smtp-server "smtp.gmail.com"
+;;     smtpmail-smtp-service 587)
 
 ;; don't keep message buffers around
 (setq message-kill-buffer-on-exit t)
@@ -1918,8 +2069,8 @@ can also use functions like @code{mu4e-headers-mark-thread} (@key{T}),
 time, and @code{mu4e-headers-mark-pattern} (@key{%}) to mark all messages
 matching a certain regular expression.
 @item @emph{How can I use @t{BBDB}?} Currently, there is no built-in for
-address management with @t{BBDB}; instead, we recommend @xref{Maintaining an
-address-book with org-contacts} for now.
+address management with @t{BBDB}; instead, we recommend using @t{mu4e}'s
+built-in @ref{Address autocompletion}.
 @item @emph{mu4e seems to return a mere subset of all matches - how can I get
 all?}. Indeed, for speed reasons (and because, if you are like the author, you
 usually don't need thousands of matches), @t{mu4e} returns only up to the
@@ -1981,8 +2132,6 @@ visible in the headers buffer, you can not collapse/open them.
 @item @emph{No support for crypto when reading mail}. Currently, you cannot
 conveniently read encrypted mail or check signatures. For outgoing messages,
 it should work though, using the built-in mechanisms.
-@item @emph{@t{mu4e} gets confused when there are multiple windows showing the
-headers.}. Yes -- don't do that.
 @item @emph{The key-bindings are @emph{somewhat} hard-coded} That is, the main
 menu assumes the default key-bindings, as do the clicks-on-bookmarks.
 @end itemize

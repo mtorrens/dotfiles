@@ -30,7 +30,9 @@
 (eval-when-compile (byte-compile-disable-warning 'cl-functions))
 (require 'cl)
 
+(require 'fringe)
 (require 'hl-line)
+
 (require 'mu4e-utils)    ;; utility functions
 (require 'mu4e-proc)
 (require 'mu4e-vars)
@@ -85,6 +87,26 @@ are of the form:
 * SHORTCUT is a one-character shortcut to call this action
 * FUNC is a function which receives a message plist as an argument.")
 
+(defvar mu4e-headers-custom-markers
+  '(("Older than"
+      (lambda (msg date) (time-less-p (mu4e-msg-field msg :date) date))
+      (lambda () (mu4e-get-time-date "Match messages before: ")))
+     ("Newer than"
+       (lambda (msg date) (time-less-p date (mu4e-msg-field msg :date)))
+       (lambda () (mu4e-get-time-date "Match messages after: ")))
+     ("Bigger than"
+       (lambda (msg bytes) (> (mu4e-msg-field msg :size) (* 1024 bytes)))
+       (lambda () (read-number "Match messages bigger than (Kbytes): "))))
+  "List of custom markers -- functions to mark message that match
+some custom function. Each of the list members has the following format:
+  (NAME PREDICATE-FUNC PARAM-FUNC)
+* NAME is the name of the predicate function, and the first character
+is the shortcut (so keep those unique).
+* PREDICATE-FUNC is a function that takes two parameters, MSG and (optionally) PARAM,
+and should return non-nil when there's a match.
+* PARAM-FUNC is function that is evaluated once, and its value is then passed to
+PREDICATE-FUNC as PARAM. This is useful for getting user-input.")
+
 (defvar mu4e-headers-sortfield 'date
   "Field to sort the headers by. Field must be a symbol, one of:
      date, subject, size, prio, from, to.")
@@ -115,7 +137,7 @@ are of the form:
 
 (defvar mu4e~headers-view-win nil
   "The view window connected to this headers view.")
-
+ 
 (defvar mu4e~headers-sortfield-choices
   '( ("date"	. date)
      ("from"	. from)
@@ -311,23 +333,32 @@ after the end of the search results."
 	  (mu4e~headers-highlight (mu4e~headers-docid-at-point (point-min)))))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 
+(defmacro mu4e~headers-defun-mark-func (mark)
+  "Define a function mu4e~headers-mark-MARK."
+  (let ((funcname (intern (concat "mu4e~headers-mark-" (symbol-name mark))))
+	 (docstring (concat "Mark header at point with " (symbol-name mark) ".")))
+     `(defun ,funcname () ,docstring
+	(interactive)
+	(mu4e-headers-mark-and-next (quote ,mark)))))
+
+;; define our mark functions; there must be some way to do this in a loop but
+;; since `mu4e~headers-defun-mark-func' is a macro, the argument must be a
+;; literal value.
+(mu4e~headers-defun-mark-func trash)
+(mu4e~headers-defun-mark-func delete)
+(mu4e~headers-defun-mark-func read)
+(mu4e~headers-defun-mark-func unread)
+(mu4e~headers-defun-mark-func flag)
+(mu4e~headers-defun-mark-func unflag)
+(mu4e~headers-defun-mark-func deferred)
+(mu4e~headers-defun-mark-func unmark)
+
+
 ;;; headers-mode and mode-map ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar mu4e-headers-mode-map nil
   "Keymap for *mu4e-headers* buffers.")
 (unless mu4e-headers-mode-map
-  ;; add some quick funcs so our key descriptions below are shorter
-  ;; TODO: defmacro this
-  (defun mu4e~headers-mark-trash()(interactive)(mu4e-headers-mark-and-next 'trash))
-  (defun mu4e~headers-mark-delete()(interactive)(mu4e-headers-mark-and-next 'delete))
-  (defun mu4e~headers-mark-unmark()(interactive)(mu4e-headers-mark-and-next 'unmark))
-  (defun mu4e~headers-mark-read()(interactive)(mu4e-headers-mark-and-next 'read))
-  (defun mu4e~headers-mark-unread()(interactive)(mu4e-headers-mark-and-next 'unread))
-  (defun mu4e~headers-mark-flag()(interactive)(mu4e-headers-mark-and-next 'flag))
-  (defun mu4e~headers-mark-unflag()(interactive)(mu4e-headers-mark-and-next 'unflag))
-
   (setq mu4e-headers-mode-map
     (let ((map (make-sparse-keymap)))
 
@@ -389,8 +420,12 @@ after the end of the search results."
       (define-key map (kbd "u") 'mu4e~headers-mark-unmark)
       (define-key map (kbd "+") 'mu4e~headers-mark-flag)
       (define-key map (kbd "-") 'mu4e~headers-mark-unflag)
-
+      (define-key map (kbd "&") 'mu4e-headers-mark-custom)
       (define-key map "m" 'mu4e-headers-mark-for-move-and-next)
+
+      (define-key map (kbd "*")  'mu4e~headers-mark-deferred)
+      (define-key map (kbd "<kp-multiply>")  'mu4e~headers-mark-deferred)
+      (define-key map (kbd "#")   'mu4e-mark-resolve-deferred-marks)
 
       (define-key map "U" 'mu4e-mark-unmark-all)
       (define-key map "x" 'mu4e-mark-execute-all)
@@ -488,7 +523,7 @@ after the end of the search results."
     hl-line-face 'mu4e-header-highlight-face)
   (mu4e~mark-initialize) ;; initialize the marking subsystem
   (hl-line-mode 1)
-
+  
   (setq header-line-format
     (cons
       (make-string
@@ -683,7 +718,7 @@ the query history stack."
       mu4e-headers-show-threads
       mu4e-headers-sortfield
       mu4e-headers-sort-revert
-      (unless mu4e-headers-full-search mu4e-search-results-limit)))) 
+      (unless mu4e-headers-full-search mu4e-search-results-limit))))
 
 (defun mu4e~headers-redraw-get-view-window ()
   "Close all windows, redraw the headers buffer based on the value
@@ -692,6 +727,10 @@ of `mu4e-split-view', and return a window for the message view."
   (unless (buffer-live-p mu4e~headers-buffer)
     (error "No headers buffer available"))
   (switch-to-buffer mu4e~headers-buffer)
+  ;; kill the existing view win
+  (when (buffer-live-p mu4e~view-buffer)
+    (kill-buffer mu4e~view-buffer))
+  ;; get a new view window
   (setq mu4e~headers-view-win
     (cond
       ((eq mu4e-split-view 'horizontal) ;; split horizontally
@@ -718,33 +757,25 @@ header."
 	(when msg
 	  (funcall func msg))))))
 
-
-(defun mu4e~headers-get-markpair ()
-  "Ask user for a mark; return (MARK . TARGET)."
-  (let* ((mark
-	   (mu4e-read-option "Mark to set: "
-	      '( ("move"	. move)
-		 ("dtrash"	. trash)
-		 ("Delete"	. delete)
-		 ("ounread"	. unread)
-		 ("read"	. read)
-		 ("+flag"	. flag)
-		 ("-unflag"	. unflag)
-		 ("unmark"	. unmark))))
-	  (target
-	    (when (eq mark 'move)
-	      (mu4e-ask-maildir-check-exists "Move message to: "))))
-    (cons mark target)))
-
-(defvar mu4e~headers-regexp-hist nil
+ (defvar mu4e~headers-regexp-hist nil
   "History list of regexps used.")
+
+ (defun mu4e~headers-mark-for-each-if (markpair mark-pred &optional param)
+  "Mark all headers for with predicate function MARK-PRED return
+non-nil with MARKPAIR. MARK-PRED is function that takes two
+arguments, MSG (the message at point) and PARAM (a user-specified
+parameter). MARKPAIR is a cell (MARK . TARGET)."
+  (mu4e-headers-for-each
+    (lambda (msg)
+      (when (funcall mark-pred msg param)
+	(mu4e-mark-at-point (car markpair) (cdr markpair))))))
 
 (defun mu4e-headers-mark-pattern ()
   "Ask user for a kind of mark (move, delete etc.), a field to
 match and a regular expression to match with. Then, mark all
 matching messages with that mark."
   (interactive)
-  (let ((markpair (mu4e~headers-get-markpair))
+  (let ((markpair (mu4e~mark-get-markpair "Mark matched messages with: " t))
 	 (field (mu4e-read-option "Field to match: "
 		  '( ("subject" . :subject)
 		     ("from"    . :from)
@@ -752,8 +783,9 @@ matching messages with that mark."
 	  (pattern (read-string
 		     (mu4e-format "Regexp:")
 		     nil 'mu4e~headers-regexp-hist)))
-    (mu4e-headers-for-each
-      (lambda (msg)
+    (mu4e~headers-mark-for-each-if
+      markpair
+      (lambda (msg param)
 	(let* ((do-mark) (value (mu4e-msg-field msg field)))
 	  (setq do-mark
 	    (if (member field '(:to :from :cc :bcc :reply-to))
@@ -761,10 +793,16 @@ matching messages with that mark."
 			 (let ((name (car contact)) (email (cdr contact)))
 			   (or (and name (string-match pattern name))
 			     (and email (string-match pattern email))))) value)
-	      (string-match pattern (or value ""))))
-	  (when do-mark
-	    (mu4e-mark-at-point (car markpair) (cdr markpair))))))))
+	      (string-match pattern (or value "")))))))))
 
+(defun mu4e-headers-mark-custom ()
+  "Mark messages based on a user-provided predicate function."
+  (interactive)
+  (let* ((pred (mu4e-read-option "Match function: "
+		 mu4e-headers-custom-markers))
+	  (param (when (cdr pred) (eval (cdr pred))))
+	  (markpair (mu4e~mark-get-markpair "Mark matched messages with: " t)))
+    (mu4e~headers-mark-for-each-if markpair (car pred) param)))
 
 (defun mu4e~headers-get-thread-info (msg what)
   "Get WHAT (a symbol, either path or thread-id) for MSG."
@@ -789,7 +827,10 @@ limited to the message at point and its descendants."
 		      (mu4e-message-at-point t) 'thread-id))
 	  (path     (mu4e~headers-get-thread-info
 		      (mu4e-message-at-point t) 'path))
-	  (markpair (mu4e~headers-get-markpair))
+	  (markpair
+	    (mu4e~mark-get-markpair
+	      (if subthread "Mark subthread with: " "Mark whole thread with: ")
+	      t))
 	  (last-marked-point))
     (mu4e-headers-for-each
       (lambda (msg)
@@ -862,8 +903,6 @@ to get it from; it's a symbol, either 'future or 'past."
       (pop mu4e~headers-query-future))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 
 ;;; interactive functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defvar mu4e~headers-search-hist nil
@@ -926,9 +965,9 @@ the last search expression."
     (format "(%s) AND %s" mu4e~headers-last-query filter)))
 
 
-(defun mu4e-headers-change-sorting (&optional rerun)
+(defun mu4e-headers-change-sorting (&optional dont-refresh)
   "Interactively change the sorting/threading parameters. With prefix-argument,
-rerun the last search with the new parameters."
+do _not_ refresh the last search with the new parameters."
   (interactive "P")
   (let* ((sortfield
 	   (mu4e-read-option "Sortfield: " mu4e~headers-sortfield-choices))
@@ -941,33 +980,52 @@ rerun the last search with the new parameters."
     (mu4e-message "Sorting by %s (%s)%s"
       (symbol-name sortfield)
       (if revert "descending" "ascending")
-      (if rerun
-	"" " (press 'g' to refresh)"))
-    (when rerun
+      (if dont-refresh
+	" (press 'g' to refresh)" ""))
+    (unless dont-refresh
       (mu4e-headers-rerun-search))))
 
-(defun mu4e-headers-toggle-threading (&optional rerun)
+(defun mu4e-headers-toggle-threading (&optional dont-refresh)
   "Toggle threading on/off for the search results. With prefix-argument,
-rerun the last search with the new setting for threading."
+do _not_ refresh the last search with the new setting for
+threading."
   (interactive "P")
   (setq mu4e-headers-show-threads (not mu4e-headers-show-threads))
   (mu4e-message "Threading turned %s%s"
     (if mu4e-headers-show-threads "on" "off")
-    (if rerun "" " (press 'g' to refresh)"))
-  (when rerun
+    (if dont-refresh
+	" (press 'g' to refresh)" ""))
+  (unless dont-refresh
     (mu4e-headers-rerun-search)))
 
-(defun mu4e-headers-toggle-full-search (&optional rerun)
+(defun mu4e-headers-toggle-full-search (&optional dont-refresh)
   "Toggle full-search on/off for the search results. With prefix-argument,
-rerun the last search with the new setting for threading."
+do _not_ refresh the last search with the new setting for
+threading."
   (interactive "P")
   (setq mu4e-headers-full-search (not mu4e-headers-full-search))
   (mu4e-message "Full search turned %s%s"
     (if mu4e-headers-full-search "on" "off")
-    (if rerun "" " (press 'g' to refresh)")) 
-  (when rerun
+    (if dont-refresh
+	" (press 'g' to refresh)" ""))
+  (unless dont-refresh
     (mu4e-headers-rerun-search)))
 
+(defvar mu4e~headers-loading-buf nil
+  "A buffer for loading a message view.")
+
+(defun mu4e~headers-get-loading-buf ()
+  "Get a buffer to give feedback while loading a message view."
+  (unless (buffer-live-p mu4e~headers-loading-buf)
+    (setq mu4e~headers-loading-buf
+      (get-buffer-create " *mu4e-loading*"))
+    (with-current-buffer mu4e~headers-loading-buf
+      (let ((inhibit-read-only t))
+	(erase-buffer)
+	(insert (propertize "Waiting for message..."
+		  'face 'mu4e-system-face 'intangible t)))
+      (setq buffer-read-only t)))
+  mu4e~headers-loading-buf)
 
 (defun mu4e-headers-view-message ()
   "View message at point. If there's an existing window for the
@@ -978,26 +1036,14 @@ current window. "
   (interactive)
   (unless (eq major-mode 'mu4e-headers-mode)
     (error "Must be in mu4e-headers-mode (%S)" major-mode))
-  (let* ((docid (mu4e~headers-docid-at-point))
+  (let* ((docid (or (mu4e~headers-docid-at-point)
+		  (error "No message at point")))
 	  (viewwin (mu4e~headers-redraw-get-view-window)))
     (unless (window-live-p viewwin)
       (error "Cannot get a message view"))
     (select-window viewwin)
-    (switch-to-buffer (get-buffer-create mu4e~view-buffer-name))
-    (let ((inhibit-read-only t))
-      (erase-buffer)
-      (insert (propertize "Waiting for message..."
-		'face 'mu4e-system-face 'intangible t))
-      (mu4e~proc-view docid mu4e-view-show-images))))
-
-(defun mu4e~headers-quit-buffer ()
-  "Quit the headers view and return to the main view."
-  (interactive)
-  (unless (eq major-mode 'mu4e-headers-mode)
-    (error "Must be in mu4e-headers-mode (%S)" major-mode))
-  (mu4e-mark-handle-when-leaving)
-  (mu4e-quit-buffer)
-  (mu4e~main-view))
+    (switch-to-buffer (mu4e~headers-get-loading-buf))
+    (mu4e~proc-view docid mu4e-view-show-images))) 
 
 (defun mu4e-headers-rerun-search ()
   "Rerun the search for the last search expression."
@@ -1015,12 +1061,12 @@ determines where the query is taken from and is a symbol, either
 
 (defun mu4e-headers-query-next ()
   "Execute the previous query from the query stacks."
-  (interactive "P")
+  (interactive)
   (mu4e~headers-query-navigate 'future))
 
 (defun mu4e-headers-query-prev ()
   "Execute the previous query from the query stacks."
-  (interactive "P")
+  (interactive)
   (mu4e~headers-query-navigate 'past))
 
 ;; forget the past so we don't repeat it :/
@@ -1082,7 +1128,6 @@ maildir)."
     (mu4e-mark-handle-when-leaving)
     (mu4e-headers-search (concat "\"maildir:" maildir "\""))))
 
-
 (defun mu4e-headers-split-view-resize (n)
   "In horizontal split-view, increase the number of lines shown by
 N; in vertical split-view, increase the number of columns shown by
@@ -1126,6 +1171,33 @@ region if there is a region, then move to the next message."
   (interactive)
   (mu4e-mark-for-move-set)
   (mu4e-headers-next))
+
+(defun mu4e~headers-quit-buffer ()
+  "Quit the mu4e-headers buffer. This is a rather complex function,
+to ensure we don't disturb other windows."
+  (interactive)
+  (unless (eq major-mode 'mu4e-headers-mode)
+    (error "Must be in mu4e-headers-mode (%S)" major-mode))
+  (mu4e-mark-handle-when-leaving)
+  (let ((curbuf (current-buffer)) (curwin (selected-window))
+	 (headers-visible))
+    (walk-windows
+      (lambda (win)
+	;; if we the view window connected to this one, kill it
+	(when (eq mu4e~headers-view-win win)
+	  (delete-window win)
+	  (setq mu4e~headers-view-win nil))
+	;; and kill any _other_ (non-selected) window that shows the current
+	;; buffer
+	(when (and
+		(eq curbuf (window-buffer win)) ;; does win show curbuf?
+		(not (eq curwin win))	        ;; it's not the curwin?
+		(not (one-window-p)))           ;; and not the last one?
+	  (delete-window win))))  ;; delete it!
+    ;; now, all *other* windows should be gone. kill ourselves, and return
+    ;; to the main view
+    (kill-buffer)
+    (mu4e~main-view)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide 'mu4e-headers)
