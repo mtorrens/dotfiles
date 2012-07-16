@@ -17,23 +17,18 @@
 
 (require 'org-install)
 (require 'org-capture)
-(require 'org-contacts)
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 (setq org-directory "~/Dropbox/Charles/Org/")
 (setq org-default-notes-file (concat org-directory "Agenda/Inbox.org"))
 (setq org-agenda-files (list (concat org-directory "Agenda/")))
-(setq org-contacts-files (list (concat org-directory "Contacts.org")))
 
-(global-set-key (kbd "<f11>") (lambda () (interactive) (org-agenda nil "n")))
-(global-set-key (kbd "S-<f11>") 'org-capture)
+(global-set-key (kbd "<f12>") (lambda () (interactive) (org-agenda nil "n")))
+(global-set-key (kbd "<f11>") 'org-capture)
 
 (global-set-key (kbd "<f10>") (lambda () (interactive) (ido-find-file-in-dir (concat org-directory "Agenda"))))
 (global-set-key (kbd "S-<f10>") (lambda () (interactive) (find-file (concat org-directory "Agenda/Inbox.org"))))
-
-(global-set-key (kbd "S-<f12>") 'org-contacts)
-(global-set-key (kbd "C-<f12>") (lambda () (interactive) (find-file (concat org-directory "Contacts.org"))))
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -88,9 +83,7 @@
         ("n" "Next Action" entry (file (concat org-directory "Agenda/Inbox.org"))
          "* NEXT %?")
         ("e" "Calendar Event" entry (file (concat org-directory "Agenda/Inbox.org"))
-         "* %?\n  %^T")
-        ("c" "Contacts" entry (file "~/Dropbox/Charles/Personal/Contacts.org")
-         "* %(org-contacts-template-wl-name)\n  :PROPERTIES:\n  :EMAIL: %(org-contacts-template-wl-email)\n  :END:")))
+         "* %?\n  %^T")))
 
 
 ;; Export settings

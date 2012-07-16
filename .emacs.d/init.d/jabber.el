@@ -21,7 +21,7 @@
 ;; Save history
 (setq jabber-history-enabled t
       jabber-use-global-history nil
-      jabber-history-dir "~/Dropbox/Charles/Mail/Chats/"
+      jabber-history-dir "~/Dropbox/Charles/Personal/Chats/"
       jabber-backlog-number 10
       jabber-backlog-days 14
       jabber-history-enable-rotation t

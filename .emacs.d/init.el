@@ -36,7 +36,6 @@
 (load "~/.emacs.d/init.d/dired.el")
 (load "~/.emacs.d/init.d/eshell.el")
 
-(load "~/.emacs.d/init.d/mu4e.el")
 (load "~/.emacs.d/init.d/org.el")
 (load "~/.emacs.d/init.d/jabber.el")
 
