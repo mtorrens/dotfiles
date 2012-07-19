@@ -2,8 +2,6 @@
 ;; All the various modes for different programming languages
 ;; -------------------------------------
 
-(load-file "~/.emacs.d/packages/graphviz-dot-mode.el")
-
 ;; -------------------------------------
 ;; Magit
 
@@ -16,19 +14,9 @@
 (global-set-key [f6] 'magit-status)
 
 ;; -------------------------------------
-;; CSS mode
-
-(autoload 'css-mode "css-mode-1.0" nil t)
-(add-to-list 'auto-mode-alist '("\\.css$" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
-(add-hook 'css-mode-hook '(lambda ()
-                            (setq css-indent-level 2)
-                            (setq css-indent-offset 2)))
-
-;; -------------------------------------
 ;; Ruby mode
 
-(autoload 'ruby-mode "ruby-mode-1.1" nil t)
+;; A very recent ruby-mode is now included with Emacs
 (add-to-list 'auto-mode-alist '("Capfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile" . ruby-mode))
@@ -82,6 +70,14 @@
 (add-to-list 'load-path "~/.emacs.d/packages/haml-mode.git/")
 (autoload 'haml-mode "haml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.haml$" . haml-mode))
+
+;; -------------------------------------
+;; Graphviz
+
+(add-to-list 'load-path "~/.emacs.d/packages/graphviz-dot-mode.git/")
+(autoload 'graphviz-dot-mode "graphviz-dot-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.dot$" . graphviz-dot-mode))
+(add-to-list 'auto-mode-alist '("\\.gv$" . graphviz-dot-mode))
 
 ;; ----------------------------------------------------
 ;; CMake mode

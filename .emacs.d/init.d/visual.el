@@ -21,6 +21,8 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/packages/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/packages/color-theme-solarized.git")
 (load-theme 'tomorrow-night)
+
+(add-to-list 'load-path "~/.emacs.d/packages/rainbow-mode.git")
 (require 'rainbow-mode)
 
 

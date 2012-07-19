@@ -37,3 +37,9 @@
 [submodule ".emacs.d/packages/google-maps.git"]
 	path = .emacs.d/packages/google-maps.git
 	url = git://git.naquadah.org/google-maps.git
+[submodule ".emacs.d/packages/graphviz-dot-mode.git"]
+	path = .emacs.d/packages/graphviz-dot-mode.git
+	url = https://github.com/ppareit/graphviz-dot-mode.git
+[submodule ".emacs.d/packages/rainbow-mode.git"]
+	path = .emacs.d/packages/rainbow-mode.git
+	url = https://github.com/emacsmirror/rainbow-mode.git
