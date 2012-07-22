@@ -12,8 +12,7 @@
 
 
 ;; Org-mode
-(add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09")
-(add-to-list 'load-path "~/.emacs.d/packages/org-7.8.09-contrib")
+(add-to-list 'load-path "~/.emacs.d/packages/org-mode.git/lisp/")
 
 (require 'org-install)
 (require 'org-capture)
