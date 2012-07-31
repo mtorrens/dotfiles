@@ -106,7 +106,7 @@
 
   ;; Patch up some variables
   (make-local-variable 'indent-line-function)
-  (setq indent-line-function 'org-indent-line-function)
+  (setq indent-line-function 'org-indent-line)
 
   ;; N.B. Do /not/ enable flyspell-mode here!  It overrides a few things
   ;; that are really important, like C-c $ for archive, and it makes it
