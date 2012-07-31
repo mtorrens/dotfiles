@@ -54,9 +54,6 @@ bin/*/*/*.pyc
 # Personal spelling dictionary
 !.hunspell_en_US
 
-# Procmail
-!.procmailrc
-
 # Ruby
 !.gemrc
 

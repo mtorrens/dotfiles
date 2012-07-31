@@ -1,5 +1,0 @@
-#!/bin/sh
-
-/usr/local/bin/getmail
-/usr/local/bin/offlineimap
-
