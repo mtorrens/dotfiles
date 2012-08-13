@@ -1,6 +1,3 @@
-[submodule ".emacs.d/packages/deft.git"]
-	path = .emacs.d/packages/deft.git
-	url = git://jblevins.org/git/deft.git
 [submodule ".emacs.d/packages/markdown-mode.git"]
 	path = .emacs.d/packages/markdown-mode.git
 	url = git://jblevins.org/git/markdown-mode.git
