@@ -7,5 +7,5 @@ echo "DOWNLOAD the google.csv file from Google Contacts and place it in the curr
 read -p "Press any key to continue..."
 
 mv google.csv contacts.csv
-lzma -9 contacts.csv
-mv contacts.csv.lzma $OUTDIR
+xz -9 contacts.csv
+mv contacts.csv.xz $OUTDIR
