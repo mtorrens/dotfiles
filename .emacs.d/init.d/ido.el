@@ -13,7 +13,7 @@
       ido-save-directory-list-file "~/.emacs.d/cache/ido.last"
       ido-ignore-buffers '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
                            "^\*compilation" "^\*GTAGS" "^session\.*" "^\*Minibuf"
-                           "^\*mu4e-proc" "^\*Echo" "output*$")
+                           "^\*mu4e-proc" "^\*Echo" ".*[oO]utput\*$")
       ido-ignore-files (append ido-ignore-files
                                (list
                                 ".*\\.org_archive$"
