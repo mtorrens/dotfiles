@@ -12,22 +12,20 @@
 
 
 ;; Org-mode
-(add-to-list 'load-path "~/.emacs.d/packages/org-mode.git/lisp/")
-
 (require 'org-install)
 (require 'org-capture)
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 (setq org-directory "~/Dropbox/Charles/Org/")
-(setq org-default-notes-file (concat org-directory "Agenda/Inbox.org"))
-(setq org-agenda-files (list (concat org-directory "Agenda/")))
+(setq org-default-notes-file (concat org-directory "Inbox.org"))
+(setq org-agenda-files (list org-directory))
 
 (global-set-key (kbd "<f12>") (lambda () (interactive) (org-agenda nil "n")))
 (global-set-key (kbd "<f11>") 'org-capture)
 
-(global-set-key (kbd "<f10>") (lambda () (interactive) (ido-find-file-in-dir (concat org-directory "Agenda"))))
-(global-set-key (kbd "S-<f10>") (lambda () (interactive) (find-file (concat org-directory "Agenda/Inbox.org"))))
+(global-set-key (kbd "<f10>") (lambda () (interactive) (ido-find-file-in-dir org-directory)))
+(global-set-key (kbd "S-<f10>") (lambda () (interactive) (find-file (concat org-directory "Inbox.org"))))
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -56,6 +54,17 @@
       bookmark-default-file "~/.emacs.d/cache/bookmarks"
       org-id-locations-file "~/.emacs.d/cache/org-id-locations")
 
+;; These next few lines produce extra-clean HTML exports, suitable for
+;; moving Org-Mode content into other programs.
+(setq org-export-author-info nil
+      org-export-creator-info nil
+      org-export-email-info nil
+      org-export-html-validation-link ""
+      org-export-time-stamp-file nil
+      org-export-with-section-numbers nil
+      org-export-with-timestamps nil
+      org-export-with-toc nil)
+
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
               (sequence "WAITING(w)" "HOLD(h)" "|" "CANCELLED(c)"))))
@@ -77,11 +86,11 @@
 
 ;; Capture templates
 (setq org-capture-templates
-      '(("t" "Todo Item" entry (file (concat org-directory "Agenda/Inbox.org"))
+      '(("t" "Todo Item" entry (file (concat org-directory "Inbox.org"))
          "* TODO %?")
-        ("n" "Next Action" entry (file (concat org-directory "Agenda/Inbox.org"))
+        ("n" "Next Action" entry (file (concat org-directory "Inbox.org"))
          "* NEXT %?")
-        ("e" "Calendar Event" entry (file (concat org-directory "Agenda/Inbox.org"))
+        ("e" "Calendar Event" entry (file (concat org-directory "Inbox.org"))
          "* %?\n  %^T")))
 
 
@@ -117,17 +126,6 @@
   (typopunct-mode 1)
 )
 (add-hook 'org-mode-hook 'cpence-org-mode-hook)
-
-
-;; Deft mode for Org-mode notes
-(add-to-list 'load-path "~/.emacs.d/packages/deft.git")
-(require 'deft)
-
-(setq deft-extension "org")
-(setq deft-directory (concat org-directory "Notes/"))
-(setq deft-text-mode 'org-mode)
-
-(global-set-key [f2] 'deft)
 
 
 ;; Google Maps integration (awesome)
