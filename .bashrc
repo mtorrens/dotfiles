@@ -78,10 +78,6 @@ else
 fi
 alias grep='grep --color=auto'
 
-# Read man pages in Skim
-manp() { man -t "${1}" | ps2pdf - - | open -f -a Skim ; }
-alias man='manp'
-
 # Some random aliases
 alias quit=exit
 
