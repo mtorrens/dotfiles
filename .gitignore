@@ -41,12 +41,15 @@ bin/*/*/*.pyc
 # Emacs
 !.emacs.d
 !.emacs.d/*
-.emacs.d/cache
 !.emacs.d/*/*
 !.emacs.d/*/*/*
 !.emacs.d/*/*/*/*
 !.emacs.d/*/*/*/*/*
 !.emacs.d/*/*/*/*/*/*
+
+# But not the auto-generated files
+.emacs.d/cache/*
+!.emacs.d/cache/.gitkeep
 
 # Seriously, no compiled elisp
 *.elc
