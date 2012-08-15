@@ -11,6 +11,6 @@ OUTDIR=$HOME/Dropbox/Charles/Storage/Backup
 
 cd "$MENDELEY_DIR"
 tar cvf mendeley.tar *
-lzma -9 mendeley.tar
-mv mendeley.tar.lzma "$OUTDIR"
+xz -9 mendeley.tar
+mv mendeley.tar.xz "$OUTDIR"
 
