@@ -12,6 +12,7 @@
 !bin
 !bin/*
 bin/genrand
+bin/mate
 !bin/*/*
 !bin/*/*/*
 !bin/*/*/*/*
