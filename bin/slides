@@ -1,0 +1,23 @@
+#!/bin/sh
+# Use Pandoc to convert a slideshow into HTML using Slidy
+
+# Possibly view it at the end
+if [ $1 == "--view" ]; then
+  VIEW=1
+  shift
+else
+  VIEW=0
+fi
+
+# May or may not have the extension
+ROOT=`basename $1 .md`
+
+pandoc --self-contained -t slidy -s $1.md -o $1.html
+
+if [ $VIEW -eq 1 ]; then
+  if [ -d /Applications ]; then
+    # On a Mac, open it with Plainview
+    open -a Plainview.app $1.html
+  fi
+fi
+
