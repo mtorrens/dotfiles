@@ -12,6 +12,11 @@
 \presetkeys{cpcommon.sty}{geometry=true,hyperlink=true,blacklinks=false,doublespace=false,sfheads=true,smallheads=false}{}
 \ProcessOptionsX
 
+% For some reason, setspace *must* be loaded before hyperref
+\ifCPA@doublespace
+\RequirePackage{setspace}
+\fi
+
 % Include hyperref, some of my bibliography styles use it
 \ifCPA@hyperlink
   \usepackage{hyperref}
@@ -54,7 +59,6 @@
 
 \ifCPA@doublespace
 
-\RequirePackage{setspace}
 \RequirePackage{calc}
 \newlength{\cpaskip}
 \newcounter{cpatemp}
