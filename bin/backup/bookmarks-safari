@@ -1,7 +1,9 @@
 #!/bin/sh
 
 osascript ~/bin/backup/bookmarks-safari.scpt
-mv "~/Desktop/Safari Bookmarks.html" ./bookmarks.html
+sleep 1
+
+mv "$HOME/Desktop/Safari Bookmarks.html" ./bookmarks.html
 xz -9 bookmarks.html
 mv bookmarks.html.xz ~/Dropbox/Charles/Storage/Backup/
 

@@ -1,0 +1,30 @@
+#!/bin/bash
+# Use the Twitter command-line tool 't' to back up my Twitter feed.  This
+# also does some magic sauce to merge all the backups together using a
+# combination of sort, uniq, and tail.
+
+DIR=$HOME/Dropbox/Charles/Storage/Twitter
+
+# Here we only want the most current one
+t followings --csv > $DIR/following.csv
+
+# Make the "old" versions of all the files (stripping off the CSV header)
+for i in "tweets" "retweets" "dm_received" "dm_sent"; do
+  tail -n +2 $DIR/$i.csv > $DIR/$i.csv.old
+done
+
+# Make the "new" versions of all the files (again, no CSV header)
+t timeline @pencechp --csv --number 3200 | tail -n +2 > $DIR/tweets.csv.new
+t retweets --csv --number 3200 | tail -n +2 > $DIR/retweets.csv.new
+t direct_messages --csv --number 3200 | tail -n +2 > $DIR/dm_received.csv.new
+t direct_messages_sent --csv --number 3200 | tail -n +2 > $DIR/dm_sent.csv.new
+
+# Merge them together
+for i in "tweets" "retweets" "dm_received" "dm_sent"; do
+  header=`head -n 1 $DIR/$i.csv`
+  rm $DIR/$i.csv
+  echo "$header" > $DIR/$i.csv
+
+  cat $DIR/$i.csv.old $DIR/$i.csv.new | sort -gr | uniq >> $DIR/$i.csv
+  rm $DIR/$i.csv.old $DIR/$i.csv.new
+done

@@ -34,3 +34,6 @@ cp -Rf ~/.private $DOTFILES/dotprivate
 
 rm -rf $DOTFILES/dotssh
 cp -Rf ~/.ssh $DOTFILES/dotssh
+
+# NB: This is a (very) private file!
+cp ~/.trc $DOTFILES/dottrc
