@@ -39,25 +39,6 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
-# Emacs
-!.emacs.d
-!.emacs.d/*
-!.emacs.d/*/*
-!.emacs.d/*/*/*
-!.emacs.d/*/*/*/*
-!.emacs.d/*/*/*/*/*
-!.emacs.d/*/*/*/*/*/*
-
-# But not the auto-generated files
-.emacs.d/cache/*
-!.emacs.d/cache/.gitkeep
-
-# Seriously, no compiled elisp
-*.elc
-
-# Personal spelling dictionary
-!.hunspell_en_US
-
 # Ruby
 !.gemrc
 
