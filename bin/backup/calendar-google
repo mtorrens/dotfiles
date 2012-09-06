@@ -17,8 +17,8 @@ do
 done
 
 tar cf calendar.tar *.ics
-lzma -9 calendar.tar
-mv calendar.tar.lzma $OUTDIR
+xz -9 calendar.tar
+mv calendar.tar.xz $OUTDIR
 
 rm -f *.ics
 
