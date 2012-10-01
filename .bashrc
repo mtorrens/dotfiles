@@ -68,10 +68,14 @@ fi
 # Aliases for daily use
 
 # Set up the directory colors, either GNU or BSD style depending on
-# whether or not dircolors is available.
-if [ type -P dircolors &> /dev/null ]; then
+# whether or not dircolors is available.  Also check for the GNU
+# coreutils installed over Mac OS X with the g-prefix.
+if type -P dircolors > /dev/null; then
   eval `dircolors -b`
-  alias ls='ls --color=auto'
+  alias ls='ls --color=auto --sort=version'
+elif type -P gdircolors > /dev/null; then
+  eval `gdircolors -b`
+  alias ls='gls --color=auto --sort=version'
 else
   export LSCOLORS="ExGxFxdaCxDaDaabagCxCx"
   alias ls='ls -G'
