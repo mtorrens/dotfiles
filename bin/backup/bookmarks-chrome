@@ -2,7 +2,7 @@
 # Back up Chrome bookmarks
 
 # This will be different on other operating systems
-CHROME_DIR="${HOME}/Library/Application Support/Google/Chrome/Default"
+CHROME_DIR="${HOME}/Library/Application Support/Chromium/Default"
 OUTDIR=${HOME}/Dropbox/Charles/Storage/Backup/
 
 cp "$CHROME_DIR/Bookmarks" .
