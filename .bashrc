@@ -110,5 +110,5 @@ fi
 
 # Haskell Platform: find cabal binaries if installed
 if [ -d $HOME/.cabal ]; then
-  export PATH="$PATH:$HOME/.cabal/bin"
+  export PATH="$HOME/.cabal/bin:$PATH"
 fi
