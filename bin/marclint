@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 use MARC::File::USMARC;
 use MARC::Lint;
 
