@@ -1,0 +1,25 @@
+#!/bin/sh
+# Convert an HTML file to Markdown, using Pandoc -- with some options to
+# produce the kind of Markdown I write by hand.
+
+if [ "$1" = "--help" -o $# -lt 1 ]; then
+    echo "html2mmd: convert HTML to Markdown with Pandoc"
+    echo ""
+    echo "Usage: $0 <in.html>"
+    exit 1
+fi
+
+HTML_FILE="$1"
+MD_FILE="`basename $HTML_FILE .html`.md"
+
+if type -P gsed > /dev/null; then
+    SED='gsed'
+else
+    SED='sed'
+fi
+
+# Create the Markdown file
+pandoc -f html -t markdown --normalize --no-wrap "$HTML_FILE" -o "$MD_FILE"
+
+# Remove non-breaking spaces that Pandoc likes to generate
+$SED -i "s/\xc2\xa0/ /g" "$MD_FILE"

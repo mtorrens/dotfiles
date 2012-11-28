@@ -1,0 +1,17 @@
+#!/bin/bash
+# Create a nice, print-friendly version of a Markdown file as HTML
+
+# Wrap multimarkdown by adding some HTML styling
+STYLE_FILE=$HOME/bin/mmd/style.html
+
+if [[ -e "print.md" || -e "print.html" ]]; then
+  echo "ERROR: print.md or print.html already exist, aborting"
+  exit 1
+fi
+
+cat $STYLE_FILE > print.md
+cat "$@" >> print.md
+
+multimarkdown print.md > print.html
+
+rm print.md
