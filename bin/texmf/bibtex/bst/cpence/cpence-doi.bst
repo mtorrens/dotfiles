@@ -215,87 +215,21 @@ FUNCTION {bolden}
 
 INTEGERS { nameptr namesleft numnames }
 
-%%%KCB:  Here is a portable set of routines to check for repeated authors
-%%% and replace them with a 3 em dash
-%%% According to _Chicago_Manual_of_Style_, a dash is used to
-%%% replace an author's name only if the entire list is the same, so:
-%%% Compare names. See if prev.name is identical to CurrList.
-%%% If not, then just output CurrList.
-%%% If so, replace with \BySame
-%%% I use a conservative matching scheme,
-%%% and check to see if full names are identical,
-%%% even though we only use initials.
-%%% This may mean that you have to correct your .bib database
-%%% to ensure consistency.
-%%%
-%%% sample usage:
-%%% search for {format.author}
+% This function detects entries with names that are identical to that of
+% the previous entry and replaces the repeated names with dashes (if the
+% "is.dash.repeated.names" user control is nonzero).
+STRINGS { oldname }
 
-INTEGERS {currNum prevNum tempi tempn}
-
-STRINGS {PrevList CurrList prev.name PrevTemp CurrTemp}
-
-%%%KCB: Initialize prev.name ot some nonsense string:
-
-FUNCTION {init.prev.name}
-{
-"My puppy Harley" 'prev.name :=
-}
-
-%%%KCB: Must EXECUTE {init.prev.name} after READ
-%
-% KD -- For JF we need to put a single line in place of each repeated author or 
-%       authors.  This is a combination of this routine and the one above.
-%
-%  This is made from a combination of the aer and econometrica bst files.
-%
-FUNCTION {compare.names}
-{	prev.name 'PrevList :=
-	duplicate$ 'prev.name :=	% make current list the new previous list
-	'CurrList :=
-    PrevList num.names$ 'prevNum :=
-    CurrList num.names$ 'currNum :=
-% prevNum := min(prevNum,currNum)
-    prevNum 'tempn :=
-    prevNum currNum > {currNum 'prevNum :=} {} if$
-% start with an empty string, then while the components are the same
-% add "\BySame{}"
-    #1 'nameptr :=
-    " " 'PrevTemp :=
-    " " 'CurrTemp :=
-    #0 'tempi := 
-    {nameptr tempn > not
-     #0 tempi =
-     and}
-%----------------------------------------
-	{
-	PrevList nameptr "{ff }{vv~}{ll}{ jj}" format.name$
-	CurrList nameptr "{ff }{vv~}{ll}{ jj}" format.name$ =
-          {
-	  PrevList nameptr "{ff }{vv~}{ll}{ jj}" format.name$ PrevTemp * 'PrevTemp :=
-	  CurrList nameptr "{ff }{vv~}{ll}{ jj}" format.name$ CurrTemp * 'CurrTemp :=
-	  #1 nameptr + 'nameptr := }
-          {#1 'tempi :=} 
-        if$
-        }
-    while$
-%-----------------------------------------
-    #1 prevNum + 'prevNum :=
-    #1 nameptr <
-    prevNum nameptr =
-    and
-      { "\rule[4pt]{3em}{.4pt}" }
-      { CurrList
-        #1 currNum + 'nameptr :=}
-    if$
-% add the rest of the second string
-    {nameptr currNum > not}
-    { #1 nameptr < {" and " *} {} if$
-    CurrList nameptr "{ff }{vv }{ll}{ jj}" format.name$ *
-    nameptr #1 + 'nameptr :=
-      }
-    while$
-% duplicate$ warning$
+FUNCTION {name.or.dash}
+{ 's :=
+   oldname empty$
+     { s 'oldname := s }
+     { s oldname =
+         { "\rule[4pt]{3em}{.4pt}" }
+         { s 'oldname := s }
+       if$
+     }
+   if$
 }
 
 FUNCTION {format.names}
@@ -341,7 +275,7 @@ FUNCTION {format.key}
 FUNCTION {format.authors}
 { author empty$
     { "" }
-    { " " author compare.names format.names * }
+    { " " author name.or.dash format.names * }
   if$
 }
 
@@ -360,7 +294,7 @@ FUNCTION {format.editorsnotfirst}
 FUNCTION {format.editors}
 { editor empty$
     { "" }
-    { " " editor compare.names format.names * 
+    { " " editor name.or.dash format.names * 
       editor num.names$ #1 >
         { ", editors" * }
         { ", editor" * }
