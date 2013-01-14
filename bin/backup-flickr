@@ -4,4 +4,8 @@
 
 FLICKR_BACKUP_DIR=/Users/cpence/Dropbox/Photos
 
+# Download the images, *without* redownloading anything
 offlickr -i "10158670@N00" -d $FLICKR_BACKUP_DIR -v -p -n -s
+
+# Update the XML, *with* redownloading
+offlickr -i "10158670@N00" -d $FLICKR_BACKUP_DIR -v -s
