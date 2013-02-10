@@ -1,4 +1,6 @@
 rxvt*geometry:     100x30
+rxvt*saveLines:    2048
+
 rxvt*foreground:   #c5c8c6
 rxvt*background:   #1d1f21
 rxvt*cursorColor:  #aeafad
