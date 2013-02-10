@@ -90,7 +90,7 @@ alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 alias confignwt='git --git-dir=$HOME/.config.git/'
 
 # Bash timer
-if which gdate > /dev/null; then
+if command -v gdate >/dev/null 2>&1; then
   alias stopwatch='start=$(gdate +%s) watch -n1 '"'"'gdate --date=@$(($(gdate +%s) - start)) +%M:%S'"'"
 else
   alias stopwatch='start=$(date +%s) watch -n1 '"'"'date --date=@$(($(date +%s) - start)) +%M:%S'"'"
@@ -100,7 +100,7 @@ fi
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
 
 # rbenv if installed
-if which rbenv > /dev/null; then
+if command -v rbenv >/dev/null 2>&1; then
   eval "$(rbenv init -)"
 
   function allruby()
