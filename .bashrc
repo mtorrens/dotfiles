@@ -85,11 +85,22 @@ alias grep='grep --color=auto'
 # Some random aliases
 alias quit=exit
 
-# Add the 'cygstart' utility, which opens documents just like 'start'
-# in OS X
-if command -v cygstart >/dev/null 2>&1; then
-  alias start=cygstart
+# Alias the various ways to open documents in accord with their file
+# associations
+if command -v xdg-open >/dev/null 2>&1; then
+  alias open=xdg-open
+elif command -v exo-open >/dev/null 2>&1; then
+  alias open=exo-open
+elif command -v kde-open >/dev/null 2>&1; then
+  alias open=kde-open
+elif command -v gvfs-open >/dev/null 2>&1; then
+  alias open=gvfs-open
+elif command -v gnome-open >/dev/null 2>&1; then
+  alias open=gnome-open
+elif command -v cygstart >/dev/null 2>&1; then
+  alias open=cygstart
 fi
+alias start=open
 
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
