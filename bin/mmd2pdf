@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# mmd2pdf --- MultiMarkdown convenience script
+#   <http://fletcherpenney.net/multimarkdown/>
+#   Fletcher T. Penney
+#   Hacked and tweaked by C. Pence
+
+if [ $# = 0 ]
+then
+    multimarkdown -t latex
+else
+until [ "$*" = "" ]
+do
+    multimarkdown -b -t latex "$1"
+
+    file_name=`echo $1| sed 's/\.[^.]*$//'`
+
+    latexmk -bibtex -f -pdf "$file_name.tex"
+    latexmk -c "$file_name.tex"
+    rm "$file_name.tex"
+
+    shift
+done
+fi    
