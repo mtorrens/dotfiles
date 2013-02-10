@@ -21,7 +21,7 @@ bin/mate
 !bin/*/*/*/*/*/*/*
 !bin/*/*/*/*/*/*/*/*
 
-# Ignore my Mendeley-generated BibTeX file
+# Ignore my generated BibTeX files
 bin/texmf/bibtex/bib
 
 # Ignore AuCTeX generated files
@@ -38,6 +38,9 @@ bin/*/*/*.pyc
 !.hushlogin
 !.inputrc
 !.profile
+
+# XTerm/RXVT
+!.Xdefaults
 
 # Ruby
 !.gemrc
