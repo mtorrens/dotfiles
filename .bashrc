@@ -85,6 +85,12 @@ alias grep='grep --color=auto'
 # Some random aliases
 alias quit=exit
 
+# Add the 'cygstart' utility, which opens documents just like 'start'
+# in OS X
+if command -v cygstart >/dev/null 2>&1; then
+  alias start=cygstart
+fi
+
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 alias confignwt='git --git-dir=$HOME/.config.git/'
