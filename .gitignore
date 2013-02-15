@@ -42,8 +42,8 @@ bin/*/*/*.pyc
 # XTerm/RXVT
 !.Xdefaults
 
-# Ruby
-!.gemrc
+# Latexmk
+!.latexmkrc
 
 # Nano
 !.nanorc
