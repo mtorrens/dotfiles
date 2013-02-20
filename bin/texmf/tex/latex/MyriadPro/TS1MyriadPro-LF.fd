@@ -1,0 +1,6 @@
+\ProvidesFile{TS1MyriadPro-LF.fd}
+   [2010/06/03 scalable font definitions for Adobe Myriad Pro.]
+
+\input{MyriadPro-FontDef.sty}
+
+\MyriadPro@DeclareFontShape{TS1}{ts1}{LF}{lf}

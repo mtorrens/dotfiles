@@ -1,0 +1,6 @@
+\ProvidesFile{LY1MyriadPro-TOsF.fd}
+   [2010/06/03 scalable font definitions for Adobe Myriad Pro.]
+
+\input{MyriadPro-FontDef.sty}
+
+\MyriadPro@DeclareFontShape{LY1}{ly1}{TOsF}{tosf}

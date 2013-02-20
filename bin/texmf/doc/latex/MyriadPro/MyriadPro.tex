@@ -1,0 +1,154 @@
+\documentclass[paper=a4,% Papierformat
+12pt,% Schriftgröße
+DIV=10,% Layout
+]{scrartcl} % Die Klasse
+\usepackage[latin1]{inputenc}% Eingabekodierung
+\usepackage[T1]{fontenc}% Schriftkodierung
+\usepackage{textcomp,booktabs,calc}
+
+%% Schriften
+\usepackage[lf,default,semibold]{MyriadPro}% Adobe Myriad Pro
+\linespread{1.06}% Zeilenabstand
+\normalfont\normalsize
+\typearea[current]{current}% Neuberechnung des Satzspiegels
+
+%% Infos und Lesezeichen im PDF
+\usepackage[pdfpagelabels=true]{hyperref}
+\hypersetup{%
+  plainpages=false,
+  pdfpagemode=UseNone,
+  bookmarksnumbered=true,
+  pdfborder={0 0 0},
+  pdftitle={LaTeX-Support for Adobe Myriad Pro},
+  pdfauthor={Michael Gährken},
+}
+
+%% Titelei
+\title{\LaTeX-Support for Adobe Myriad Pro}
+\author{Michael Gährken}
+\date{v1.0 -- \today}
+
+\newcommand*\pkg[1]{\mbox{\textsf{#1}}}
+
+\makeatletter
+\newcommand*\option{\@ifstar\option@default\option@}
+\newcommand*\option@default[1]{\option@{#1}*}
+\newcommand*\option@[1]{\textsf{#1}}
+\makeatother
+
+%\setlength{\leftmargini}{1em}
+%\setlength{\parindent}{1em}
+\newcommand\tabindent{\noindent\hspace{\leftmargini}}
+\newlength\optionswidth
+\setlength{\optionswidth}{8em}
+\providecommand\newblock{}
+\newenvironment{options}[1][{\makebox[\optionswidth]{}}]{%
+  \list{}{%
+    \setlength{\labelwidth}{\optionswidth}%
+    \setlength{\labelsep}{2\tabcolsep}%
+    \setlength{\leftmargin}{\leftmargini+\labelwidth+\labelsep}%
+    \setlength{\rightmargin}{0pt}%
+    \setlength{\topsep}{\medskipamount}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\itemsep}{0pt}%
+    \renewcommand*\makelabel[1]{%
+      \parbox[t]{\labelwidth}{\raggedright\hspace{0pt}##1}}%
+    \renewcommand\newblock{\medskip}%
+    \raggedright
+  }%
+}{%
+  \endlist
+}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+The \pkg{MyriadPro} package provides support for the Adobe Myriad Pro font family from Adobe. You can use these fonts in a \LaTeX\ document by adding the command
+\begin{quote}
+  \verb|\usepackage{MyriadPro}|
+\end{quote}
+to the preamble. This will change the sans-serif font to Adobe Myriad Pro.
+
+
+The \pkg{MyriadPro} package automatically loads the \pkg{textcomp} package and the \pkg{fontaxes} package\footnote{The \pkg{fontaxes} package ist part of the MinionPro distribution, available at \url{http://www.ctan.org/tex-archive/fonts/minionpro/}}. If you want to pass options to this package you can either 
+put the corresponding \verb|\usepackage| command before the \verb|\usepackage{MyriadPro}| or 
+you can include the options in the \verb|\documentclass| command.
+
+\section{Options}
+
+\subsection{Text font}
+
+By default MyriadPro not used as the text font but as the sans-serif font. To use the sans-serif font as the default text font, the following options is required. It is also possible to use the semibold instead of the bold weight for commands like \verb|\textbf{}| and \verb|\bfseries|.
+
+\begin{options}
+  \item[\option{default}]        use sans-serif font as default text font
+  \item[\option{semibold}]        use semibold instead of bold weight
+\end{options}
+
+\subsection{Figure selection}
+
+Adobe Myriad Pro offers four different figure versions. A detailed description is given in Section~\ref{sec:fig}. The default version can be selected by the following options:
+
+\begin{options}
+  \item[\option*{osf}]        use text figures
+  \item[\option{lf}]          use lining figures
+ \newblock
+  \item[\option*{pr}]        use proportional figures
+  \item[\option{tab}]          use tabular figures
+\end{options}
+
+
+\section{Figure selection}
+\label{sec:fig}
+
+Adobe Myriad Pro offers four different figure versions. One can choose between \emph{text figures} (lowercase figures) and \emph{lining figures} (uppercase figures) and one can choose between \emph{proportional} figures (figures with different widths) and \emph{tabular} figures (all figures have the same width, useful mainly for tables).
+
+\medskip\tabindent
+\begin{tabular}{@{}lll@{}}
+  \toprule
+                & text figures & lining figures \\
+  \midrule
+   proportional & \figureversion{text,proportional}0123456789
+                & \figureversion{lining,proportional}0123456789 \\
+   tabular      & \figureversion{text,tabular}0123456789
+                & \figureversion{lining,tabular}0123456789 \\
+  \bottomrule
+\end{tabular}
+
+\medskip\noindent
+The \verb|\figureversion| command can be used to switch between different figure versions. Possible parameters are:
+
+\begin{options}
+  \item[\option{text}, \option{osf}]          text figures
+  \item[\option{lining}, \option{lf}]         lining figures
+  \item[\option{tabular}, \option{tab}]       tabular figures
+  \item[\option{proportional}, \option{prop}] proportional figures
+\end{options}
+
+ \section{NFSS classification}
+
+ Parenthesised combinations are provided via substitutions.
+
+ \nobreak\medskip\noindent
+ \begingroup
+ \centering\let\>=\\%
+ \begin{tabular}{@{}p{7.5em}p{7em}lp{9em}@{}}
+   \toprule
+   encoding & family & series & shape \\
+   \midrule
+   \raggedright T1, TS1, LY1,&
+   MyriadPro-OsF, MyriadPro-LF, MyriadPro-TOsF, MyriadPro-TLF &
+   l, m, sb, b (bx) &
+   n, it (sl) \\
+   \bottomrule
+ \end{tabular}\par
+ \endgroup
+
+\section{Further information}
+
+For further information about the provided commands, please refer to the documentation included with the \pkg{MinionPro} package\footnote{Available at \url{http://www.ctan.org/tex-archive/fonts/minionpro/}}.
+
+
+\end{document}
