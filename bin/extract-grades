@@ -37,8 +37,11 @@ do
     continue
   fi
   
-  comment=`echo $comment | $SED 's/^[Oo]verall:\s*//'`
+  comment=`echo $comment | $SED 's/^[Oo]verall:\s*\([0-9]\{1,3\}\)\s*.*/\1/'`
   name=$(echo ${i%.*})
   
   echo "$name,$comment" >> grades.csv
 done
+
+# Sort the file by filename
+sort grades.csv > $TMPDIR/out.csv && mv $TMPDIR/out.csv grades.csv
