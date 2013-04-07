@@ -1,0 +1,51 @@
+% CODINGSCHEME FONTSPECIFIC
+/MyriadPro-v1-Base-Encoding-aa [
+% 0x00
+ /A /AE /Aacute /Abreve /Acircumflex /Adieresis /Agrave /Aogonek
+ /Aring /Atilde /B /C /Cacute /Ccaron /Ccedilla /D
+% 0x10
+ /Dcaron /E /Eacute /Ecaron /Ecircumflex /Edieresis /Egrave /Eng
+ /Eogonek /Eth /Euro /Euro.taboldstyle /F /G /Gbreve /H
+% 0x20
+ /I /IJ /Iacute /Icircumflex /Idieresis /Idotaccent /Igrave /J
+ /K /L /Lacute /Lcaron /Lslash /M /N /Nacute
+% 0x30
+ /Ncaron /Ntilde /O /OE /Oacute /Ocircumflex /Odieresis /Ograve
+ /Ohungarumlaut /Omega /Oslash /Otilde /P /Q /R /Racute
+% 0x40
+ /Rcaron /S /Sacute /Scaron /Scedilla /T /Tcaron /Tcommaaccent
+ /Thorn /U /Uacute /Ucircumflex /Udieresis /Ugrave /Uhungarumlaut /Uring
+% 0x50
+ /V /W /X /Y /Yacute /Ydieresis /Z /Zacute
+ /Zcaron /Zdotaccent /a /aacute /abreve /acircumflex /acute /acute.cap
+% 0x60
+ /adieresis /ae /agrave /ampersand /aogonek /aring /asciicircum /asciitilde
+ /asterisk /at /atilde /b /backslash /bar /braceleft /braceright
+% 0x70
+ /bracketleft /bracketright /breve /breve.cap /brokenbar /bullet /c /cacute
+ /caron /caron.cap /ccaron /ccedilla /cedilla /cedilla.cap /cent /cent.taboldstyle
+% 0x80
+ /circumflex /circumflex.cap /colon /comma /copyright /currency /d /dagger
+ /daggerdbl /dcaron /dcroat /degree /dieresis /dieresis.cap /divide /dollar
+% 0x90
+ /dollar.taboldstyle /dong /dotaccent /dotaccent.cap /dotlessi /e /eacute /ecaron
+ /ecircumflex /edieresis /egrave /eight /eight.fitted /eight.oldstyle /eight.taboldstyle /ellipsis
+% 0xA0
+ /emdash /endash /eng /eogonek /equal /estimated /eth /exclam
+ /exclamdown /f /f_f /f_f_i /f_f_j /f_f_l /f_i /f_j
+% 0xB0
+ /f_l /fi /five /five.fitted /five.oldstyle /five.taboldstyle /fl /florin
+ /florin.taboldstyle /four /four.fitted /four.oldstyle /four.taboldstyle /fraction /g /gbreve
+% 0xC0
+ /germandbls /grave /grave.cap /greater /guillemotleft /guillemotright /guilsinglleft /guilsinglright
+ /h /hungarumlaut /hungarumlaut.cap /hyphen /i /iacute /icircumflex /idieresis
+% 0xD0
+ /igrave /ij /j /k /l /lacute /lcaron /less
+ /logicalnot /lslash /m /macron /macron.cap /minus /mu /multiply
+% 0xE0
+ /n /nacute /ncaron /nine /nine.fitted /nine.oldstyle /nine.taboldstyle /ntilde
+ /numbersign /numbersign.taboldstyle /o /oacute /ocircumflex /odieresis /oe /ogonek
+% 0xF0
+ /ogonek.cap /ograve /ohungarumlaut /one /one.fitted /one.oldstyle /one.taboldstyle /onehalf
+ /onequarter /onesuperior /ordfeminine /ordmasculine /oslash /otilde /p /paragraph
+] def

@@ -11,7 +11,6 @@
 # My binary directory containing scripts
 !bin
 !bin/*
-bin/genrand
 bin/mate
 !bin/*/*
 !bin/*/*/*
@@ -43,8 +42,8 @@ bin/*/*/*.pyc
 # XTerm/RXVT
 !.Xdefaults
 
-# Ruby
-!.gemrc
+# Latexmk
+!.latexmkrc
 
 # Nano
 !.nanorc

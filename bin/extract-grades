@@ -1,0 +1,47 @@
+#!/bin/bash
+# Extract grades from Word or PDF comments
+
+# Do our best to automatically extract the path to the get_comments JAR
+# file.  (Run it through `echo` to expand the glob path.)
+GET_COMMENTS_PATH=`echo ~/Dropbox/Charles/Development/get_comments/target/*-with-dependencies.jar`
+
+# Check if that doesn't exist
+if [[ ! -e $GET_COMMENTS_PATH ]]; then
+  echo "ERROR: Cannot find path to the get_comments JAR file!"
+  exit 1
+fi
+
+
+# Get real sed, if possible
+if type -P gsed > /dev/null; then
+  SED=gsed
+else
+  SED=sed
+fi
+
+
+# Make sure we don't already have a CSV output file here
+if [[ -e "grades.csv" ]]; then
+  echo "ERROR: grades.csv already exists, aborting"
+  exit 1
+fi
+
+
+# Look at every DOC, DOCX, and PDF in the current drectory
+shopt -s nullglob
+for i in *.{doc,docx,pdf}
+do
+  comment=`java -jar $GET_COMMENTS_PATH -q -l 1 "$i"`
+  if [[ "x$comment" = "x" ]]; then
+    echo "WARNING: Document '$i' does not have any comments, skipping..."
+    continue
+  fi
+  
+  comment=`echo $comment | $SED 's/^[Oo]verall:\s*\([0-9]\{1,3\}\)\s*.*/\1/'`
+  name=$(echo ${i%.*})
+  
+  echo "$name,$comment" >> grades.csv
+done
+
+# Sort the file by filename
+sort grades.csv > $TMPDIR/out.csv && mv $TMPDIR/out.csv grades.csv

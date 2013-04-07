@@ -1,0 +1,69 @@
+\ProvidesFile{MyriadPro-FontDef.sty}[2010/07/03 v1.0 font definition macros (MG)]
+
+\ifx\MyriadPro@DeclareFontShape\@undefined\else\endinput\fi
+
+\expandafter\ifx\csname MyriadPro@Scale\endcsname\relax
+ \let\MyriadPro@@Scale\@empty
+\else
+ \edef\MyriadPro@@Scale{s*[\csname MyriadPro@Scale\endcsname]}%
+\fi
+
+\expandafter\ifx\csname MyriadPro@Version\endcsname\relax
+ \edef\MyriadPro@@Version{1}
+\else
+ \edef\MyriadPro@@Version{\csname MyriadPro@Version\endcsname}%
+\fi
+
+\expandafter\ifx\csname MyriadPro@Bold\endcsname\relax
+ \edef\MyriadPro@@Bold{b}
+\else
+ \edef\MyriadPro@@Bold{\csname MyriadPro@Bold\endcsname}%
+\fi
+
+% #1: LaTeX-fncoding ("T1")
+% #2: Encoding in filename ("t1")
+% #3: LaTeX-figure-"family" ("LF")
+% #4: Figure-"family" in filename ("lf")
+\newcommand\MyriadPro@DeclareFontShape[4]{%
+  \DeclareFontFamily{#1}{MyriadPro-#3}{}
+  
+  \DeclareFontShape{#1}{MyriadPro-#3}{l}{n}{
+     <-> \MyriadPro@@Scale MyriadPro-Light-v\MyriadPro@@Version-#4-#2
+  }{}
+    
+  \DeclareFontShape{#1}{MyriadPro-#3}{l}{it}{
+     <-> \MyriadPro@@Scale MyriadPro-LightIt-v\MyriadPro@@Version-#4-#2
+  }{}
+
+  \DeclareFontShape{#1}{MyriadPro-#3}{m}{n}{
+     <-> \MyriadPro@@Scale MyriadPro-Regular-v\MyriadPro@@Version-#4-#2
+  }{}
+    
+  \DeclareFontShape{#1}{MyriadPro-#3}{m}{it}{
+     <-> \MyriadPro@@Scale MyriadPro-It-v\MyriadPro@@Version-#4-#2
+  }{}
+
+  \DeclareFontShape{#1}{MyriadPro-#3}{sb}{n}{
+     <-> \MyriadPro@@Scale MyriadPro-Semibold-v\MyriadPro@@Version-#4-#2
+  }{}
+    
+  \DeclareFontShape{#1}{MyriadPro-#3}{sb}{it}{
+     <-> \MyriadPro@@Scale MyriadPro-SemiboldIt-v\MyriadPro@@Version-#4-#2
+  }{}
+
+  \DeclareFontShape{#1}{MyriadPro-#3}{b}{n}{
+     <-> \MyriadPro@@Scale MyriadPro-Bold-v\MyriadPro@@Version-#4-#2
+  }{}
+    
+  \DeclareFontShape{#1}{MyriadPro-#3}{b}{it}{
+     <-> \MyriadPro@@Scale MyriadPro-BoldIt-v\MyriadPro@@Version-#4-#2
+  }{}
+  
+  \DeclareFontShape{#1}{MyriadPro-#3}{bx}{n}{<->ssub * MyriadPro-#3/\MyriadPro@@Bold/n}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{bx}{it}{<->ssub * MyriadPro-#3/\MyriadPro@@Bold/it}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{bx}{sl}{<->ssub * MyriadPro-#3/\MyriadPro@@Bold/sl}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{l}{sl}{<->ssub * MyriadPro-#3/l/it}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{m}{sl}{<->ssub * MyriadPro-#3/m/it}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{sb}{sl}{<->ssub * MyriadPro-#3/sb/it}{}
+  \DeclareFontShape{#1}{MyriadPro-#3}{b}{sl}{<->ssub * MyriadPro-#3/b/it}{}
+}

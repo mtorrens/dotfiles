@@ -1,0 +1,43 @@
+   \NeedsTeXFormat{LaTeX2e}
+   \ProvidesPackage{MyriadPro}         [2010/07/03 v1.0 MyriadPro support for LaTeX (MG)]
+\newcommand\MyriadPro@Text@Fig@A{}% Tab ("T") oder prop ("")
+\newcommand\MyriadPro@Text@Fig@B{OsF} % OsF oder LF
+\newcommand\MyriadPro@Text@Family{MyriadPro-\MyriadPro@Text@Fig@A\MyriadPro@Text@Fig@B}
+\DeclareOption{tab}{\def\MyriadPro@Text@Fig@A{T}}
+\DeclareOption{prop} {\def\MyriadPro@Text@Fig@A{}}
+\DeclareOption{osf}{\def\MyriadPro@Text@Fig@B{OsF}}
+\DeclareOption{lf} {\def\MyriadPro@Text@Fig@B{LF}}
+%\DeclareOption{footnotefigures}{%
+%  \def\@makefnmark{%
+%    \begingroup
+%    \normalfont
+%    \fontfamily{MyriadPro-Extra}\fontencoding{U}\selectfont
+%    \@thefnmark
+%    \endgroup}}
+\DeclareOption{default}{%
+  \renewcommand{\familydefault}{\sfdefault}%
+}%
+\DeclareOption{semibold}{\def\MyriadPro@Bold{sb}}
+\ProcessOptions\relax
+%\RequirePackage{MyriadPro-FontDef}
+\@ifpackageloaded{textcomp}{}{\RequirePackage{textcomp}}
+
+\edef\sfdefault{\MyriadPro@Text@Family}
+
+\RequirePackage{fontaxes}[2005/05/04]
+\let\oldstylenums\textfigures
+
+  \DeclareEncodingSubset{TS1}{MinionPro-LF}  {1}%
+  \DeclareEncodingSubset{TS1}{MinionPro-TLF} {1}%
+  \DeclareEncodingSubset{TS1}{MinionPro-OsF} {1}%
+  \DeclareEncodingSubset{TS1}{MinionPro-TOsF}{1}%
+  \AtBeginDocument{
+    \UndeclareTextCommand{\textvisiblespace}{T1}%
+    \UndeclareTextCommand{\textcompwordmark}{T1}%
+    \UndeclareTextCommand{\textsterling}{T1}%
+    \UndeclareTextCommand{\j}{T1}%
+    \UndeclareTextCommand{\j}{LY1}%
+  }
+
+
+  \normalfont

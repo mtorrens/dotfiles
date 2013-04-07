@@ -1,0 +1,51 @@
+% CODINGSCHEME FONTSPECIFIC
+/MyriadPro-v1-Base-Encoding-ab [
+% 0x00
+ /parenleft /parenright /percent /percent.oldstyle /period /periodcentered /perthousand /plus
+ /plusminus /q /question /questiondown /quotedbl /quotedblbase /quotedblleft /quotedblright
+% 0x10
+ /quoteleft /quoteright /quotesinglbase /quotesingle /r /racute /radical /rcaron
+ /registered /ring /ring.cap /s /sacute /scaron /scedilla /section
+% 0x20
+ /semicolon /seven /seven.fitted /seven.oldstyle /seven.taboldstyle /six /six.fitted /six.oldstyle
+ /six.taboldstyle /slash /space /space_uni030F /sterling /sterling.taboldstyle /t /tcaron
+% 0x30
+ /tcommaaccent /thorn /three /three.fitted /three.oldstyle /three.taboldstyle /threequarters /threesuperior
+ /tilde /tilde.cap /trademark /two /two.fitted /two.oldstyle /two.taboldstyle /twosuperior
+% 0x40
+ /u /uacute /ucircumflex /udieresis /ugrave /uhungarumlaut /underscore /uni00A0
+ /uni00AD /uni2116 /uring /v /w /x /y /yacute
+% 0x50
+ /ydieresis /yen /yen.taboldstyle /z /zacute /zcaron /zdotaccent /zero
+ /zero.denominator /zero.fitted /zero.numerator /zero.oldstyle /zero.taboldstyle /.notdef /.notdef /.notdef
+% 0x60
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0x70
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0x80
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0x90
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xA0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xB0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xC0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xD0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xE0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+% 0xF0
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+] def
