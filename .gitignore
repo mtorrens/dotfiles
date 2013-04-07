@@ -35,6 +35,7 @@ bin/*/*/*.pyc
 # Shell configuration
 !.bashrc
 !.bash_profile
+!.bash_logout
 !.hushlogin
 !.inputrc
 !.profile
