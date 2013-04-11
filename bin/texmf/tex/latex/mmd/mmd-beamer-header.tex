@@ -13,6 +13,9 @@
 
 \setbeamertemplate{navigation symbols}{}
 
+\let\oldinsertenumlabel=\insertenumlabel
+\renewcommand{\insertenumlabel}{{\lnfigures\tbfigures \oldinsertenumlabel}}
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{MinionPro}
