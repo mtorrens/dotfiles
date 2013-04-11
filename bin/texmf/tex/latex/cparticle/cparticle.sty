@@ -1,21 +1,175 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cparticle}[2012/05/08 C. Pence Article Template]
+\ProvidesPackage{cparticle}[2012/05/08 C. Pence Article]
 
 % Options
 \RequirePackage{xkeyval}
-\DeclareOptionX*{\PassOptionsToPackage{\CurrentOption}{cpcommon}}
+\define@boolkey{cparticle.sty}[CPA@]{geometry}[true]{}
+\define@boolkey{cparticle.sty}[CPA@]{hyperlink}[true]{}
+\define@boolkey{cparticle.sty}[CPA@]{blacklinks}[false]{}
+\define@boolkey{cparticle.sty}[CPA@]{doublespace}[false]{}
+\define@boolkey{cparticle.sty}[CPA@]{sfheads}[true]{}
+\define@boolkey{cparticle.sty}[CPA@]{smallheads}[false]{}
+\define@boolkey{cparticle.sty}[CPA@]{gentium}[false]{}
+\presetkeys{cparticle.sty}{geometry=true,hyperlink=true,blacklinks=false,doublespace=false,sfheads=true,smallheads=false,gentium=false}{}
 \ProcessOptionsX
 
-% Everything Else
-\RequirePackage{cpcommon}
+% For some reason, setspace *must* be loaded before hyperref
+\ifCPA@doublespace
+\RequirePackage{setspace}
+\fi
+
+% Include hyperref, some of my bibliography styles use it
+\ifCPA@hyperlink
+  \usepackage{hyperref}
+  \hypersetup{
+    colorlinks,
+    breaklinks,
+    citecolor=black,
+    linkcolor=black,
+    filecolor=black,
+    menucolor=black
+  }
+  \ifCPA@blacklinks
+  \hypersetup{urlcolor=black}
+  \else
+  \hypersetup{urlcolor=blue}
+  \fi
+\fi
+
+% AMS
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+
+% Kerning, Graphics
+\RequirePackage{graphicx}
+\RequirePackage{microtype}
+\RequirePackage[xspace]{ellipsis}
 
 % Fonts
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\renewcommand{\rmdefault}{gentiumbook}
-\usepackage[scaled=0.9]{PTSans}
+\ifCPA@gentium
+  \renewcommand{\rmdefault}{gentiumbook}
+  \usepackage[scaled=0.9]{PTSans}
+
+  \usepackage[euler-digits]{eulervm}
+  \renewcommand{\mathit}[1]{{#1}}
+\else
+  \usepackage[textosf,mathlf,minionint,footnotefigures]{MinionPro}
+  \usepackage{MyriadPro}
+\fi
 \usepackage{inconsolata}
-\usepackage[euler-digits]{eulervm}
-\renewcommand{\mathit}[1]{{#1}}
+
+% Page
+\ifCPA@geometry
+  \ifCPA@doublespace
+    \usepackage[letterpaper,hmargin=1in,vmargin=1in]{geometry}
+  \else
+    \usepackage[letterpaper,hmargin=1.5in,vmargin=1in]{geometry}
+  \fi
+\fi
+
+% Spacing
+\frenchspacing
+
+\ifCPA@doublespace
+
+\RequirePackage{calc}
+\newlength{\cpaskip}
+\newcounter{cpatemp}
+
+\usepackage{printlen}
+
+\AtBeginDocument{\setstretch{2.0}}
+
+\renewenvironment{quote}{%
+\list{}{\rightmargin\leftmargin}%
+\let\cpastretch\baselinestretch%
+%\setcounter{cpatemp}{500*\real{\baselinestretch}-500}%
+\setlength{\cpaskip}{\baselineskip*\value{cpatemp}/1000}%
+\setstretch{1.0}%
+\item\relax}
+{\endlist\setstretch{\cpastretch}\vspace{-\cpaskip}}
+
+\def\changemargin#1#2{%
+\let\cpastretch\baselinestretch%
+%\setcounter{cpatemp}{500*\real{\baselinestretch}-500}%
+\setlength{\cpaskip}{\baselineskip*\value{cpatemp}/1000}%
+\list{}{\rightmargin#2\leftmargin#1}\setstretch{1.0}\item[]}
+\def\endchangemargin{\endlist\setstretch{\cpastretch}\vspace{-\cpaskip}}
+
+\fi
+
+\setlength{\parindent}{2\baselineskip}
+
+
+% Bibliography
+\RequirePackage{ragged2e}
+\RequirePackage{natbib}
+\setcitestyle{authoryear,round,sort}
+\let\cite=\citet
+\ifCPA@doublespace
+  \renewcommand{\bibsection}{\section*{\bibname}\setstretch{1.0}\RaggedRight}
+\else
+  \renewcommand{\bibsection}{\section*{\bibname}\RaggedRight}
+\fi
+
+% Footnotes
+\RequirePackage{hanging}
+\RequirePackage{settobox}
+\newsavebox{\cpafnotemark}
+\newlength{\cpafnote}
+% This is almost the same as the 'hangparas' environment, but 'hangparas'
+% has some whitespace in its definition, which causes the insertion of a space
+% that destroys the precise alignment that I'm building here.  So I redefine
+% 'hangparas' as 'cpafootnote'.
+\newenvironment{cpafootnote}[2]{\setlength{\parindent}{1em}\everypar={\hangpara{#1}{#2}}}{\par}
+\renewcommand\@makefntext[1]{%
+    \sbox{\cpafnotemark}{\@thefnmark.\hspace{0.5ex}}
+    \settoboxwidth{\cpafnote}{\cpafnotemark}
+    \noindent\usebox{\cpafnotemark}\begin{cpafootnote}{\cpafnote}{0}\hangpara{\cpafnote}{1}#1\end{cpafootnote}}
+
+
+% Section Headers
+\newcommand{\runinhead}[1]{\emph{#1.}\hspace{1em}}
+
+\ifCPA@sfheads
+  \RequirePackage[tiny,sf]{titlesec}
+  \newcommand{\cpahfamily}{\sffamily}
+\else
+  \RequirePackage[tiny]{titlesec}
+  \newcommand{\cpahfamily}{\bfseries}
+\fi
+\ifCPA@smallheads
+  \newcommand{\cpahbig}{\normalsize}
+\else
+  \newcommand{\cpahbig}{\large}
+\fi
+\titleformat{\section}[hang]
+  {\cpahbig\cpahfamily}
+  {\thesection.}
+  {0.5em}
+  {}
+\titlespacing*{\section}{0pt}{\baselineskip}{0.84\baselineskip}
+\titleformat{\subsection}[hang]
+  {\normalsize\cpahfamily}
+  {\thesubsection.}
+  {0.5em}
+  {}
+\titleformat{\subsubsection}[hang]
+  {\normalsize\cpahfamily}
+  {{\upshape\thesubsubsection.}}
+  {0.5em}
+  {}
+\titleformat{\paragraph}[runin]
+  {\normalsize\cpahfamily}
+  {}
+  {0pt}
+  {}
+
+\ifcsname abstractname\endcsname
+  \renewcommand{\abstractname}{\cpahfamily Abstract}
+\fi
 
 \endinput
