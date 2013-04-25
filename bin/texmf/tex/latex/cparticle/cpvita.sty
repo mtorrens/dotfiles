@@ -42,7 +42,7 @@
 % New commands and environments
 
 \newlength{\datewidth}
-\setlength{\datewidth}{1.1in}
+\setlength{\datewidth}{1.15in}
 
 % This defines how the name looks
 \newcommand{\bigname}[1]{\begin{center}\textls[110]{\LARGE\MakeUppercase{#1}}\end{center}}
@@ -51,7 +51,7 @@
 \newenvironment{ressection}[1]{
   \needspace{50pt}
   \vspace{20pt}
-  \centerline{\Large\textls[80]{\MakeUppercase{#1}}}
+  \centerline{\Large\textls[80]{\textsc{\MakeLowercase{#1}}}}
   \begin{compactitem}\vspace{6pt}}
 {\end{compactitem}}
 
@@ -59,22 +59,22 @@
 \newcommand{\resitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdateitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.1in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
+\newcommand{\resdateitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.1in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill\figureversion{tab} #2}}\vspace*{2pt}}
 
 % A ressubitem is a simple list element in anything but a ressection (second level)
 \newcommand{\ressubitem}[1]{\item #1\vspace*{2pt}}
 
 % A resdateitem is a simple list element in a ressection with a date
-\newcommand{\resdatesubitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill #2}}\vspace*{2pt}}
+\newcommand{\resdatesubitem}[2]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1}\hfill\parbox[t]{\datewidth}{\hfill\figureversion{tab} #2}}\vspace*{2pt}}
 
 % A resbigitem is a complex list element for stuff like jobs and education:
 %  Arg 1: Name of company or university
 %  Arg 2: Title
 %  Arg 3: Dates
-\newcommand{\resbigitem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright \textbf{#1}\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
+\newcommand{\resbigitem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright \textbf{#1}\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill\figureversion{tab} #3}}\vspace*{2pt}}
 
 % A resmeditem is a resbigitem without the boldness
-\newcommand{\resmeditem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill #3}}\vspace*{2pt}}
+\newcommand{\resmeditem}[3]{\item {\parbox[t]{\linewidth-\datewidth-0.2in}{\raggedright #1\\\nopagebreak[4]\textit{#2}}\hfill\parbox[t]{\datewidth}{\hfill\figureversion{tab} #3}}\vspace*{2pt}}
 
 % This is a list that comes with a resbigitem
 \newenvironment{ressubsec}[3]{\vspace{6pt} \resbigitem{#1}{#2}{#3} \begin{compactitem}}{\end{compactitem}}
