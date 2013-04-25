@@ -55,11 +55,13 @@
 
   \usepackage[euler-digits]{eulervm}
   \renewcommand{\mathit}[1]{{#1}}
+
+  \usepackage{inconsolata}
 \else
   \usepackage[textosf,mathlf,minionint,footnotefigures]{MinionPro}
   \usepackage{MyriadPro}
+  \usepackage[scaled=0.95]{inconsolata}
 \fi
-\usepackage{inconsolata}
 
 % Page
 \ifCPA@geometry
@@ -137,9 +139,15 @@
 \ifCPA@sfheads
   \RequirePackage[tiny,sf]{titlesec}
   \newcommand{\cpahfamily}{\sffamily}
+  \newcommand{\cpahbigstyle}{\bfseries\upshape}
+  \newcommand{\cpahmedstyle}{\bfseries\normalsize}
+  \newcommand{\cpahsmallstyle}{\upshape}
 \else
   \RequirePackage[tiny]{titlesec}
   \newcommand{\cpahfamily}{\bfseries}
+  \newcommand{\cpahbigstyle}{\upshape}
+  \newcommand{\cpahmedstyle}{\normalsize}
+  \newcommand{\cpahsmallstyle}{}
 \fi
 \ifCPA@smallheads
   \newcommand{\cpahbig}{\normalsize}
@@ -147,18 +155,18 @@
   \newcommand{\cpahbig}{\large}
 \fi
 \titleformat{\section}[hang]
-  {\cpahbig\cpahfamily}
+  {\cpahbig\cpahfamily\cpahbigstyle}
   {\thesection.}
   {0.5em}
   {}
 \titlespacing*{\section}{0pt}{\baselineskip}{0.84\baselineskip}
 \titleformat{\subsection}[hang]
-  {\normalsize\cpahfamily}
+  {\cpahfamily\cpahmedstyle}
   {\thesubsection.}
   {0.5em}
   {}
 \titleformat{\subsubsection}[hang]
-  {\normalsize\cpahfamily}
+  {\cpahfamily\cpahsmallstyle}
   {{\upshape\thesubsubsection.}}
   {0.5em}
   {}
