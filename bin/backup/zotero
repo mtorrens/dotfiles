@@ -1,0 +1,18 @@
+#!/bin/sh
+# Back up Zotero database
+
+# Here's the paths for OS X and Linux
+if [ `uname -s` = "Darwin" ]; then
+  ZOT_PROFILES_DIR="$HOME/Library/Application Support/Zotero/Profiles"
+else
+  ZOT_PROFILES_DIR="$HOME/.zotero/Profiles"
+fi
+OUTDIR=$HOME/Dropbox/Charles/Storage/Backup
+
+ZOT_PROFILE="`find "${ZOT_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`"
+
+cd "$ZOT_PROFILE"
+tar cvf zotero.tar *
+xz -9 zotero.tar
+mv zotero.tar.xz "$OUTDIR"
+
