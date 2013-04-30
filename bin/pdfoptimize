@@ -1,0 +1,22 @@
+#!/bin/sh
+# Recompress the images in a PDF file
+
+if [ "$1" = "--help" -o $# -ne 2 ]; then
+  echo "pdfoptimize: optimize the images in a PDF file"
+  echo ""
+  echo "Usage: pdfoptimize <in.pdf> <out.pdf>"
+  exit 1
+fi
+
+# Valid values here are:
+#   /screen = 72dpi
+#   /ebook = 150dpi
+#   /printer = 300dpi
+#   /prepress = 300dpi + color preserving
+#
+# Thanks to:
+#   http://stackoverflow.com/q/10450120
+#   http://milan.kupcevic.net/ghostscript-ps-pdf/
+
+pdf2ps "$1" __tmp.ps
+ps2pdf -dPDFSETTINGS=/ebook __tmp.ps "$2"
