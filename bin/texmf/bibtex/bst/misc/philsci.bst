@@ -153,6 +153,7 @@ ENTRY
     author
     booktitle
     chapter
+    doi
     edition
     editor
     howpublished
@@ -377,6 +378,13 @@ FUNCTION {emphasize}
   if$
 }
 
+FUNCTION {quotify}
+{ duplicate$ empty$
+    { pop$ "" }
+    { "``" swap$ * "''" * }
+  if$
+}
+
 %
 % Emphasize the top string on the stack, but add a trailing space.
 %
@@ -534,11 +542,17 @@ FUNCTION {blank.sep}
 { after.quote 'output.state := 
 }
 
+FUNCTION {format.doi}
+{ doi empty$
+    { "" }
+    { new.block "\doi{" doi * "}" * }
+  if$
+}
 
 FUNCTION {format.title}
 { title empty$
     { "" }
-    { "``" title "t" change.case$ * ".''" * }
+    { title "t" change.case$ add.period$ quotify }
   if$
 }
 
@@ -1011,6 +1025,7 @@ FUNCTION {article}
       format.pages output
     }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1046,6 +1061,7 @@ FUNCTION {book}
       format.book.crossref output.nonnull
     }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1062,6 +1078,7 @@ FUNCTION {booklet}
   blank.sep
   howpublished output
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1101,6 +1118,7 @@ FUNCTION {booklet}
 %      format.book.crossref output.nonnull
 %    }
 %  if$
+%  format.doi output
 %  new.block
 %  note output
 %  fin.entry
@@ -1132,6 +1150,7 @@ FUNCTION {incollection}
     format.pages output
   }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1165,6 +1184,7 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1195,6 +1215,7 @@ FUNCTION {manual}
 %  address output
 %  ":" output
 %  organization output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1213,6 +1234,7 @@ FUNCTION {mastersthesis}
   "Master's thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1228,6 +1250,7 @@ FUNCTION {misc}
   format.title output
   blank.sep
   howpublished output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1247,6 +1270,7 @@ FUNCTION {phdthesis}
   "Ph.\ D. thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1272,6 +1296,7 @@ FUNCTION {proceedings}
   new.sentence
   organization output
   publisher output.colon
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1291,6 +1316,7 @@ FUNCTION {techreport}
   institution
   "institution" output.check
   address output
+  format.doi output
   new.block
   note output
   fin.entry
@@ -1305,6 +1331,7 @@ FUNCTION {unpublished}
   output.year.check                      % added
   new.block
   format.title output
+  format.doi output
   blank.sep
   note "note" output.check
   fin.entry
@@ -1630,6 +1657,8 @@ FUNCTION {begin.bib}
     { preamble$ write$ newline$ }
   if$
   "\begin{thebibliography}{}" write$ newline$
+  "\providecommand{\doi}[1]{doi: #1}"
+  write$ newline$
 }
 
 
