@@ -23,6 +23,35 @@ shopt -sq checkjobs
 
 
 ###############################################################################
+# Path settings
+
+# Python: pick up locally installed python executables
+if [ -d /usr/local/share/python ]; then
+  export PATH="/usr/local/share/python:$PATH"
+fi
+
+# TeX: pick up TeXLive binary path
+if [ -d /usr/local/texbin ]; then
+  export PATH="/usr/local/texbin:$PATH"
+fi
+
+# Haskell Platform: find cabal binaries if installed
+if [ -d $HOME/.cabal ]; then
+  export PATH="$HOME/.cabal/bin:$PATH"
+fi
+
+# Ruby: set up rbenv if installed
+if command -v rbenv >/dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
+# Always let home-directory binaries override everything
+if [ -d $HOME/bin ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
+
+###############################################################################
 # Prompt and Window Title
 
 # Set the title bar
@@ -121,24 +150,3 @@ fi
 
 # Dropbox: find all "conflicts", which just show up in the filesystem
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
-
-# rbenv if installed
-if command -v rbenv >/dev/null 2>&1; then
-  eval "$(rbenv init -)"
-
-  function allruby()
-  {
-    for ruby in `rbenv versions --bare`; do
-      rbenv shell $ruby
-      $@
-      rbenv shell --unset
-    done
-  }
-  
-  export RBXOPT=-X19
-fi
-
-# Haskell Platform: find cabal binaries if installed
-if [ -d $HOME/.cabal ]; then
-  export PATH="$HOME/.cabal/bin:$PATH"
-fi
