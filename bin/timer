@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # A simple countdown timer written in bash script
-# Author: Timothy Lin
-# Date: 2011-07-21
+# Author: Timothy Lin, modified by C. Pence to play audio alarm
+# Date: 2013-05-28
 
 # Messages
 INTERRUPT_MSG="Count down stopped by user interrupt."
@@ -182,3 +182,17 @@ while [ 0 -eq 0 ]; do
 done
 
 cleanup_and_exit "$TIMEUP_MSG"
+
+# play some sort of alarm sound, if possible
+if command -v afplay >/dev/null 2>&1; then
+  # play one of the default sounds on Mac OS X
+  afplay /System/Library/Sounds/Glass.aiff
+elif command -v canberra-gtk-play >/dev/null 2>&1; then
+  # on Linux, try to use the Canberra XDG specification
+  canberra-gtk-play --id="alarm-clock-elapsed" --description="Terminal Alarm"
+elif [ -e /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga ]; then
+  # we might not have Canberra, but maybe we have the sound theme?
+  if command -v ogg321 >/dev/null 2>&1; then
+    ogg321 /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga
+  fi
+fi
