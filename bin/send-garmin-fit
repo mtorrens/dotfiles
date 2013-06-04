@@ -1,0 +1,21 @@
+#!/bin/bash
+# Send a Garmin FIT file to Smashrun, with conversion.  Needs Mutt installed
+# and functional local sendmail (msmtp, esmtp, etc.) to send the e-mails.
+
+if [ "$1" = "--help" -o $# -ne 1 ]; then
+  echo "$0: send a Garmin FIT file to Smashrun"
+  echo ""
+  echo "Usage: $0 <file.fit>"
+  exit 1
+fi
+
+if [[ -e "temp.tcx" ]]; then
+  echo "ERROR: temp.tcx already exists, aborting"
+  exit 1
+fi
+
+gpsbabel -i garmin_fit -f "$1" -o gtrnctr,course=no,sport=Running -F "temp.tcx"
+
+echo "Submitting TCX file." | mutt -s "Submitting TCX file" -a temp.tcx -- cpence@smashrun.com
+
+rm -f temp.tcx
