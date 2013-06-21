@@ -1,0 +1,12 @@
+#!/bin/sh
+# Back up Wunderlist tasks
+
+OUTDIR="${HOME}/Dropbox/Charles/Storage/Backup"
+
+echo "DOWNLOAD the JSON backup file from Wunderlist and place it in the current directory."
+read -p "Press any key to continue..."
+
+FILE=`ls wunderlist-*.json`
+mv $FILE todo.json
+xz -9 todo.json
+mv todo.json.xz $OUTDIR
