@@ -24,11 +24,6 @@ shopt -sq checkjobs
 ###############################################################################
 # Path settings
 
-# Python: pick up locally installed python executables
-if [ -d /usr/local/share/python ]; then
-  export PATH="/usr/local/share/python:$PATH"
-fi
-
 # TeX: pick up TeXLive binary path
 if [ -d /usr/local/texbin ]; then
   export PATH="/usr/local/texbin:$PATH"
