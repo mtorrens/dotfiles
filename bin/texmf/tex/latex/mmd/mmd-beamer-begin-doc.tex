@@ -16,6 +16,11 @@
 	\institute{\affiliation}
 \fi
 
+\ifx\logo\undefined
+\else
+  \institute{\affiliation \\[1.5em] \includegraphics[width=0.3\textwidth]{\logo}}
+\fi
+
 \ifx\mydate\undefined
 	\def\mydate{\today}
 \else
@@ -24,7 +29,7 @@
 
 \ifx\event\undefined
 \else
-	\date[\mydate]{\mydate~ / \event }
+	\date[\mydate]{\mydate~/~\event}
 \fi
 
 
