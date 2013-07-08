@@ -617,12 +617,6 @@ FUNCTION {format.date}
        pop$ "????" }
     'skip$
   if$
-  month empty$
-    'skip$
-    { month
-      " " * swap$ *
-    }
-  if$
   extra.label *
   before.all 'output.state :=
   ", " swap$ *
