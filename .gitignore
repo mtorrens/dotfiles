@@ -42,6 +42,9 @@ bin/*/*/*.pyc
 # XTerm/RXVT
 !.Xdefaults
 
+# MinTTY on Cygwin
+!.minttyrc
+
 # Latexmk
 !.latexmkrc
 
