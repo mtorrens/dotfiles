@@ -1,0 +1,14 @@
+#!/bin/bash
+# Find all PDF files in the current directory without OCR text
+
+IFS='
+'
+
+for i in `find . -iname '*.pdf'`
+do
+  text=`pdftotext "$i" - | gsed -e 's/\s//g' | head -c 20`
+
+  if [[ -z "$text" ]]; then
+    echo "$i"
+  fi
+done
