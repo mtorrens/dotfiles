@@ -7,4 +7,4 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/share/pkgconfig
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-export EDITOR=nano
+export EDITOR=/usr/bin/nano
