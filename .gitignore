@@ -24,13 +24,18 @@ bin/pdftotext
 # Ignore my generated BibTeX files
 bin/texmf/bibtex/bib
 
-# Ignore AuCTeX generated files
-.auctex
-
 # Ignore compiled python in all directories
 bin/*.pyc
 bin/*/*.pyc
 bin/*/*/*.pyc
+
+# FDO config directory
+!.config
+!.config/gtk-3.0
+!.config/gtk-3.0/settings.ini
+
+# Ignore AuCTeX generated files
+.auctex
 
 # Shell configuration
 !.bashrc
