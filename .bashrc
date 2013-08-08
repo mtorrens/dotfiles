@@ -3,6 +3,11 @@
 ###############################################################################
 # Bash Configuration
 
+# Start by changing colors, if available
+if [ -e $HOME/bin/color-theme ]; then
+  . $HOME/bin/color-theme
+fi
+
 # Get bash-completion
 if [ -f /etc/bash_completion ]; then
   . /etc/bash_completion
