@@ -34,9 +34,6 @@ bin/*/*/*.pyc
 !.config/gtk-3.0
 !.config/gtk-3.0/settings.ini
 
-# Ignore AuCTeX generated files
-.auctex
-
 # Shell configuration
 !.bashrc
 !.bash_profile
@@ -45,34 +42,34 @@ bin/*/*/*.pyc
 !.inputrc
 !.profile
 
-# XTerm/RXVT
+# X configuration
 !.Xdefaults
+!.xinitrc
 
-# MinTTY on Cygwin
-!.minttyrc
+# Ignore AuCTeX generated files
+.auctex
 
-# Latexmk
-!.latexmkrc
-
-# Nano
-!.nanorc
-
-# Mercurial
-!.hgrc
-
-# GTK
-!.gtkrc-2.0
+# GDB
+!.gdbinit
 
 # GPG
 !.gnupg
 !.gnupg/gpg.conf
 
-# SVN
-!.subversion
-!.subversion/config
+# GTK
+!.gtkrc-2.0
 
-# GDB
-!.gdbinit
+# Mercurial
+!.hgrc
+
+# Latexmk
+!.latexmkrc
+
+# MinTTY on Cygwin
+!.minttyrc
+
+# Nano
+!.nanorc
 
 # Recoll (but not its database or history file)
 !.recoll
@@ -81,6 +78,10 @@ bin/*/*/*.pyc
 !.recoll/mimeconf
 !.recoll/mimeview
 !.recoll/ptrans
+
+# SVN
+!.subversion
+!.subversion/config
 
 # Lastly, ignore all DS_Store files
 *.DS_Store
