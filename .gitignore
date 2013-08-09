@@ -35,6 +35,13 @@ bin/*/*/*.pyc
 !.config/gtk-3.0/settings.ini
 !.config/redshift.conf
 
+# FDO local directory
+!.local
+!.local/share
+!.local/share/kupfer
+!.local/share/kupfer/plugins
+!.local/share/kupfer/plugins/deepdirectories.py
+
 # Shell configuration
 !.bashrc
 !.bash_profile
