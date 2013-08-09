@@ -57,6 +57,12 @@ bin/*/*/*.pyc
 # Ignore AuCTeX generated files
 .auctex
 
+# Emacs
+!.emacs.d
+!.emacs.d/*
+.emacs.d/cache
+.emacs.d/el-get
+
 # GDB
 !.gdbinit
 
