@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Merge my Xresources
 xrdb -merge $HOME/.Xresources
@@ -16,6 +16,11 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   done
   unset f
 fi
+
+# Make multimedia keys work with PulseAudio
+for i in /dev/input/by-id/*-kbd; do
+  pacmd load-module module-mmkbd-evdev device=$i &> /dev/null
+done
 
 # Silliness for QT4
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
@@ -40,7 +45,7 @@ dropboxd &
 DESKTOP_SESSION=gnome yaudtray &
 
 # Kupfer
-kupfer &
+kupfer --no-splash &
 
 # Shift color temperature of display at night
 redshift &
