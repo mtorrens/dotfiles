@@ -53,8 +53,8 @@ kupfer --no-splash &
 # Shift color temperature of display at night
 redshift &
 
-# Local web-app server
-/opt/prax/bin/prax start &
+# Personal Wiki
+[[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &
 
 
 # Run WindowMaker
