@@ -28,18 +28,23 @@
 	scss-mode
 	markdown-mode
 	icomplete+
+	anything
 	fill-column-indicator))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (el-get 'sync my:el-get-packages)
 
 
+;; Customizations
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 ;; Fonts and visuals
 (set-default-font "Droid Sans Mono:pixelsize=14")
 (setq-default line-spacing 2)
 
-(add-to-list 'default-frame-alist '(width . 115))
-(add-to-list 'default-frame-alist '(height . 35))
+(add-to-list 'default-frame-alist '(width . 90))
+(add-to-list 'default-frame-alist '(height . 40))
 
 (load-theme 'base16-railscasts-dark t)
 (tool-bar-mode -1)
@@ -91,11 +96,71 @@
 (line-number-mode t)
 (column-number-mode t)
 
+(setq-default mode-line-format
+  (list
+    ;; the buffer name; the file name as a tool tip
+    '(:eval (propertize "%b " 'face 'font-lock-keyword-face
+        'help-echo (buffer-file-name)))
+
+    ;; line and column
+    "(" ;; '%02' to set to 2 chars at least; prevents flickering
+      (propertize "%02l" 'face 'font-lock-type-face) ","
+      (propertize "%02c" 'face 'font-lock-type-face) 
+    ") "
+
+    ;; relative position, size of file
+    "["
+    (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
+    "/"
+    (propertize "%I" 'face 'font-lock-constant-face) ;; size
+    "] "
+
+    ;; the current major mode for the buffer.
+    "["
+    '(:eval (propertize "%m" 'face 'font-lock-string-face
+              'help-echo buffer-file-coding-system))
+    "] "
+
+
+    "[" ;; insert vs overwrite mode, input-method in a tooltip
+    '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
+              'face 'font-lock-preprocessor-face
+              'help-echo (concat "Buffer is in "
+                           (if overwrite-mode "overwrite" "insert") " mode")))
+
+    ;; was this buffer modified since the last save?
+    '(:eval (when (buffer-modified-p)
+              (concat ","  (propertize "Mod"
+                             'face 'font-lock-warning-face
+                             'help-echo "Buffer has been modified"))))
+
+    ;; is this buffer read-only?
+    '(:eval (when buffer-read-only
+              (concat ","  (propertize "RO"
+                             'face 'font-lock-type-face
+                             'help-echo "Buffer is read-only"))))  
+    "] "
+    "%-" ;; fill with '-'
+    ))
+
 ;; Minibuffer
 (icomplete-mode t)
 (setq icomplete-prospects-height 1
       icomplete-compute-delay 0)
 (require 'icomplete+ nil noerror)
+
+;; Anything
+(require 'anything-config)
+(global-set-key (kbd "C-x b")
+		(lambda() (interactive)
+		  (anything
+		   :prompt "Switch to: "
+		   :candidate-number-limit 10
+		   :sources
+		   '( anything-c-source-buffers
+		      anything-c-source-recentf
+		      anything-c-source-files-in-current-dir+
+		      anything-c-source-locate))))
 
 ;; Buffer names
 (require 'uniquify)
@@ -114,22 +179,23 @@
       recentf-max-menu-items 15)
 (recentf-mode t)
 (setq auto-save-list-file-prefix "~/.emacs.d/cache/auto-save-list/.saves-")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values (quote ((encoding . utf-8)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 ;; Keyboard
 (global-set-key (kbd "RET") 'newline-and-indent)
 
+;; Visual Line Mode config
+(defun visual-line-line-range () 
+  (save-excursion 
+    (cons (progn (vertical-motion 0) (point)) 
+	  (progn (vertical-motion 1) (point))))) 
+(setq hl-line-range-function 'visual-line-line-range) 
+
 ;; Ruby/RSpec
 (setq rspec-use-rake-when-possible nil
       rspec-use-bundler-when-possible t)
+
+;; Markdown
+(add-hook 'markdown-mode-hook
+	  (lambda ()
+	    (visual-line-mode 1)
+	    (fci-mode 0)))
