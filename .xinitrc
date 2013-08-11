@@ -51,7 +51,7 @@ DESKTOP_SESSION=gnome yaudtray &
 kupfer --no-splash &
 
 # Shift color temperature of display at night
-redshift &
+gtk-redshift &
 
 # Personal Wiki
 [[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &
