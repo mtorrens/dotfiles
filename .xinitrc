@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set GNUstep directory path
+export GNUSTEP_USER_ROOT=$HOME/.GNUstep
+
 # Merge my Xresources
 xrdb -merge $HOME/.Xresources
 

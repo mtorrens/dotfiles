@@ -1,0 +1,77 @@
+(
+  "Window Maker",
+  (Run..., EXEC, "%A(Run, Type command:)"),
+  (Terminal, EXEC, urxvt),
+  (PCManFM, EXEC, pcmanfm),
+  (Emacs, EXEC, emacs),
+  ("Google Chrome", EXEC, "google-chrome"),
+  (
+    Applications,
+    (
+      Productivity,
+      (Wunderlist, EXEC, "/usr/local/bin/wunderlist"),
+      (Zotero, EXEC, zotero),
+      (Writer, EXEC, lowriter),
+      (Calc, EXEC, localc),
+      (Impress, EXEC, loimpress),
+      (Timer, EXEC, pystopwatch)
+    ),
+    (
+      Network,
+      (Thunderbird, EXEC, thunderbird),
+      (FileZilla, EXEC, filezilla),
+      (Transmission, EXEC, "transmission-gtk")
+    ),
+    (
+      Graphics,
+      ("The GIMP", EXEC, gimp),
+      (Draw, EXEC, lodraw),
+      (Inkscape, EXEC, inkscape)
+    ),
+    (
+      Media,
+      (VLC, EXEC, vlc),
+      (Handbrake, EXEC, handbrake),
+      (Picard, EXEC, picard),
+      (Audacity, EXEC, audacity)
+    ),
+    (
+      System,
+      (ARandR, EXEC, arandr),
+      (Seahorse, EXEC, seahorse),
+      (fsv, EXEC, fsv2),
+      (Baobab, EXEC, baobab)
+    ),
+    (
+      "XDG Menu",
+      OPEN_MENU,
+      "|| xdg_menu --format WindowMaker --root-menu /etc/xdg/menus/arch-applications.menu"
+    )
+  ),
+  (
+    "Window Maker",
+    (
+      Backgrounds,
+      OPEN_MENU,
+      "-noext $HOME/Dropbox/Charles/Personal/Wallpaper/1366x768 $HOME/Dropbox/Charles/Personal/Wallpaper/Tiled WITH wmsetbg -u -t"
+    ),
+    (Configure, EXEC, "/usr/lib/GNUstep/Applications/WPrefs.app/WPrefs"),
+    (Restart, RESTART)
+  ),
+  (
+    Workspace,
+    (Workspaces, WORKSPACE_MENU),
+    ("Hide Others", HIDE_OTHERS),
+    ("Show All", SHOW_ALL),
+    ("Arrange Icons", ARRANGE_ICONS),
+    (Refresh, REFRESH),
+    ("Save Session", SAVE_SESSION),
+    ("Clear Session", CLEAR_SESSION)
+  ),
+  (
+    "End Session",
+    ("Log Out", EXIT),
+    (Reboot, EXEC, "gksu \"systemctl reboot\""),
+    ("Shut Down", EXEC, "gksu \"systemctl poweroff\"")
+  )
+)
