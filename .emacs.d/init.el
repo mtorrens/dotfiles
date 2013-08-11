@@ -40,7 +40,7 @@
 (load custom-file)
 
 ;; Fonts and visuals
-(set-default-font "Droid Sans Mono:pixelsize=14")
+(add-to-list 'default-frame-alist '(font . "Droid Sans Mono:pixelsize=14"))
 (setq-default line-spacing 2)
 
 (add-to-list 'default-frame-alist '(width . 90))
