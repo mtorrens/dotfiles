@@ -1,6 +1,6 @@
 (
   "Window Maker",
-  (Run..., EXEC, "%A(Run, Type command:)"),
+  (Run..., SHORTCUT, "Mod1+F2", EXEC, "%A(Run, Type command:)"),
   (Terminal, EXEC, urxvt),
   (PCManFM, EXEC, pcmanfm),
   (Emacs, EXEC, emacs),
@@ -40,7 +40,42 @@
       (ARandR, EXEC, arandr),
       (Seahorse, EXEC, seahorse),
       (fsv, EXEC, fsv2),
-      (Baobab, EXEC, baobab)
+      (Baobab, EXEC, baobab),
+      (
+        "Volume Up",
+        SHORTCUT,
+        XF86AudioRaiseVolume,
+        SHEXEC,
+        "$HOME/bin/osd-volume plus"
+      ),
+      (
+        "Volume Down",
+        SHORTCUT,
+        XF86AudioLowerVolume,
+        SHEXEC,
+        "$HOME/bin/osd-volume minus"
+      ),
+      (
+        "Volume Mute",
+        SHORTCUT,
+        XF86AudioMute,
+        SHEXEC,
+        "$HOME/bin/osd-volume mute"
+      ),
+      (
+        "Brightness Down",
+        SHORTCUT,
+        XF86MonBrightnessDown,
+        SHEXEC,
+        "$HOME/bin/osd-brightness minus"
+      ),
+      (
+        "Brightness Up",
+        SHORTCUT,
+        XF86MonBrightnessUp,
+        SHEXEC,
+        "$HOME/bin/osd-brightness plus"
+      )
     ),
     (
       "XDG Menu",

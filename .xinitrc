@@ -9,6 +9,9 @@ xrdb -merge $HOME/.Xresources
 # Set up my keyboard
 setxkbmap -option ctrl:nocaps
 
+# Drop screen brightness on boot
+echo "908" > /sys/class/backlight/intel_backlight/brightness
+
 # Set the right DPI
 xrandr --dpi 135
 
@@ -20,10 +23,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
   unset f
 fi
 
-# Make multimedia keys work with PulseAudio
-for i in /dev/input/by-id/*-kbd; do
-  pacmd load-module module-mmkbd-evdev device=$i &> /dev/null
-done
 
 # Silliness for QT4
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
@@ -34,6 +33,7 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 # Notification daemon
 /usr/lib/notification-daemon-1.0/notification-daemon &
+
 
 # Volume control
 pasystray &
@@ -55,6 +55,9 @@ kupfer --no-splash &
 
 # Shift color temperature of display at night
 gtk-redshift &
+
+# Update checker
+kalu &
 
 # Personal Wiki
 [[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &
