@@ -20,16 +20,19 @@
 
 (setq my:el-get-packages
       '(base16-themes
-	magit
-	ruby-mode
-	rspec-mode
-	haml-mode
-	sass-mode
-	scss-mode
-	markdown-mode
-	icomplete+
-	anything
-	fill-column-indicator))
+        magit
+        ethan-wspace
+        auctex
+        ruby-mode
+        rspec-mode
+        haml-mode
+        sass-mode
+        scss-mode
+        markdown-mode
+        yaml-mode
+        icomplete+
+        anything
+        fill-column-indicator))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (el-get 'sync my:el-get-packages)
@@ -80,9 +83,10 @@
       scroll-preserve-screen-position t)
 
 ;; File saving
-(setq-default fill-column 80)
+(global-ethan-wspace-mode 1)
+(setq-default fill-column 80
+              indent-tabs-mode nil)
 (setq make-backup-files nil
-      require-final-newline t
       locale-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -105,7 +109,7 @@
     ;; line and column
     "(" ;; '%02' to set to 2 chars at least; prevents flickering
       (propertize "%02l" 'face 'font-lock-type-face) ","
-      (propertize "%02c" 'face 'font-lock-type-face) 
+      (propertize "%02c" 'face 'font-lock-type-face)
     ") "
 
     ;; relative position, size of file
@@ -138,7 +142,7 @@
     '(:eval (when buffer-read-only
               (concat ","  (propertize "RO"
                              'face 'font-lock-type-face
-                             'help-echo "Buffer is read-only"))))  
+                             'help-echo "Buffer is read-only"))))
     "] "
     "%-" ;; fill with '-'
     ))
@@ -152,15 +156,15 @@
 ;; Anything
 (require 'anything-config)
 (global-set-key (kbd "C-x b")
-		(lambda() (interactive)
-		  (anything
-		   :prompt "Switch to: "
-		   :candidate-number-limit 10
-		   :sources
-		   '( anything-c-source-buffers
-		      anything-c-source-recentf
-		      anything-c-source-files-in-current-dir+
-		      anything-c-source-locate))))
+                (lambda() (interactive)
+                  (anything
+                   :prompt "Switch to: "
+                   :candidate-number-limit 10
+                   :sources
+                   '( anything-c-source-buffers
+                      anything-c-source-recentf
+                      anything-c-source-files-in-current-dir+
+                      anything-c-source-locate))))
 
 ;; Buffer names
 (require 'uniquify)
@@ -184,18 +188,28 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;; Visual Line Mode config
-(defun visual-line-line-range () 
-  (save-excursion 
-    (cons (progn (vertical-motion 0) (point)) 
-	  (progn (vertical-motion 1) (point))))) 
-(setq hl-line-range-function 'visual-line-line-range) 
+(defun visual-line-line-range ()
+  (save-excursion
+    (cons (progn (vertical-motion 0) (point))
+          (progn (vertical-motion 1) (point)))))
+(setq hl-line-range-function 'visual-line-line-range)
 
 ;; Ruby/RSpec
 (setq rspec-use-rake-when-possible nil
       rspec-use-bundler-when-possible t)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (ethan-wspace-clean-all-modes)))
+
+;; TeX
+(add-hook 'TeX-mode-hook
+          (lambda ()
+            (visual-line-mode 1)
+            (fci-mode 0)))
 
 ;; Markdown
 (add-hook 'markdown-mode-hook
-	  (lambda ()
-	    (visual-line-mode 1)
-	    (fci-mode 0)))
+          (lambda ()
+            (ethan-wspace-mode 0)
+            (visual-line-mode 1)
+            (fci-mode 0)))
