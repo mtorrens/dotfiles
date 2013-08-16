@@ -14,7 +14,8 @@
       (Writer, EXEC, lowriter),
       (Calc, EXEC, localc),
       (Impress, EXEC, loimpress),
-      (Timer, EXEC, pystopwatch)
+      (Timer, EXEC, pystopwatch),
+      (VirtualBox, EXEC, VirtualBox)
     ),
     (
       Network,
@@ -41,6 +42,7 @@
       (Seahorse, EXEC, seahorse),
       (fsv, EXEC, fsv2),
       (Baobab, EXEC, baobab),
+      ("Lock Screen", SHORTCUT, "Mod4+l", EXEC, slimlock),
       (
         "Volume Up",
         SHORTCUT,
