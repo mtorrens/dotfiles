@@ -70,8 +70,8 @@ function show() {
                         DOTS=$((DOTS - 1))
                 done
         fi
-	killall aosd-cat &> /dev/null
-        echo "$BAR" | aosd_cat -n "Droid Sans Mono 50" -u 1000 -o 500 -R $COLOR -f 500
+	killall aosd_cat &> /dev/null
+        echo "$BAR" | aosd_cat -p 0 -x 50 -y 600 -n "Droid Sans Mono 50" -u 1000 -o 500 -R $COLOR -f 500
 }
  
 case "$1" in
