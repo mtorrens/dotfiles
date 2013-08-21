@@ -7,4 +7,3 @@ if [ `uname -o` = "Cygwin" ]; then
     eval $(/usr/local/bin/ssh-pageant -qk 2>/dev/null)
   fi
 fi
-

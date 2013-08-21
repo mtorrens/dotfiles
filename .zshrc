@@ -1,35 +1,36 @@
-# Bash configuration
 
 ###############################################################################
-# Bash Configuration
+# Basic shell settings
 
-# Start by changing colors, if available
-if [ -e $HOME/bin/color-theme ]; then
+# Load required ZSH modules
+autoload -Uz compinit promptinit colors
+
+# Set the console color theme, if available
+if [[ -e $HOME/bin/color-theme ]]; then
   . $HOME/bin/color-theme
 fi
 
-# Get bash-completion
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
-if [ -f /usr/local/etc/bash_completion ]; then
-  . /usr/local/etc/bash_completion
-fi
+# Enable ZSH completion
+compinit
+zstyle :compinstall filename '~/.zshrc'
 
-# Set up the bash history
-export HISTSIZE=4096
-export HISTFILESIZE=16384
+# Configure history file
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt HIST_IGNORE_DUPS
+setopt appendhistory
 
-# Engage some shell options (quietly, in case they don't
-# exist)
-shopt -sq autocd
-shopt -sq checkjobs
+# Set some random shell options
+setopt autocd
+unsetopt beep notify
 
+bindkey -e
 
 ###############################################################################
 # Path settings
 
-# TeX: pick up TeXLive binary path
+# TeX: pick up OS X TeXLive binary path
 if [ -d /usr/local/texbin ]; then
   export PATH="/usr/local/texbin:$PATH"
 fi
@@ -49,36 +50,25 @@ if [ -d $HOME/bin ]; then
   export PATH="$HOME/bin:$PATH"
 fi
 
-
 ###############################################################################
-# Prompt and Window Title
-
-# Set the title bar
-case "$TERM" in xterm*|rxvt*)
-	PR_TITLEBAR="\[\e]2;\u@\h:\w\a\]"
-	;;
-*)
-	PR_TITLEBAR=""
-	;;
-esac
+# Prompt
 
 # Set the prompt
+promptinit
+colors
+
 if [[ "$UID" == "0" ]]; then
-    PROMPT='[\[\e[31;1m\]\h\[\e[0m\] \w]\$ '
+    PROMPT="[%{$fg_bold[red]%}%m%{$reset_color%} %~]$ "
 else
-    PROMPT='[\[\e[32;1m\]\u@\h\[\e[0m\] \w]\$ '
+    PROMPT="[%{$fg_bold[green]%}%n@%m%{$reset_color%} %~]$ "
 fi
-
-# And, set everything
-export PS1="${PROMPT}${PR_TITLEBAR}"
-
 
 ###############################################################################
 # Configuration for other programs/systems
 
-export EDITOR=nano
-export MAILDIR=$HOME/Dropbox/Charles/Mail/
-export LESSHISTFILE=-
+LANG=en_US.UTF-8
+EDITOR=/usr/bin/nano
+LESSHISTFILE=-
 
 if [ `uname -s` = "Darwin" ]; then
   # Disable mail checking and resource-fork copying, only on OS X
@@ -97,17 +87,16 @@ elif [ `uname -o` = "Cygwin" ]; then
   trap logout HUP
 fi
 
-
 ###############################################################################
 # Aliases for daily use
 
 # Set up the directory colors, either GNU or BSD style depending on
 # whether or not dircolors is available.  Also check for the GNU
 # coreutils installed over Mac OS X with the g-prefix.
-if type -P dircolors > /dev/null; then
+if type -p dircolors > /dev/null; then
   eval `dircolors -b`
   alias ls='ls --color=auto --sort=version'
-elif type -P gdircolors > /dev/null; then
+elif type -p gdircolors > /dev/null; then
   eval `gdircolors -b`
   alias ls='gls --color=auto --sort=version'
 else
@@ -139,13 +128,6 @@ alias start=open
 # This is the magic sauce for my dotfiles configuration
 alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 alias confignwt='git --git-dir=$HOME/.config.git/'
-
-# Bash timer
-if command -v gdate >/dev/null 2>&1; then
-  alias stopwatch='start=$(gdate +%s) watch -n1 '"'"'gdate --date=@$(($(gdate +%s) - start)) +%M:%S'"'"
-else
-  alias stopwatch='start=$(date +%s) watch -n1 '"'"'date --date=@$(($(date +%s) - start)) +%M:%S'"'"
-fi
 
 # Dropbox: find all "conflicts", which just show up in the filesystem
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
