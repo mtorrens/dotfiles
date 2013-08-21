@@ -17,6 +17,12 @@ OS X:
 
 ### Install Oh-My-Zsh
 
+Arch:
+
+    yaourt -S oh-my-zsh-git
+
+OS X:
+
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
 ### Install Homesick and link
