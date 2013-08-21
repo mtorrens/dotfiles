@@ -16,6 +16,14 @@
              :pkgname "milkypostman/base16-emacs"
              :post-init (add-to-list 'custom-theme-load-path
                                      default-directory))
+      (:name auctex-latexmk
+             :description "This library adds LatexMk support to AUCTeX."
+             :website "https://github.com/tom-tan/auctex-latexmk"
+             :type github
+             :pkgname "tom-tan/auctex-latexmk"
+             :post-init (progn
+                          (require 'auctex-latexmk)
+                          (auctex-latexmk-setup)))
 ))
 
 (setq my:el-get-packages
@@ -23,6 +31,7 @@
         magit
         ethan-wspace
         auctex
+        auctex-latexmk
         ruby-mode
         rspec-mode
         haml-mode
@@ -202,8 +211,20 @@
             (ethan-wspace-clean-all-modes)))
 
 ;; TeX
+(setq TeX-view-program-list '(("Evince" "evince %o")))
 (add-hook 'TeX-mode-hook
           (lambda ()
+            (visual-line-mode 1)
+            (fci-mode 0)
+            (setq TeX-command-default "LatexMk"
+                  TeX-PDF-mode t
+                  TeX-output-extension "pdf"
+                  TeX-view-program-selection '((output-pdf "Evince")))))
+
+;; Plain text
+(add-hook 'text-mode-hook
+          (lambda ()
+            (ethan-wspace-mode 0)
             (visual-line-mode 1)
             (fci-mode 0)))
 
