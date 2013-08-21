@@ -1,0 +1,8 @@
+bin
+.GNUstep
+.config
+.emacs.d
+.gnupg
+.local/share
+.subversion
+.recoll
