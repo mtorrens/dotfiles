@@ -19,11 +19,20 @@ setopt autocd
 unsetopt beep notify
 
 # Oh My Zsh
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="mh"
-DISABLE_CORRECTION="true"
-plugins=(archlinux git rails4 ruby bundler capistrano colored-man gem rake rbenv)
-source $ZSH/oh-my-zsh.sh
+if [[ -d /usr/share/oh-my-zsh ]]; then
+  ZSH=/usr/share/oh-my-zsh
+fi
+if [[ -d $HOME/.oh-my-zsh ]]; then
+  ZSH=$HOME/.oh-my-zsh
+fi
+
+if [[ ! -z "$ZSH" ]]; then
+  ZSH_THEME="gentoo"
+  DISABLE_AUTO_UPDATE="true"
+  DISABLE_CORRECTION="true"
+  plugins=(archlinux git bundler colored-man gem rake rbenv)
+  source $ZSH/oh-my-zsh.sh
+fi
 
 ###############################################################################
 # Path settings
@@ -91,3 +100,15 @@ alias start=open
 
 # Dropbox: find all "conflicts", which just show up in the filesystem
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
+
+# Development directories
+dev() { cd ~/Development/$1; }
+devm() { cd ~/Development/$1/master; }
+_dev() { _files -W ~/Development -/; }
+compdef _dev dev
+compdef _dev devm
+
+# Fast Dropbox access
+db() { cd ~/Dropbox/Charles/$1; }
+_db() { _files -W ~/Dropbox/Charles -/; }
+compdef _db db
