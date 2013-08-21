@@ -35,33 +35,37 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 dunst &
 
 
+# System tray
+lal &
+(sleep 1 && docker &)
+
 # Battery monitor
-batti &
+(sleep 2 && batti &)
 
 # NetworkManager
-nm-applet &
+(sleep 2 && nm-applet &)
 
 # Dropbox
-dropboxd &
+(sleep 2 && dropboxd &)
 
 # Disk mounter (the environment variable makes it find the icons)
-DESKTOP_SESSION=gnome yaudtray &
+(sleep 2 && DESKTOP_SESSION=gnome yaudtray &)
 
 # Kupfer
 kupfer --no-splash &
 
 # Shift color temperature of display at night
-gtk-redshift &
+redshift &
 
 # Update checker
-kalu &
+(sleep 2 && kalu &)
 
 # Personal Wiki
 [[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &
 
 
-# Run WindowMaker
-exec wmaker
+# Run OpenBox
+exec openbox-session
 
 
 # Kill the PulseAudio daemon
