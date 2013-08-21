@@ -93,6 +93,7 @@
       "-noext $HOME/Dropbox/Charles/Personal/Wallpaper/1366x768 $HOME/Dropbox/Charles/Personal/Wallpaper/Tiled WITH wmsetbg -u -t"
     ),
     (Configure, EXEC, "/usr/lib/GNUstep/Applications/WPrefs.app/WPrefs"),
+    ("Gather Windows", EXEC, "~/bin/gather-windows"),
     (Restart, RESTART)
   ),
   (
