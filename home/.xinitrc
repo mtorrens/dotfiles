@@ -40,20 +40,11 @@ bbpager &
 lal &
 docker &
 
-# Battery monitor
-batti &
-
 # Disk mounter (the environment variable makes it find the icons)
 DESKTOP_SESSION=gnome yaudtray &
 
-# Kupfer
-kupfer --no-splash &
-
 # Shift color temperature of display at night
 redshift &
-
-# Update checker
-kalu &
 
 # Personal Wiki
 [[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &
