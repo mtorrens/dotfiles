@@ -7,3 +7,4 @@ bin
 .recoll
 .config/openbox
 .config/gtk-3.0
+.config/dunst
