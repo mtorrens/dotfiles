@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Set GNUstep directory path
-export GNUSTEP_USER_ROOT=$HOME/.GNUstep
-
 # Merge my Xresources
 xrdb -merge $HOME/.Xresources
 
@@ -34,6 +31,9 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 # Notification daemon
 dunst &
 
+# Set background
+nitrogen --restore &
+
 
 # System tray
 lal &
@@ -41,6 +41,9 @@ lal &
 
 # Battery monitor
 (sleep 2 && batti &)
+
+# Volume mixer
+(sleep 2 && volti &)
 
 # NetworkManager
 (sleep 2 && nm-applet &)
