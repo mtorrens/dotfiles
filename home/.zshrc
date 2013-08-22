@@ -7,16 +7,31 @@ if [[ -e $HOME/bin/color-theme ]]; then
   . $HOME/bin/color-theme
 fi
 
+# Load some things that ZSH doesn't by default
+autoload zmv
+
 # Configure history file
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt HIST_IGNORE_DUPS
-setopt appendhistory
 
-# Set some random shell options
-setopt autocd
-unsetopt beep notify
+# Shell options
+setopt APPEND_HISTORY
+setopt AUTO_CD
+unsetopt BEEP
+setopt COMPLETE_IN_WORD
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
+setopt IGNORE_EOF
+setopt INC_APPEND_HISTORY
+unsetopt NOTIFY
+setopt NO_BG_NICE
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt SHARE_HISTORY
 
 # Oh My Zsh
 if [[ -d /usr/share/oh-my-zsh ]]; then
@@ -77,9 +92,36 @@ elif [ `uname -o` = "Cygwin" ]; then
 fi
 
 ###############################################################################
+# Colorize all the things
+GRC=`which grc`
+
+if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
+  alias colorify='grc -es --colour=auto'
+  alias configure='colorify ./configure'
+  alias cvs='colorify cvs'
+  alias diff='colorify diff'
+  alias dig='colorify dig'
+  alias gcc='colorify gcc'
+  alias g++='colorify g++'
+  alias as='colorify as'
+  alias ld='colorify ld'
+  alias ifconfig='colorify ifconfig'
+  alias mount='colorify mount'
+  alias netstat='colorify netstat'
+  alias ping='colorify ping'
+  alias ps='colorify ps'
+  alias traceroute='colorify traceroute'
+fi
+
+###############################################################################
 # Aliases for daily use
 
 alias quit=exit
+
+# Sort by version (which is awesome) and show type indicators
+alias ls='ls -F --sort=version --color=auto '
+alias ll='ls -Fl --sort=version --color=auto '
+alias la='ls -FlA --sort=version --color=auto '
 
 # Alias the various ways to open documents in accord with their file
 # associations

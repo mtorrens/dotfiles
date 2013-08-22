@@ -1,22 +1,22 @@
 #!/bin/bash
- 
+
 # CHANGES, RE-VIEWS/WRITES, IMPROVEMENTS:
-# mhasko: functions; VOL-steps; 
+# mhasko: functions; VOL-steps;
 # gashapon: autodectect default sink
 # konrad: more reliable way to autodetect default sink
- 
+
 # get default sink name
 SINK_NAME=$(pactl stat | grep "alsa_output" | perl -a -n -e 'print $F[2]')
- 
+
 # set max allowed volume; 0x10000 = 100%
 VOL_MAX="0x10000"
- 
+
 STEPS="16" # 2^n
 VOL_STEP=$((VOL_MAX / STEPS))
- 
+
 VOL_NOW=`pacmd dump | grep -P "^set-sink-volume $SINK_NAME\s+" | perl -p -n -e 's/.+\s(.x.+)$/$1/'`
 MUTE_STATE=`pacmd dump | grep -P "^set-sink-mute $SINK_NAME\s+" | perl -p -n -e 's/.+\s(yes|no)$/$1/'`
- 
+
 function plus() {
         VOL_NEW=$((VOL_NOW + VOL_STEP))
         if [ $VOL_NEW -gt $((VOL_MAX)) ]; then
@@ -26,7 +26,7 @@ function plus() {
         pactl set-sink-volume $SINK_NAME `printf "0x%X" $VOL_NEW`
 	VOL_NOW=`pacmd dump | grep -P "^set-sink-volume $SINK_NAME\s+" | perl -p -n -e 's/.+\s(.x.+)$/$1/'`
 }
- 
+
 function minus() {
         VOL_NEW=$((VOL_NOW - VOL_STEP))
         if [ $(($VOL_NEW)) -lt $((0x00000)) ]; then
@@ -36,44 +36,26 @@ function minus() {
         pactl set-sink-volume $SINK_NAME `printf "0x%X" $VOL_NEW`
 	VOL_NOW=`pacmd dump | grep -P "^set-sink-volume $SINK_NAME\s+" | perl -p -n -e 's/.+\s(.x.+)$/$1/'`
 }
- 
+
 function mute() {
         if [ $MUTE_STATE = no ]; then
                 pactl set-sink-mute $SINK_NAME 1
+                MUTE_STATE="yes"
         elif [ $MUTE_STATE = yes ]; then
                 pactl set-sink-mute $SINK_NAME 0
+                MUTE_STATE="no"
         fi
 }
- 
+
 function show() {
         BAR=""
 	COLOR=""
         if [[ $MUTE_STATE = yes || $VOL_NOW == "0x000" ]]; then
-                BAR="mute"
-		COLOR="red"
-                ITERATOR=$((STEPS / 2 - 2))
-                while [ $ITERATOR -gt 0 ]; do
-                        BAR=" ${BAR} "
-                        ITERATOR=$((ITERATOR - 1))
-                done
-        else
-		COLOR="green"
-                DENOMINATOR=$((VOL_MAX / STEPS))
-                LINES=$((VOL_NOW / DENOMINATOR))
-                DOTS=$((STEPS - LINES))
-                while [ $LINES -gt 0 ]; do
-                        BAR="${BAR}|"
-                        LINES=$((LINES - 1))
-                done
-                while [ $DOTS -gt 0 ]; do
-                        BAR="${BAR}."
-                        DOTS=$((DOTS - 1))
-                done
+                COLOR="red"
         fi
-	killall aosd_cat &> /dev/null
-        echo "$BAR" | aosd_cat -p 0 -x 50 -y 600 -n "Droid Sans Mono 50" -u 1000 -o 500 -R $COLOR -f 500
+        $HOME/bin/osd-show-bar $VOL_NOW $VOL_MAX $COLOR
 }
- 
+
 case "$1" in
         plus)
                 plus

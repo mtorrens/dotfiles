@@ -38,22 +38,13 @@ nitrogen --restore &
 # System tray
 bbpager &
 lal &
-(sleep 1 && docker &)
+docker &
 
 # Battery monitor
-(sleep 2 && batti &)
-
-# Volume mixer
-(sleep 2 && volti &)
-
-# NetworkManager
-(sleep 2 && nm-applet &)
-
-# Dropbox
-(sleep 2 && dropboxd &)
+batti &
 
 # Disk mounter (the environment variable makes it find the icons)
-(sleep 2 && DESKTOP_SESSION=gnome yaudtray &)
+DESKTOP_SESSION=gnome yaudtray &
 
 # Kupfer
 kupfer --no-splash &
@@ -62,7 +53,7 @@ kupfer --no-splash &
 redshift &
 
 # Update checker
-(sleep 2 && kalu &)
+kalu &
 
 # Personal Wiki
 [[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server &

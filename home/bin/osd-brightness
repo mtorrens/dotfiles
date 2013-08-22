@@ -2,51 +2,37 @@
 
 # Root
 BACKLIGHT=/sys/class/backlight/intel_backlight
- 
-# set max allowed volume
+
+# set max allowed brightness
 MAX=`cat $BACKLIGHT/max_brightness`
- 
+
 STEPS="10"
 STEP=$((MAX / STEPS))
 
 NOW=`cat $BACKLIGHT/brightness`
- 
+
 function plus() {
 	NEW=$((NOW + STEP))
-        if [ $NEW -gt $((MAX)) ]; then
-                NEW=$((MAX))
-        fi
+  if [ $NEW -gt $((MAX)) ]; then
+    NEW=$((MAX))
+  fi
 	echo $NEW > $BACKLIGHT/brightness
 	NOW=$NEW
 }
- 
+
 function minus() {
-        NEW=$((NOW - STEP))
-        if [ $(($NEW)) -lt 0 ]; then
-                NEW=0
-        fi
+  NEW=$((NOW - STEP))
+    if [ $(($NEW)) -lt 0 ]; then
+      NEW=0
+  fi
 	echo $NEW > $BACKLIGHT/brightness
 	NOW=$NEW
 }
- 
+
 function show() {
-        BAR=""
-	COLOR="green"
-        DENOMINATOR=$((MAX / STEPS))
-        LINES=$((NOW / DENOMINATOR))
-        DOTS=$((STEPS - LINES))
-        while [ $LINES -gt 0 ]; do
-                BAR="${BAR}|"
-                LINES=$((LINES - 1))
-        done
-        while [ $DOTS -gt 0 ]; do
-                BAR="${BAR}."
-                DOTS=$((DOTS - 1))
-        done
-	killall aosd_cat &>/dev/null
-        echo "$BAR" | aosd_cat -p 0 -x 50 -y 600 -n "Droid Sans Mono 50" -u 1000 -o 500 -R $COLOR -f 500
+  $HOME/bin/osd-show-bar $NOW $MAX
 }
- 
+
 case "$1" in
         plus)
                 plus
