@@ -36,6 +36,7 @@ nitrogen --restore &
 
 
 # System tray
+bbpager &
 lal &
 (sleep 1 && docker &)
 
