@@ -28,5 +28,5 @@ lal*font: Droid Sans
 lal*fontsize: 14
 lal*bold: false
 lal*color: #cccccc
-lal*width: 200
+lal*width: 175
 lal*format: %a, %b %0d | %H:%M

@@ -1,10 +1,14 @@
-#
-# Set system-wide environment variables here for Openbox
-# User-specific variables should be placed in $HOME/.config/openbox/environment
-#
+# Start DBus
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && type dbus-launch >/dev/null; then
+  eval $(dbus-launch --sh-syntax --exit-with-session)
+fi
 
-# To set your language for displaying messages and time/date formats, use the following:
-#LANG=en_CA.UTF8
+# Enable system bleeps and bloops
+export GTK_MODULES="canberra-gtk-module"
 
-# To set your keyboard layout, you need to modify your X config:
-# http://www.google.com/search?q=how+to+set+keyboard+layout+xorg
+# Silliness for QT4 to find GTK icon theme
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# Start GNOME keyring
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK

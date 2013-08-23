@@ -168,13 +168,13 @@
   </item>
   <item label="Reboot">
     <action name="Execute">
-      <command>gksu "systemctl reboot"</command>
+      <command>gksu 'systemctl reboot'</command>
       <startupnotify><enabled>no</enabled></startupnotify>
     </action>
   </item>
   <item label="Shut Down">
     <action name="Shut Down">
-      <command>gksu "systemctl poweroff"</command>
+      <command>gksu 'systemctl poweroff'</command>
       <startupnotify><enabled>no</enabled></startupnotify>
     </action>
   </item>
