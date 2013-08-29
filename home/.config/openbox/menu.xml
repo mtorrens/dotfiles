@@ -42,12 +42,6 @@
 </menu>
 
 <menu id="apps-net-menu" label="Internet">
-  <item label="Thunderbird">
-    <action name="Execute">
-      <command>thunderbird</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
   <item label="FileZilla">
     <action name="Execute">
       <command>filezilla</command>
@@ -110,6 +104,39 @@
   </item>
 </menu>
 
+<menu id="apps-games-menu" label="Games">
+  <item label="FCEUX (NES)">
+    <action name="Execute">
+      <command>fceux</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="openbox-config-menu" label="Openbox Config">
+  <item label="Edit menu.xml">
+    <action name="Execute">
+      <command>subl3 ~/.config/openbox/menu.xml</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Edit rc.xml">
+    <action name="Execute">
+      <command>subl3 ~/.config/openbox/rc.xml</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="OBConf">
+    <action name="Execute">
+      <command>obconf</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Reconfigure Openbox">
+    <action name="Reconfigure" />
+  </item>
+</menu>
+
 <menu id="xdg-pipe-menu" label="XDG Menu" execute="xdg_menu --format openbox3-pipe --root-menu /etc/xdg/menus/arch-applications.menu" />
 
 <menu id="system-menu" label="System">
@@ -147,15 +174,7 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="OBConf">
-    <action name="Execute">
-      <command>obconf</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <item label="Reconfigure Openbox">
-    <action name="Reconfigure" />
-  </item>
+  <menu id="openbox-config-menu" />
   <separator />
   <menu id="xdg-pipe-menu" />
 </menu>
@@ -173,7 +192,7 @@
     </action>
   </item>
   <item label="Shut Down">
-    <action name="Shut Down">
+    <action name="Execute">
       <command>gksu 'systemctl poweroff'</command>
       <startupnotify><enabled>no</enabled></startupnotify>
     </action>
@@ -194,6 +213,12 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <item label="nvPY">
+    <action name="Execute">
+      <command>nvpy</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
   <item label="Sublime Text">
     <action name="Execute">
       <command>subl3</command>
@@ -206,11 +231,18 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <item label="Thunderbird">
+    <action name="Execute">
+      <command>thunderbird</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
   <separator/>
   <menu id="apps-productivity-menu"/>
   <menu id="apps-net-menu"/>
   <menu id="apps-graphics-menu"/>
   <menu id="apps-media-menu"/>
+  <menu id="apps-games-menu"/>
   <separator label="System" />
   <menu id="system-menu"/>
   <separator />
