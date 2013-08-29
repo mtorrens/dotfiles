@@ -47,6 +47,9 @@ if [[ ! -z "$ZSH" ]]; then
   DISABLE_CORRECTION="true"
   plugins=(archlinux git bundler colored-man gem rake rbenv)
   source $ZSH/oh-my-zsh.sh
+
+  # Except for this.  Don't do this.
+  unalias 1 2 3 4 5 6 7 8 9
 fi
 
 ###############################################################################
