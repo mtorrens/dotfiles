@@ -6,7 +6,7 @@ BACKLIGHT=/sys/class/backlight/intel_backlight
 # set max allowed brightness
 MAX=`cat $BACKLIGHT/max_brightness`
 
-STEPS="10"
+STEPS="20"
 STEP=$((MAX / STEPS))
 
 NOW=`cat $BACKLIGHT/brightness`
