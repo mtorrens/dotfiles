@@ -16,7 +16,7 @@ URxvt*cursorColor:  #e6e1dc
 
 ! XFT
 Xft.hinting: true
-Xft.hintstyle: hintfull
+Xft.hintstyle: hintslight
 Xft.antialias: rgba
 Xft.rgba: rgb
 
