@@ -16,9 +16,6 @@ nitrogen --restore &
 # Shift color temp of display at night
 redshift &
 
-# Personal wiki
-[[ -d $HOME/Dropbox/Charles/Wiki ]] && cd $HOME/Dropbox/Charles/Wiki && rake server
-
 
 # Start dock apps (mini-sleeps to keep them in order, these are supposed
 # to hang execution of the whole script so that Openbox doesn't start
