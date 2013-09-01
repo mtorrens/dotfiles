@@ -3,12 +3,6 @@
 <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
 <menu id="apps-productivity-menu" label="Productivity">
-  <item label="Zotero">
-    <action name="Execute">
-      <command>zotero</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
   <item label="Writer">
     <action name="Execute">
       <command>lowriter</command>
@@ -36,6 +30,21 @@
   <item label="VirtualBox">
     <action name="Execute">
       <command>VirtualBox</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-research-menu" label="Research">
+  <item label="Zotero">
+    <action name="Execute">
+      <command>zotero</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Recoll">
+    <action name="Execute">
+      <command>recoll</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -239,6 +248,7 @@
   </item>
   <separator/>
   <menu id="apps-productivity-menu"/>
+  <menu id="apps-research-menu"/>
   <menu id="apps-net-menu"/>
   <menu id="apps-graphics-menu"/>
   <menu id="apps-media-menu"/>
