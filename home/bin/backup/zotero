@@ -5,7 +5,7 @@
 if [ `uname -s` = "Darwin" ]; then
   ZOT_PROFILES_DIR="$HOME/Library/Application Support/Zotero/Profiles"
 else
-  ZOT_PROFILES_DIR="$HOME/.zotero/Profiles"
+  ZOT_PROFILES_DIR="$HOME/.zotero/zotero"
 fi
 OUTDIR=$HOME/Dropbox/Charles/Storage/Backup
 

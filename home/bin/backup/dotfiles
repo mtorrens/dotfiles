@@ -3,51 +3,27 @@
 # will find them.
 
 DOTFILES="${HOME}/Dropbox/Charles/Storage/Backup/dotfiles"
+HSREPO="${HOME}/.homesick/repos/dotfiles"
 
+# Start by getting all the files from the git repo
+cd $HSREPO
+for i in `git ls-files home | egrep -v '^home/bin'`
+do
+  dest="$DOTFILES/`echo $i | sed 's@home/\.@dot@'`"
+  mkdir -p `dirname $dest`
+  cp $HSREPO/$i $dest
+done
+
+# Catch everything ignored by the above that we still want
 cp ~/.gitconfig $DOTFILES/dotgitconfig
-cp ~/.gitignore $DOTFILES/dotgitignore
-cp ~/.gitmodules $DOTFILES/dotgitmodules
+cp ~/.notifier.conf $DOTFILES/dotnotifier.conf
+cp ~/.nvpy.cfg $DOTFILES/dotnvpy.cfg
+cp ~/.transifexrc $DOTFILES/dottransifexrc
+cp ~/.trc $DOTFILES/dottrc
 
 rm -rf $DOTFILES/bin
 cp -Rf ~/bin $DOTFILES/bin
 
-cp ~/.bashrc $DOTFILES/dotbashrc
-cp ~/.bash_profile $DOTFILES/dotbash_profile
-cp ~/.hushlogin $DOTFILES/dothushlogin
-cp ~/.inputrc $DOTFILES/dotinputrc
-cp ~/.profile $DOTFILES/dotprofile
-
-cp ~/.Xdefaults $DOTFILES/dotXdefaults
-cp ~/.xinitrc $DOTFILES/dotxinitrc
-cp ~/.latexmkrc $DOTFILES/dotlatexmkrc
-cp ~/.nanorc $DOTFILES/dotnanorc
-cp ~/.hgrc $DOTFILES/dothgrc
-cp ~/.gtkrc-2.0 $DOTFILES/dotgtkrc-2.0
-cp ~/.gnupg/gpg.conf $DOTFILES/gpg.conf
-
-rm -rf $DOTFILES/dotsubversion
-mkdir $DOTFILES/dotsubversion
-cp ~/.subversion/{config,servers} $DOTFILES/dotsubversion
-
-cp ~/.gdbinit $DOTFILES/dotgdbinit
-
 rm -rf $DOTFILES/dotprivate
 cp -Rf ~/.private $DOTFILES/dotprivate
 
-rm -rf $DOTFILES/dotconfig
-cp -Rf ~/.config $DOTFILES/dotconfig
-
-rm -rf $DOTFILES/dotemacs.d
-cp -Rf ~/.emacs.d $DOTFILES/dotemacs.d
-
-rm -rf $DOTFILES/dotssh
-cp -Rf ~/.ssh $DOTFILES/dotssh
-
-rm -rf $DOTFILES/dotGNUstep
-cp -Rf ~/.GNUstep $DOTFILES/dotGNUstep
-
-rm -rf $DOTFILES/dotrecoll
-cp -Rf ~/.recoll $DOTFILES/dotrecoll
-
-# NB: This is a (very) private file!
-cp ~/.trc $DOTFILES/dottrc
