@@ -31,3 +31,5 @@ docker &
 
 sleep 1
 DESKTOP_SESSION=gnome yaudtray &
+weatherboy -l 2394734 -u c -a &
+gmail-notify &
