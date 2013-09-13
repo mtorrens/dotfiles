@@ -153,6 +153,10 @@ _dev() { _files -W ~/Development -/; }
 compdef _dev dev
 compdef _dev devm
 
+devp() { subl3 --project ~/Development/$1/$1.sublime-project }
+_devp() { _files -W ~/Development -/; }
+compdef _devp devp
+
 # Fast Dropbox access
 db() { cd ~/Dropbox/Charles/$1; }
 _db() { _files -W ~/Dropbox/Charles -/; }
