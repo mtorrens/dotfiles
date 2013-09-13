@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<openbox_menu xmlns="http://openbox.org/3.4/menu">
+<openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/">
 
 <menu id="apps-productivity-menu" label="Productivity">
-  <item label="Writer">
+  <item label="Writer" icon="/usr/share/icons/Tango/24x24/mimetypes/x-office-document.png">
     <action name="Execute">
       <command>lowriter</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Calc">
+  <item label="Calc" icon="/usr/share/icons/Tango/24x24/mimetypes/x-office-spreadsheet.png">
     <action name="Execute">
       <command>localc</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Impress">
+  <item label="Impress" icon="/usr/share/icons/Tango/24x24/mimetypes/x-office-presentation.png">
     <action name="Execute">
       <command>loimpress</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Timer">
+  <item label="Timer" icon="/usr/share/icons/Tango/24x24/actions/appointment-new.png">
     <action name="Execute">
       <command>pystopwatch</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="VirtualBox">
+  <item label="VirtualBox" icon="/usr/share/icons/hicolor/24x24/mimetypes/virtualbox-vbox.png">
     <action name="Execute">
       <command>VirtualBox</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -36,13 +36,13 @@
 </menu>
 
 <menu id="apps-research-menu" label="Research">
-  <item label="Zotero">
+  <item label="Zotero" icon="/usr/share/icons/Tango/24x24/places/folder-documents.png">
     <action name="Execute">
       <command>zotero</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Recoll">
+  <item label="Recoll" icon="/usr/share/icons/Tango/24x24/actions/search.png">
     <action name="Execute">
       <command>recoll</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -51,13 +51,13 @@
 </menu>
 
 <menu id="apps-net-menu" label="Internet">
-  <item label="FileZilla">
+  <item label="FileZilla" icon="/usr/share/icons/Tango/24x24/apps/preferences-system-network-proxy.png">
     <action name="Execute">
       <command>filezilla</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Transmission">
+  <item label="Transmission" icon="/usr/share/icons/hicolor/24x24/apps/transmission.png">
     <action name="Execute">
       <command>transmission</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -66,19 +66,19 @@
 </menu>
 
 <menu id="apps-graphics-menu" label="Graphics">
-  <item label="Gimp">
+  <item label="Gimp" icon="/usr/share/icons/hicolor/24x24/apps/gimp.png">
     <action name="Execute">
       <command>gimp</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Inkscape">
+  <item label="Inkscape" icon="/usr/share/icons/hicolor/24x24/apps/inkscape.png">
     <action name="Execute">
       <command>inkscape</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Draw">
+  <item label="Draw" icon="/usr/share/icons/Tango/24x24/mimetypes/x-office-drawing.png">
     <action name="Execute">
       <command>lodraw</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -87,25 +87,25 @@
 </menu>
 
 <menu id="apps-media-menu" label="Multimedia">
-  <item label="VLC">
+  <item label="VLC" icon="/usr/share/icons/hicolor/48x48/apps/vlc.png">
     <action name="Execute">
       <command>vlc</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="HandBrake">
+  <item label="HandBrake" icon="/usr/share/icons/hicolor/24x24/apps/hb-icon.png">
     <action name="Execute">
       <command>handbrake</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Picard">
+  <item label="Picard" icon="/usr/share/icons/hicolor/24x24/apps/picard.png">
     <action name="Execute">
       <command>picard</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Audacity">
+  <item label="Audacity" icon="/usr/share/icons/hicolor/24x24/apps/audacity.png">
     <action name="Execute">
       <command>audacity</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -114,7 +114,7 @@
 </menu>
 
 <menu id="apps-games-menu" label="Games">
-  <item label="FCEUX (NES)">
+  <item label="FCEUX (NES)" icon="/usr/share/icons/Tango/24x24/devices/input-gaming.png">
     <action name="Execute">
       <command>fceux</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -123,25 +123,25 @@
 </menu>
 
 <menu id="openbox-config-menu" label="Openbox Config">
-  <item label="Edit menu.xml">
+  <item label="Edit menu.xml" icon="/usr/share/icons/Tango/24x24/actions/bookmark-new.png">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/menu.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Edit rc.xml">
+  <item label="Edit rc.xml" icon="/usr/share/icons/Tango/24x24/emblems/emblem-system.png">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/rc.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="OBConf">
+  <item label="OBConf" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-theme.png">
     <action name="Execute">
       <command>obconf</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Reconfigure Openbox">
+  <item label="Reconfigure Openbox" icon="/usr/share/icons/Tango/24x24/actions/view-refresh.png">
     <action name="Reconfigure" />
   </item>
 </menu>
@@ -149,58 +149,61 @@
 <menu id="xdg-pipe-menu" label="XDG Menu" execute="xdg_menu --format openbox3-pipe --root-menu /etc/xdg/menus/arch-applications.menu" />
 
 <menu id="system-menu" label="System">
-  <item label="ARandR">
+  <item label="ARandR" icon="/usr/share/icons/Tango/24x24/actions/view-fullscreen.png">
     <action name="Execute">
       <command>arandr</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Seahorse">
+  <item label="Seahorse" icon="/usr/share/icons/hicolor/24x24/apps/seahorse.png">
     <action name="Execute">
       <command>seahorse</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="fsv">
+  <item label="fsv" icon="/usr/share/icons/Tango/24x24/devices/drive-harddisk.png">
     <action name="Execute">
       <command>fsv2</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Manage Cups Printers">
+  <item label="Manage Cups Printers" icon="/usr/share/icons/Tango/24x24/devices/printer.png">
     <action name="Execute">
       <command>xdg-open http://localhost:631/</command>
-      <startupnotify>
-        <enabled>no</enabled>
-        <icon>cups</icon>
-      </startupnotify>
+      <startupnotify><enabled>no</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="GParted" icon="/usr/share/icons/hicolor/24x24/apps/gparted.png">
+    <action name="Execute">
+      <command>gsku gparted</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator />
-  <item label="Set Background">
+  <item label="Set Background" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-wallpaper.png">
     <action name="Execute">
       <command>nitrogen ~/Dropbox/Charles/Personal/Wallpaper</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <menu id="openbox-config-menu" />
+  <menu id="openbox-config-menu" icon="/usr/share/icons/Tango/24x24/apps/preferences-system-windows.png" />
   <separator />
-  <menu id="xdg-pipe-menu" />
+  <menu id="xdg-pipe-menu" icon="/usr/share/icons/Tango/24x24/places/distributor-logo.png" />
 </menu>
 
 <menu id="end-session-menu" label="End Session">
-  <item label="Log Out">
+  <item label="Log Out" icon="/usr/share/icons/Tango/24x24/actions/system-log-out.png" >
     <action name="Exit">
       <prompt>yes</prompt>
     </action>
   </item>
-  <item label="Reboot">
+  <item label="Reboot" icon="/usr/share/icons/Tango/24x24/actions/view-refresh.png">
     <action name="Execute">
       <command>gksu 'systemctl reboot'</command>
       <startupnotify><enabled>no</enabled></startupnotify>
     </action>
   </item>
-  <item label="Shut Down">
+  <item label="Shut Down" icon="/usr/share/icons/Tango/24x24/actions/system-shutdown.png">
     <action name="Execute">
       <command>gksu 'systemctl poweroff'</command>
       <startupnotify><enabled>no</enabled></startupnotify>
@@ -209,54 +212,56 @@
 </menu>
 
 <menu id="root-menu" label="Openbox 3">
+  <showIcons>yes</showIcons>
+
   <separator label="Applications" />
-  <item label="Terminal">
+  <item label="Terminal" icon="/usr/share/icons/Tango/24x24/apps/terminal.png">
     <action name="Execute">
       <command>sakura</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="PCManFM">
+  <item label="PCManFM" icon="/usr/share/icons/Tango/24x24/apps/file-manager.png">
     <action name="Execute">
       <command>pcmanfm</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="nvPY">
+  <item label="nvPY" icon="/usr/share/icons/Tango/24x24/actions/edit-find-replace.png">
     <action name="Execute">
       <command>nvpy</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Sublime Text">
+  <item label="Sublime Text" icon="/usr/share/icons/Tango/24x24/apps/text-editor.png">
     <action name="Execute">
       <command>subl3</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Google Chrome">
+  <item label="Google Chrome" icon="/usr/share/icons/Tango/24x24/apps/web-browser.png">
     <action name="Execute">
       <command>google-chrome</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Thunderbird">
+  <item label="Thunderbird" icon="/usr/share/icons/Tango/24x24/apps/email.png">
     <action name="Execute">
       <command>thunderbird</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator/>
-  <menu id="apps-productivity-menu"/>
-  <menu id="apps-research-menu"/>
-  <menu id="apps-net-menu"/>
-  <menu id="apps-graphics-menu"/>
-  <menu id="apps-media-menu"/>
-  <menu id="apps-games-menu"/>
+  <menu id="apps-productivity-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-office.png" />
+  <menu id="apps-research-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-science.png" />
+  <menu id="apps-net-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-internet.png" />
+  <menu id="apps-graphics-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-graphics.png" />
+  <menu id="apps-media-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-multimedia.png" />
+  <menu id="apps-games-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-games.png" />
   <separator label="System" />
-  <menu id="system-menu"/>
+  <menu id="system-menu" icon="/usr/share/icons/Tango/24x24/categories/applications-system.png" />
   <separator />
-  <menu id="end-session-menu" />
+  <menu id="end-session-menu" icon="/usr/share/icons/Tango/24x24/apps/preferences-system-session.png" />
 </menu>
 
 </openbox_menu>
