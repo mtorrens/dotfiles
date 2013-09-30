@@ -48,6 +48,18 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <item label="SpeedCrunch" icon="/usr/share/icons/Tango/24x24/apps/accessories-calculator.png">
+    <action name="Execute">
+      <command>speedcrunch</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="wxMaxima" icon="/usr/share/icons/Tango/24x24/apps/accessories-calculator.png">
+    <action name="Execute">
+      <command>wxmaxima</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
 </menu>
 
 <menu id="apps-net-menu" label="Internet">
@@ -120,6 +132,12 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <item label="Snes9x (SNES)" icon="/usr/share/icons/Tango/24x24/devices/input-gaming.png">
+    <action name="Execute">
+      <command>snes9x-gtk</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
 </menu>
 
 <menu id="openbox-config-menu" label="Openbox Config">
@@ -183,6 +201,12 @@
   <item label="Set Background" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-wallpaper.png">
     <action name="Execute">
       <command>nitrogen ~/Dropbox/Charles/Personal/Wallpaper</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="Screensaver Properties" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-screensaver.png">
+    <action name="Execute">
+      <command>xscreensaver-demo</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>

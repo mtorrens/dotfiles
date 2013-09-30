@@ -247,7 +247,7 @@
     </keybind>
     <keybind key="W-l">
       <action name="Execute">
-        <command>slimlock</command>
+        <command>xscreensaver-command -lock</command>
       </action>
     </keybind>
     <keybind key="XF86MonBrightnessDown">
@@ -273,6 +273,11 @@
     <keybind key="XF86AudioMute">
       <action name="Execute">
         <command>sh -c '~/bin/osd-volume mute'</command>
+      </action>
+    </keybind>
+    <keybind key="XF86PowerOff">
+      <action name="Execute">
+        <command>gksu 'systemctl poweroff'</command>
       </action>
     </keybind>
     <!-- Keybindings for windows -->
