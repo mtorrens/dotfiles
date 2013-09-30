@@ -49,7 +49,7 @@ if [[ ! -z "$ZSH" ]]; then
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
-  unalias 1 2 3 4 5 6 7 8 9
+  unalias 1 2 3 4 5 6 7 8 9 spec
 fi
 
 ###############################################################################
@@ -93,6 +93,9 @@ elif [ `uname -o` = "Cygwin" ]; then
   fi
   trap logout HUP
 fi
+
+# JRuby configuration (ONCE JRUBY 1.7.5 IS RELEASED, THIS SHOULD NOT BE NECESSARY!!)
+export JRUBY_OPTS="-Xcompile.invokedynamic=false"
 
 ###############################################################################
 # Colorize all the things
