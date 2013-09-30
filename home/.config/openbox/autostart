@@ -2,6 +2,7 @@
 xrdb -merge $HOME/.Xresources
 setxkbmap -option ctrl:nocaps
 xrandr --dpi 135
+xscreensaver -no-splash &
 
 # Default screen brightness
 echo "908" > /sys/class/backlight/intel_backlight/brightness
@@ -30,6 +31,5 @@ sleep 1
 docker &
 
 sleep 1
-DESKTOP_SESSION=gnome yaudtray &
 weatherboy -l 2394734 -u c -a &
 gmail-notify &
