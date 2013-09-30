@@ -1,0 +1,6 @@
+[
+    // On a MacBook Air, the "insert" key is actually fn+Enter, which is way
+    // too easy to press by accident.  Just rebind it to actually typing a
+    // carriage return.
+    { "keys": ["insert"], "command": "insert", "args": {"characters": "\n"} }
+]
