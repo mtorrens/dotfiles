@@ -1,0 +1,7 @@
+#!/bin/sh
+# Way simpler version of the too-complex MultiMarkdown mmd2pdf command.
+
+multimarkdown -b -t latex "$1"
+latexmk "`basename '$1' .md`.tex"
+latexmk -c "`basename '$1' .md`.tex"
+rm "`basename '$1' .md`.tex"
