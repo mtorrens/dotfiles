@@ -4,19 +4,22 @@
 
 DOTFILES="${HOME}/Dropbox/Charles/Storage/Backup/dotfiles"
 HSREPO="${HOME}/.homesick/repos/dotfiles"
+export IFS="
+"
 
 # Start by getting all the files from the git repo
 cd $HSREPO
 for i in `git ls-files home | egrep -v '^home/bin'`
 do
-  dest="$DOTFILES/`echo $i | sed 's@home/\.@dot@'`"
-  mkdir -p `dirname $dest`
-  cp $HSREPO/$i $dest
+  dest="$DOTFILES/`echo "$i" | sed 's@home/\.@dot@'`"
+  mkdir -p `dirname "$dest"`
+  cp "$HSREPO/$i" "$dest"
 done
+
+unset $IFS
 
 # Catch everything ignored by the above that we still want
 cp ~/.gitconfig $DOTFILES/dotgitconfig
-cp ~/.notifier.conf $DOTFILES/dotnotifier.conf
 cp ~/.nvpy.cfg $DOTFILES/dotnvpy.cfg
 cp ~/.transifexrc $DOTFILES/dottransifexrc
 cp ~/.trc $DOTFILES/dottrc
