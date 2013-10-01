@@ -32,4 +32,3 @@ docker &
 
 sleep 1
 weatherboy -l 2394734 -u c -a &
-gmail-notify &
