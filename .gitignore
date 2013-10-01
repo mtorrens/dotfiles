@@ -1,2 +1,8 @@
 home/bin/texmf/bibtex/bib
 *.pyc
+
+# Things I don't want to accidentally track
+home/.nvpy.cfg
+home/.trc
+home/.transifexrc
+
