@@ -14,9 +14,6 @@ dunst &
 # Set background
 nitrogen --restore &
 
-# Shift color temp of display at night
-redshift &
-
 
 # Start dock apps (mini-sleeps to keep them in order, these are supposed
 # to hang execution of the whole script so that Openbox doesn't start
