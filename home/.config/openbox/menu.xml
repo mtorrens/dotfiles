@@ -263,9 +263,15 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Thunderbird" icon="/usr/share/icons/Tango/24x24/apps/email.png">
+  <item label="Wunderlist" icon="/usr/share/icons/Tango/24x24/emblems/emblem-unreadable.png">
     <action name="Execute">
-      <command>thunderbird</command>
+      <command>/opt/google/chrome/google-chrome --app-id=ojcflmmmcfpacggndoaaflkmcoblhnbh --profile-directory=Default</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <item label="GMail" icon="/usr/share/icons/Tango/24x24/apps/email.png">
+    <action name="Execute">
+      <command>/opt/google/chrome/google-chrome --app-id=ejidjjhkpiempkbhmpbfngldlkglhimk --profile-directory=Default</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
