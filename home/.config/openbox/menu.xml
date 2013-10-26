@@ -193,7 +193,7 @@
   </item>
   <item label="GParted" icon="/usr/share/icons/hicolor/24x24/apps/gparted.png">
     <action name="Execute">
-      <command>gsku gparted</command>
+      <command>gksu gparted</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>

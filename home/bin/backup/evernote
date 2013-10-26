@@ -1,0 +1,14 @@
+#!/bin/bash
+# Back up Evernote notes to Markdown
+
+DIR=$HOME/Dropbox/Charles/Storage/Notes
+
+rm -rf $DIR
+mkdir $DIR
+
+pushd $DIR
+
+$HOME/bin/evernote-to-markdown
+echo "TOTAL: `find . -iname '*.md' | wc -l` notes downloaded"
+
+popd
