@@ -3,7 +3,7 @@
 
 # This will be different on other operating systems
 CHROME_DIR="${HOME}/.config/google-chrome/Default"
-OUTDIR=${HOME}/Dropbox/Charles/Storage/Backup/
+OUTDIR="/media/truecrypt1/Backup/"
 
 cp "$CHROME_DIR/Bookmarks" .
 lzma -9 ./Bookmarks

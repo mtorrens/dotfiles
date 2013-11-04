@@ -2,7 +2,7 @@
 # Back up my dotfiles to a place where my off-site backup utility
 # will find them.
 
-DOTFILES="${HOME}/Dropbox/Charles/Storage/Backup/dotfiles"
+DOTFILES="/media/truecrypt1/Backup/dotfiles"
 HSREPO="${HOME}/.homesick/repos/dotfiles"
 export IFS="
 "
@@ -13,20 +13,19 @@ for i in `git ls-files home | egrep -v '^home/bin'`
 do
   dest="$DOTFILES/`echo "$i" | sed 's@home/\.@dot@'`"
   mkdir -p `dirname "$dest"`
-  cp "$HSREPO/$i" "$dest"
+  cp -L "$HSREPO/$i" "$dest"
 done
 
 unset $IFS
 
 # Catch everything ignored by the above that we still want
 cp ~/.gitconfig $DOTFILES/dotgitconfig
-cp ~/.nvpy.cfg $DOTFILES/dotnvpy.cfg
 cp ~/.transifexrc $DOTFILES/dottransifexrc
 cp ~/.trc $DOTFILES/dottrc
 
 rm -rf $DOTFILES/bin
-cp -Rf ~/bin $DOTFILES/bin
+cp -RLf ~/bin $DOTFILES/bin
 
 rm -rf $DOTFILES/dotprivate
-cp -Rf ~/.private $DOTFILES/dotprivate
+cp -RLf ~/.private $DOTFILES/dotprivate
 

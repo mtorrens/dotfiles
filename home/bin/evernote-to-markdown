@@ -13,7 +13,7 @@ for notebook in `geeknote notebook-list | grep ' : ' | sed 's/.* : //'`; do
 
   for notenum in `seq 1 $numfound`; do
     title="`cat out.list | grep " $notenum : " | sed 's/.*2013  //'`"
-    filename="`echo "$title" | sed -e "s/[/:]/_/g"`"
+    filename="`echo "$title" | sed -e "s/[/:?]/_/g"`"
 
     echo "...$title"
 

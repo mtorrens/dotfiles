@@ -1,7 +1,7 @@
 #!/bin/bash
 # Pull down some calendars and pack them for backup
 
-OUTDIR="${HOME}/Dropbox/Charles/Storage/Backup"
+OUTDIR="/media/truecrypt1/Backup/"
 
 # This file should contain:
 # export CAL_1="url"

@@ -1,9 +1,10 @@
 #!/bin/sh
+OUTDIR="/media/truecrypt1/Backup/"
 
 osascript ~/bin/backup/bookmarks-safari.scpt
 sleep 1
 
 mv "$HOME/Desktop/Safari Bookmarks.html" ./bookmarks.html
 xz -9 bookmarks.html
-mv bookmarks.html.xz ~/Dropbox/Charles/Storage/Backup/
+mv bookmarks.html.xz $OUTDIR
 

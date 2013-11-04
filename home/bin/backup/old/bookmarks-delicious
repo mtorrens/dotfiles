@@ -2,6 +2,7 @@
 # Back up my bookmarks from Delicious
 
 source ${HOME}/bin/backup/utilities.sh
+OUTDIR="/media/truecrypt1/Backup/"
 
 # Get the file with the Delicious password
 get_private_file delicious-pass delicious-pass
@@ -13,5 +14,5 @@ release_private_file delicious-pass
 
 # Compress and save to backup directory
 lzma -9 bookmarks.xml
-mv bookmarks.xml.lzma ${HOME}/Dropbox/Charles/Storage/Backup/
+mv bookmarks.xml.lzma $OUTDIR
 

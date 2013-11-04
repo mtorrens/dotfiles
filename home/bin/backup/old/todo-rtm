@@ -2,6 +2,8 @@
 # Back up my to-do list from Remember the Milk using wget with a password
 # credential file stored privately.
 
+OUTDIR="/media/truecrypt1/Backup/"
+
 #source ${HOME}/bin/backup/utilities.sh
 
 # Get the private wgetrc with RTM credentials
@@ -17,4 +19,4 @@ rm ~/.wgetrc
 
 # Compress and save to backup directory
 xz -9 todo.ics
-mv todo.ics.xz ${HOME}/Dropbox/Charles/Storage/Backup/
+mv todo.ics.xz $OUTDIR
