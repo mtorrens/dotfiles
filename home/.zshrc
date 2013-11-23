@@ -45,7 +45,7 @@ if [[ ! -z "$ZSH" ]]; then
   ZSH_THEME="gentoo"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
-  plugins=(archlinux git bundler colored-man gem rake rbenv)
+  plugins=(archlinux git bundler colored-man gem rake rbenv systemd)
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
@@ -93,9 +93,6 @@ elif [ `uname -o` = "Cygwin" ]; then
   fi
   trap logout HUP
 fi
-
-# JRuby configuration (ONCE JRUBY 1.7.5 IS RELEASED, THIS SHOULD NOT BE NECESSARY!!)
-export JRUBY_OPTS="-Xcompile.invokedynamic=false"
 
 ###############################################################################
 # Colorize all the things
