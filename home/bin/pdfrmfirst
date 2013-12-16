@@ -1,0 +1,14 @@
+#!/bin/sh
+# Remove the first page from a PDF file using ghostscript
+
+if [ "$1" = "--help" -o $# -ne 1 ]; then
+  echo "pdfrmfirst: remove the first page from a PDF file"
+  echo ""
+  echo "Usage: $0 <in.pdf>"
+  exit 1
+fi
+
+num_pages=`pdfinfo "$1" | grep '^Pages:' | sed 's/^Pages: *\([0-9]*\)/\1/'`
+
+gs -sDEVICE=pdfwrite -dBATCH -dQUIET -dNOPAUSE -dFirstPage=2 -dLastPage=$num_pages "-sOutputFile=_temp.pdf" "$1"
+mv _temp.pdf "$1"

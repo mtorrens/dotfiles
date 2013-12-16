@@ -1,0 +1,14 @@
+#!/bin/sh
+# Anonymize a given PDF file
+
+if [ "$1" = "--help" -o $# -ne 1 ]; then
+  echo "pdfanonymize: anonymize a PDF file"
+  echo ""
+  echo "Usage: $0 <in.pdf>"
+  exit 1
+fi
+
+mv "$1" "_$1"
+pdftk "_$1" update_info $HOME/bin/pdfanonymize.metadata output "$1"
+rm "_$1"
+
