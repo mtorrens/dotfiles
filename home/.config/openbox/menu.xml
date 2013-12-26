@@ -198,9 +198,9 @@
     </action>
   </item>
   <separator />
-  <item label="Set Background" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-wallpaper.png">
+  <item label="Desktop Preferences" icon="/usr/share/icons/Tango/24x24/apps/preferences-desktop-wallpaper.png">
     <action name="Execute">
-      <command>nitrogen ~/Dropbox/Charles/Personal/Wallpaper</command>
+      <command>spacefm --desktop-pref</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -245,9 +245,9 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="PCManFM" icon="/usr/share/icons/Tango/24x24/apps/file-manager.png">
+  <item label="SpaceFM" icon="/usr/share/icons/Tango/24x24/apps/file-manager.png">
     <action name="Execute">
-      <command>pcmanfm</command>
+      <command>spacefm</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>

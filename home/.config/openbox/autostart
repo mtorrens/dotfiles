@@ -11,8 +11,8 @@ echo "908" > /sys/class/backlight/intel_backlight/brightness
 # Notification daemon
 dunst &
 
-# Set background
-nitrogen --restore &
+# SpaceFM daemon for automounts and desktop
+spacefm --desktop &
 
 
 # Start dock apps (mini-sleeps to keep them in order, these are supposed

@@ -376,9 +376,10 @@
       <mousebind button="A-Left" action="Click">
         <action name="Unshade"/>
       </mousebind>
+      <!--
       <mousebind button="A-Left" action="Drag">
         <action name="Move"/>
-      </mousebind>
+      </mousebind> -->
       <mousebind button="A-Right" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
