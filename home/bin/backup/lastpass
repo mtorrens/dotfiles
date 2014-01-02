@@ -1,0 +1,10 @@
+#!/bin/sh
+# Back up LastPass export
+
+OUTDIR="/mnt/truecrypt1/Backup/"
+
+echo "EXPORT the LastPass vault as lastpass.csv and save to the current directory."
+read -p "Press any key to continue..."
+
+xz -9 lastpass.csv
+mv lastpass.csv.xz $OUTDIR
