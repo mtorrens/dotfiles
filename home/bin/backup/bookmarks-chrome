@@ -6,7 +6,7 @@ CHROME_DIR="${HOME}/.config/google-chrome/Default"
 OUTDIR="/mnt/truecrypt1/Backup/"
 
 cp "$CHROME_DIR/Bookmarks" .
-lzma -9 ./Bookmarks
-mv ./Bookmarks.lzma ${OUTDIR}
+xz -9 ./Bookmarks
+mv ./Bookmarks.xz ${OUTDIR}
 
 
