@@ -2,7 +2,7 @@
 # Back up my to-do list from Remember the Milk using wget with a password
 # credential file stored privately.
 
-OUTDIR="/media/truecrypt1/Backup/"
+OUTDIR="/mnt/truecrypt1/Backup/"
 
 #source ${HOME}/bin/backup/utilities.sh
 

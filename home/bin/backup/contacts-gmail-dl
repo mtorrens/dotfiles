@@ -1,7 +1,7 @@
 #!/bin/sh
 # Back up Google Contacts
 
-OUTDIR="/media/truecrypt1/Backup/"
+OUTDIR="/mnt/truecrypt1/Backup/"
 
 echo "DOWNLOAD the google.csv file from Google Contacts and place it in the current directory."
 read -p "Press any key to continue..."

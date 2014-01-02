@@ -2,7 +2,7 @@
 # Back up my bookmarks from Delicious
 
 source ${HOME}/bin/backup/utilities.sh
-OUTDIR="/media/truecrypt1/Backup/"
+OUTDIR="/mnt/truecrypt1/Backup/"
 
 # Get the file with the Delicious password
 get_private_file delicious-pass delicious-pass

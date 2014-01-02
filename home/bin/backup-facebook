@@ -1,7 +1,7 @@
 #!/bin/sh
 # Re-pack and backup Facebook from a ZIP
 
-OUTDIR="/media/truecrypt1/Backup/"
+OUTDIR="/mnt/truecrypt1/Backup/"
 
 echo "DOWNLOAD the Facebook ZIP archive and unzip it in the current directory."
 read -p "Press any key to continue..."

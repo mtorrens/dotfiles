@@ -3,7 +3,7 @@
 # also does some magic sauce to merge all the backups together using a
 # combination of sort, uniq, and tail.
 
-DIR="/media/truecrypt1/Twitter"
+DIR="/mnt/truecrypt1/Twitter"
 
 # Here we only want the most current one
 t followings --csv > $DIR/following.csv
