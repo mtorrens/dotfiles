@@ -14,15 +14,5 @@ dunst &
 # SpaceFM daemon for automounts and desktop
 spacefm --desktop &
 
-
-# Start dock apps (mini-sleeps to keep them in order, these are supposed
-# to hang execution of the whole script so that Openbox doesn't start
-# running /etc/xdg/autostart/* or ~/.config/autostart/* before docker is
-# up and running)
-lal &
-
-sleep 1
-docker &
-
-sleep 1
-weatherboy -l 12777834 -u c -a &
+# System tray
+trayer --edge top --align left --widthtype request --heighttype request --transparent true --expand true --alpha 255 --SetPartialStrut false --SetDockType false &
