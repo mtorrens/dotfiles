@@ -1,3 +1,6 @@
+# Lua extensions
+lua_load ~/.conky_lua_scripts.lua
+
 # Enable XFT
 use_xft yes
 xftfont Monospace:size=6
@@ -35,7 +38,6 @@ default_color grey
 default_shade_color gray24
 stippled_borders 2
 short_units yes
-use_spacer left
 
 # Smooth out some of the values
 cpu_avg_samples 2
@@ -57,7 +59,7 @@ $color$stippled_hr
 ${alignc}Temperatures
 ${alignc}CPU0: ${color white}${platform coretemp.0 temp 2}°C$color - CPU1: ${color white}${platform coretemp.0 temp 3}°C$color - MB: ${color white}${platform coretemp.0 temp 1}°C
 $color$stippled_hr
-${color}CPU:  ${color white}${cpu cpu1}%${alignr}${cpubar 6,175 cpu1}
-${color}RAM:  ${color white}$memperc%  $mem/$memmax${alignr}${membar 6,85}
-${color}Swap: ${color white}$swapperc% $swap/$swapmax${alignr}${swapbar 6,85}
-${color}Disk: ${color white}${fs_used_perc /}% ${fs_used /}/${fs_size /}${alignr}${fs_bar 6,85 /}
+${color}CPU:  ${color white}${lua_parse pad3 ${cpu cpu1}}%${alignr}${cpubar 6,180 cpu1}
+${color}RAM:  ${color white}${lua_parse pad3 $memperc}% $mem/$memmax${alignr}${membar 6,85}
+${color}Swap: ${color white}${lua_parse pad3 $swapperc}% $swap/$swapmax${alignr}${swapbar 6,85}
+${color}Disk: ${color white}${lua_parse pad3 ${fs_used_perc /}}% ${fs_used /}/${fs_size /}${alignr}${fs_bar 6,85 /}
