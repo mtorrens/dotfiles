@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# Return the ZIP code of the computer's current location
+require 'net/http'
+require 'uri'
+require 'json'
+
+begin
+  geo_uri = URI.parse('http://ipinfo.io/json')
+  geo_json = Net::HTTP.get(geo_uri)
+  ret = JSON.parse(geo_json)
+
+  puts ret['postal']
+rescue
+  puts ''
+end
