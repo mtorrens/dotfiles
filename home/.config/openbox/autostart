@@ -19,9 +19,6 @@ spacefm --desktop &
 # to hang execution of the whole script so that Openbox doesn't start
 # running /etc/xdg/autostart/* or ~/.config/autostart/* before docker is
 # up and running)
-bbpager &
-
-sleep 0.5
 lal &
 
 sleep 1
