@@ -10,7 +10,7 @@ if [ "$1" = "--help" -o $# -lt 1 ]; then
 fi
 
 HTML_FILE="$1"
-MD_FILE="`basename $HTML_FILE .html`.md"
+MD_FILE="`basename "$HTML_FILE" .html`.md"
 
 if type -P gsed > /dev/null; then
     SED='gsed'
