@@ -8,7 +8,7 @@ rm "`basename "$1" .md`.tex"
 
 # latexmkrc seems to ignore my value for $clean_ext, leaving files even if
 # they're present.  Nuke them manually.
-for ext in synctex.gz bbl snm nav pyg ist xdy fls glg glo log log out
+for ext in synctex.gz bbl snm nav pyg ist xdy fls glg glo log log out toc
 do
   rm -f "`basename "$1" .md`.$ext"
 done
