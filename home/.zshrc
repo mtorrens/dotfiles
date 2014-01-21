@@ -45,11 +45,11 @@ if [[ ! -z "$ZSH" ]]; then
   ZSH_THEME="gentoo"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
-  plugins=(archlinux git bundler colored-man gem rake rbenv systemd)
+  plugins=(archlinux git colored-man gem rake rbenv systemd)
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
-  unalias 1 2 3 4 5 6 7 8 9 spec
+  unalias 1 2 3 4 5 6 7 8 9
 fi
 
 ###############################################################################
