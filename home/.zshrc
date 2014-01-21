@@ -146,6 +146,9 @@ alias start=open
 # Dropbox: find all "conflicts", which just show up in the filesystem
 alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
 
+# Zotero: find all unlinked PDFs which are stored in the Zotero folder
+alias zotero-unlinked="find ~/.zotero/zotero/*.default/zotero/storage -iname '*.pdf'"
+
 # Development directories
 dev() { cd ~/Development/$1; }
 devm() { cd ~/Development/$1/master; }
