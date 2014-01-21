@@ -20,3 +20,4 @@ fi
 
 pdf2ps "$1" __tmp.ps
 ps2pdf -dPDFSETTINGS=/ebook __tmp.ps "$2"
+rm -f __tmp.ps
