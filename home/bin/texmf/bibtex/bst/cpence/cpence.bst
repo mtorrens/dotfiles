@@ -1,5 +1,5 @@
 %% File: `abbrvnat.bst'
-%% A modification of `abbrv.bst' for use with natbib package 
+%% A modification of `abbrv.bst' for use with natbib package
 %%
 %% Copyright 1993-2005 Patrick W Daly
 %% Max-Planck-Institut f\"ur Sonnensystemforschung
@@ -279,7 +279,7 @@ FUNCTION {format.authors}
 FUNCTION {format.editorsnotfirst}
 { editor empty$
     { "" }
-    { " " editor format.names * 
+    { " " editor format.names *
       editor num.names$ #1 >
         { ", editors" * }
         { ", editor" * }
@@ -291,7 +291,7 @@ FUNCTION {format.editorsnotfirst}
 FUNCTION {format.editors}
 { editor empty$
     { "" }
-    { " " editor name.or.dash format.names * 
+    { " " editor name.or.dash format.names *
       editor num.names$ #1 >
         { ", editors" * }
         { ", editor" * }
@@ -945,7 +945,10 @@ FUNCTION {misc}
   title howpublished new.block.checkb
   format.title output
   howpublished new.block.checka
-  howpublished output
+  howpublished url = not
+    { howpublished output }
+    { }
+  if$
   format.url output
   new.block
   note output
@@ -1397,7 +1400,7 @@ FUNCTION {reverse.pass}
   extra.label
   duplicate$ empty$
     'skip$
-    { year field.or.null #-1 #1 substring$ chr.to.int$ #65 < 
+    { year field.or.null #-1 #1 substring$ chr.to.int$ #65 <
     { "{\natexlab{" swap$ * "}}" * }
     { "{(\natexlab{" swap$ * "})}" * }
     if$ }
