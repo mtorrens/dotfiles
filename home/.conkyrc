@@ -26,6 +26,7 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 alignment top_right
 gap_x 10
 gap_y 10
+minimum_size 185 800
 
 # Shade, but don't outline or border
 draw_shades yes
@@ -48,6 +49,9 @@ TEXT
 ${font Deja Vu Sans:size=9}${alignr}${color white}${time %a, %b %-e | %H:%M}${voffset 30}
 ${font}${color white}$alignc$sysname $kernel on $machine
 ${color white}$alignc${exec whoami} @ $nodename
+$color$stippled_hr
+${alignc}E-mail at charles@charlespence.net
+${color white}${alignc}Inbox: ${execpi 300 ~/.private/conky-gmail}
 $color$stippled_hr
 ${alignc}Weather for ${execi 600 ~/bin/get-city}
 ${color white}${alignc}${execi 600 ~/bin/conky-weather}
