@@ -265,19 +265,19 @@
   </item>
   <item label="Wunderlist" icon="/usr/share/icons/elementary/categories/48/applications-versioncontrol.svg">
     <action name="Execute">
-      <command>/opt/google/chrome-unstable/google-chrome --app-id=ojcflmmmcfpacggndoaaflkmcoblhnbh --profile-directory=Default</command>
+      <command>/opt/google/chrome-unstable/google-chrome --app-id=ojcflmmmcfpacggndoaaflkmcoblhnbh --profile-directory=Default --user-data-dir=/home/cpence/.config/google-chrome-unstable</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <item label="Google Calendar" icon="/usr/share/icons/elementary/apps/48/office-calendar.svg">
     <action name="Execute">
-      <command>/opt/google/chrome-unstable/google-chrome --app-id=ejjicmeblgpmajnghnpcppodonldlgfn --profile-directory=Default</command>
+      <command>/opt/google/chrome-unstable/google-chrome --app-id=ejjicmeblgpmajnghnpcppodonldlgfn --profile-directory=Default --user-data-dir=/home/cpence/.config/google-chrome-unstable</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <item label="GMail" icon="/usr/share/icons/elementary/apps/48/gmail.svg">
     <action name="Execute">
-      <command>/opt/google/chrome-unstable/google-chrome --app-id=ejidjjhkpiempkbhmpbfngldlkglhimk --profile-directory=Default</command>
+      <command>/opt/google/chrome-unstable/google-chrome --app-id=pjkljhegncpnkpknbcohdijeoejaedia --profile-directory=Default --user-data-dir=/home/cpence/.config/google-chrome-unstable</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
