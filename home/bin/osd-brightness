@@ -1,18 +1,21 @@
 #!/bin/bash
 
 # Root
-BACKLIGHT=/sys/class/backlight/intel_backlight
+BACKLIGHT=/sys/class/backlight/acpi_video0
 
 # set max allowed brightness
 MAX=`cat $BACKLIGHT/max_brightness`
 
 STEPS="20"
 STEP=$((MAX / STEPS))
+if [[ "$STEP" -le 0 ]]; then
+  STEP=1
+fi
 
 NOW=`cat $BACKLIGHT/brightness`
 
 function plus() {
-	NEW=$((NOW + STEP))
+  NEW=$((NOW + STEP))
   if [ $NEW -gt $((MAX)) ]; then
     NEW=$((MAX))
   fi
@@ -22,7 +25,7 @@ function plus() {
 
 function minus() {
   NEW=$((NOW - STEP))
-    if [ $(($NEW)) -lt 0 ]; then
+  if [ $(($NEW)) -lt 0 ]; then
       NEW=0
   fi
 	echo $NEW > $BACKLIGHT/brightness

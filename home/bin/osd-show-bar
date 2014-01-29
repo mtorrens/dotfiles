@@ -12,8 +12,7 @@ fi
 STEPS=32
 
 BAR=""
-DENOMINATOR=$((MAX / STEPS))
-LINES=$((VAL / DENOMINATOR))
+LINES=$((VAL * STEPS / MAX))
 DOTS=$((STEPS - LINES))
 while [ $LINES -gt 0 ]; do
   BAR="${BAR}|"
