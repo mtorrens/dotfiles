@@ -2,7 +2,7 @@
 # Back up Chrome bookmarks
 
 # This will be different on other operating systems
-CHROME_DIR="${HOME}/.config/google-chrome/Default"
+CHROME_DIR="${HOME}/.config/google-chrome-unstable/Default"
 OUTDIR="/mnt/truecrypt1/Backup/"
 
 cp "$CHROME_DIR/Bookmarks" .
