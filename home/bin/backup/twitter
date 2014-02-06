@@ -5,6 +5,11 @@
 
 DIR="/mnt/truecrypt1/Twitter"
 
+if ! type -P csvquote > /dev/null; then
+  echo "ERROR: Don't have csvquote installed, bailing"
+  exit 1
+fi
+
 # Here we only want the most current one
 t followings --csv > $DIR/following.csv
 
@@ -25,6 +30,6 @@ for i in "tweets" "retweets" "dm_received" "dm_sent"; do
   rm $DIR/$i.csv
   echo "$header" > $DIR/$i.csv
 
-  cat $DIR/$i.csv.old $DIR/$i.csv.new | sort -gr | uniq >> $DIR/$i.csv
+  cat $DIR/$i.csv.old $DIR/$i.csv.new | csvquote | sort -gr | uniq | csvquote -u >> $DIR/$i.csv
   rm $DIR/$i.csv.old $DIR/$i.csv.new
 done
