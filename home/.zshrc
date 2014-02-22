@@ -164,3 +164,10 @@ compdef _devp devp
 db() { cd ~/Dropbox/Charles/$1; }
 _db() { _files -W ~/Dropbox/Charles -/; }
 compdef _db db
+
+# Rage quit support
+function fuck() {
+  if killall -9 "$2"; then
+    echo ; echo " (╯°□°）╯︵$(echo "$2"|flip)"; echo
+  fi
+}
