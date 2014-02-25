@@ -27,7 +27,7 @@
  /x /y /z /braceleft /bar /braceright /asciitilde /Ucircumflex
 % 0x80
  /Udieresis /Ugrave /Upsilon /Xi /Yacute /Ydieresis /Zcaron /aacute
- /acircumflex /afii10073 /afii10095 /afii61352 /agrave /atilde /brokenbar /circumflex.cyr
+ /acircumflex /uni0337 /uni044D /aringacute /agrave /atilde /brokenbar /circumflex.cyr
 % 0x90
  /circumflex.cyrcap /copyright /degree /divide /eacute /ecircumflex /egrave /eight.fitted
  /eight.oldstyle /eight.taboldstyle /f_f /f_f_i /f_f_l /f_i /f_l /f_t

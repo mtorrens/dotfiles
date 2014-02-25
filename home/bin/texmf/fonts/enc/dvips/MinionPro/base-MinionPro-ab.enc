@@ -8,7 +8,7 @@
  /Ncaron /Ohorn /Ohungarumlaut /Racute /Rcaron /Sacute /Scedilla /T_h
  /Tcaron /Tcommaaccent /Uhorn /Uhungarumlaut /Uring /Utilde /Ygrave /Zacute
 % 0x20
- /Zdotaccent /abreve /adieresis /afii10069.ital /afii61289 /aogonek /aring /cacute
+ /Zdotaccent /abreve /adieresis /uni0434.ital /uni2113 /aogonek /aring /cacute
  /ccaron /ccedilla /dcaron /dcroat /ecaron /edieresis /ellipsis /eng
 % 0x30
  /eogonek /eth /f_b /f_f_b /f_f_h /f_f_j /f_f_k /space
