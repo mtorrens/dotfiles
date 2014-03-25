@@ -3,7 +3,7 @@
 
 # Do our best to automatically extract the path to the get_comments JAR
 # file.  (Run it through `echo` to expand the glob path.)
-GET_COMMENTS_PATH=`echo ~/Dropbox/Charles/Development/get_comments/target/*-with-dependencies.jar`
+GET_COMMENTS_PATH=`echo ~/Development/get_comments/master/target/*-with-dependencies.jar`
 
 # Check if that doesn't exist
 if [[ ! -e $GET_COMMENTS_PATH ]]; then

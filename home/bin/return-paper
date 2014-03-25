@@ -1,0 +1,27 @@
+#!/bin/bash
+# Return a student paper using the return template
+
+if [ "$1" = "--help" -o $# -ne 2 ]; then
+  echo "return-paper: return a student paper in an e-mail"
+  echo ""
+  echo "Usage: $0 <e-mail address> <paper file>"
+  exit 1
+fi
+
+TEMPLATE="$HOME/Dropbox/Charles/Templates/Paper Return Mail.txt"
+
+if [ ! -e "$TEMPLATE" ]; then
+  echo "ERROR: Paper return template doesn't exist. Please fix."
+  exit 1
+fi
+
+EMAIL="$1"
+FILE="$2"
+
+if [ ! -e "$FILE" ]; then
+  echo "ERROR: File provided ($FILE) doesn't exist."
+  exit 1
+fi
+
+cat "$TEMPLATE" | mutt -a "$FILE" -s "Your Paper" -- "$EMAIL"
+
