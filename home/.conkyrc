@@ -63,7 +63,7 @@ $color$stippled_hr
 ${alignc}Temperatures
 ${alignc}CPU0: ${color white}${platform coretemp.0 temp 2}°C$color - CPU1: ${color white}${platform coretemp.0 temp 3}°C$color - MB: ${color white}${platform coretemp.0 temp 1}°C
 $color$stippled_hr
-${color}CPU:  ${color white}${lua_parse pad3 ${cpu cpu1}}%${alignr}${cpubar 6,174 cpu1}
+${color}CPU:  ${color white}${lua_parse pad3 ${cpu cpu0}}%${alignr}${cpubar cpu0 6,174}
 ${color}RAM:  ${color white}${lua_parse pad3 $memperc}% $mem/$memmax${alignr}${membar 6,85}
 ${color}Swap: ${color white}${lua_parse pad3 $swapperc}% $swap/$swapmax${alignr}${swapbar 6,85}
 ${color}Disk: ${color white}${lua_parse pad3 ${fs_used_perc /}}% ${fs_used /}/${fs_size /}${alignr}${fs_bar 6,85 /}
