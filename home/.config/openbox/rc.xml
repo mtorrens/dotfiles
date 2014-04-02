@@ -218,9 +218,6 @@
         <to>4</to>
       </action>
     </keybind>
-    <keybind key="W-d">
-      <action name="ToggleShowDesktop"/>
-    </keybind>
     <keybind key="W-l">
       <action name="Execute">
         <command>xscreensaver-command -lock</command>
@@ -253,7 +250,7 @@
     </keybind>
     <keybind key="XF86PowerOff">
       <action name="Execute">
-        <command>gksu 'systemctl poweroff'</command>
+        <command>sh -c '~/bin/spacefm-endsession'</command>
       </action>
     </keybind>
     <!-- Keybindings for windows -->
@@ -300,35 +297,17 @@
         </finalactions>
       </action>
     </keybind>
-    <!-- Keybindings for window switching with the arrow keys -->
-    <keybind key="W-S-Right">
-      <action name="DirectionalCycleWindows">
-        <direction>right</direction>
-      </action>
-    </keybind>
-    <keybind key="W-S-Left">
-      <action name="DirectionalCycleWindows">
-        <direction>left</direction>
-      </action>
-    </keybind>
-    <keybind key="W-S-Up">
-      <action name="DirectionalCycleWindows">
-        <direction>up</direction>
-      </action>
-    </keybind>
-    <keybind key="W-S-Down">
-      <action name="DirectionalCycleWindows">
-        <direction>down</direction>
-      </action>
-    </keybind>
     <!-- Keybindings for running applications -->
     <keybind key="W-e">
       <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>Konqueror</name>
-        </startupnotify>
-        <command>kfmclient openProfile filemanagement</command>
+        <startupnotify><enabled>yes</enabled></startupnotify>
+        <command>spacefm -w</command>
+      </action>
+    </keybind>
+    <keybind key="W-t">
+      <action name="Execute">
+        <startupnotify><enabled>yes</enabled></startupnotify>
+        <command>urxvt</command>
       </action>
     </keybind>
   </keyboard>
