@@ -1,0 +1,21 @@
+#!/bin/bash
+# Open a file in the default association
+
+# Figure out which command
+if command -v spacefm >/dev/null 2>&1; then
+  CMD=spacefm
+elif command -v exo-open >/dev/null 2>&1; then
+  CMD=exo-open
+elif command -v kde-open >/dev/null 2>&1; then
+  CMD=kde-open
+elif command -v gvfs-open >/dev/null 2>&1; then
+  CMD=gvfs-open
+elif command -v gnome-open >/dev/null 2>&1; then
+  CMD=gnome-open
+elif command -v xdg-open >/dev/null 2>&1; then
+  CMD=xdg-open
+elif command -v cygstart >/dev/null 2>&1; then
+  CMD=cygstart
+fi
+
+$CMD "$@" &>/dev/null &

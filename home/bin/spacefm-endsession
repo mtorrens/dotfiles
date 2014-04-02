@@ -1,0 +1,15 @@
+#!/bin/bash
+
+eval "`spacefm -g --title "End Session" --label "Would you like to shut down?" --button Cancel --button 'Log Out' --button Reboot --button 'Shut Down'`"
+
+if [[ "$dialog_pressed_index" == "1" ]]; then
+  # Log out
+  openbox --exit
+elif [[ "$dialog_pressed_index" == "2" ]]; then
+  # Reboot
+  sudo reboot
+elif [[ "$dialog_pressed_index" == "3" ]]; then
+  # Shut down
+  sudo poweroff
+fi
+
