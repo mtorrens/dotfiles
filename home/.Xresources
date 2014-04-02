@@ -1,6 +1,6 @@
-URxvt*geometry:     100x30
+URxvt*geometry:     100x25
 URxvt*saveLines:    2048
-URxvt*font:         xft:Droid Sans Mono:pixelsize=14
+URxvt*font:         xft:Meslo LG M:pixelsize=13
 URxvt*lineSpace:    2
 URxvt*loginShell:   true
 URxvt*scrollstyle:  next
@@ -8,6 +8,13 @@ URxvt*scrollBar_right: true
 URxvt*scrollTtyOutput: false
 URxvt*scrollWithBuffer: true
 URxvt*scrollTtyKeypress: true
+
+! Keys
+URxvt*iso14755:     false
+URxvt*perl-ext-common: default,clipboard
+URxvt*keysym.C-C:   perl:clipboard:copy
+URxvt*keysym.C-V:   perl:clipboard:paste
+URxvt*keysym.C-A-V: perl:clipboard:paste_escaped
 
 ! Base16 Railscasts Theme
 URxvt*foreground:   #e6e1dc

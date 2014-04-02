@@ -52,6 +52,12 @@ if [[ ! -z "$ZSH" ]]; then
   unalias 1 2 3 4 5 6 7 8 9
 fi
 
+# zsh key bindings for urxvt
+bindkey "\e[7~" beginning-of-line
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[8~" end-of-line
+bindkey "\e[4~" end-of-line
+
 ###############################################################################
 # Path settings
 
@@ -126,21 +132,7 @@ alias ls='ls -F --sort=version --color=auto '
 alias ll='ls -Fl --sort=version --color=auto '
 alias la='ls -FlA --sort=version --color=auto '
 
-# Alias the various ways to open documents in accord with their file
-# associations
-if command -v xdg-open >/dev/null 2>&1; then
-  alias open=xdg-open
-elif command -v exo-open >/dev/null 2>&1; then
-  alias open=exo-open
-elif command -v kde-open >/dev/null 2>&1; then
-  alias open=kde-open
-elif command -v gvfs-open >/dev/null 2>&1; then
-  alias open=gvfs-open
-elif command -v gnome-open >/dev/null 2>&1; then
-  alias open=gnome-open
-elif command -v cygstart >/dev/null 2>&1; then
-  alias open=cygstart
-fi
+# Alias 'start' to my open command for Windows-likeness
 alias start=open
 
 # Dropbox: find all "conflicts", which just show up in the filesystem
