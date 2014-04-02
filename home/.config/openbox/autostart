@@ -4,10 +4,6 @@ setxkbmap -option ctrl:nocaps
 xrandr --dpi 135
 xscreensaver -no-splash &
 
-# Default screen brightness
-echo "908" > /sys/class/backlight/intel_backlight/brightness
-
-
 # Notification daemon
 dunst &
 
