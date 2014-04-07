@@ -104,22 +104,31 @@ fi
 # Colorize all the things
 GRC=`which grc`
 
-if [ "$TERM" != dumb ] && [ -n "$GRC" ]; then
-  alias colorify='grc -es --colour=auto'
-  alias configure='colorify ./configure'
-  alias cvs='colorify cvs'
-  alias diff='colorify diff'
-  alias dig='colorify dig'
-  alias gcc='colorify gcc'
-  alias g++='colorify g++'
-  alias as='colorify as'
-  alias ld='colorify ld'
-  alias ifconfig='colorify ifconfig'
-  alias mount='colorify mount'
-  alias netstat='colorify netstat'
-  alias ping='colorify ping'
-  alias ps='colorify ps'
-  alias traceroute='colorify traceroute'
+if [ "$TERM" != dumb ]; then
+  if [ -n "$GRC" ]; then
+    alias colorify='grc -es --colour=auto'
+    alias configure='colorify ./configure'
+    alias cvs='colorify cvs'
+    alias diff='colorify diff'
+    alias dig='colorify dig'
+    alias gcc='colorify gcc'
+    alias g++='colorify g++'
+    alias as='colorify as'
+    alias ld='colorify ld'
+    alias ifconfig='colorify ifconfig'
+    alias mount='colorify mount'
+    alias netstat='colorify netstat'
+    alias ping='colorify ping'
+    alias ps='colorify ps'
+    alias traceroute='colorify traceroute'
+  fi
+
+  alias dmesg='dmesg -L'
+  alias grep='grep --color=auto'
+  alias egrep='egrep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias less='less --RAW-CONTROL-CHARS'
+else
 fi
 
 ###############################################################################
@@ -135,9 +144,6 @@ alias la='ls -FlA --sort=version --color=auto '
 # Alias 'start' to my open command for Windows-likeness
 alias start=open
 
-# Dropbox: find all "conflicts", which just show up in the filesystem
-alias db-conflicts='find -L ~/Dropbox \( -path "*.dropbox*" -prune \) -o \( -name "*conflicted*" -print \)'
-
 # Zotero: find all unlinked PDFs which are stored in the Zotero folder
 alias zotero-unlinked="find ~/.zotero/zotero/*.default/zotero/storage -iname '*.pdf'"
 
@@ -151,11 +157,6 @@ compdef _dev devm
 devp() { subl3 --project ~/Development/$1/$1.sublime-project }
 _devp() { _files -W ~/Development -/; }
 compdef _devp devp
-
-# Fast Dropbox access
-db() { cd ~/Dropbox/Charles/$1; }
-_db() { _files -W ~/Dropbox/Charles -/; }
-compdef _db db
 
 # Rage quit support
 function fuck() {
