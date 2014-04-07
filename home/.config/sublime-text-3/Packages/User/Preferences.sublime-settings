@@ -1,13 +1,14 @@
 {
 	"color_scheme": "Packages/Base16 Color Schemes/base16-railscasts.dark.tmTheme",
 	"detect_indentation": true,
+	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Meslo LG M",
 	"font_options":
 	[
 		"subpixel_antialias"
 	],
-	"font_size": 7,
+	"font_size": 10,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
