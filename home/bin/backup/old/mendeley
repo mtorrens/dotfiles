@@ -7,7 +7,7 @@ if [ `uname -s` = "Darwin" ]; then
 else
   MENDELEY_DIR="$HOME/.local/share/data/Mendeley Ltd./Mendeley Desktop/"
 fi
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 cd "$MENDELEY_DIR"
 tar cvf mendeley.tar *

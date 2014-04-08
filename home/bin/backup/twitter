@@ -3,7 +3,7 @@
 # also does some magic sauce to merge all the backups together using a
 # combination of sort, uniq, and tail.
 
-DIR="/mnt/truecrypt1/Twitter"
+DIR="$HOME/Storage/Twitter"
 
 if ! type -P csvquote > /dev/null; then
   echo "ERROR: Don't have csvquote installed, bailing"

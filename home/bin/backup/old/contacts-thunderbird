@@ -5,7 +5,7 @@
 
 # This will be different on other operating systems
 FF_PROFILES_DIR="${HOME}/Library/Thunderbird/Profiles"
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 TB_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`
 cp "$TB_PROFILE/abook.mab" .

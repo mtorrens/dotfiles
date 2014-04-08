@@ -7,7 +7,7 @@ if [ `uname -s` = "Darwin" ]; then
 else
   ZOT_PROFILES_DIR="$HOME/.zotero/zotero"
 fi
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 ZOT_PROFILE="`find "${ZOT_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`"
 

@@ -8,7 +8,7 @@ if [ "$1" = "--help" -o $# -ne 2 ]; then
   exit 1
 fi
 
-TEMPLATE="$HOME/Dropbox/Charles/Templates/Paper Return Mail.txt"
+TEMPLATE="$HOME/SpiderOak Hive/Charles/Templates/Paper Return Mail.txt"
 
 if [ ! -e "$TEMPLATE" ]; then
   echo "ERROR: Paper return template doesn't exist. Please fix."

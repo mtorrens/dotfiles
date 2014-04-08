@@ -1,5 +1,5 @@
 #!/bin/sh
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 osascript ~/bin/backup/bookmarks-safari.scpt
 sleep 1

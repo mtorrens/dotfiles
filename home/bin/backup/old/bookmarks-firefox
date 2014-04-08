@@ -9,7 +9,7 @@
 
 # This will be different on other operating systems
 FF_PROFILES_DIR="${HOME}/Library/Application Support/Firefox/Profiles"
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 FF_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`
 cp "$FF_PROFILE/bookmarks.html" .

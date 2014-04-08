@@ -3,7 +3,7 @@
 
 # This will be different on other operating systems
 CHROME_DIR="${HOME}/.config/chromium/Default"
-OUTDIR="/mnt/truecrypt1/Backup/"
+OUTDIR="$HOME/Storage/Backup/"
 
 cp "$CHROME_DIR/Bookmarks" .
 xz -9 ./Bookmarks
