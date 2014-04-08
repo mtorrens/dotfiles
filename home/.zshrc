@@ -128,7 +128,6 @@ if [ "$TERM" != dumb ]; then
   alias egrep='egrep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias less='less --RAW-CONTROL-CHARS'
-else
 fi
 
 ###############################################################################
@@ -137,9 +136,9 @@ fi
 alias quit=exit
 
 # Sort by version (which is awesome) and show type indicators
-alias ls='ls -F --sort=version --color=auto '
-alias ll='ls -Fl --sort=version --color=auto '
-alias la='ls -FlA --sort=version --color=auto '
+alias ls='ls --file-type --sort=version --color=auto '
+alias ll='ls -l --file-type --sort=version --color=auto '
+alias la='ls -lA --file-type --sort=version --color=auto '
 
 # Alias 'start' to my open command for Windows-likeness
 alias start=open
