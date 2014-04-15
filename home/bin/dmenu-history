@@ -1,0 +1,29 @@
+#!/bin/sh
+if [ $# -lt 1 ] ; then
+        echo 1>&2 "usage: dmenu_history hist_file dmenu_opts..."
+        exit 1
+fi
+f="$1"
+tf=`mktemp`
+if ! [ -e "$f" ]; then touch "$f"; fi
+shift
+( sort -r -k 1,1 -n -s "$f" | cut -d' ' -f2- ; cat - ) | dmenu "$@" |
+if read x; then
+        cat "$f" | {
+                i=1
+                while read n y; do
+                        if [ "$y" = "$x" ]; then
+                                i=`expr "$n" + 1`
+                        else
+                                echo "$n $y"
+                        fi
+                done
+                exit $i 
+        } > "$tf"
+        i=$?
+        echo "$i $x" > "$f"
+        cat "$tf" >> "$f"
+        rm "$tf"
+        echo "$x"
+fi
+

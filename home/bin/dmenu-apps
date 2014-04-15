@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Configuration
+FONT="Droid Sans Mono-9"
+BG="#2b2b2b"
+FG="#e6e1dc"
+SEL_BG="#3a4055"
+SEL_FG="#d4cfc9"
+
+# What follows duplicates the default dmenu_run script
+DMENU_RUN_CACHE=$HOME/.cache/dmenu_run
+
+IFS=:
+if stest -dqr -n "$DMENU_RUN_CACHE" $PATH; then
+  stest -flx $PATH | sort -u > $DMENU_RUN_CACHE
+fi
+
+( $HOME/bin/dmenu-history $HOME/.cache/dmenu_run_history -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG" < "$DMENU_RUN_CACHE" ) | /usr/bin/zsh &
