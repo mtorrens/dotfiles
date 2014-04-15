@@ -10,7 +10,7 @@ SEL_FG="#d4cfc9"
 FILE_ROOT="$HOME/SpiderOak Hive"
 
 IFS=:
-SELECTED=`find "$FILE_ROOT" -type f -o -type d | $HOME/bin/dmenu-history $HOME/.cache/dmenu_files_history -b -i -l 5 -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG"`
+SELECTED=`find "$FILE_ROOT" -type f -o -type d | $HOME/bin/dmenu-history $HOME/.cache/dmenu_files_history -i -l 10 -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG"`
 
 if [[ -n "$SELECTED" ]]; then
   $HOME/bin/open "$SELECTED"

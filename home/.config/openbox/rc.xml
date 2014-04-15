@@ -223,6 +223,16 @@
         <command>xscreensaver-command -lock</command>
       </action>
     </keybind>
+    <keybind key="W-space">
+      <action name="Execute">
+        <command>bash -c '~/bin/dmenu-apps'</command>
+      </action>
+    </keybind>
+    <keybind key="W-A-space">
+      <action name="Execute">
+        <command>bash -c '~/bin/dmenu-files'</command>
+      </action>
+    </keybind>
     <keybind key="XF86MonBrightnessDown">
       <action name="Execute">
         <command>sh -c '~/bin/osd-brightness minus'</command>
