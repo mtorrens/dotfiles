@@ -69,9 +69,9 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Transmission" icon="/usr/share/icons/hicolor/scalable/apps/transmission.svg">
+  <item label="Deluge" icon="/usr/share/icons/hicolor/scalable/apps/deluge.svg">
     <action name="Execute">
-      <command>transmission-qt</command>
+      <command>deluge</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
