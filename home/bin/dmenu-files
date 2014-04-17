@@ -7,10 +7,13 @@ FG="#e6e1dc"
 SEL_BG="#3a4055"
 SEL_FG="#d4cfc9"
 
-FILE_ROOT="$HOME/SpiderOak Hive"
+CACHE="$HOME/.cache/dmenu_files"
 
-IFS=:
-SELECTED=`find "$FILE_ROOT" -type f -o -type d | $HOME/bin/dmenu-history $HOME/.cache/dmenu_files_history -i -l 10 -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG"`
+# FIXME: ONLY DO THIS when changed
+find $HOME/SpiderOak\ Hive $HOME/Dropbox -type f -o -type d > $CACHE
+find $HOME -type d -not -name '.*' -maxdepth 1 >> $CACHE
+
+SELECTED=`cat $CACHE | $HOME/bin/dmenu-history $HOME/.cache/dmenu_files_history -i -l 10 -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG"`
 
 if [[ -n "$SELECTED" ]]; then
   $HOME/bin/open "$SELECTED"
