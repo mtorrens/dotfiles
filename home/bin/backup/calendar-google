@@ -1,6 +1,8 @@
 #!/bin/bash
 # Pull down some calendars and pack them for backup
 
+source ${HOME}/bin/backup/utilities.sh
+
 OUTDIR="$HOME/Storage/Backup/"
 
 # This file should contain:
@@ -8,7 +10,9 @@ OUTDIR="$HOME/Storage/Backup/"
 # ...
 # export CAL_N="url"
 # export NUM_CALS=N
-. ${HOME}/.private/calendars.sh
+get_private_file calendars.sh calendars.sh
+. ${HOME}/calendars.sh
+release_private_file calendars.sh
 
 for ((i = 1 ; i <= $NUM_CALS ; i++ ))
 do

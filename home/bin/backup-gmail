@@ -3,11 +3,11 @@
 
 source ${HOME}/bin/backup/utilities.sh
 
-get_private_file getmail.gmail .getmail/getmail.gmail
-getmail -r getmail.gmail
-release_private_file .getmail/getmail.gmail
+get_private_file getmail.gmail getmail.gmail
+getmail -r ${HOME}/getmail.gmail
+release_private_file getmail.gmail
 
-get_private_file getmail.family .getmail/getmail.family
-getmail -r getmail.family
-release_private_file .getmail/getmail.family
+get_private_file getmail.family getmail.family
+getmail -r ${HOME}/getmail.family
+release_private_file getmail.family
 
