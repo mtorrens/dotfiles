@@ -8,7 +8,4 @@ if [ "$1" = "--help" -o $# -ne 1 ]; then
   exit 1
 fi
 
-mv "$1" "_$1"
-pdftk "_$1" update_info $HOME/bin/pdfanonymize.metadata output "$1"
-rm "_$1"
-
+pdfjam "$1" --no-keepinfo

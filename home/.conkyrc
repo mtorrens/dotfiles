@@ -24,9 +24,10 @@ own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 # Top-right of the screen, please
 alignment top_right
-gap_x 10
-gap_y 10
-minimum_size 185 800
+gap_x 5
+gap_y 5
+minimum_size 1000 30
+maximum_width 1000
 
 # Shade, but don't outline or border
 draw_shades yes
@@ -35,7 +36,7 @@ draw_borders no
 draw_graph_borders yes
 
 # Set colors and visuals
-default_color grey
+default_color white
 default_shade_color gray24
 stippled_borders 2
 short_units yes
@@ -46,24 +47,11 @@ net_avg_samples 2
 
 
 TEXT
-${font Deja Vu Sans:size=9}${alignr}${color white}${time %a, %b %-e | %H:%M}${voffset 30}
-${font}${color white}$alignc$sysname $kernel on $machine
-${color white}$alignc${exec whoami} @ $nodename
-$color$stippled_hr
-${alignc}E-mail at charles@charlespence.net
-${color white}${alignc}Inbox: ${execpi 300 ~/.private/conky-gmail}
-$color$stippled_hr
-${alignc}Weather for ${execi 600 ~/bin/get-city}
-${color white}${alignc}${execi 600 ~/bin/conky-weather}
-$color$stippled_hr
-${alignc}Battery status
-${color white}${battery}${alignr}${battery_time}
-${color white}${battery_bar}
-$color$stippled_hr
-${alignc}Temperatures
-${alignc}CPU0: ${color white}${platform coretemp.0 temp 2}°C$color - CPU1: ${color white}${platform coretemp.0 temp 3}°C$color - MB: ${color white}${platform coretemp.0 temp 1}°C
-$color$stippled_hr
-${color}CPU:  ${color white}${lua_parse pad3 ${cpu cpu0}}%${alignr}${cpubar cpu0 6,174}
-${color}RAM:  ${color white}${lua_parse pad3 $memperc}% $mem/$memmax${alignr}${membar 6,85}
-${color}Swap: ${color white}${lua_parse pad3 $swapperc}% $swap/$swapmax${alignr}${swapbar 6,85}
-${color}Disk: ${color white}${lua_parse pad3 ${fs_used_perc /}}% ${fs_used /}/${fs_size /}${alignr}${fs_bar 6,85 /}
+${alignr}${execpi 300 ~/.private/conky-gmail} (E) \
+ ${battery} ${battery_time} (B) \
+ ${platform coretemp.0 temp 2}°C (C) \
+ ${platform coretemp.0 temp 1}°C (M) \
+${lua_parse pad3 ${cpu cpu0}}% (U) \
+${lua_parse pad3 $memperc}% (R) \
+${lua_parse pad3 $swapperc}% (S) \
+  ${time %a, %b %-e | %H:%M}
