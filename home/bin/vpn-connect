@@ -1,0 +1,5 @@
+#!/bin/sh
+# Connect to the Notre Dame VPN
+
+sudo openconnect --user cpence --interface vpn0 vpnaccess.nd.edu
+
