@@ -152,9 +152,9 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="fsv" icon="/usr/share/icons/elementary/devices/48/drive-harddisk.svg">
+  <item label="Graphical Disk Map" icon="/usr/share/icons/elementary/devices/48/drive-harddisk.svg">
     <action name="Execute">
-      <command>fsv2</command>
+      <command>gdmap</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
