@@ -2,10 +2,10 @@
 
 # Configuration
 FONT="Droid Sans Mono-9"
-BG="#2b2b2b"
-FG="#e6e1dc"
-SEL_BG="#3a4055"
-SEL_FG="#d4cfc9"
+BG="#f5f5f5"
+FG="#303030"
+SEL_BG="#e0e0e0"
+SEL_FG="#303030"
 
 CACHE="$HOME/.cache/dmenu_files"
 
