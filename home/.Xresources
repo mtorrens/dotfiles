@@ -17,9 +17,9 @@ URxvt*keysym.C-V:   perl:clipboard:paste
 URxvt*keysym.C-A-V: perl:clipboard:paste_escaped
 
 ! Base16 Railscasts Theme
-URxvt*foreground:   #e6e1dc
-URxvt*background:   #2b2b2b
-URxvt*cursorColor:  #e6e1dc
+URxvt*foreground:   #303030
+URxvt*background:   #f5f5f5
+URxvt*cursorColor:  #303030
 
 ! XFT
 Xft.hinting: true
@@ -30,11 +30,3 @@ Xft.dpi: 135
 
 ! Cursors
 Xcursor.theme: Jimmac
-
-! Lal
-lal*font: Droid Sans
-lal*fontsize: 14
-lal*bold: false
-lal*color: #cccccc
-lal*width: 175
-lal*format: %a, %b %0d | %H:%M
