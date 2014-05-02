@@ -102,27 +102,8 @@ fi
 
 ###############################################################################
 # Colorize all the things
-GRC=`which grc`
 
 if [ "$TERM" != dumb ]; then
-  if [ -n "$GRC" ]; then
-    alias colorify='grc -es --colour=auto'
-    alias configure='colorify ./configure'
-    alias cvs='colorify cvs'
-    alias diff='colorify diff'
-    alias dig='colorify dig'
-    alias gcc='colorify gcc'
-    alias g++='colorify g++'
-    alias as='colorify as'
-    alias ld='colorify ld'
-    alias ifconfig='colorify ifconfig'
-    alias mount='colorify mount'
-    alias netstat='colorify netstat'
-    alias ping='colorify ping'
-    alias ps='colorify ps'
-    alias traceroute='colorify traceroute'
-  fi
-
   alias dmesg='dmesg -L'
   alias grep='grep --color=auto'
   alias egrep='egrep --color=auto'
@@ -133,15 +114,15 @@ fi
 ###############################################################################
 # Aliases for daily use
 
-alias quit=exit
-
 # Sort by version (which is awesome) and show type indicators
 alias ls='ls --file-type --sort=version --color=auto '
 alias ll='ls -l --file-type --sort=version --color=auto '
 alias la='ls -lA --file-type --sort=version --color=auto '
 
-# Alias 'start' to my open command for Windows-likeness
-alias start=open
+# grep through the output of ps without showing grep itself in output
+psgrep() {
+  ps axf | grep "[${*:0:1}]${*:1}"
+}
 
 # Zotero: find all unlinked PDFs which are stored in the Zotero folder
 alias zotero-unlinked="find ~/.zotero/zotero/*.default/zotero/storage -iname '*.pdf'"
