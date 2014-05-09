@@ -324,6 +324,30 @@
         <command>urxvt</command>
       </action>
     </keybind>
+    <keybind key="W-s">
+      <action name="Execute">
+        <startupnotify>
+          <enabled>yes</enabled>
+        </startupnotify>
+        <command>subl3</command>
+      </action>
+    </keybind>
+    <keybind key="W-f">
+      <action name="Execute">
+        <startupnotify>
+          <enabled>yes</enabled>
+        </startupnotify>
+        <command>recoll</command>
+      </action>
+    </keybind>
+    <keybind key="W-c">
+      <action name="Execute">
+        <startupnotify>
+          <enabled>yes</enabled>
+        </startupnotify>
+        <command>chromium</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
