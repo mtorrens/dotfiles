@@ -1,7 +1,7 @@
 URxvt*geometry:     100x25
 URxvt*saveLines:    2048
-URxvt*font:         xft:Meslo LG M:pixelsize=13
-URxvt*lineSpace:    2
+URxvt*font:         xft:Consolas:pixelsize=15
+URxvt*lineSpace:    4
 URxvt*loginShell:   true
 URxvt*scrollstyle:  next
 URxvt*scrollBar_right: true
