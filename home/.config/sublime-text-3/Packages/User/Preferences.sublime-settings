@@ -5,12 +5,12 @@
 	"detect_indentation": true,
 	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
-	"font_face": "Droid Sans Mono",
+	"font_face": "Consolas",
 	"font_options":
 	[
 		"subpixel_antialias"
 	],
-	"font_size": 10,
+	"font_size": 11,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
@@ -18,8 +18,8 @@
 		"Vintage",
 		"Markdown"
 	],
-	"line_padding_bottom": 1,
-	"line_padding_top": 1,
+	"line_padding_bottom": 2,
+	"line_padding_top": 2,
 	"remember_open_files": false,
 	"rulers":
 	[
