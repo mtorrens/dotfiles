@@ -1,4 +1,6 @@
 {
+	"always_show_minimap_viewport": true,
+	"auto_indent": true,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
 	"color_scheme": "Packages/Base16 Color Schemes/base16-default.light.tmTheme",
@@ -15,9 +17,10 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Markdown"
+		"Markdown",
+		"Vintage"
 	],
+	"indent_to_bracket": true,
 	"line_padding_bottom": 2,
 	"line_padding_top": 2,
 	"remember_open_files": false,
@@ -25,9 +28,12 @@
 	[
 		80
 	],
+	"smart_indent": true,
+	"spell_check": 2,
 	"tab_size": 2,
 	"theme": "Soda Light 3.sublime-theme",
 	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
 	"use_tab_steps": true,
