@@ -58,6 +58,9 @@ bindkey "\e[1~" beginning-of-line
 bindkey "\e[8~" end-of-line
 bindkey "\e[4~" end-of-line
 
+# Don't get the enter key confused
+stty icrnl
+
 ###############################################################################
 # Path settings
 
@@ -115,9 +118,10 @@ fi
 # Aliases for daily use
 
 # Sort by version (which is awesome) and show type indicators
+alias l='ls --file-type --sort=version --color=auto '
 alias ls='ls --file-type --sort=version --color=auto '
-alias ll='ls -l --file-type --sort=version --color=auto '
-alias la='ls -lA --file-type --sort=version --color=auto '
+alias ll='ls -lh --file-type --sort=version --color=auto '
+alias la='ls -lhA --file-type --sort=version --color=auto '
 
 # grep through the output of ps without showing grep itself in output
 psgrep() {
