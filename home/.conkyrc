@@ -3,12 +3,12 @@ lua_load ~/.conky_lua_scripts.lua
 
 # Enable XFT
 use_xft yes
-xftfont Monospace:size=6
-xftalpha 0.8
+xftfont Droid Sans Mono:size=8
+xftalpha 1
 override_utf8_locale yes
 
 # Run in the background, not on the terminal
-background yes
+background no
 out_to_console no
 
 # Update every 2 seconds, forever
@@ -19,26 +19,28 @@ total_run_times 0
 double_buffer yes
 own_window yes
 own_window_type normal
-own_window_transparent yes
+own_window_transparent no
+own_window_colour gray19
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
 # Top-right of the screen, please
-alignment top_right
-gap_x 5
-gap_y 5
-minimum_size 1000 30
-maximum_width 1000
+alignment top_middle
+gap_x 0
+gap_y 1
+minimum_size 1366 20
+maximum_width 1366
+max_text_width 0
 
-# Shade, but don't outline or border
-draw_shades yes
+# Outline the text to be visible on any wallpaper
+draw_shades no
 draw_outline no
 draw_borders no
 draw_graph_borders yes
 
 # Set colors and visuals
-default_color white
+default_color gray82
+default_outline_color gray24
 default_shade_color gray24
-stippled_borders 2
 short_units yes
 
 # Smooth out some of the values
@@ -47,11 +49,10 @@ net_avg_samples 2
 
 
 TEXT
-${alignr}${execpi 300 ~/.private/conky-gmail} (E) \
- ${battery} ${battery_time} (B) \
- ${platform coretemp.0 temp 2}°C (C) \
+${alignr}${battery} ${battery_time} \
+        ${platform coretemp.0 temp 2}°C (C) \
  ${platform coretemp.0 temp 1}°C (M) \
-${lua_parse pad3 ${cpu cpu0}}% (U) \
-${lua_parse pad3 $memperc}% (R) \
-${lua_parse pad3 $swapperc}% (S) \
-  ${time %a, %b %-e | %H:%M}
+        ${lua_parse pad3 ${cpu cpu0}}% (U) \
+ ${lua_parse pad3 $memperc}% (R) \
+ ${lua_parse pad3 $swapperc}% (S) \
+        ${time %a, %b %-e | %H:%M}  \
