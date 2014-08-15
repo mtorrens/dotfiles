@@ -1,0 +1,14 @@
+#!/bin/bash
+
+wget -q -O tmp-all https://spideroak.com/canary
+
+cat tmp-all | head -n 7 > tmp-canary
+cat tmp-all | awk '/-----BEGIN PGP SIGNATURE-----/ && c++ == 0,/-----END PGP SIGNATURE-----/' > tmp-sig1
+cat tmp-all | awk '/-----BEGIN PGP SIGNATURE-----/ && c++ == 1,/-----END PGP SIGNATURE-----/' > tmp-sig2
+cat tmp-all | awk '/-----BEGIN PGP SIGNATURE-----/ && c++ == 2,/-----END PGP SIGNATURE-----/' > tmp-sig3
+
+gpg --verify tmp-sig1 tmp-canary
+gpg --verify tmp-sig2 tmp-canary
+gpg --verify tmp-sig3 tmp-canary
+
+rm tmp-sig1 tmp-sig2 tmp-sig3 tmp-canary tmp-all
