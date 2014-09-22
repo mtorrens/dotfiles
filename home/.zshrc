@@ -97,8 +97,8 @@ elif [ `uname -o` = "Cygwin" ]; then
   export TMPDIR=/tmp
 
   # Enable SSH authentication through Pageant
-  if [ -z "$SSH_AUTH_SOCK" -a -x /usr/local/bin/ssh-pageant ]; then
-    eval $(/usr/local/bin/ssh-pageant -q)
+  if [ -z "$SSH_AUTH_SOCK" -a -x /usr/bin/ssh-pageant ]; then
+    eval $(/usr/bin/ssh-pageant -rq -a /tmp/.ssh-pageant)
   fi
   trap logout HUP
 fi
