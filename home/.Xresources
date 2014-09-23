@@ -26,7 +26,6 @@ Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.antialias: rgba
 Xft.rgba: rgb
-Xft.dpi: 135
 
 ! Cursors
 Xcursor.theme: Jimmac
