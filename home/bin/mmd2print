@@ -3,9 +3,10 @@
 
 # Wrap multimarkdown by adding some HTML styling
 STYLE_FILE=$HOME/bin/mmd/style.html
+OUT_FILE="`basename "$@" .md`.html"
 
-if [[ -e "print.md" || -e "print.html" ]]; then
-  echo "ERROR: print.md or print.html already exist, aborting"
+if [[ -e "print.md" || -e "print.html" || -e "$OUT_FILE" ]]; then
+  echo "ERROR: 'print.md', 'print.html', or '$OUT_FILE' already exist, aborting"
   exit 1
 fi
 
@@ -13,5 +14,6 @@ cat $STYLE_FILE > print.md
 cat "$@" >> print.md
 
 multimarkdown print.md > print.html
+mv print.html "$OUT_FILE"
 
 rm print.md
