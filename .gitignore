@@ -1,4 +1,5 @@
 home/bin/texmf/bibtex/bib
+home/bin/texmf/ls-R
 *.pyc
 
 # Things I don't want to accidentally track
