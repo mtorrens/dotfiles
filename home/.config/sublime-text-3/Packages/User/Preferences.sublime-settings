@@ -17,8 +17,8 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Vintage",
-		"Markdown"
+		"Markdown",
+		"Vintage"
 	],
 	"indent_to_bracket": true,
 	"line_padding_bottom": 2,
@@ -29,7 +29,7 @@
 		80
 	],
 	"smart_indent": true,
-	"spell_check": 2,
+	"spell_check": true,
 	"tab_size": 2,
 	"theme": "Soda Light 3.sublime-theme",
 	"translate_tabs_to_spaces": true,

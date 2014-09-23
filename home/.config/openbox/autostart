@@ -1,7 +1,6 @@
 # X configuration
 xrdb -merge $HOME/.Xresources
 setxkbmap -option ctrl:nocaps
-xrandr --dpi 135
 xscreensaver -no-splash &
 
 # Notification daemon
@@ -11,4 +10,8 @@ dunst &
 spacefm --desktop &
 
 # System tray
-trayer --edge top --align left --widthtype request --heighttype request --transparent true --tint 0x303030 --alpha 0 --expand true --SetPartialStrut false --SetDockType false &
+trayer --edge top --align left --distance 1920 --distancefrom left --widthtype request --heighttype request --transparent true --tint 0x303030 --alpha 0 --expand true --SetPartialStrut false --SetDockType false &
+
+# Volume control
+(sleep 2 && pnmixer) &
+

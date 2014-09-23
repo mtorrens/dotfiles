@@ -3,7 +3,7 @@ lua_load ~/.conky_lua_scripts.lua
 
 # Enable XFT
 use_xft yes
-xftfont Droid Sans Mono:size=8
+xftfont Droid Sans Mono:size=13
 xftalpha 1
 override_utf8_locale yes
 
@@ -23,13 +23,11 @@ own_window_transparent no
 own_window_colour gray19
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 
-# Top-right of the screen, please
-alignment top_middle
-gap_x 0
-gap_y 1
-minimum_size 1366 20
-maximum_width 1366
-max_text_width 0
+# Top of the screen, please
+alignment top_left
+gap_x 1925
+gap_y 2
+minimum_size 1920 16
 
 # Outline the text to be visible on any wallpaper
 draw_shades no
@@ -49,10 +47,12 @@ net_avg_samples 2
 
 
 TEXT
-${alignr}${battery} ${battery_time} \
-        ${platform coretemp.0 temp 2}°C (C) \
- ${platform coretemp.0 temp 1}°C (M) \
-        ${lua_parse pad3 ${cpu cpu0}}% (U) \
- ${lua_parse pad3 $memperc}% (R) \
- ${lua_parse pad3 $swapperc}% (S) \
-        ${time %a, %b %-e | %H:%M}  \
+${alignr}${offset -40}${hwmon temp 1}°C ${voffset 2}${font StyleBats:size=13}E${font}${voffset -4}  \
+ ${hwmon temp 2}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
+ ${hwmon temp 3}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
+ ${hwmon temp 4}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
+ ${hwmon temp 5}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
+        ${lua_parse pad3 ${cpu cpu0}}% ${voffset 2}${font StyleBats:size=13}I${font}${voffset -4}\
+ ${lua_parse pad3 $memperc}% ${voffset 2}${font StyleBats:size=13}J${font}${voffset -4}\
+ ${lua_parse pad3 $swapperc}% ${font StyleBats:size=13}T${font}\
+        ${voffset -2}${font Droid Sans:size=13}${time %a, %b %-e}${font} | ${time %H:%M}
