@@ -263,6 +263,27 @@
         <command>sh -c '~/bin/spacefm-endsession'</command>
       </action>
     </keybind>
+    <!-- Keybindings for quodlibet -->
+    <keybind key="W-F9">
+      <action name="Execute">
+        <command>quodlibet --previous</command>
+      </action>
+    </keybind>
+    <keybind key="W-F10">
+      <action name="Execute">
+        <command>quodlibet --play-pause</command>
+      </action>
+    </keybind>
+    <keybind key="W-F11">
+      <action name="Execute">
+        <command>quodlibet --stop</command>
+      </action>
+    </keybind>
+    <keybind key="W-F12">
+      <action name="Execute">
+        <command>quodlibet --next</command>
+      </action>
+    </keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4">
       <action name="Close"/>
