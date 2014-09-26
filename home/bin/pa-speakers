@@ -1,0 +1,7 @@
+#!/bin/sh
+
+pacmd set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo
+pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo analog-output-speaker
+
+# Stop the audio player, which will force it to reset sinks
+quodlibet --stop
