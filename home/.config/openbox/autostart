@@ -3,14 +3,17 @@ xrdb -merge $HOME/.Xresources
 setxkbmap -option ctrl:nocaps
 xscreensaver -no-splash &
 
+# Compositor
+compton -b --config ~/.config/compton.conf &
+
 # Notification daemon
-dunst &
+/usr/lib/notify-osd-customizable/notify-osd &
 
 # SpaceFM daemon for automounts and desktop
 spacefm --desktop &
 
 # System tray
-trayer --edge top --align left --distance 1920 --distancefrom left --widthtype request --heighttype request --transparent true --tint 0x303030 --alpha 0 --expand true --SetPartialStrut false --SetDockType false &
+trayer --edge top --align left --distance 1920 --distancefrom left --widthtype request --heighttype request --transparent true --tint 0x303030 --alpha 0 --expand true --SetPartialStrut false --SetDockType true &
 
 # Volume control
 (sleep 2 && pnmixer) &

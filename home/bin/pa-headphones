@@ -1,7 +1,14 @@
 #!/bin/sh
 
+# Set the default sink and output
 pacmd set-default-sink crossfeed
 pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo analog-output-headphones
 
-# Stop the audio player, which will force it to reset sinks
-quodlibet --stop
+# Move the playing stream over
+STREAM_INDEX=`pacmd list-sink-inputs | grep protocol-native -B 1 | grep index: | sed 's/.*index: //'`
+if [ ! -z "$STREAM_INDEX" ]; then
+  pacmd move-sink-input $STREAM_INDEX crossfeed
+fi
+
+# Notify
+notify-send "Output Changed" "Audio output set to headphones" --icon=audio-headphones-symbolic
