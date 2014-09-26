@@ -166,7 +166,7 @@
   </item>
   <item label="GParted" icon="/usr/share/icons/hicolor/scalable/apps/gparted.svg">
     <action name="Execute">
-      <command>gksu gparted</command>
+      <command>pkexec gparted</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
