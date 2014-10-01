@@ -1,13 +1,19 @@
 #!/bin/sh
 
+HEADPHONE_SINK=crossfeed
+HEADPHONE_OUT_SINK='alsa_output.pci-0000_00_1b.0.analog-stereo'
+HEADPHONE_PORT=analog-output-lineout
+SPEAKER_SINK='alsa_output.usb-Audioengine_Audioengine_2_-00-A2.analog-stereo'
+SPEAKER_PORT=analog-output
+
 # Set the default sink and output
-pacmd set-default-sink crossfeed
-pacmd set-sink-port alsa_output.pci-0000_00_1b.0.analog-stereo analog-output-headphones
+pacmd set-default-sink $HEADPHONE_SINK
+pacmd set-sink-port $HEADPHONE_OUT_SINK $HEADPHONE_PORT
 
 # Move the playing stream over
 STREAM_INDEX=`pacmd list-sink-inputs | grep protocol-native -B 1 | grep index: | sed 's/.*index: //'`
 if [ ! -z "$STREAM_INDEX" ]; then
-  pacmd move-sink-input $STREAM_INDEX crossfeed
+  pacmd move-sink-input $STREAM_INDEX $HEADPHONE_SINK
 fi
 
 # Notify
