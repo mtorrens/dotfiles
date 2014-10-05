@@ -86,11 +86,17 @@ LANG=en_US.UTF-8
 EDITOR=nano
 LESSHISTFILE=-
 
-if [ `uname -s` = "Darwin" ]; then
+if type guname >/dev/null; then
+  UNAME=guname
+else
+  UNAME=uname
+fi
+
+if [ `$UNAME -s` = "Darwin" ]; then
   # Disable mail checking and resource-fork copying, only on OS X
   export MAILPATH=""
   export COPYFILE_DISABLE=true
-elif [ `uname -o` = "Cygwin" ]; then
+elif [ `$UNAME -o` = "Cygwin" ]; then
   # Set some environment variables on Windows
   export TMP=/tmp
   export TEMP=/tmp
@@ -118,10 +124,18 @@ fi
 # Aliases for daily use
 
 # Sort by version (which is awesome) and show type indicators
-alias l='ls --file-type --sort=version --color=auto '
-alias ls='ls --file-type --sort=version --color=auto '
-alias ll='ls -lh --file-type --sort=version --color=auto '
-alias la='ls -lhA --file-type --sort=version --color=auto '
+if type gls >/dev/null; then
+  # Mac/HomeBrew support
+  alias l='gls --file-type --sort=version --color=auto '
+  alias ls='gls --file-type --sort=version --color=auto '
+  alias ll='gls -lh --file-type --sort=version --color=auto '
+  alias la='gls -lhA --file-type --sort=version --color=auto '
+else
+  alias l='ls --file-type --sort=version --color=auto '
+  alias ls='ls --file-type --sort=version --color=auto '
+  alias ll='ls -lh --file-type --sort=version --color=auto '
+  alias la='ls -lhA --file-type --sort=version --color=auto '
+fi
 
 # grep through the output of ps without showing grep itself in output
 psgrep() {
