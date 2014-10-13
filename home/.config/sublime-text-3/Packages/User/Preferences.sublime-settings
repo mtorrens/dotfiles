@@ -3,7 +3,7 @@
 	"auto_indent": true,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/Base16 Color Schemes/base16-default.light.tmTheme",
+	"color_scheme": "Packages/User/base16-default.light (SL).tmTheme",
 	"detect_indentation": true,
 	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
@@ -16,8 +16,8 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Markdown",
-		"Vintage"
+		"Vintage",
+		"Markdown"
 	],
 	"indent_to_bracket": true,
 	"line_padding_bottom": 2,
