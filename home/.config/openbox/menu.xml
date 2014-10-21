@@ -171,9 +171,9 @@
     </action>
   </item>
   <separator />
-  <item label="Desktop Preferences" icon="/usr/share/icons/elementary/categories/32/preferences-desktop-wallpaper.svg">
+  <item label="Set Wallpaper" icon="/usr/share/icons/elementary/categories/32/preferences-desktop-wallpaper.svg">
     <action name="Execute">
-      <command>spacefm --desktop-pref</command>
+      <command>nitrogen</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -198,9 +198,9 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="SpaceFM" icon="/usr/share/icons/elementary/apps/48/system-file-manager.svg">
+  <item label="PCManFM" icon="/usr/share/icons/elementary/apps/48/system-file-manager.svg">
     <action name="Execute">
-      <command>spacefm</command>
+      <command>pcmanfm</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -227,7 +227,7 @@
   <separator />
   <item label="End Session" icon="/usr/share/icons/elementary/categories/32/preferences-system-session.svg">
     <action name="Execute">
-      <command>sh -c '~/bin/spacefm-endsession'</command>
+      <command>sh -c '~/bin/end-session'</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
