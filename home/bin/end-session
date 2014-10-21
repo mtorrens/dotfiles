@@ -1,14 +1,14 @@
 #!/bin/bash
 
-eval "`spacefm -g --title "End Session" --label "Would you like to shut down?" --button Cancel --button 'Log Out' --button Reboot --button 'Shut Down'`"
+answer=$(zenity --list --radiolist --text="Would you like to shut down?" --column " " --column "Action" TRUE "Shut Down" FALSE "Reboot" FALSE "Log Out")
 
-if [[ "$dialog_pressed_index" == "1" ]]; then
+if [[ "$answer" == "Log Out" ]]; then
   # Log out
   openbox --exit
-elif [[ "$dialog_pressed_index" == "2" ]]; then
+elif [[ "$answer" == "Reboot" ]]; then
   # Reboot
   sudo reboot
-elif [[ "$dialog_pressed_index" == "3" ]]; then
+elif [[ "$answer" == "Shut Down" ]]; then
   # Shut down
   sudo poweroff
 fi
