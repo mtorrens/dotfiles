@@ -20,7 +20,6 @@ unset $IFS
 
 # Catch everything ignored by the above that we still want
 cp ~/.gitconfig $DOTFILES/dotgitconfig
-cp ~/.muttrc $DOTFILES/dotmuttrc
 cp ~/.netrc $DOTFILES/dotnetrc
 cp ~/.relish $DOTFILES/dotrelish
 cp ~/.transifexrc $DOTFILES/dottransifexrc
