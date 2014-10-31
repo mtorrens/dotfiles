@@ -4,7 +4,7 @@
 # Figure out which command
 if command -v spacefm >/dev/null 2>&1; then
   CMD=spacefm
-elif command -v pcmanfm >/dev/null 2?&1; then
+elif command -v pcmanfm >/dev/null 2>&1; then
   CMD=pcmanfm
 elif command -v exo-open >/dev/null 2>&1; then
   CMD=exo-open

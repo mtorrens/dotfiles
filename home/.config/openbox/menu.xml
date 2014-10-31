@@ -200,7 +200,7 @@
   </item>
   <item label="PCManFM" icon="/usr/share/icons/elementary/apps/48/system-file-manager.svg">
     <action name="Execute">
-      <command>pcmanfm</command>
+      <command>pcmanfm /home/cpence</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
