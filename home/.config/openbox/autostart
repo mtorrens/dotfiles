@@ -9,8 +9,9 @@ xscreensaver -no-splash &
 # Compositor
 compton -b --config ~/.config/compton.conf &
 
-# Notification daemon
+# Notification daemon and Polkit logins
 /usr/lib/mate-notification-daemon/mate-notification-daemon &
+lxpolkit &
 
 # PCManFM daemon for automounts
 pcmanfm -d &
@@ -21,3 +22,6 @@ trayer --edge top --align left --distance 1920 --distancefrom left --widthtype r
 # Volume control
 (sleep 2 && pnmixer) &
 
+# Start Zim and gmusicbrowser on boot
+(sleep 2 && zim --plugin trayicon) &
+(sleep 2 && gmusicbrowser) &
