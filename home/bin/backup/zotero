@@ -12,7 +12,7 @@ OUTDIR="$HOME/Storage/Backup/"
 ZOT_PROFILE="`find "${ZOT_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`"
 
 cd "$ZOT_PROFILE"
-tar cvf zotero.tar *
+tar cf zotero.tar *
 xz -9 zotero.tar
 mv zotero.tar.xz "$OUTDIR"
 
