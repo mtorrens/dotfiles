@@ -21,11 +21,5 @@ URxvt*foreground:   #303030
 URxvt*background:   #f5f5f5
 URxvt*cursorColor:  #303030
 
-! XFT
-Xft.hinting: true
-Xft.hintstyle: hintslight
-Xft.antialias: rgba
-Xft.rgba: rgb
-
 ! Cursors
 Xcursor.theme: Jimmac
