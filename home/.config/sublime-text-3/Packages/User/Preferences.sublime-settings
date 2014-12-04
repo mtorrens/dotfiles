@@ -27,6 +27,7 @@
 	[
 		80
 	],
+	"scroll_past_end": true,
 	"smart_indent": true,
 	"spell_check": true,
 	"tab_size": 2,

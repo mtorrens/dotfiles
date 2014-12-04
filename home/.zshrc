@@ -42,6 +42,11 @@ if [[ -d $HOME/.oh-my-zsh ]]; then
 fi
 
 if [[ ! -z "$ZSH" ]]; then
+  if [ `uname -s` = "Darwin" ]; then
+    # Force /usr/local/bin ahead in the path, *before* rbenv gets loaded.
+    export PATH="/usr/local/bin:$PATH"
+  fi
+
   ZSH_THEME="gentoo"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
@@ -162,3 +167,6 @@ function fuck() {
     echo ; echo " (╯°□°）╯︵$(echo "$2"|flip)"; echo
   fi
 }
+
+# added by travis gem
+[ -f /Users/pence/.travis/travis.sh ] && source /Users/pence/.travis/travis.sh
