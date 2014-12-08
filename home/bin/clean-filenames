@@ -1,0 +1,5 @@
+#!/bin/bash
+# Remove characters from filenames in the current directory (recursive) that can't be
+# used on Windows hosts.
+
+find . -name "*[<>:\\|?*]*" -exec bash -c 'x="{}"; y=$(sed "s/[<>:\\|?*]\+/-/g" <<< "$x") && mv "$x" "$y" ' \;
