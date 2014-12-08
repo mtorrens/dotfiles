@@ -3,7 +3,7 @@ lua_load ~/.conky_lua_scripts.lua
 
 # Enable XFT
 use_xft yes
-xftfont Droid Sans Mono:size=13
+xftfont Liberation Mono:size=14
 xftalpha 1
 override_utf8_locale yes
 
@@ -55,4 +55,4 @@ ${alignr}${offset -40}${hwmon temp 1}°C ${voffset 2}${font StyleBats:size=13}E$
         ${lua_parse pad3 ${cpu cpu0}}% ${voffset 2}${font StyleBats:size=13}I${font}${voffset -4}\
  ${lua_parse pad3 $memperc}% ${voffset 2}${font StyleBats:size=13}J${font}${voffset -4}\
  ${lua_parse pad3 $swapperc}% ${font StyleBats:size=13}T${font}\
-        ${voffset -2}${font Droid Sans:size=13}${time %a, %b %-e}${font} | ${time %H:%M}
+        ${voffset -2}${font Sans:size=13}${time %a, %b %-e}${font} | ${time %H:%M}
