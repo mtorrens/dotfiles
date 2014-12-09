@@ -37,7 +37,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Mint</name>
+    <name>Greybird</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -326,14 +326,6 @@
           <enabled>yes</enabled>
         </startupnotify>
         <command>subl3</command>
-      </action>
-    </keybind>
-    <keybind key="W-f">
-      <action name="Execute">
-        <startupnotify>
-          <enabled>yes</enabled>
-        </startupnotify>
-        <command>recoll</command>
       </action>
     </keybind>
     <keybind key="W-c">

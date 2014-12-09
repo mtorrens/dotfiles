@@ -42,15 +42,9 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Recoll" icon="/usr/share/icons/elementary/actions/48/edit-find.svg">
+  <item label="Calculator" icon="/usr/share/icons/elementary/apps/48/accessories-calculator.svg">
     <action name="Execute">
-      <command>recoll</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <item label="SpeedCrunch" icon="/usr/share/icons/elementary/apps/48/accessories-calculator.svg">
-    <action name="Execute">
-      <command>speedcrunch</command>
+      <command>galculator</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
