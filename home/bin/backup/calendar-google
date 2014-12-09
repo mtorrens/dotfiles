@@ -3,7 +3,7 @@
 
 source ${HOME}/bin/backup/utilities.sh
 
-OUTDIR="$HOME/Storage/Backup/"
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
 
 # This file should contain:
 # export CAL_1="url"

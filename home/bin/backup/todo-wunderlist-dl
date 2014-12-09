@@ -1,7 +1,7 @@
 #!/bin/sh
 # Back up Wunderlist tasks
 
-OUTDIR="$HOME/Storage/Backup/"
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
 
 echo "DOWNLOAD the JSON backup file from Wunderlist and place it in the current directory."
 read -p "Press any key to continue..."

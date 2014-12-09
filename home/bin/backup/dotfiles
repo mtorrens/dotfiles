@@ -2,7 +2,7 @@
 # Back up my dotfiles to a place where my off-site backup utility
 # will find them.
 
-DOTFILES="$HOME/Storage/Backup/dotfiles"
+DOTFILES="$HOME/Dropbox/Storage/Charles/Backup/dotfiles"
 HSREPO="${HOME}/.homesick/repos/dotfiles"
 export IFS="
 "
