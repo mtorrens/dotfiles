@@ -34,10 +34,10 @@ setopt NO_LIST_BEEP
 setopt SHARE_HISTORY
 
 # Oh My Zsh
-if [[ -d /usr/share/oh-my-zsh ]]; then
+if [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
   ZSH=/usr/share/oh-my-zsh
 fi
-if [[ -d $HOME/.oh-my-zsh ]]; then
+if [[ -f $HOME/.oh-my-zsh/oh-my-zsh.sh ]]; then
   ZSH=$HOME/.oh-my-zsh
 fi
 
@@ -50,7 +50,7 @@ if [[ ! -z "$ZSH" ]]; then
   ZSH_THEME="gentoo"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
-  plugins=(archlinux git colored-man gem rake rbenv systemd)
+  plugins=(archlinux git colored-man gem rake rbenv systemd virtualbox)
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
