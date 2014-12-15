@@ -1,0 +1,12 @@
+#!/bin/bash
+# Start SAGU while loading my properties from the private folder
+
+source ${HOME}/bin/backup/utilities.sh
+
+get_private_file SAGU.properties SAGU.properties
+pushd ${HOME}
+
+/usr/bin/sagu
+
+popd
+release_private_file SAGU.properties
