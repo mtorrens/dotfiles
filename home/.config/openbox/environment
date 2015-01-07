@@ -3,8 +3,9 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && type dbus-launch >/dev/null; then
   eval $(dbus-launch --sh-syntax --exit-with-session)
 fi
 
-# Start GPG agent
-eval "$(gpg-agent --daemon --enable-ssh-support)"
+# Start GPG agent (requires GnuPG 2.1)
+gpgconf --launch gpg-agent
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 
 # Silliness for QT4 to find GTK icon theme
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
