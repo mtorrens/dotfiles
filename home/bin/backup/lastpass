@@ -7,4 +7,6 @@ echo "EXPORT the LastPass vault as lastpass.csv and save to the current director
 read -p "Press any key to continue..."
 
 xz -9 lastpass.csv
-mv lastpass.csv.xz $OUTDIR
+gpg --encrypt -r charles@charlespence.net lastpass.csv.xz
+rm lastpass.csv.xz
+mv lastpass.csv.xz.gpg $OUTDIR
