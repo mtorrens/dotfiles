@@ -8,4 +8,12 @@ if [ "$1" = "--help" -o $# -ne 1 ]; then
   exit 1
 fi
 
-pdfjam "$1" --no-keepinfo
+pdfjam -q "$1" --no-keepinfo
+OUTFILE="`basename "$1" .pdf`-pdfjam.pdf"
+
+if [[ ! -e "$OUTFILE" ]]; then
+  echo "ERROR: pdfjam didn't produce an output file; see what went wrong"
+  exit 1
+fi
+
+mv "$OUTFILE" "$1"
