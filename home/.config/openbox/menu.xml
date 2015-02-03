@@ -27,6 +27,7 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <separator />
   <item label="VirtualBox" icon="/usr/share/icons/hicolor/24x24/mimetypes/virtualbox-vbox.png">
     <action name="Execute">
       <command>VirtualBox</command>
@@ -56,21 +57,6 @@
   </item>
 </menu>
 
-<menu id="apps-net-menu" label="Internet">
-  <item label="FileZilla" icon="/usr/share/icons/hicolor/scalable/apps/filezilla.svg">
-    <action name="Execute">
-      <command>filezilla</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <item label="Deluge" icon="/usr/share/icons/hicolor/scalable/apps/deluge.svg">
-    <action name="Execute">
-      <command>deluge</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-</menu>
-
 <menu id="apps-graphics-menu" label="Graphics">
   <item label="Gimp" icon="/usr/share/icons/hicolor/24x24/apps/gimp.png">
     <action name="Execute">
@@ -90,18 +76,19 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <separator />
+  <item label="Briss" icon="/usr/share/briss/briss-icon.png">
+    <action name="Execute">
+      <command>briss</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
 </menu>
 
 <menu id="apps-media-menu" label="Multimedia">
   <item label="VLC" icon="/usr/share/icons/hicolor/48x48/apps/vlc.png">
     <action name="Execute">
       <command>vlc</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <item label="Picard" icon="/usr/share/icons/hicolor/24x24/apps/picard.png">
-    <action name="Execute">
-      <command>picard</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -194,7 +181,7 @@
   </item>
   <item label="PCManFM" icon="/usr/share/icons/elementary/apps/48/system-file-manager.svg">
     <action name="Execute">
-      <command>pcmanfm /home/cpence</command>
+      <command>pcmanfm -n /home/cpence</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
@@ -213,10 +200,8 @@
   <separator/>
   <menu id="apps-productivity-menu" icon="/usr/share/icons/elementary/categories/48/applications-office.svg" />
   <menu id="apps-research-menu" icon="/usr/share/icons/elementary/categories/48/applications-libraries.svg" />
-  <menu id="apps-net-menu" icon="/usr/share/icons/elementary/categories/48/applications-internet.svg" />
   <menu id="apps-graphics-menu" icon="/usr/share/icons/elementary/categories/48/applications-graphics.svg" />
   <menu id="apps-media-menu" icon="/usr/share/icons/elementary/categories/48/applications-multimedia.svg" />
-  <separator label="System" />
   <menu id="system-menu" icon="/usr/share/icons/elementary/categories/48/applications-system.svg" />
   <separator />
   <item label="End Session" icon="/usr/share/icons/elementary/categories/32/preferences-system-session.svg">

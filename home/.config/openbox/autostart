@@ -23,5 +23,4 @@ trayer --edge top --align left --distance 1920 --distancefrom left --widthtype r
 (sleep 2 && pnmixer) &
 
 # Start Zim and gmusicbrowser on boot
-(sleep 2 && zim --plugin trayicon) &
 (sleep 2 && gmusicbrowser) &
