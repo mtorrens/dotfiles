@@ -1,0 +1,18 @@
+#!/bin/bash
+# Wait for the audio devices to exist before we fire up PA
+
+CARD0="/dev/snd/by-id/usb-Audioengine_Audioengine_2+-00"
+CARD1="/dev/snd/by-id/usb-GFEC_ASSP_DigiHug_USB_Audio-01"
+
+while [[ ! -f "$CARD0" -o ! -f "$CARD1" ]]
+do
+  inotifywait -qqt2 -e create -e moved_to /dev/snd/by-id
+end
+
+# Both of them exist, fire up PA (start by killing it if it already got started)
+pulseaudio -k
+start-pulseaudio-x11 &
+
+# Once it's live, fire up music player and volume control
+(sleep 2 && pnmixer) &
+(sleep 2 && gmusicbrowser) &
