@@ -4,10 +4,9 @@
 CARD0="/dev/snd/by-id/usb-Audioengine_Audioengine_2+-00"
 CARD1="/dev/snd/by-id/usb-GFEC_ASSP_DigiHug_USB_Audio-01"
 
-while [[ ! -f "$CARD0" -o ! -f "$CARD1" ]]
-do
+while [[ ( ! -e "$CARD0" ) || ( ! -e "$CARD1" ) ]]; do
   inotifywait -qqt2 -e create -e moved_to /dev/snd/by-id
-end
+done
 
 # Both of them exist, fire up PA (start by killing it if it already got started)
 pulseaudio -k
