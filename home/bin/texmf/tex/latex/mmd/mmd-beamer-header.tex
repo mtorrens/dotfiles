@@ -1,13 +1,13 @@
 %
 %	Configure LaTeX to produce a PDF presentation using the beamer class
 %
-
-\documentclass[ignorenonframetext,11pt]{beamer}
+\documentclass[ignorenonframetext,11pt,noamssymb]{beamer}
 %\documentclass[onesided]{article}
 %\usepackage{graphicx}
 %\usepackage{beamerarticle}
 
 \usefonttheme{structurebold}
+\usefonttheme[onlymath]{serif}
 \definecolor{cpred}{rgb}{0.757,0.192,0}
 \setbeamercolor{structure}{fg=cpred}
 
@@ -22,7 +22,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{MinionPro}
+\usepackage[textlf,minionint,footnotefigures]{MinionPro}
 \usepackage{MyriadPro}
 
 \usepackage{patchcmd}
