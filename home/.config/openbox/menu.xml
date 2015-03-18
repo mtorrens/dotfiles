@@ -152,12 +152,6 @@
     </action>
   </item>
   <separator />
-  <item label="Set Wallpaper" icon="/usr/share/icons/elementary/categories/32/preferences-desktop-wallpaper.svg">
-    <action name="Execute">
-      <command>nitrogen</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
   <item label="Screensaver Properties" icon="/usr/share/icons/elementary/categories/22/preferences-desktop-effects.svg">
     <action name="Execute">
       <command>xscreensaver-demo</command>

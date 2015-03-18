@@ -1,5 +1,5 @@
 # Desktop ASAP
-nitrogen --restore &
+sh ~/.fehbg &
 
 # X configuration
 xrdb -merge $HOME/.Xresources
