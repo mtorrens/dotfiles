@@ -309,7 +309,7 @@
         <startupnotify>
           <enabled>yes</enabled>
         </startupnotify>
-        <command>pcmanfm /home/cpence</command>
+        <command>pcmanfm -n /home/cpence</command>
       </action>
     </keybind>
     <keybind key="W-t">
