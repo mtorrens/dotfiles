@@ -6,15 +6,23 @@
 %\documentclass[onesided]{article}
 %\usepackage{graphicx}
 %\usepackage{beamerarticle}
+\usepackage{tcolorbox}
 
 \usefonttheme{structurebold}
 \usefonttheme[onlymath]{serif}
 \definecolor{cpred}{rgb}{0.757,0.192,0}
 \setbeamercolor{structure}{fg=cpred}
 
-\setbeamercolor{quote}{bg=cpred,fg=white}
+\setbeamercolor{quote}{bg=white,fg=black}
 \setbeamerfont{quote}{shape=\upshape}
-\setbeamertemplate{quote begin}{\beamercolorbox[vmode,rounded=true,center]{quote}}
+\makeatletter
+\newcommand*{\AdjustMargins}{%
+    \setlength{\rightmargin}{0em}%
+    \setlength{\leftmargini}{0em}%
+}
+\makeatother
+\setbeamertemplate{quote begin}{\AdjustMargins\begin{tcolorbox}[colframe=cpred]}
+\setbeamertemplate{quote end}{\end{tcolorbox}}
 
 \setbeamertemplate{navigation symbols}{}
 
