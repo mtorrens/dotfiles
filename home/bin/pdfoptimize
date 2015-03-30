@@ -18,6 +18,6 @@ fi
 #   http://stackoverflow.com/q/10450120
 #   http://milan.kupcevic.net/ghostscript-ps-pdf/
 
-pdf2ps "$1" __tmp.ps
+pdftops -level3 "$1" __tmp.ps
 ps2pdf -dPDFSETTINGS=/ebook __tmp.ps "$2"
 rm -f __tmp.ps
