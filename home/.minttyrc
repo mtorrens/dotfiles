@@ -1,6 +1,6 @@
 BoldAsFont=yes
-Font=Meslo LG M
-FontHeight=10
+Font=Consolas
+FontHeight=12
 FontSmoothing=full
 Locale=en_US
 Charset=UTF-8

@@ -1,6 +1,6 @@
 {
 	"font_size": 12,
-  "font_face": "Liberation Mono",
-  "line_padding_bottom": 2,
-  "line_padding_top": 2
+  "font_face": "Consolas",
+  "line_padding_bottom": 3,
+  "line_padding_top": 3
 }

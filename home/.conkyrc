@@ -3,7 +3,7 @@ lua_load ~/.conky_lua_scripts.lua
 
 # Enable XFT
 use_xft yes
-xftfont Liberation Mono:size=14
+xftfont Consolas:size=13
 xftalpha 1
 override_utf8_locale yes
 
@@ -47,12 +47,12 @@ net_avg_samples 2
 
 
 TEXT
-${alignr}${offset -40}${hwmon temp 1}°C ${voffset 2}${font StyleBats:size=13}E${font}${voffset -4}  \
- ${hwmon temp 2}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
- ${hwmon temp 3}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
- ${hwmon temp 4}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
- ${hwmon temp 5}°C ${voffset 2}${font StyleBats:size=13}A${font}${voffset -4} \
-        ${lua_parse pad3 ${cpu cpu0}}% ${voffset 2}${font StyleBats:size=13}I${font}${voffset -4}\
- ${lua_parse pad3 $memperc}% ${voffset 2}${font StyleBats:size=13}J${font}${voffset -4}\
+${alignr}${offset -60}  \
+ ${hwmon temp 2}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon temp 3}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon temp 4}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon temp 5}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+        ${lua_parse pad3 ${cpu cpu0}}% ${voffset 0}${font StyleBats:size=13}I${font}${voffset -1}\
+ ${lua_parse pad3 $memperc}% ${voffset 0}${font StyleBats:size=13}J${font}${voffset -1}\
  ${lua_parse pad3 $swapperc}% ${font StyleBats:size=13}T${font}\
-        ${voffset -2}${font Sans:size=13}${time %a, %b %-e}${font} | ${time %H:%M}
+        ${voffset -6}${font Segoe UI:size=13}${time %a, %b %-e}${font} | ${time %H:%M}

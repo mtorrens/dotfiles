@@ -1,6 +1,6 @@
 URxvt*geometry:     100x25
 URxvt*saveLines:    2048
-URxvt*font:         xft:Liberation Mono:pixelsize=15
+URxvt*font:         xft:Consolas:pixelsize=16
 URxvt*lineSpace:    4
 URxvt*loginShell:   true
 URxvt*scrollstyle:  next

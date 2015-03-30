@@ -1,6 +1,6 @@
 gtk-error-bell = 0
 gtk-theme-name = "Greybird"
-gtk-font-name = "Sans 10"
+gtk-font-name = "Segoe UI 10"
 gtk-icon-theme-name = "elementary"
 gtk-recent-files-max-age = 0
 gtk-recent-files-limit = 0
