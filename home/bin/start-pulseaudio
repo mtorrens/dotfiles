@@ -13,5 +13,4 @@ pulseaudio -k
 start-pulseaudio-x11 &
 
 # Once it's live, fire up music player and volume control
-(sleep 2 && pnmixer) &
 (sleep 2 && gmusicbrowser) &
