@@ -1,0 +1,26 @@
+%Filename: t1mbl.fd
+%Created by: tex mbl-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{t1mbl.fd}
+   [2015/03/30 Fontinst v1.933 font definitions for T1/mbl.]
+
+\DeclareFontFamily{T1}{mbl}{}
+
+\DeclareFontShape{T1}{mbl}{m}{n}{
+   <-> mblr8t
+}{}
+
+\DeclareFontShape{T1}{mbl}{m}{sc}{
+   <-> mblrc8t
+}{}
+
+\DeclareFontShape{T1}{mbl}{m}{sl}{
+   <-> mblro8t
+}{}
+
+\DeclareFontShape{T1}{mbl}{m}{it}{<->ssub * mbl/m/sl}{}
+
+\endinput

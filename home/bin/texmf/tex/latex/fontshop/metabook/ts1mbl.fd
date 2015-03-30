@@ -1,0 +1,22 @@
+%Filename: ts1mbl.fd
+%Created by: tex mbl-drv
+%Created using fontinst v1.933
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{ts1mbl.fd}
+   [2015/03/30 Fontinst v1.933 font definitions for TS1/mbl.]
+
+\DeclareFontFamily{TS1}{mbl}{}
+
+\DeclareFontShape{TS1}{mbl}{m}{n}{
+   <-> mblr8c
+}{}
+
+\DeclareFontShape{TS1}{mbl}{m}{sl}{
+   <-> mblro8c
+}{}
+
+\DeclareFontShape{TS1}{mbl}{m}{it}{<->ssub * mbl/m/sl}{}
+
+\endinput
