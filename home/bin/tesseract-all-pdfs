@@ -1,0 +1,5 @@
+#!/bin/bash
+# Run tesseract on an entire folder of PDFs.
+
+find . -name '*.pdf' -print0 | xargs -0 -P 3 -n 1 -I '{}' -t sh -c \
+  'convert -density 300 -depth 8 -background white -flatten +matte {} {}.tiff ; tesseract -l eng {}.tiff {} ; rm {}.tiff'
