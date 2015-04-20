@@ -7,7 +7,7 @@ setxkbmap -option ctrl:nocaps
 xscreensaver -no-splash &
 
 # PulseAudio
-~/bin/start-pulseaudio
+~/bin/start-pulseaudio &
 
 # Compositor
 compton -b --config ~/.config/compton.conf &
