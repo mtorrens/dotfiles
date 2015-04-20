@@ -1,0 +1,20 @@
+#!/bin/bash
+
+CACHE_FILE="$HOME/.cache/dmenu_files_history"
+TEMP_FILE="${CACHE_FILE}_temp"
+
+rm -f $TEMP_FILE
+touch $TEMP_FILE
+
+while read line
+do
+  filename=`echo $line | sed 's/^[0-9]* //'`
+
+  if [[ -n "$filename" ]]; then
+    if [[ -e "$filename" ]]; then
+      echo "$line" >> $TEMP_FILE
+    fi
+  fi
+done < $HOME/.cache/dmenu_files_history
+
+mv $TEMP_FILE $CACHE_FILE
