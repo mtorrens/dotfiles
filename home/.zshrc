@@ -48,8 +48,15 @@ if [[ ! -z "$ZSH" ]]; then
   fi
 
   ZSH_THEME="gentoo"
+  CASE_SENSITIVE="true"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
+
+  ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
+  if [[ ! -d $ZSH_CACHE_DIR ]]; then
+    mkdir $ZSH_CACHE_DIR
+  fi
+
   plugins=(archlinux git colored-man gem rake rbenv systemd virtualbox)
   source $ZSH/oh-my-zsh.sh
 
