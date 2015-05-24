@@ -1,10 +1,10 @@
 #!/bin/sh
 # Recompress the images in a PDF file
 
-if [ "$1" = "--help" -o $# -ne 2 ]; then
+if [ "$1" = "--help" -o $# -ne 1 ]; then
   echo "pdfoptimize: optimize the images in a PDF file"
   echo ""
-  echo "Usage: pdfoptimize <in.pdf> <out.pdf>"
+  echo "Usage: pdfoptimize <in.pdf>"
   exit 1
 fi
 
@@ -19,5 +19,6 @@ fi
 #   http://milan.kupcevic.net/ghostscript-ps-pdf/
 
 pdftops -level3 "$1" __tmp.ps
-ps2pdf -dPDFSETTINGS=/ebook __tmp.ps "$2"
+ps2pdf -dPDFSETTINGS=/ebook __tmp.ps __tmp.pdf
 rm -f __tmp.ps
+mv __tmp.pdf "$1"
