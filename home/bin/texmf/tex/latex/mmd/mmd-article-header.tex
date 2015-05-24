@@ -2,6 +2,10 @@
 %	Configure LaTeX to produce an article using the memoir class
 %
 
-\documentclass[oneside,article]{memoir}
-
+\documentclass[oneside,article,12pt]{memoir}
 \input{mmd-memoir-setup}
+\setsecheadstyle{\sffamily\bfseries\large}
+\setsecnumformat{\csname the#1\endcsname.~}
+\setsechook{\setsecnumformat{\arabic{section}.~}}
+\renewcommand{\maketitlehooka}{\sffamily\bfseries}
+\renewcommand{\maketitlehookb}{\mdseries}
