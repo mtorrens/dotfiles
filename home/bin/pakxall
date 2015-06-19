@@ -1,0 +1,14 @@
+#!/bin/bash
+
+IFS="
+"
+
+for line in `pakx $1 | tail -n +2`; do
+  file=`echo $line | cut -d' ' -f1`
+
+  dir=`dirname $file`
+  mkdir -p $dir
+
+  pakx $1 $file $file
+done
+
