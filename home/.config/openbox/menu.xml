@@ -21,12 +21,6 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Timer" icon="/usr/share/icons/elementary/categories/48/preferences-system-time.svg">
-    <action name="Execute">
-      <command>pystopwatch</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
   <separator />
   <item label="VirtualBox" icon="/usr/share/icons/hicolor/24x24/mimetypes/virtualbox-vbox.png">
     <action name="Execute">
@@ -37,19 +31,19 @@
 </menu>
 
 <menu id="apps-research-menu" label="Research">
-  <item label="Zotero" icon="/usr/share/icons/elementary/categories/48/applications-libraries.svg">
+  <item label="Zotero" icon="/usr/share/icons/Tango/22x22/categories/applications-science.png">
     <action name="Execute">
       <command>zotero</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Calculator" icon="/usr/share/icons/elementary/apps/48/accessories-calculator.svg">
+  <item label="Calculator" icon="/usr/share/icons/Tango/22x22/apps/accessories-calculator.png">
     <action name="Execute">
       <command>galculator</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="wxMaxima" icon="/usr/share/icons/elementary/categories/48/applications-mathematics.svg">
+  <item label="wxMaxima" icon="/usr/share/icons/Tango/22x22/apps/gnome-monitor.png">
     <action name="Execute">
       <command>wxmaxima</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -58,13 +52,13 @@
 </menu>
 
 <menu id="apps-graphics-menu" label="Graphics">
-  <item label="Gimp" icon="/usr/share/icons/hicolor/24x24/apps/gimp.png">
+  <item label="Gimp" icon="/usr/share/icons/hicolor/22x22/apps/gimp.png">
     <action name="Execute">
       <command>gimp</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Inkscape" icon="/usr/share/icons/hicolor/24x24/apps/inkscape.png">
+  <item label="Inkscape" icon="/usr/share/icons/hicolor/22x22/apps/inkscape.png">
     <action name="Execute">
       <command>inkscape</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -92,7 +86,7 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Audacity" icon="/usr/share/icons/hicolor/24x24/apps/audacity.png">
+  <item label="Audacity" icon="/usr/share/icons/hicolor/22x22/apps/audacity.png">
     <action name="Execute">
       <command>audacity</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -101,25 +95,25 @@
 </menu>
 
 <menu id="openbox-config-menu" label="Openbox Config">
-  <item label="Edit menu.xml" icon="/usr/share/icons/elementary/actions/48/bookmark-new.svg">
+  <item label="Edit menu.xml" icon="/usr/share/icons/Tango/22x22/actions/bookmark-new.png">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/menu.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Edit rc.xml" icon="/usr/share/icons/elementary/mimes/48/text-x-makefile.svg">
+  <item label="Edit rc.xml" icon="/usr/share/icons/Tango/22x22/mimetypes/text-x-script.png">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/rc.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="OBConf" icon="/usr/share/icons/elementary/categories/48/preferences-desktop.svg">
+  <item label="OBConf" icon="/usr/share/icons/Tango/22x22/categories/preferences-desktop.png">
     <action name="Execute">
       <command>obconf</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Reconfigure Openbox" icon="/usr/share/icons/elementary/actions/48/view-refresh.svg">
+  <item label="Reconfigure Openbox" icon="/usr/share/icons/Tango/22x22/actions/view-refresh.png">
     <action name="Reconfigure" />
   </item>
 </menu>
@@ -127,19 +121,19 @@
 <menu id="xdg-pipe-menu" label="XDG Menu" execute="xdg_menu --format openbox3-pipe --root-menu /etc/xdg/menus/arch-applications.menu" />
 
 <menu id="system-menu" label="System">
-  <item label="ARandR" icon="/usr/share/icons/elementary/categories/32/preferences-desktop-display.svg">
+  <item label="ARandR" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-windows.png">
     <action name="Execute">
       <command>arandr</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Graphical Disk Map" icon="/usr/share/icons/elementary/devices/48/drive-harddisk.svg">
+  <item label="Graphical Disk Map" icon="/usr/share/icons/Tango/22x22/devices/harddrive.png">
     <action name="Execute">
       <command>gdmap</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Manage Cups Printers" icon="/usr/share/icons/elementary/devices/48/printer.svg">
+  <item label="Manage Cups Printers" icon="/usr/share/icons/Tango/22x22/devices/printer.png">
     <action name="Execute">
       <command>xdg-open http://localhost:631/</command>
       <startupnotify><enabled>no</enabled></startupnotify>
@@ -152,53 +146,53 @@
     </action>
   </item>
   <separator />
-  <item label="Screensaver Properties" icon="/usr/share/icons/elementary/categories/22/preferences-desktop-effects.svg">
+  <item label="Screensaver Properties" icon="/usr/share/icons/Tango/22x22/apps/preferences-desktop-screensaver.png">
     <action name="Execute">
       <command>xscreensaver-demo</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <menu id="openbox-config-menu" icon="/usr/share/icons/elementary/actions/48/window-new.svg" />
+  <menu id="openbox-config-menu" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-windows.png" />
   <separator />
-  <menu id="xdg-pipe-menu" icon="/usr/share/icons/elementary/places/48/distributor-logo.svg" />
+  <menu id="xdg-pipe-menu" icon="/usr/share/icons/Tango/22x22/places/distributor-logo.png" />
 </menu>
 
 <menu id="root-menu" label="Openbox 3">
   <showIcons>yes</showIcons>
 
   <separator label="Applications" />
-  <item label="Terminal" icon="/usr/share/icons/elementary/apps/48/utilities-terminal.svg">
+  <item label="Terminal" icon="/usr/share/icons/Tango/22x22/apps/utilities-terminal.png">
     <action name="Execute">
       <command>urxvt</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="PCManFM" icon="/usr/share/icons/elementary/apps/48/system-file-manager.svg">
+  <item label="PCManFM" icon="/usr/share/icons/Tango/22x22/apps/system-file-manager.png">
     <action name="Execute">
       <command>pcmanfm -n /home/cpence</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Sublime Text" icon="/usr/share/icons/elementary/apps/48/accessories-text-editor.svg">
+  <item label="Sublime Text" icon="/usr/share/icons/Tango/22x22/apps/accessories-text-editor.png">
     <action name="Execute">
       <command>subl3</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Chromium" icon="/usr/share/icons/elementary/apps/48/internet-web-browser.svg">
+  <item label="Chromium" icon="/usr/share/icons/Tango/22x22/apps/internet-web-browser.png">
     <action name="Execute">
       <command>chromium</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator/>
-  <menu id="apps-productivity-menu" icon="/usr/share/icons/elementary/categories/48/applications-office.svg" />
-  <menu id="apps-research-menu" icon="/usr/share/icons/elementary/categories/48/applications-libraries.svg" />
-  <menu id="apps-graphics-menu" icon="/usr/share/icons/elementary/categories/48/applications-graphics.svg" />
-  <menu id="apps-media-menu" icon="/usr/share/icons/elementary/categories/48/applications-multimedia.svg" />
-  <menu id="system-menu" icon="/usr/share/icons/elementary/categories/48/applications-system.svg" />
+  <menu id="apps-productivity-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-office.png" />
+  <menu id="apps-research-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-science.png" />
+  <menu id="apps-graphics-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-graphics.png" />
+  <menu id="apps-media-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-multimedia.png" />
+  <menu id="system-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-system.png" />
   <separator />
-  <item label="End Session" icon="/usr/share/icons/elementary/categories/32/preferences-system-session.svg">
+  <item label="End Session" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-session.png">
     <action name="Execute">
       <command>sh -c '~/bin/end-session'</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
