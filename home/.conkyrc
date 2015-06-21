@@ -48,10 +48,11 @@ net_avg_samples 2
 
 TEXT
 ${alignr}${offset -60}  \
- ${hwmon temp 2}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
- ${hwmon temp 3}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
- ${hwmon temp 4}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
- ${hwmon temp 5}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon 1 temp 1}°C ${voffset 0}${font StyleBats:size=13}V${font}${voffset -1} \
+   ${hwmon 1 temp 2}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon 1 temp 3}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon 1 temp 4}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
+ ${hwmon 1 temp 5}°C ${voffset 0}${font StyleBats:size=13}A${font}${voffset -1} \
         ${lua_parse pad3 ${cpu cpu0}}% ${voffset 0}${font StyleBats:size=13}I${font}${voffset -1}\
  ${lua_parse pad3 $memperc}% ${voffset 0}${font StyleBats:size=13}J${font}${voffset -1}\
  ${lua_parse pad3 $swapperc}% ${font StyleBats:size=13}T${font}\
