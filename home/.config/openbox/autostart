@@ -4,7 +4,7 @@ sh ~/.fehbg &
 # X configuration
 xrdb -merge $HOME/.Xresources
 setxkbmap -option ctrl:nocaps
-xscreensaver -no-splash &
+xautolock -time 15 -locker i3lock-wrapper &
 
 # PulseAudio
 ~/bin/start-pulseaudio &
