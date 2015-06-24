@@ -1,9 +1,9 @@
 #!/bin/sh
 
 HEADPHONE_SINK=crossfeed
-HEADPHONE_OUT_SINK='alsa_output.usb-GFEC_ASSP_DigiHug_USB_Audio-01-Audio.analog-stereo'
+HEADPHONE_OUT_SINK='alsa_output.usb-GFEC_ASSP_DigiHug_USB_Audio-01.analog-stereo'
 HEADPHONE_PORT=analog-output
-SPEAKER_SINK='alsa_output.usb-Audioengine_Audioengine_2_-00-A2.analog-stereo'
+SPEAKER_SINK='alsa_output.usb-Audioengine_Audioengine_2_-00.analog-stereo'
 SPEAKER_PORT=analog-output
 
 # Set the default sink and output
