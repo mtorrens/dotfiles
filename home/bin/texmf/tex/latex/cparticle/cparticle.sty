@@ -87,19 +87,13 @@
 
 \renewenvironment{quote}{%
 \list{}{\rightmargin\leftmargin}%
-\let\cpastretch\baselinestretch%
-%\setcounter{cpatemp}{500*\real{\baselinestretch}-500}%
-\setlength{\cpaskip}{\baselineskip*\value{cpatemp}/1000}%
 \setstretch{1.0}%
 \item\relax}
-{\endlist\setstretch{\cpastretch}\vspace{-\cpaskip}}
+{\endlist\setstretch{2.0}\vspace{-0.5\baselineskip}}
 
 \def\changemargin#1#2{%
-\let\cpastretch\baselinestretch%
-%\setcounter{cpatemp}{500*\real{\baselinestretch}-500}%
-\setlength{\cpaskip}{\baselineskip*\value{cpatemp}/1000}%
 \list{}{\rightmargin#2\leftmargin#1}\setstretch{1.0}\item[]}
-\def\endchangemargin{\endlist\setstretch{\cpastretch}\vspace{-\cpaskip}}
+\def\endchangemargin{\endlist\setstretch{2.0}\vspace{-0.5\baselineskip}}
 
 \fi
 
