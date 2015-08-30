@@ -1638,9 +1638,9 @@ FUNCTION {begin.bib}
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
   write$ newline$
-  "  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else"
+  "  \providecommand{\doi}[1]{doi:#1}\else"
   write$ newline$
-  "  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup \urlstyle{rm}\Url}\fi"
+  "  \providecommand{\doi}{DOI:\begingroup \urlstyle{rm}\Url}\fi"
   write$ newline$
   "\providecommand{\eprint}[2][]{\url{#2}}"
   write$ newline$
