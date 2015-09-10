@@ -317,7 +317,7 @@
         <startupnotify>
           <enabled>yes</enabled>
         </startupnotify>
-        <command>urxvt</command>
+        <command>lilyterm</command>
       </action>
     </keybind>
     <keybind key="W-s">
