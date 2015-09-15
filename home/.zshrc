@@ -73,6 +73,9 @@ bindkey "\e[4~" end-of-line
 # Don't get the enter key confused
 stty icrnl
 
+# Travis gem has some completion of its own
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
 ###############################################################################
 # Path settings
 
@@ -150,12 +153,21 @@ else
 fi
 
 # grep through the output of ps without showing grep itself in output
-psgrep() {
-  ps axf | grep "[${*:0:1}]${*:1}"
-}
+# Also shim for the fact that BSD ps (Mac OS X) doesn't have the awesome tree
+# `ps f` support.
+if [ `$UNAME -s` = "Darwin" ]; then
+  alias ps='ps ax'
 
-# Zotero: find all unlinked PDFs which are stored in the Zotero folder
-alias zotero-unlinked="find ~/.zotero/zotero/*.default/zotero/storage -iname '*.pdf'"
+  psgrep() {
+    ps ax | grep "[${*:0:1}]${*:1}"
+  }
+else
+  alias ps='ps axf'
+
+  psgrep() {
+    ps axf | grep "[${*:0:1}]${*:1}"
+  }
+fi
 
 # Development directories
 dev() { cd ~/Development/$1; }
@@ -174,6 +186,3 @@ function fuck() {
     echo ; echo " (╯°□°）╯︵$(echo "$2"|flip)"; echo
   fi
 }
-
-# added by travis gem
-[ -f /Users/pence/.travis/travis.sh ] && source /Users/pence/.travis/travis.sh
