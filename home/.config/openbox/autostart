@@ -1,5 +1,5 @@
 # Desktop ASAP
-sh ~/.fehbg &
+hsetroot -solid '#555577'
 
 # X configuration
 xrdb -merge $HOME/.Xresources

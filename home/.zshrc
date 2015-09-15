@@ -2,11 +2,6 @@
 ###############################################################################
 # Basic shell settings
 
-# Set the console color theme, if available
-if [[ -e $HOME/bin/color-theme ]]; then
-  . $HOME/bin/color-theme
-fi
-
 # Load some things that ZSH doesn't by default
 autoload zmv
 
