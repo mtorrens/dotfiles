@@ -10,8 +10,8 @@ SEL_FG="#303030"
 CACHE="$HOME/.cache/dmenu_files"
 
 # FIXME: ONLY DO THIS when changed
-find $HOME/SpiderOak\ Hive $HOME/Dropbox -type f -o -type d > $CACHE
-find $HOME -type d -not -name '.*' -maxdepth 1 >> $CACHE
+find $HOME/Dropbox -type f -o -type d > $CACHE
+find $HOME -maxdepth 1 -type d -not -name '.*' >> $CACHE
 
 SELECTED=`cat $CACHE | $HOME/bin/dmenu-history $HOME/.cache/dmenu_files_history -i -l 10 -fn "$FONT" -nb "$BG" -nf "$FG" -sb "$SEL_BG" -sf "$SEL_FG"`
 
