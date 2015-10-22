@@ -11,15 +11,12 @@ xset s off &
 # PulseAudio
 ~/bin/start-pulseaudio &
 
-# Compositor
-compton -b --config ~/.config/compton.conf &
-
 # Notification daemon and Polkit logins
-/usr/lib/mate-notification-daemon/mate-notification-daemon &
-lxpolkit &
+dunst &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
-# PCManFM daemon for automounts
-pcmanfm -d &
+# SpaceFM daemon for automounts
+spacefm -d &
 
 # System tray
 trayer --edge top --align left --distance 1920 --distancefrom left --widthtype request --heighttype request --transparent true --tint 0x303030 --alpha 0 --expand true --SetPartialStrut false --SetDockType true &

@@ -3,26 +3,26 @@
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/">
 
 <menu id="apps-productivity-menu" label="Productivity">
-  <item label="Writer" icon="/usr/share/icons/hicolor/scalable/apps/libreoffice-writer.svg">
+  <item label="Writer" icon="/usr/share/icons/Numix-Circle/scalable/apps/libreoffice-writer.svg">
     <action name="Execute">
       <command>lowriter</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Calc" icon="/usr/share/icons/hicolor/scalable/apps/libreoffice-calc.svg">
+  <item label="Calc" icon="/usr/share/icons/Numix-Circle/scalable/apps/libreoffice-calc.svg">
     <action name="Execute">
       <command>localc</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Impress" icon="/usr/share/icons/hicolor/scalable/apps/libreoffice-impress.svg">
+  <item label="Impress" icon="/usr/share/icons/Numix-Circle/scalable/apps/libreoffice-impress.svg">
     <action name="Execute">
       <command>loimpress</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator />
-  <item label="VirtualBox" icon="/usr/share/icons/hicolor/24x24/mimetypes/virtualbox-vbox.png">
+  <item label="VirtualBox" icon="/usr/share/icons/Numix-Circle/scalable/apps/virtualbox.svg">
     <action name="Execute">
       <command>VirtualBox</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -31,19 +31,19 @@
 </menu>
 
 <menu id="apps-research-menu" label="Research">
-  <item label="Zotero" icon="/usr/share/icons/Tango/22x22/categories/applications-science.png">
+  <item label="Zotero" icon="/usr/share/icons/Numix-Circle/scalable/apps/zotero.svg">
     <action name="Execute">
       <command>zotero</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Calculator" icon="/usr/share/icons/Tango/22x22/apps/accessories-calculator.png">
+  <item label="Calculator" icon="/usr/share/icons/Numix-Circle/scalable/apps/calc.svg">
     <action name="Execute">
       <command>galculator</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="wxMaxima" icon="/usr/share/icons/Tango/22x22/apps/gnome-monitor.png">
+  <item label="wxMaxima" icon="/usr/share/icons/Numix-Circle/scalable/apps/maxima.svg">
     <action name="Execute">
       <command>wxmaxima</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -52,26 +52,26 @@
 </menu>
 
 <menu id="apps-graphics-menu" label="Graphics">
-  <item label="Gimp" icon="/usr/share/icons/hicolor/22x22/apps/gimp.png">
+  <item label="Gimp" icon="/usr/share/icons/Numix-Circle/scalable/apps/gimp.svg">
     <action name="Execute">
       <command>gimp</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Inkscape" icon="/usr/share/icons/hicolor/22x22/apps/inkscape.png">
+  <item label="Inkscape" icon="/usr/share/icons/Numix-Circle/scalable/apps/inkscape.svg">
     <action name="Execute">
       <command>inkscape</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Draw" icon="/usr/share/icons/hicolor/scalable/apps/libreoffice-draw.svg">
+  <item label="Draw" icon="/usr/share/icons/Numix-Circle/scalable/apps/libreoffice-draw.svg">
     <action name="Execute">
       <command>lodraw</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator />
-  <item label="Briss" icon="/usr/share/briss/briss-icon.png">
+  <item label="Briss" icon="/usr/share/icons/Numix-Circle/scalable/apps/pdfmod.svg">
     <action name="Execute">
       <command>briss</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -80,13 +80,13 @@
 </menu>
 
 <menu id="apps-media-menu" label="Multimedia">
-  <item label="VLC" icon="/usr/share/icons/hicolor/48x48/apps/vlc.png">
+  <item label="VLC" icon="/usr/share/icons/Numix-Circle/scalable/apps/vlc.svg">
     <action name="Execute">
       <command>vlc</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Audacity" icon="/usr/share/icons/hicolor/22x22/apps/audacity.png">
+  <item label="Audacity" icon="/usr/share/icons/Numix-Circle/scalable/apps/audacity.svg">
     <action name="Execute">
       <command>audacity</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
@@ -95,104 +95,92 @@
 </menu>
 
 <menu id="openbox-config-menu" label="Openbox Config">
-  <item label="Edit menu.xml" icon="/usr/share/icons/Tango/22x22/actions/bookmark-new.png">
+  <item label="Edit menu.xml" icon="/usr/share/icons/Numix-Circle/scalable/apps/classicmenu-indicator-dark.svg">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/menu.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Edit rc.xml" icon="/usr/share/icons/Tango/22x22/mimetypes/text-x-script.png">
+  <item label="Edit rc.xml" icon="/usr/share/icons/Numix-Circle/scalable/apps/oxygen.svg">
     <action name="Execute">
       <command>subl3 ~/.config/openbox/rc.xml</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="OBConf" icon="/usr/share/icons/Tango/22x22/categories/preferences-desktop.png">
-    <action name="Execute">
-      <command>obconf</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <item label="Reconfigure Openbox" icon="/usr/share/icons/Tango/22x22/actions/view-refresh.png">
+  <item label="Reconfigure Openbox" icon="/usr/share/icons/Numix-Circle/scalable/apps/un-reboot.svg">
     <action name="Reconfigure" />
   </item>
 </menu>
 
-<menu id="xdg-pipe-menu" label="XDG Menu" execute="xdg_menu --format openbox3-pipe --root-menu /etc/xdg/menus/arch-applications.menu" />
+<menu id="xdg-pipe-menu" label="XDG Menu" execute="obmenu-generator -i" />
 
 <menu id="system-menu" label="System">
-  <item label="ARandR" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-windows.png">
+  <item label="ARandR" icon="/usr/share/icons/Numix-Circle/scalable/apps/display.svg">
     <action name="Execute">
       <command>arandr</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Graphical Disk Map" icon="/usr/share/icons/Tango/22x22/devices/harddrive.png">
+  <item label="Baobab" icon="/usr/share/icons/Numix-Circle/scalable/apps/baobab.svg">
     <action name="Execute">
-      <command>gdmap</command>
+      <command>baobab</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Manage Cups Printers" icon="/usr/share/icons/Tango/22x22/devices/printer.png">
+  <item label="Manage Cups Printers" icon="/usr/share/icons/Numix-Circle/scalable/apps/cups.svg">
     <action name="Execute">
       <command>xdg-open http://localhost:631/</command>
       <startupnotify><enabled>no</enabled></startupnotify>
     </action>
   </item>
-  <item label="GParted" icon="/usr/share/icons/hicolor/scalable/apps/gparted.svg">
+  <item label="GParted" icon="/usr/share/icons/Numix-Circle/scalable/apps/gparted.svg">
     <action name="Execute">
       <command>pkexec gparted</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator />
-  <item label="Screensaver Properties" icon="/usr/share/icons/Tango/22x22/apps/preferences-desktop-screensaver.png">
-    <action name="Execute">
-      <command>xscreensaver-demo</command>
-      <startupnotify><enabled>yes</enabled></startupnotify>
-    </action>
-  </item>
-  <menu id="openbox-config-menu" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-windows.png" />
+  <menu id="openbox-config-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/obconf.svg" />
   <separator />
-  <menu id="xdg-pipe-menu" icon="/usr/share/icons/Tango/22x22/places/distributor-logo.png" />
+  <menu id="xdg-pipe-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/distributor-logo-lfs.svg" />
 </menu>
 
 <menu id="root-menu" label="Openbox 3">
   <showIcons>yes</showIcons>
 
   <separator label="Applications" />
-  <item label="Terminal" icon="/usr/share/icons/Tango/22x22/apps/utilities-terminal.png">
+  <item label="Terminal" icon="/usr/share/icons/Numix-Circle/scalable/apps/terminal.svg">
     <action name="Execute">
-      <command>lilyterm</command>
+      <command>sakura -c 110 -r 30</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="PCManFM" icon="/usr/share/icons/Tango/22x22/apps/system-file-manager.png">
+  <item label="SpaceFM" icon="/usr/share/icons/Numix-Circle/scalable/apps/spacefm.svg">
     <action name="Execute">
-      <command>pcmanfm -n /home/cpence</command>
+      <command>spacefm -n /home/cpence</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Sublime Text" icon="/usr/share/icons/Tango/22x22/apps/accessories-text-editor.png">
+  <item label="Sublime Text" icon="/usr/share/icons/Numix-Circle/scalable/apps/sublimetext.svg">
     <action name="Execute">
       <command>subl3</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
-  <item label="Chromium" icon="/usr/share/icons/Tango/22x22/apps/internet-web-browser.png">
+  <item label="Chromium" icon="/usr/share/icons/Numix-Circle/scalable/apps/chromium.svg">
     <action name="Execute">
       <command>chromium</command>
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
   <separator/>
-  <menu id="apps-productivity-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-office.png" />
-  <menu id="apps-research-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-science.png" />
-  <menu id="apps-graphics-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-graphics.png" />
-  <menu id="apps-media-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-multimedia.png" />
-  <menu id="system-menu" icon="/usr/share/icons/Tango/22x22/categories/applications-system.png" />
+  <menu id="apps-productivity-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-office.svg" />
+  <menu id="apps-research-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-science.svg" />
+  <menu id="apps-graphics-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-graphics.svg" />
+  <menu id="apps-media-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-multimedia.svg" />
+  <menu id="system-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-system.svg" />
   <separator />
-  <item label="End Session" icon="/usr/share/icons/Tango/22x22/apps/preferences-system-session.png">
+  <item label="End Session" icon="/usr/share/icons/Numix-Circle/scalable/apps/gnome-session.svg">
     <action name="Execute">
       <command>sh -c '~/bin/end-session'</command>
       <startupnotify><enabled>yes</enabled></startupnotify>

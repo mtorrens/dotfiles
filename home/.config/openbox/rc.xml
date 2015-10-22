@@ -37,7 +37,7 @@
                   'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>NeXT</name>
+    <name>Numix</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
@@ -309,7 +309,7 @@
         <startupnotify>
           <enabled>yes</enabled>
         </startupnotify>
-        <command>pcmanfm -n /home/cpence</command>
+        <command>spacefm -n /home/cpence</command>
       </action>
     </keybind>
     <keybind key="W-t">
@@ -317,7 +317,7 @@
         <startupnotify>
           <enabled>yes</enabled>
         </startupnotify>
-        <command>lilyterm</command>
+        <command>sakura -c 110 -r 30</command>
       </action>
     </keybind>
     <keybind key="W-s">
