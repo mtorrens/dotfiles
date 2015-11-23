@@ -1,5 +1,5 @@
 # Desktop ASAP
-hsetroot -solid '#555577'
+nitrogen --restore
 
 # X configuration
 xrdb -merge $HOME/.Xresources
@@ -7,9 +7,6 @@ setxkbmap -option ctrl:nocaps
 xautolock -time 15 -locker i3lock-wrapper &
 xset -dpms &
 xset s off &
-
-# PulseAudio
-~/bin/start-pulseaudio &
 
 # Notification daemon and Polkit logins
 dunst &
