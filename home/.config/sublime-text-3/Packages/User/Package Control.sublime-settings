@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"Base16 Color Schemes",
+		"Better CoffeeScript",
 		"Cucumber",
 		"Gherkin (Cucumber) Formatter",
 		"GPG",
@@ -13,11 +14,12 @@
 		"LaTeXTools",
 		"MarkdownEditing",
 		"Numix Theme",
+		"OpenGL Shading Language (GLSL)",
 		"Package Control",
 		"Sass",
+		"Shader Syntax (GLSL HLSL Cg)",
 		"SublimeLinter",
 		"SublimeLinter-haml",
-		"Theme - Soda",
 		"WordCount"
 	]
 }
