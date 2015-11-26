@@ -1,0 +1,23 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Base16 Color Schemes",
+		"Cucumber",
+		"Gherkin (Cucumber) Formatter",
+		"GPG",
+		"JSONLint",
+		"LaTeXTools",
+		"MarkdownEditing",
+		"Numix Theme",
+		"Package Control",
+		"Sass",
+		"SublimeLinter",
+		"SublimeLinter-haml",
+		"Theme - Soda",
+		"WordCount"
+	]
+}
