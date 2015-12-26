@@ -46,6 +46,7 @@ if [[ ! -z "$ZSH" ]]; then
   CASE_SENSITIVE="true"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
+  RBENV_ROOT="$HOME/.rbenv"
 
   ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
   if [[ ! -d $ZSH_CACHE_DIR ]]; then
