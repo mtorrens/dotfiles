@@ -29,11 +29,10 @@ setopt NO_LIST_BEEP
 setopt SHARE_HISTORY
 
 # Oh My Zsh
-if [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
-  ZSH=/usr/share/oh-my-zsh
-fi
 if [[ -f $HOME/.oh-my-zsh/oh-my-zsh.sh ]]; then
   ZSH=$HOME/.oh-my-zsh
+elif [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
+  ZSH=/usr/share/oh-my-zsh
 fi
 
 if [[ ! -z "$ZSH" ]]; then
