@@ -166,6 +166,11 @@ else
   }
 fi
 
+# Binary diff
+bindiff() {
+  diff -y <(xxd $1) <(xxd $2) | colordiff
+}
+
 # Development directories
 dev() { cd ~/Development/$1; }
 devm() { cd ~/Development/$1/master; }

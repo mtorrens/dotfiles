@@ -1,2 +1,9 @@
 ! Cursors
 Xcursor.theme: Jimmac
+
+! dmenu
+dmenu.font: Liberation Mono-16
+dmenu.background: #f5f5f5
+dmenu.foreground: #303030
+dmenu.selbackground: #e0e0e0
+dmenu.selforeground: #303030

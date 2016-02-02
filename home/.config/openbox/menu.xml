@@ -173,6 +173,12 @@
       <startupnotify><enabled>yes</enabled></startupnotify>
     </action>
   </item>
+  <item label="Pidgin" icon="/usr/share/icons/Numix-Circle/scalable/apps/pidgin.svg">
+    <action name="Execute">
+      <command>pidgin</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
   <separator/>
   <menu id="apps-productivity-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-office.svg" />
   <menu id="apps-research-menu" icon="/usr/share/icons/Numix-Circle/scalable/apps/applications-science.svg" />

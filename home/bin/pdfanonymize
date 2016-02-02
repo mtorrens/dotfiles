@@ -16,4 +16,17 @@ if [[ ! -e "$OUTFILE" ]]; then
   exit 1
 fi
 
-mv "$OUTFILE" "$1"
+exiftool -all:all= $OUTFILE
+exiftool -all:all $OUTFILE
+exiftool -extractEmbedded -all:all $OUTFILE
+
+OUTFILE2="`basename "$1" .pdf`-qpdf.pdf"
+qpdf --linearize $OUTFILE $OUTFILE2
+
+if [[ ! -e "$OUTFILE2" ]]; then
+  echo "ERROR: qpdf didn't produce an output file; see what went wrong"
+  exit 1
+fi
+
+rm -f "$OUTFILE"
+mv "$OUTFILE2" "$1"
