@@ -52,7 +52,7 @@ if [[ ! -z "$ZSH" ]]; then
     mkdir $ZSH_CACHE_DIR
   fi
 
-  plugins=(archlinux git colored-man gem rake rbenv systemd virtualbox)
+  plugins=(archlinux git colored-man gem rake rbenv golang systemd virtualbox)
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
@@ -83,6 +83,10 @@ fi
 if [ -d $HOME/.cabal ]; then
   export PATH="$HOME/.cabal/bin:$PATH"
 fi
+
+# Go path
+export GOPATH="$HOME/Development/go"
+export PATH="$PATH:$GOPATH/bin"
 
 # Always let home-directory binaries override everything
 if [ -d $HOME/bin ]; then
