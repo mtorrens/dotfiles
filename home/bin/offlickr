@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Offlickr
 # Hugo Haas <hugo@larve.net> -- http://larve.net/people/hugo/
@@ -9,13 +9,13 @@
 #   * wget patch
 #   * backup of videos as well
 #   * updated to Beej's Flickr API version 1.2 (required)
-# 
+#
 # Beraldo Leal <beraldo at beraldoleal.com> contributed:
 #   * Download photos in set with -s and -p option
 
 import sys
 import libxml2
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import getopt
 import time
 import os.path
@@ -62,7 +62,7 @@ class Offlickr:
                               format='xmlnode')
         (token, frob) = self.fapi.get_token_part_one()
         if not token:
-            raw_input('Press ENTER after you authorized this program')
+            input('Press ENTER after you authorized this program')
         self.fapi.get_token_part_two((token, frob))
         self.token = token
         self.flickrUserId = uid
@@ -73,7 +73,7 @@ class Offlickr:
         """Returns whether the previous call was successful"""
 
         if rsp['stat'] == 'fail':
-            print 'Error!'
+            print('Error!')
             return True
         else:
             return False
@@ -85,10 +85,10 @@ class Offlickr:
         flickr_max = 500
         photos = []
 
-        print 'Retrieving list of photos'
+        print('Retrieving list of photos')
         while True:
             if self.verbose:
-                print 'Requesting a page...'
+                print('Requesting a page...')
             n = n + 1
             rsp = self.fapi.photos_search(
                 api_key=self.__flickrAPIKey,
@@ -105,7 +105,7 @@ class Offlickr:
                 return None
             photos += rsp.photos[0].photo
             if self.verbose:
-                print ' %d photos so far' % len(photos)
+                print(' %d photos so far' % len(photos))
             if len(photos) >= int(rsp.photos[0]['total']):
                 break
 
@@ -118,10 +118,10 @@ class Offlickr:
         flickr_max = 500
         photos = []
 
-        print 'Retrieving list of photos'
+        print('Retrieving list of photos')
         while True:
             if self.verbose:
-                print 'Requesting a page...'
+                print('Requesting a page...')
             n = n + 1
             rsp = \
                 self.fapi.photos_getWithGeoData(api_key=self.__flickrAPIKey,
@@ -133,7 +133,7 @@ class Offlickr:
                 return None
             photos += rsp.photos[0].photo
             if self.verbose:
-                print ' %d photos so far' % len(photos)
+                print(' %d photos so far' % len(photos))
             if len(photos) >= int(rsp.photos[0]['total']):
                 break
 
@@ -199,7 +199,7 @@ class Offlickr:
         """Returns an array containing containing the photo metadata (as a string), and the format of the photo"""
 
         if self.verbose:
-            print 'Requesting metadata for photo %s' % pid
+            print('Requesting metadata for photo %s' % pid)
         rsp = self.fapi.photos_getInfo(api_key=self.__flickrAPIKey,
                 auth_token=self.token, photo_id=pid)
         if self.__testFailure(rsp):
@@ -213,7 +213,7 @@ class Offlickr:
         """Returns an XML string containing the photo comments"""
 
         if self.verbose:
-            print 'Requesting comments for photo %s' % pid
+            print('Requesting comments for photo %s' % pid)
         rsp = \
             self.fapi.photos_comments_getList(api_key=self.__flickrAPIKey,
                 auth_token=self.token, photo_id=pid)
@@ -260,7 +260,7 @@ class Offlickr:
         p = ((100 * count) * blockSize) / totalSize
         if p > 100:
             p = 100
-        print '\r %3d %%' % p,
+        print('\r %3d %%' % p, end=' ')
         sys.stdout.flush()
 
     def downloadURL(
@@ -281,7 +281,7 @@ class Offlickr:
                     url)
             os.system(cmd)
         else:
-            urllib.urlretrieve(url, tmpfile,
+            urllib.request.urlretrieve(url, tmpfile,
                                reporthook=self.__downloadReportHook)
         os.rename(tmpfile, '%s/%s' % (target, filename))
 
@@ -289,28 +289,28 @@ class Offlickr:
 def usage():
     """Command line interface usage"""
 
-    print 'Usage: Offlickr.py -i <flickr Id>'
-    print 'Backs up Flickr photos and metadata'
-    print 'Options:'
-    print '\t-f <date>\tbeginning of the date range'
-    print '\t\t\t(default: since you started using Flickr)'
-    print '\t-t <date>\tend of the date range'
-    print '\t\t\t(default: until now)'
-    print '\t-d <dir>\tdirectory for saving files (default: ./dst)'
-    print '\t-l <level>\tlevels of directory hashes (default: 0)'
-    print '\t-p\t\tback up photos in addition to photo metadata'
-    print '\t-n\t\tdo not redownload anything which has already been downloaded (only jpg checked)'
-    print '\t-o\t\toverwrite photo, even if it already exists'
-    print '\t-L\t\tback up human-readable photo locations and permissions to separate files'
-    print '\t-s\t\tback up all photosets (time range is ignored)'
-    print '\t-e\t\tback up videos ONLY'
-    print '\t-w\t\tuse wget instead of internal Python HTTP library'
-    print '\t-c <threads>\tnumber of threads to run to backup photos (default: 1)'
-    print '\t-v\t\tverbose output'
-    print '\t-N\t\tdry run'
-    print '\t-h\t\tthis help message'
-    print '\nDates are specified in seconds since the Epoch (00:00:00 UTC, January 1, 1970).'
-    print '\nVersion ' + __version__
+    print('Usage: Offlickr.py -i <flickr Id>')
+    print('Backs up Flickr photos and metadata')
+    print('Options:')
+    print('\t-f <date>\tbeginning of the date range')
+    print('\t\t\t(default: since you started using Flickr)')
+    print('\t-t <date>\tend of the date range')
+    print('\t\t\t(default: until now)')
+    print('\t-d <dir>\tdirectory for saving files (default: ./dst)')
+    print('\t-l <level>\tlevels of directory hashes (default: 0)')
+    print('\t-p\t\tback up photos in addition to photo metadata')
+    print('\t-n\t\tdo not redownload anything which has already been downloaded (only jpg checked)')
+    print('\t-o\t\toverwrite photo, even if it already exists')
+    print('\t-L\t\tback up human-readable photo locations and permissions to separate files')
+    print('\t-s\t\tback up all photosets (time range is ignored)')
+    print('\t-e\t\tback up videos ONLY')
+    print('\t-w\t\tuse wget instead of internal Python HTTP library')
+    print('\t-c <threads>\tnumber of threads to run to backup photos (default: 1)')
+    print('\t-v\t\tverbose output')
+    print('\t-N\t\tdry run')
+    print('\t-h\t\tthis help message')
+    print('\nDates are specified in seconds since the Epoch (00:00:00 UTC, January 1, 1970).')
+    print('\nVersion ' + __version__)
 
 
 def fileWrite(
@@ -328,7 +328,7 @@ def fileWrite(
     f = open(directory + '/' + filename, 'w')
     f.write(string)
     f.close()
-    print 'Written as', filename
+    print('Written as', filename)
 
 
 class photoBackupThread(threading.Thread):
@@ -399,21 +399,21 @@ def backupPhoto(
     if (getVideosOnly and not isVideo):
         return
 
-    print str(i) + '/' + str(total) + ': ' + id + ': '\
-         + title.encode('utf-8')
+    print(str(i) + '/' + str(total) + ': ' + id + ': '\
+         + title.encode('utf-8'))
     td = target_dir(target, hash_level, id)
     if doNotRedownload and os.path.isfile(td + '/' + id + '.xml')\
          and os.path.isfile(td + '/' + id + '-comments.xml')\
          and (not getPhotos or getPhotos and os.path.isfile(td + '/'
                + id + '.jpg')):
-        print 'Photo %s already downloaded; continuing' % id
+        print('Photo %s already downloaded; continuing' % id)
         return
 
     # Get Metadata
 
     metadataResults = offlickr.getPhotoMetadata(id)
     if metadataResults == None:
-        print 'Failed!'
+        print('Failed!')
         sys.exit(2)
     metadata = metadataResults[0]
     format = metadataResults[1]
@@ -436,18 +436,18 @@ def backupPhoto(
 
 
     if source == None:
-        print 'Oopsie, no photo found'
+        print('Oopsie, no photo found')
         return
 
     # if it's a Video, we cannot trust the format that getInfo told us.
     # we have to make an extra round trip to grab the Content-Disposition
     isPrivateFailure = False
     if isVideo:
-        sourceconnection = urllib.urlopen(source)
+        sourceconnection = urllib.request.urlopen(source)
         try:
             format = sourceconnection.headers['Content-Disposition'].split('.')[-1].rstrip('"')
         except:
-            print 'warning: private video %s cannot be backed up due to a Flickr bug' % str(id)
+            print('warning: private video %s cannot be backed up due to a Flickr bug' % str(id))
             format = 'privateVideofailure'
             isPrivateFailure = True
 
@@ -456,12 +456,12 @@ def backupPhoto(
     isPrivateFailure = False
     if os.path.isfile('%s/%s' % (t_dir, filename))\
          and not overwritePhotos:
-        print '%s already downloaded... continuing' % filename
+        print('%s already downloaded... continuing' % filename)
         return
     if not isPrivateFailure:
-        print 'Retrieving ' + source + ' as ' + filename
+        print('Retrieving ' + source + ' as ' + filename)
         offlickr.downloadURL(source, t_dir, filename, verbose=True)
-        print 'Done downloading %s' % filename
+        print('Done downloading %s' % filename)
 
 
 def backupPhotos(
@@ -480,16 +480,16 @@ def backupPhotos(
 
     if dateHi == maxTime:
         t = time.time()
-        print 'For incremental backups, the current time is %.0f' % t
-        print "You can rerun the program with '-f %.0f'" % t
+        print('For incremental backups, the current time is %.0f' % t)
+        print("You can rerun the program with '-f %.0f'" % t)
 
     photos = offlickr.getPhotoList(dateLo, dateHi)
     if photos == None:
-        print 'No photos found'
+        print('No photos found')
         sys.exit(1)
 
     total = len(photos)
-    print 'Backing up', total, 'photos'
+    print('Backing up', total, 'photos')
 
     if threads > 1:
         concurrentThreads = threading.Semaphore(threads)
@@ -543,16 +543,16 @@ def backupLocation(
 
     if dateHi == maxTime:
         t = time.time()
-        print 'For incremental backups, the current time is %.0f' % t
-        print "You can rerun the program with '-f %.0f'" % t
+        print('For incremental backups, the current time is %.0f' % t)
+        print("You can rerun the program with '-f %.0f'" % t)
 
     photos = offlickr.getGeotaggedPhotoList(dateLo, dateHi)
     if photos == None:
-        print 'No photos found'
+        print('No photos found')
         sys.exit(1)
 
     total = len(photos)
-    print 'Backing up', total, 'photo locations'
+    print('Backing up', total, 'photo locations')
 
     i = 0
     for p in photos:
@@ -562,17 +562,17 @@ def backupLocation(
         if doNotRedownload and os.path.isfile(td + pid + '-location.xml'
                 ) and os.path.isfile(td + pid
                  + '-location-permissions.xml'):
-            print pid + ': Already there'
+            print(pid + ': Already there')
             continue
         location = offlickr.getPhotoLocation(pid)
         if location == None:
-            print 'Failed!'
+            print('Failed!')
         else:
             fileWrite(offlickr.dryrun, target_dir(target, hash_level,
                       pid), pid + '-location.xml', location)
         locationPermission = offlickr.getPhotoLocationPermission(pid)
         if locationPermission == None:
-            print 'Failed!'
+            print('Failed!')
         else:
             fileWrite(offlickr.dryrun, target_dir(target, hash_level,
                       pid), pid + '-location-permissions.xml',
@@ -584,42 +584,42 @@ def backupPhotosets(threads, offlickr, getPhotos, getVideosOnly, target, hash_le
 
     photosets = offlickr.getPhotosetList()
     if photosets == None:
-        print 'No photosets found'
+        print('No photosets found')
         sys.exit(0)
 
     total = len(photosets)
-    print 'Backing up', total, 'photosets'
+    print('Backing up', total, 'photosets')
 
     i = 0
     for p in photosets:
         i = i + 1
         pid = str(int(p['id']))  # Making sure we don't have weird things here
-        print str(i) + '/' + str(total) + ': ' + pid + ': '\
-             + p.title[0].text.encode('utf-8')
+        print(str(i) + '/' + str(total) + ': ' + pid + ': '\
+             + p.title[0].text.encode('utf-8'))
 
         # Get Metadata
 
         info = offlickr.getPhotosetInfo(pid,
                 offlickr.fapi.photosets_getInfo)
         if info == None:
-            print 'Failed!'
+            print('Failed!')
         else:
             fileWrite(offlickr.dryrun, target_dir(target + '/sets/' + pid, hash_level,
                       pid), 'set_' + pid + '_info.xml', info)
         photos = offlickr.getPhotosetInfo(pid,
                 offlickr.fapi.photosets_getPhotos)
         if photos == None:
-            print 'Failed!'
+            print('Failed!')
         else:
             fileWrite(offlickr.dryrun, target_dir(target + '/sets/' + pid, hash_level,
                       pid), 'set_' + pid + '_photos.xml', photos)
-      
+
         photos = offlickr.getPhotosetPhotos(pid)
         if photos == None:
-            print 'No photos found in this photoset'
+            print('No photos found in this photoset')
         else:
            total = len(photos)
-           print 'Backing up', total, 'photos'
+           print('Backing up', total, 'photos')
 
            if threads > 1:
                concurrentThreads = threading.Semaphore(threads)
@@ -739,13 +739,13 @@ def main():
     # Check that we have a user id specified
 
     if flickrUserId == None:
-        print 'You need to specify a Flickr Id'
+        print('You need to specify a Flickr Id')
         sys.exit(1)
 
     # Check that the target directory exists
 
     if not os.path.isdir(target):
-        print target + ' is not a directory; please fix that.'
+        print(target + ' is not a directory; please fix that.')
         sys.exit(1)
 
     offlickr = Offlickr(
