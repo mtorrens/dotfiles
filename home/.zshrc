@@ -182,6 +182,10 @@ _dev() { _files -W ~/Development -/; }
 compdef _dev dev
 compdef _dev devm
 
+devg() { cd ~/Development/go/src/$1; }
+_devg() { _files -/ -W ~/Development/go/src; }
+compdef _devg devg
+
 devp() { subl3 --project ~/Development/$1/$1.sublime-project }
 _devp() { _files -W ~/Development -/; }
 compdef _devp devp
