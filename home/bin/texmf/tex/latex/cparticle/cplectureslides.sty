@@ -1,0 +1,42 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cplectureslides}[2016/08/21 C. Pence slide template]
+
+\RequirePackage{graphicx}
+\graphicspath{{/home/cpence/Dropbox/Charles/Work/Slides/}{/Users/pence/Dropbox/Charles/Work/Slides/}}
+\RequirePackage{tcolorbox}
+
+\usefonttheme{structurebold}
+\definecolor{cpred}{rgb}{0.757,0.192,0}
+\setbeamercolor{structure}{fg=cpred}
+
+\setbeamercolor{quote}{bg=white,fg=black}
+\setbeamerfont{quote}{shape=\upshape}
+\makeatletter
+\newcommand*{\AdjustMargins}{%
+    \setlength{\rightmargin}{0em}%
+    \setlength{\leftmargini}{0em}%
+}
+\makeatother
+\setbeamertemplate{quote begin}{\AdjustMargins\begin{tcolorbox}[colframe=cpred]}
+\setbeamertemplate{quote end}{\end{tcolorbox}}
+
+\setbeamertemplate{navigation symbols}{}
+
+\let\oldinsertenumlabel=\insertenumlabel
+\renewcommand{\insertenumlabel}{{\lnfigures\tbfigures \oldinsertenumlabel}}
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[textlf,minionint,footnotefigures]{MinionPro}
+\RequirePackage[lf]{MyriadPro}
+\RequirePackage{patchcmd}
+\RequirePackage{tabulary}
+\RequirePackage{booktabs}
+\RequirePackage{framed}
+\definecolor{shadecolor}{named}{white}
+\RequirePackage{subfigure}
+\RequirePackage{paralist}
+\usetheme{Pittsburgh}
+
+\AtBeginDocument{\frenchspacing
+\frame{\setlength\parskip{0pt}\titlepage}}
