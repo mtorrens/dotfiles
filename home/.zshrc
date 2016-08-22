@@ -123,6 +123,12 @@ elif [ `$UNAME -o` = "Cygwin" ]; then
   trap logout HUP
 fi
 
+# If we're running gpg-agent, feed it a new TTY
+export GPG_TTY=$(tty)
+if type gpg-connect-agent >/dev/null; then
+  gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
+
 ###############################################################################
 # Colorize all the things
 
