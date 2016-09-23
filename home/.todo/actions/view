@@ -11,7 +11,7 @@ action=$1
 shift
 
 # Get option
-option=$1;
+option=${1:-project};
 shift
 
 # Get rest of them

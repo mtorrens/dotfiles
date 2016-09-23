@@ -59,8 +59,8 @@ export TODO_ACTIONS_DIR="${HOME}/.todo/actions"
 
 # There is highlighting for projects and contexts.
 #
-export COLOR_PROJECT=$RED
-export COLOR_CONTEXT=$RED
+export COLOR_PROJECT=$GREEN
+export COLOR_CONTEXT=$GREEN
 
 # === BEHAVIOR ===
 
@@ -70,10 +70,14 @@ export COLOR_CONTEXT=$RED
 # inserted, but before colorization, and before hiding of
 # priority, context, and project.
 #
-# export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -f -k2'
+export TODOTXT_SORT_COMMAND="${HOME}/.todo/actions/sort"
 
 # TODOTXT_FINAL_FILTER will filter list output after colorization,
 # priority hiding, context hiding, and project hiding. That is,
 # just before the list output is displayed.
 #
 # export TODOTXT_FINAL_FILTER='cat'
+
+# The default action to run when todo.sh is run without one.
+#
+export TODOTXT_DEFAULT_ACTION=view
