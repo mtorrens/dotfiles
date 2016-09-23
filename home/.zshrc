@@ -202,3 +202,6 @@ function fuck() {
     echo ; echo " (╯°□°）╯︵$(echo "$2"|flip)"; echo
   fi
 }
+
+# todo.sh support
+alias t='todo.sh'
