@@ -46,6 +46,7 @@ if [[ ! -z "$ZSH" ]]; then
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
   RBENV_ROOT="$HOME/.rbenv"
+  PERLBREW_ROOT="$HOME/.perl5"
 
   ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
   if [[ ! -d $ZSH_CACHE_DIR ]]; then
@@ -73,6 +74,9 @@ stty icrnl
 
 ###############################################################################
 # Path settings
+
+# Perlbrew: pick up local perl binary path
+[ -f $HOME/.perl5/etc/bashrc ] && source $HOME/.perl5/etc/bashrc
 
 # TeX: pick up OS X TeXLive binary path
 if [ -d /usr/local/texbin ]; then
@@ -126,7 +130,7 @@ fi
 # If we're running gpg-agent, feed it a new TTY
 export GPG_TTY=$(tty)
 if type gpg-connect-agent >/dev/null; then
-  gpg-connect-agent updatestartuptty /bye >/dev/null
+  gpg-connect-agent -q updatestartuptty /bye >/dev/null
 fi
 
 ###############################################################################
