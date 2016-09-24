@@ -13,7 +13,7 @@ export GOPATH=$HOME/Development/go
 
 # GPG agent is being run locally
 unset SSH_AGENT_PID
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+export SSH_AUTH_SOCK=/run/user/`id -u`/gnupg/S.gpg-agent.ssh
 
 # Silliness for QT4 to find GTK icon theme
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
