@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Use the fact that my sort script turns these red
-"$TODO_SH" ls |
-  grep $(printf "^\x1B\[0;31m")
