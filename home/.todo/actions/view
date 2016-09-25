@@ -6,6 +6,12 @@
 # Stop Verbose lines, thanks to Mark Harrison
 TODOTXT_VERBOSE=0
 
+if type gdate >/dev/null; then
+    DATE=gdate
+else
+    DATE=date
+fi
+
 # Get action
 action=$1
 shift
@@ -60,7 +66,7 @@ function project_view() {
     # For each project show header and the list of todo items
     for project in $PROJECTS; do
         # Use core _list function, does numbering and colouring for us
-        PROJECT_LIST=$(_list "$TODO_FILE" "+$project\b" "$term" | sed 's/[ ]\++[a-zA-Z0-9\{._\-\}]*\ */ /g')
+        PROJECT_LIST=$(_list "$TODO_FILE" "+$project\b" "$term" | sed 's/ +[a-zA-Z0-9\{._\-\}]*\ */ /g')
         if [[ -n "${PROJECT_LIST}" ]]; then
             echo "---  $project  ---"
             echo "${PROJECT_LIST}"
@@ -111,13 +117,13 @@ function date_view() {
     echo ""
 
     #  Find all dates and sort
-    DATES=$(grep -o '[^  ]*t:[^  ]\+' "$TODO_FILE" | grep '^t:' | sort -u | sed 's/^t://g')
+    DATES=$(grep -o '[^  ]*due:[^  ]\+' "$TODO_FILE" | grep '^due:' | sort -u | sed 's/^due://g')
 
     #  Get option
     option=$1
 
     #  Get today
-    today=$(date -d $(date +%Y-%m-%d) +%s)
+    today=$($DATE -d $($DATE +%Y-%m-%d) +%s)
 
     #  For each date show header and the list of todo items
     for date in $DATES ; do
@@ -130,7 +136,7 @@ function date_view() {
         fi
 
         #  Use core _list function, does numbering and colouring for us
-        DATE_LIST=$(_list "$TODO_FILE" "t:$date" "$term" | sed 's/\(^t:\|\ *t:\)[0-9-]*\ */ /g')
+        DATE_LIST=$(_list "$TODO_FILE" "due:$date" "$term" | sed 's/\(^due:\|\ *due:\)[0-9-]*\ */ /g')
         if [ -n "${DATE_LIST}" ]; then
             echo  "---  $date  ---"
             echo  "${DATE_LIST}"
@@ -139,9 +145,8 @@ function date_view() {
     done
 
     #  Show todo items not associated to a date
-    re="^(date|nodate)$"
-    if [[ "$option" =~ $re ]]; then
-        DATE_LIST=$(_list "$TODO_FILE" "$term" | grep -v "t:[0-9-]*")
+    if [[ "$option" == "nodate" ]]; then
+        DATE_LIST=$(_list "$TODO_FILE" "$term" | grep -v "due:[0-9-]*")
         if [ -n "${DATE_LIST}" ]; then
             echo "---  Items without date  ---"
             echo "${DATE_LIST}"
@@ -153,7 +158,7 @@ function date_check() {
     # Assign variables
     threshold=$1
     today=$2
-    _date=$(date -d "$3" +%s)
+    _date=$($DATE -d "$3" +%s)
 
     # Check if the date is valid or not
     # return:
@@ -212,7 +217,7 @@ if [[ "$option" =~ $re ]]; then
     *)
         re="^(date|nodate|future|past)$"
         if [[ ! ( "$option" =~ $re ) ]]; then
-            option=$(date -d $(date -d $option +%Y-%m-%d) +%s)
+            option=$($DATE -d $($DATE -d $option +%Y-%m-%d) +%s)
         fi
 
         date_view $option
