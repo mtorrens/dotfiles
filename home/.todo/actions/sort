@@ -1,13 +1,13 @@
 #!/bin/bash
 export DATE=`date +%Y%m%d`
 
-if type gsed >/dev/null; then
+if type gsed &>/dev/null; then
   SED=gsed
 else
   SED=sed
 fi
 
-if type gsort >/dev/null; then
+if type gsort &>/dev/null; then
   SORT=gsort
 else
   SORT=sort

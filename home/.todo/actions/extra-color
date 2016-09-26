@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if type gsed >/dev/null; then
+if type gsed &>/dev/null; then
   SED=gsed
 else
   SED=sed

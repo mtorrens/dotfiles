@@ -150,7 +150,7 @@ fi
 # Aliases for daily use
 
 # Sort by version (which is awesome) and show type indicators
-if type gls >/dev/null; then
+if type gls &>/dev/null; then
   # Mac/HomeBrew support
   alias l='gls --file-type --sort=version --color=auto '
   alias ls='gls --file-type --sort=version --color=auto '
