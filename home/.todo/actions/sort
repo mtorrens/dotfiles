@@ -19,17 +19,4 @@ cat |
   # Prepend all-nines to any line without a due date
   $SED '/^[0-9]\{8\}/!s/^/99999999 /' |
   # Sort by the first column, by number
-  env LC_COLLATE=C $SORT -k1,1n -k3f |
-  # Color up anything that's overdue, also culling off those leading 8-digit
-  # numbers
-  awk '{
-    printf "%s", ($1 < ENVIRON["DATE"] ? "\033[0;31m" : "")
-    for (i = 2; i <= NF; i++) {
-      printf "%s ", $i
-    }
-    printf "%s\n", ($1 <= ENVIRON["DATE"] ? "\033[0m" : "")
-  }' |
-  # # Color up due and again tags, and leading numbers
-  $SED "s@\(due:[-0-9]*\)@\x1b[0;34m\1\x1b[0m@g" |
-  $SED "s@\(again:[+0-9mdwy]*\)@\x1b[2m\1\x1b[0m@g" |
-  $SED "s@^\([0-9]\+\) @\x1b[2m\1\x1b[0m @g"
+  env LC_COLLATE=C $SORT -k1,1n -k3f
