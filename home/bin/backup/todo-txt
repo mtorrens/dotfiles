@@ -1,0 +1,12 @@
+#!/bin/bash
+# Pull down some calendars and pack them for backup
+
+source ${HOME}/bin/backup/utilities.sh
+
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
+INDIR="$HOME/Dropbox/Charles/Todo"
+
+tar cf todo.tar -C "$INDIR" .
+xz -9 todo.tar
+mv todo.tar.xz $OUTDIR
+
