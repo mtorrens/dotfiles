@@ -1,9 +1,9 @@
 {
-  "caret_style": "phase",
+	"caret_style": "phase",
+	"color_scheme": "Packages/User/MarkdownEditor-numix.tmTheme",
 	"extensions":
 	[
 		"mdown"
 	],
-	"trim_trailing_white_space_on_save": false,
-  "color_scheme": "Packages/User/MarkdownEditor-numix.tmTheme"
+	"trim_trailing_white_space_on_save": false
 }
