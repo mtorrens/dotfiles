@@ -200,6 +200,9 @@ devp() { subl3 --project ~/Development/$1/$1.sublime-project }
 _devp() { _files -W ~/Development -/; }
 compdef _devp devp
 
+# Completion for a variety of my scripts
+compdef '_files -g "*.md"' pandoc-slides
+
 # Rage quit support
 function fuck() {
   if killall -9 "$2"; then
