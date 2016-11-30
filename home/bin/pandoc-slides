@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$1" = "--help" -o $# -ne 1 ]; then
+  echo "pandoc-slides: build slides and notes using my lecture slides template"
+  echo ""
+  echo "Usage: $0 <in.md>"
+  exit 1
+fi
+
+INFILE="$1"
+OUT_SLIDES="`basename "$1" .md` (Slides).pdf"
+OUT_NOTES="`basename "$1" .md` (Notes).pdf"
+
+pandoc -t beamer "$1" -o "$OUT_SLIDES"
+pandoc -t beamer -V handout "$1" -o "$OUT_NOTES"
