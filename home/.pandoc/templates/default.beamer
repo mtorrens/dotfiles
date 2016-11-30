@@ -26,11 +26,13 @@ $if(handout)$
 \addtobeamertemplate{frame begin}{\beamer@framenotesbegin}{}
 \addtobeamertemplate{frame end}{}{\beamer@setupnote\beamer@notesactions}
 \makeatother
+
+% pencechp: no figures on handout
+\usepackage{comment}
+\excludecomment{figure}
+\let\endfigure\relax
 $else$
 \documentclass[11pt,noamssymb,ignorenonframetext,$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
-\setbeamertemplate{caption}[numbered]
-\setbeamertemplate{caption label separator}{: }
-\setbeamercolor{caption name}{fg=normal text.fg}
 
 % pencechp: force disable navigation symbols
 \beamertemplatenavigationsymbolsempty
@@ -62,6 +64,22 @@ $else$
 \makeatother
 \setbeamertemplate{quote begin}{\AdjustMargins\begin{tcolorbox}[colframe=cpred]}
 \setbeamertemplate{quote end}{\end{tcolorbox}}
+
+% pencechp: Activate actual graphics
+\usepackage{graphicx,grffile}
+
+% pencechp: Set graphics paths such that I can actually find my folder of
+% slide images, on both OS X and Linux
+\graphicspath{{/home/cpence/Dropbox/Charles/Work/Slides/}{/Users/pence/Dropbox/Charles/Work/Slides/}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 
 \usepackage{fixltx2e} % provides \textsubscript
@@ -80,25 +98,8 @@ $endif$
 
 \usepackage{longtable,booktabs}
 \usepackage{caption}
-% These lines are needed to make table captions work with longtable:
-\makeatletter
-\def\fnum@table{\tablename~\thetable}
-\makeatother
-
-\usepackage{graphicx,grffile}
-
-% pencechp: Set graphics paths such that I can actually find my folder of
-% slide images, on both OS X and Linux
-\graphicspath{{/home/cpence/Dropbox/Charles/Work/Slides/}{/Users/pence/Dropbox/Charles/Work/Slides/}}
-
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\DeclareCaptionLabelFormat{nolabel}{}
+\captionsetup{labelformat=nolabel}
 
 % Prevent slide breaks in the middle of a paragraph:
 \widowpenalties 1 10000
