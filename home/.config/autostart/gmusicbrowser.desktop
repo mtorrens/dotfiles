@@ -5,7 +5,6 @@ Type=Application
 Name=gmusicbrowser
 Comment=Start the gmusicbrowser music player
 Exec=gmusicbrowser
-OnlyShowIn=XFCE;
 StartupNotify=false
 Terminal=false
 Hidden=false
