@@ -322,7 +322,7 @@ regex/i/\.(s|asm)$
 	Include=editor
 
 include/editor
-	Open=%var{EDITOR:vi} %f
+	Open=subl3 %f
 
 # .so libraries
 regex/\.(so|so\.[0-9\.]*)$
@@ -413,7 +413,6 @@ type/^GIF
 	Include=image
 
 type/^JPEG
-	View=%view{ascii} /usr/lib/mc/ext.d/image.sh view jpeg
 	Include=image
 
 type/^PC\ bitmap
@@ -443,26 +442,25 @@ type/^PPM
 type/^Netpbm
 	Include=image
 
-shell/.xcf
-	Open=/usr/lib/mc/ext.d/image.sh open xcf
-
 shell/.xbm
-	Open=/usr/lib/mc/ext.d/image.sh open xbm
+	Include=image
 
 shell/.xpm
 	Include=image
-	View=/usr/lib/mc/ext.d/image.sh view xpm %f
 
 shell/.ico
 	Include=image
 
+shell/.xcf
+	Open=gimp %f
+
 shell/i/.svg
-	View=%view{ascii} /usr/lib/mc/ext.d/image.sh view svg
-	Open=/usr/lib/mc/ext.d/image.sh open svg
+	Open=inkscape %f
+	View=%view{ascii} identify %f
 
 include/image
-	Open=/usr/lib/mc/ext.d/image.sh open ALL_FORMATS
-	View=%view{ascii} /usr/lib/mc/ext.d/image.sh view ALL_FORMATS
+	Open=mirage %f
+	View=%view{ascii} identify %f
 
 
 ### Sound files ###
@@ -561,6 +559,11 @@ include/video
 type/^PostScript
 	Open=/usr/lib/mc/ext.d/doc.sh open ps
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view ps
+
+# AI
+shell/i/.ai
+	Open=inkscape %f
+	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view pdf
 
 # PDF
 type/^PDF
