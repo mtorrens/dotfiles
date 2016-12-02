@@ -1,0 +1,9 @@
+# Reset the background
+nitrogen --restore
+
+# Start the system tray
+stalonetray &
+
+# Start the notification daemon
+dunst &
+

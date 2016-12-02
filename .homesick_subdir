@@ -3,7 +3,6 @@ bin
 .gnupg
 .subversion
 .recoll
-.config/openbox
 .config/gtk-3.0
 .config/dunst
 .config/sublime-text-3

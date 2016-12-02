@@ -1,0 +1,28 @@
+
+! URxvt look and feel
+URxvt.font: xft:Hack:size=10.5
+URxvt.letterSpace: -2
+
+URxvt.geometry: 110x30
+URxvt.saveLines: 8192
+URxvt.visualBell: true
+URxvt.urgentOnBell: true
+
+URxvt.loginShell: true
+
+URxvt.scrollStyle: next
+URxvt.scrollBar: true
+URxvt.scrollBar_right: true
+
+! Dont scroll automatically, but jump back on keypress
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollTtyKeypress: true
+
+! Make less and other pagers work right
+URxvt.secondaryScreen: true
+URxvt.secondaryScroll: false
+
+! Dont initialize perl extensions
+URxvt.perl-ext:
+URxvt.perl-ext-common:
