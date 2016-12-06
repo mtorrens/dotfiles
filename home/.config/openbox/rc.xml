@@ -19,19 +19,19 @@
     <primaryMonitor>Active</primaryMonitor>
   </placement>
   <theme>
-    <name>Fog</name>
+    <name>NeXT</name>
     <titleLayout>NLSIMC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
       <name>Droid Sans</name>
-      <size>11</size>
+      <size>10</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>
     <font place="InactiveWindow">
       <name>Droid Sans</name>
-      <size>11</size>
+      <size>10</size>
       <weight>Bold</weight>
       <slant>Normal</slant>
     </font>

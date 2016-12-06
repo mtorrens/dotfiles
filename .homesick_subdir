@@ -2,12 +2,11 @@ bin
 .config
 .gnupg
 .subversion
-.recoll
 .config/gtk-3.0
 .config/dunst
 .config/sublime-text-3
 .config/sublime-text-3/Packages
 .config/sublime-text-3/Packages/User
 .config/sublime-text-3/Packages/User (OS Settings)
-.config/obmenu-generator
 .config/mc
+.local/share/themes
