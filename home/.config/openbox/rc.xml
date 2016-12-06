@@ -86,8 +86,8 @@
     <position>BottomLeft</position>
     <floatingX>0</floatingX>
     <floatingY>0</floatingY>
-    <noStrut>no</noStrut>
-    <stacking>Above</stacking>
+    <noStrut>yes</noStrut>
+    <stacking>Below</stacking>
     <direction>Vertical</direction>
     <autoHide>no</autoHide>
     <hideDelay>300</hideDelay>
