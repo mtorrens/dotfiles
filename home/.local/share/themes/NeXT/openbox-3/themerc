@@ -118,6 +118,9 @@ border.width: 1
 
 padding.width: 4
 
+! OSD
+osd.label.text.color: white
+
 ! Desktop background
 
 !rootCommand: xsetroot -solid rgb:55/51/71
