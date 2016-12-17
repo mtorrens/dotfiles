@@ -8,8 +8,16 @@ if [ "$1" = "--help" -o $# -ne 1 ]; then
 fi
 
 INFILE="$1"
-OUT_SLIDES="`basename "$1" .md` (Slides).pdf"
-OUT_NOTES="`basename "$1" .md` (Notes).pdf"
+OUT_SLIDES="`basename "$1" .md` (Slides).tex"
+OUT_NOTES="`basename "$1" .md` (Notes).tex"
 
-pandoc -t beamer "$1" -o "$OUT_SLIDES"
-pandoc -t beamer -V handout "$1" -o "$OUT_NOTES"
+pandoc -t beamer "$1" --standalone -o "$OUT_SLIDES"
+pandoc -t beamer -V handout "$1" --standalone -o "$OUT_NOTES"
+
+latexmk "$OUT_SLIDES"
+latexmk "$OUT_NOTES"
+
+latexmk -c "$OUT_SLIDES"
+latexmk -c "$OUT_NOTES"
+rm "$OUT_SLIDES"
+rm "$OUT_NOTES"

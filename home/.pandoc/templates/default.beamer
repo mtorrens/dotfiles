@@ -14,13 +14,17 @@ $if(handout)$
 \input{beamerbasenotes.sty}
 \def\beamer@currentmode{article}
 
+\usepackage{ifthen}
 \renewcommand\beamer@outsideframenote[2][]{%
   \def\beamer@noteenvstart{}%
   \def\beamer@noteenvend{}%
   \setkeys{beamernotes}{#1}%
-  \par
-  \beamer@noteenvstart\begin{leftbar}\textbf{NOTES:} #2\end{leftbar}\beamer@noteenvend%
-  \par
+  \ifx\beamer@notes\@empty%
+  \else%
+    \par
+    \beamer@noteenvstart\begin{leftbar}\textbf{NOTES:} #2\end{leftbar}\beamer@noteenvend%
+    \par
+  \fi%
 }
 
 \addtobeamertemplate{frame begin}{\beamer@framenotesbegin}{}
