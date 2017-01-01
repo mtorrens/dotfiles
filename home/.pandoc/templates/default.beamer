@@ -98,6 +98,18 @@ $endif$
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 
+% pencechp: I need these symbols in a few lectures on hist. of chemistry
+\usepackage{cmll}
+\newcommand\triangleletter[1]{%
+ \makebox[1.4em][c]{%
+ \makebox[0pt][c]{\raisebox{.3em}{\tiny #1}}%
+ \makebox[0pt][c]{\huge \ensuremath{\bigtriangleup}}}}%
+\newcommand\trianglelettercurve[1]{%
+ \makebox[1.4em][c]{%
+ \makebox[0pt][c]{\raisebox{.3em}{\tiny #1}}%
+ \makebox[0pt][c]{\huge \ensuremath{\bigtriangleup}}%
+ \makebox[0pt][c]{\raisebox{-.5em}{\huge \ensuremath{\sincoh}}}}}%
+
 \hypersetup{pdfborder={0 0 0},breaklinks=true}
 
 \usepackage{longtable,booktabs}
