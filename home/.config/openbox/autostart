@@ -1,5 +1,8 @@
 # Reset the background
-nitrogen --restore
+hsetroot -solid '#505170'
+
+# Start the automounter
+udiskie -ant2 &
 
 # Start the system tray
 stalonetray &
