@@ -11,7 +11,6 @@
 		"Gherkin (Cucumber) Formatter",
 		"Golang Build",
 		"GoSublime",
-		"GPG",
 		"JSONLint",
 		"LaTeXTools",
 		"MarkdownEditing",
@@ -22,7 +21,6 @@
 		"SublimeLinter",
 		"SublimeLinter-haml",
 		"Theme - Piatto",
-		"Todo.txt Syntax",
-		"WordCount"
+		"Todo.txt Syntax"
 	]
 }
