@@ -1,0 +1,15 @@
+#!/bin/bash
+
+amixer -q sset Capture toggle
+
+if amixer sget Capture | grep -q "\[on\]"; then
+  TEXT="Microphone on"
+  COLOR=green
+else
+  TEXT="Microphone off"
+  COLOR=red
+fi
+
+killall -q osd_cat
+echo "$TEXT" | osd_cat -A center -p bottom -c $COLOR -l 1 -d 3 -f "-*-tahoma-bold-r-*-*-*-700-*-*-*-*-*-*" &
+

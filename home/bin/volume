@@ -1,0 +1,85 @@
+#!/bin/bash
+
+ACTION=$1
+
+CONTROL=Master
+MIN=`amixer sget $CONTROL | grep "Limits:" | sed 's@^ *@@' | cut -d' ' -f3`
+MAX=`amixer sget $CONTROL | grep "Limits:" | sed 's@^ *@@' | cut -d' ' -f5`
+CUR=`amixer sget $CONTROL | grep "\[[0-9]*%\]" | sed 's@^ *@@' | cut -d' ' -f3`
+if amixer sget $CONTROL | grep -q "\[on\]"; then
+  MUTED=0
+else
+  MUTED=1
+  if [[ $ACTION == 'mute' ]]; then
+    ACTION=unmute
+  fi
+fi
+
+if [[ $ACTION == 'toggle' ]]; then
+  if [[ $MUTED -eq 0 ]]; then
+    ACTION=mute
+  else
+    ACTION=unmute
+  fi
+fi
+
+# This is the default number in osd_cat's percentage bar
+STEPS=30
+
+# This is equivalent to (MAX - MIN) / STEPS, rounding up
+STEP_SIZE=$(((MAX - MIN + STEPS - 1) / STEPS))
+REMAINDER=$(((MAX - MIN) - (STEP_SIZE * STEPS)))
+
+CURRENT_STEP=$(((CUR - REMAINDER) / STEP_SIZE))
+
+if [[ $ACTION == 'mute' ]]; then
+  amixer -q sset $CONTROL mute
+  MUTED=1
+  NEXT=CUR
+elif [[ $ACTION == 'unmute' ]]; then
+  NEXT=CUR
+  if [[ $CUR -eq 0 ]]; then
+    NEXT=$((STEPS / 2 * STEP_SIZE + REMAINDER))
+    amixer -q sset $CONTROL $NEXT
+  fi
+
+  amixer -q sset $CONTROL unmute
+  MUTED=0
+else
+  if [[ $ACTION == 'up' ]]; then
+    NEXT_STEP=$((CURRENT_STEP + 1))
+  fi
+  if [[ $ACTION == 'down' ]]; then
+    NEXT_STEP=$((CURRENT_STEP - 1))
+  fi
+
+  if [[ $NEXT_STEP -ge $STEPS ]]; then
+    NEXT_STEP=$STEPS
+  fi
+
+  if [[ $NEXT_STEP -le 0 ]]; then
+    amixer -q sset $CONTROL mute
+    amixer -q sset $CONTROL 0
+
+    NEXT=0
+    MUTED=1
+  else
+    NEXT=$((NEXT_STEP * STEP_SIZE + REMAINDER))
+    amixer -q sset $CONTROL $NEXT
+    amixer -q sset $CONTROL unmute
+    MUTED=0
+  fi
+fi
+
+if [[ $MUTED -eq 1 ]]; then
+  TEXT="(Muting)"
+  COLOR=red
+else
+  TEXT="Volume:"
+  COLOR=green
+fi
+
+NEXT_PERCENT=$((NEXT * 100 / MAX))
+
+killall -q osd_cat
+osd_cat -A center -p bottom -c $COLOR -l 1 -d 3 -f "-*-tahoma-bold-r-*-*-*-700-*-*-*-*-*-*" -b percentage -P $NEXT_PERCENT -T "$TEXT" &

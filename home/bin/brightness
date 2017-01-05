@@ -1,0 +1,33 @@
+#!/bin/bash
+
+MAX_BRIGHTNESS=`cat /sys/class/backlight/intel_backlight/max_brightness`
+CURRENT=`cat /sys/class/backlight/intel_backlight/brightness`
+# This is the default number in osd_cat's percentage bar
+STEPS=30
+
+# This is equivalent to (MAX - MIN) / STEPS, rounding up
+STEP_SIZE=$(((MAX_BRIGHTNESS + STEPS - 1) / STEPS))
+REMAINDER=$((MAX_BRIGHTNESS - (STEP_SIZE * STEPS)))
+
+CURRENT_STEP=$(((CURRENT - REMAINDER) / STEP_SIZE))
+
+if [[ "$1" == "up" ]]; then
+  NEXT_STEP=$((CURRENT_STEP + 1))
+else
+  NEXT_STEP=$((CURRENT_STEP - 1))
+fi
+
+if [[ $NEXT_STEP -ge $STEPS ]]; then
+  NEXT_STEP=$STEPS
+fi
+if [[ $NEXT_STEP -le 0 ]]; then
+  NEXT_STEP=0
+fi
+
+NEXT=$((NEXT_STEP * STEP_SIZE + REMAINDER))
+NEXT_PERCENT=$((NEXT_STEP * 100 / STEPS))
+
+echo $NEXT > /sys/class/backlight/intel_backlight/brightness
+
+killall -q osd_cat
+osd_cat -A center -p bottom -c green -l 1 -d 3 -f "-*-tahoma-bold-r-*-*-*-700-*-*-*-*-*-*" -b percentage -P $NEXT_PERCENT -T 'Brightness:' &
