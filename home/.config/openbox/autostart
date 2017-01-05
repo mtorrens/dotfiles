@@ -1,12 +1,14 @@
 # Reset the background
 hsetroot -solid '#505170'
 
-# Start the automounter
-udiskie -ant2 &
-
 # Start the system tray
 stalonetray &
 
+# Start the automounter
+udiskie -ant2 &
+
+# Start a battery icon, if we're on the laptop
+command -v cbatticon >/dev/null 2>&1 && { cbatticon -n & }
+
 # Start the notification daemon
 dunst &
-
