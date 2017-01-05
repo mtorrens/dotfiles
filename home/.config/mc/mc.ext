@@ -1,4 +1,7 @@
 # Midnight Commander 3.0 extension file
+# Completely gutted to use xdg-open for everything that's not a MC custom
+# filesystem type thing.
+
 # Warning: Structure of this file has changed completely with version 3.0
 #
 # All lines starting with # or empty lines are thrown away.
@@ -281,7 +284,6 @@ shell/i/.iso
 	Open=%cd %p/iso9660://
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view iso9660
 
-
 regex/\.(diff|patch)$
 	Open=%cd %p/patchfs://
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view cat
@@ -297,7 +299,6 @@ shell/i/.lib
 	Open=%cd %p/ulib://
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view lib
 
-
 # Mailboxes
 type/^ASCII\ mail\ text
 	Open=%cd %p/mailfs://
@@ -305,58 +306,22 @@ type/^ASCII\ mail\ text
 
 ### Sources ###
 
-# C/C++
-regex/i/\.(c|cc|cpp)$
-	Include=editor
-
-# C/C++ header
-regex/i/\.(h|hh|hpp)$
-	Include=editor
-
-# Fortran
-shell/i/.f
-	Include=editor
-
-# Assembler
-regex/i/\.(s|asm)$
-	Include=editor
-
-include/editor
-	Open=subl3 %f
-
 # .so libraries
 regex/\.(so|so\.[0-9\.]*)$
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view so
 
 # Object
 type/^ELF
-	#Open=%var{PAGER:more} %f
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view elf
 
 ### Documentation ###
 
-# Texinfo
-#regex/\.(te?xi|texinfo)$
-
-# GNU Info page
-type/^Info\ text
- 	Open=/usr/lib/mc/ext.d/text.sh open info
-
-shell/.info
-	Open=/usr/lib/mc/ext.d/text.sh open info
-
-# Exception: .3gp are video files not manual pages
-shell/i/.3gp
-	Include=video
-
 # Manual page
 regex/(([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])|\.man)$
-	Open=/usr/lib/mc/ext.d/text.sh open man %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man %var{PAGER:more}
 
 # Perl pod page
 shell/.pod
-	Open=/usr/lib/mc/ext.d/text.sh open pod %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view pod %var{PAGER:more}
 
 # Troff with me macros.
@@ -366,46 +331,33 @@ shell/read.me
 	View=
 
 shell/.me
-	Open=/usr/lib/mc/ext.d/text.sh open nroff.me %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view nroff.me %var{PAGER:more}
 
 # Troff with ms macros.
 shell/.ms
-	Open=/usr/lib/mc/ext.d/text.sh open nroff.ms %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view nroff.ms %var{PAGER:more}
 
 # Manual page - compressed
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.g?[Zz]$
-	Open=/usr/lib/mc/ext.d/text.sh open man.gz %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.gz %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.bz$
-	Open=/usr/lib/mc/ext.d/text.sh open man.bz %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.bz %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.bz2$
-	Open=/usr/lib/mc/ext.d/text.sh open man.bz2 %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.bz2 %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.lz$
-	Open=/usr/lib/mc/ext.d/text.sh open man.lz %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.lz %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.lz4$
-	Open=/usr/lib/mc/ext.d/text.sh open man.lz4 %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.lz4 %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.lzma$
-	Open=/usr/lib/mc/ext.d/text.sh open man.lzma %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.lzma %var{PAGER:more}
 
 regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.xz$
-	Open=/usr/lib/mc/ext.d/text.sh open man.xz %var{PAGER:more}
 	View=%view{ascii,nroff} /usr/lib/mc/ext.d/text.sh view man.xz %var{PAGER:more}
-
-# CHM
-shell/i/.chm
-	Open=/usr/lib/mc/ext.d/text.sh open chm
 
 ### Images ###
 
@@ -451,52 +403,23 @@ shell/.xpm
 shell/.ico
 	Include=image
 
-shell/.xcf
-	Open=gimp %f
-
 shell/i/.svg
-	Open=inkscape %f
-	View=%view{ascii} identify %f
+	Include=image
 
 include/image
-	Open=mirage %f
 	View=%view{ascii} identify %f
 
 
 ### Sound files ###
 
-regex/i/\.(wav|snd|voc|au|smp|aiff|snd|m4a|ape|aac|wv)$
-	Open=/usr/lib/mc/ext.d/sound.sh open common
-
-regex/i/\.(mod|s3m|xm|it|mtm|669|stm|ult|far)$
-	Open=/usr/lib/mc/ext.d/sound.sh open mod
-
-shell/i/.waw22
-	Open=/usr/lib/mc/ext.d/sound.sh open wav22
-
 shell/i/.mp3
-	Open=/usr/lib/mc/ext.d/sound.sh open mp3
 	View=%view{ascii} /usr/lib/mc/ext.d/sound.sh view mp3
 
 regex/i/\.og[gax]$
-	Open=/usr/lib/mc/ext.d/sound.sh open ogg
 	View=%view{ascii} /usr/lib/mc/ext.d/sound.sh view ogg
 
-regex/i/\.(spx|flac)$
-	Open=/usr/lib/mc/ext.d/sound.sh open common
-
-regex/i/\.(midi?|rmid?)$
-	Open=/usr/lib/mc/ext.d/sound.sh open midi
-
 shell/i/.wma
-	Open=/usr/lib/mc/ext.d/sound.sh open wma
 	View=%view{ascii} /usr/lib/mc/ext.d/sound.sh view wma
-
-
-### Play lists ###
-
-regex/i/\.(m3u|pls)$
-	Open=/usr/lib/mc/ext.d/sound.sh open playlist
 
 
 ### Video ###
@@ -538,18 +461,14 @@ regex/i/\.fl[icv]$
 shell/i/.ogv
 	Include=video
 
-regex/i/\.ra?m$
-	Open=/usr/lib/mc/ext.d/video.sh open ram
-
 # WebM
 shell/i/.webm
-    Include=video
+  Include=video
 
 type/WebM
-    Include=video
+  Include=video
 
 include/video
-	Open=/usr/lib/mc/ext.d/video.sh open ALL_FORMATS
 	View=%view{ascii} /usr/lib/mc/ext.d/video.sh view ALL_FORMATS
 
 
@@ -557,94 +476,45 @@ include/video
 
 # Postscript
 type/^PostScript
-	Open=/usr/lib/mc/ext.d/doc.sh open ps
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view ps
 
 # AI
 shell/i/.ai
-	Open=inkscape %f
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view pdf
 
 # PDF
 type/^PDF
-	Open=/usr/lib/mc/ext.d/doc.sh open pdf
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view pdf
 
 # html
 regex/i/\.html?$
-	Open=/usr/lib/mc/ext.d/web.sh open html
 	View=%view{ascii} /usr/lib/mc/ext.d/web.sh view html
 
-# StarOffice 5.2
-shell/.sdw
-	Open=/usr/lib/mc/ext.d/doc.sh open ooffice
-
 # StarOffice 6 and OpenOffice.org formats
-regex/i/\.(odt|ott|sxw|stw|ods|ots|sxc|stc|odp|otp|sxi|sti|odg|otg|sxd|std|odb|odf|sxm|odm|sxg)$
-	Open=/usr/lib/mc/ext.d/doc.sh open ooffice
+regex/i/\.(sdw|odt|ott|sxw|stw|ods|ots|sxc|stc|odp|otp|sxi|sti|odg|otg|sxd|std|odb|odf|sxm|odm|sxg)$
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view odt
 
-# AbiWord
-shell/.abw
-	Open=/usr/lib/mc/ext.d/doc.sh open abw
-
-# Gnumeric
-shell/i/.gnumeric
-	Open=/usr/lib/mc/ext.d/doc.sh open gnumeric
-
 # Microsoft Word Document
-regex/i/\.(do[ct]|wri)$
-	Open=/usr/lib/mc/ext.d/doc.sh open msdoc
+regex/i/\.(do[ct]x?|wri)$
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
-type/^Microsoft\ Word
-	Open=/usr/lib/mc/ext.d/doc.sh open msdoc
-	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msdoc
-
-# RTF document
-shell/i/.rtf
-	Open=/usr/lib/mc/ext.d/doc.sh open msdoc
 
 # Microsoft Excel Worksheet
-regex/i/\.xl[sw]$
-	Open=/usr/lib/mc/ext.d/doc.sh open msxls
-	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msxls
-type/^Microsoft\ Excel
-	Open=/usr/lib/mc/ext.d/doc.sh open msxls
+regex/i/\.xl[sw]x?$
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msxls
 
 regex/i/\.(ppt|pps)$
-	Open=/usr/lib/mc/ext.d/doc.sh open msppt
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view msppt
-
-# Use OpenOffice.org to open any MS Office documents
-type/^Microsoft\ Office\ Document
-	Open=/usr/lib/mc/ext.d/doc.sh open ooffice
-
-# Framemaker
-type/^FrameMaker
-	Open=/usr/lib/mc/ext.d/doc.sh open framemaker
 
 # DVI
 shell/i/.dvi
-	Open=/usr/lib/mc/ext.d/doc.sh open dvi
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view dvi
-
-# TeX
-shell/i/.tex
-	Include=editor
 
 # DjVu
 regex/i/\.djvu?$
-	Open=/usr/lib/mc/ext.d/doc.sh open djvu
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view djvu
-
-# Comic Books
-regex/i/\.cb[zr]$
-	Open=/usr/lib/mc/ext.d/doc.sh open comic
 
 # Epub & mobi
 regex/i/\.(epub|mobi)$
-	Open=/usr/lib/mc/ext.d/doc.sh open epub
 	View=%view{ascii} /usr/lib/mc/ext.d/doc.sh view epub
 
 
@@ -668,39 +538,18 @@ regex/^Makefile\.(PL|pl)$
 
 # sqlite3.db
 type/^SQLite 3.x database
-	Open=/usr/lib/mc/ext.d/misc.sh open sqlite
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view sqlite
 
 # dbf
 shell/i/.dbf
-	Open=/usr/lib/mc/ext.d/misc.sh open dbf
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view dbf
-
-# REXX script
-regex/\.(rexx?|cmd)$
-       Open=rexx %f %{Enter parameters};echo "Press ENTER";read y
-
-# Disk images for Commodore computers (VIC20, C64, C128)
-shell/i/.d64
-	Open=%cd %p/uc1541://
-	View=%view{ascii} c1541 %f -list
-	Extract=c1541 %f -extract
-
-# Glade, a user interface designer for GTK+ and GNOME
-shell/i/.glade
-	Open=/usr/lib/mc/ext.d/misc.sh open glade
 
 # Gettext Catalogs
 regex/\.g?mo$
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view mo
 
-# po
-shell/.po
-	Open=/usr/lib/mc/ext.d/misc.sh open po
-
 # lyx
 shell/i/.lyx
-	Open=/usr/lib/mc/ext.d/misc.sh open lyx
 	View=%view{ascii} /usr/lib/mc/ext.d/misc.sh view lyx
 
 # torrent
@@ -801,7 +650,7 @@ type/^Parity\ Archive\ Volume\ Set
 
 # Default target for anything not described above
 default/*
-	Open=
+	Open=xdg-open %f > /dev/null 2>&1 &
 	View=
 
 
