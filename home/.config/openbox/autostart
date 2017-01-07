@@ -7,8 +7,9 @@ stalonetray &
 # Start the automounter
 udiskie -ant2 &
 
-# Start a battery icon, if we're on the laptop
-command -v cbatticon >/dev/null 2>&1 && { cbatticon -n & }
+# Start battery icons, if we're on the laptop
+command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT0 & }
+command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT1 & }
 
 # Start the notification daemon
 dunst &
