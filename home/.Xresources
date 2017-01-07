@@ -4,6 +4,10 @@ URxvt.font: xft:Hack:size=10.5
 URxvt.letterSpace: -2
 
 URxvt.geometry: 110x30
+URxvt.externalBorder: 0
+URxvt.internalBorder: 0
+URxvt.borderless: true
+
 URxvt.saveLines: 8192
 URxvt.visualBell: true
 URxvt.urgentOnBell: true
