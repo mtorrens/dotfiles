@@ -6,7 +6,6 @@ OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
 echo "EXPORT the LastPass vault as lastpass.csv and save to the current directory."
 read -p "Press any key to continue..."
 
-xz -9 lastpass.csv
-gpg --encrypt -r charles@charlespence.net lastpass.csv.xz
-rm lastpass.csv.xz
-mv lastpass.csv.xz.gpg $OUTDIR
+7z a -mhe=on lastpass.csv.7z -p lastpass.csv
+shred -u lastpass.csv
+mv lastpass.csv.7z $OUTDIR
