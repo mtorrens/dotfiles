@@ -74,41 +74,6 @@
   </item>
 </menu>
 
-<menu id="apps-term-menu" label="Terminals">
-  <item label="Rxvt Unicode">
-    <action name="Execute">
-      <command>urxvt</command>
-    </action>
-  </item>
-  <item label="Gnome Terminal">
-    <action name="Execute">
-      <command>gnome-terminal</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-      </startupnotify>
-    </action>
-  </item>
-  <item label="Xfce Terminal">
-    <action name="Execute">
-      <command>xfce4-terminal</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-      </startupnotify>
-    </action>
-  </item>
-  <item label="Konsole">
-    <action name="Execute">
-      <command>konsole</command>
-      <startupnotify>
-        <enabled>yes</enabled>
-      </startupnotify>
-    </action>
-  </item>
-  <item label="Xterm">
-    <action name="Execute"><command>xterm</command></action>
-  </item>
-</menu>
-
 <menu id="apps-net-menu" label="Internet">
   <item label="Firefox">
     <action name="Execute">
@@ -171,39 +136,19 @@
 </menu>
 
 <menu id="apps-office-menu" label="Office">
-  <item label="OpenOffice Base">
+  <item label="LibreOffice Writer">
     <action name="Execute">
-      <command>ooffice -base</command>
+      <command>lowriter</command>
     </action>
   </item>
-  <item label="OpenOffice Calc">
+  <item label="LibreOffice Calc">
     <action name="Execute">
-      <command>ooffice -calc</command>
+      <command>localc</command>
     </action>
   </item>
-  <item label="OpenOffice Draw">
+  <item label="LibreOffice Impress">
     <action name="Execute">
-      <command>ooffice -draw</command>
-    </action>
-  </item>
-  <item label="OpenOffice Impress">
-    <action name="Execute">
-      <command>ooffice -impress</command>
-    </action>
-  </item>
-  <item label="OpenOffice Math">
-    <action name="Execute">
-      <command>ooffice -math</command>
-    </action>
-  </item>
-  <item label="OpenOffice Printer Administration">
-    <action name="Execute">
-      <command>ooffice-printeradmin</command>
-    </action>
-  </item>
-  <item label="OpenOffice Writer">
-    <action name="Execute">
-      <command>ooffice -writer</command>
+      <command>loimpress</command>
     </action>
   </item>
 </menu>
@@ -373,6 +318,17 @@
 
 <menu id="root-menu" label="Openbox 3">
   <separator label="Applications" />
+  <item label="Terminal">
+    <action name="Execute">
+      <command>urxvt</command>
+    </action>
+  </item>
+  <item label="Chromium">
+    <action name="Execute">
+      <command>chromium</command>
+    </action>
+  </item>
+  <separator />
   <menu id="apps-accessories-menu"/>
   <menu id="apps-editors-menu"/>
   <menu id="apps-graphics-menu"/>
