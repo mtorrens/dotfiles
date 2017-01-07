@@ -341,8 +341,8 @@
   <menu id="system-menu"/>
   <separator />
   <item label="Log Out">
-    <action name="Exit">
-      <prompt>yes</prompt>
+    <action name="Execute">
+      <command>zsh -c '~/bin/end-session'</command>
     </action>
   </item>
 </menu>
