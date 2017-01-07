@@ -83,12 +83,6 @@ LANG=en_US.UTF-8
 EDITOR=/usr/bin/nano
 LESSHISTFILE=-
 
-# If we're running gpg-agent, feed it a new TTY
-export GPG_TTY=$(tty)
-if type gpg-connect-agent >/dev/null; then
-  gpg-connect-agent -q updatestartuptty /bye >/dev/null
-fi
-
 ###############################################################################
 # Colorize all the things
 
