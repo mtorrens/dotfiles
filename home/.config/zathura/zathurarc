@@ -1,0 +1,4 @@
+set adjust-open "width"
+set highlight-transparency 0.3
+set page-padding 15
+
