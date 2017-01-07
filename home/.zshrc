@@ -36,11 +36,6 @@ elif [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
 fi
 
 if [[ ! -z "$ZSH" ]]; then
-  if [ `uname -s` = "Darwin" ]; then
-    # Force /usr/local/bin ahead in the path, *before* rbenv gets loaded.
-    export PATH="/usr/local/bin:$PATH"
-  fi
-
   ZSH_THEME="gentoo"
   CASE_SENSITIVE="true"
   DISABLE_AUTO_UPDATE="true"
@@ -69,24 +64,8 @@ bindkey "\e[4~" end-of-line
 # Don't get the enter key confused
 stty icrnl
 
-# Travis gem has some completion of its own
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-
 ###############################################################################
 # Path settings
-
-# Perlbrew: pick up local perl binary path
-[ -f $HOME/.perl5/etc/bashrc ] && source $HOME/.perl5/etc/bashrc
-
-# TeX: pick up OS X TeXLive binary path
-if [ -d /usr/local/texbin ]; then
-  export PATH="/usr/local/texbin:$PATH"
-fi
-
-# Haskell Platform: find cabal binaries if installed
-if [ -d $HOME/.cabal ]; then
-  export PATH="$HOME/.cabal/bin:$PATH"
-fi
 
 # Go path
 export GOPATH="$HOME/Development/go"
@@ -101,31 +80,8 @@ fi
 # Configuration for other programs/systems
 
 LANG=en_US.UTF-8
-EDITOR=nano
+EDITOR=/usr/bin/nano
 LESSHISTFILE=-
-
-if type guname >/dev/null; then
-  UNAME=guname
-else
-  UNAME=uname
-fi
-
-if [ `$UNAME -s` = "Darwin" ]; then
-  # Disable mail checking and resource-fork copying, only on OS X
-  export MAILPATH=""
-  export COPYFILE_DISABLE=true
-elif [ `$UNAME -o` = "Cygwin" ]; then
-  # Set some environment variables on Windows
-  export TMP=/tmp
-  export TEMP=/tmp
-  export TMPDIR=/tmp
-
-  # Enable SSH authentication through Pageant
-  if [ -z "$SSH_AUTH_SOCK" -a -x /usr/bin/ssh-pageant ]; then
-    eval $(/usr/bin/ssh-pageant -rq -a /tmp/.ssh-pageant)
-  fi
-  trap logout HUP
-fi
 
 # If we're running gpg-agent, feed it a new TTY
 export GPG_TTY=$(tty)
@@ -150,35 +106,17 @@ fi
 # Aliases for daily use
 
 # Sort by version (which is awesome) and show type indicators
-if type gls &>/dev/null; then
-  # Mac/HomeBrew support
-  alias l='gls --file-type --sort=version --color=auto '
-  alias ls='gls --file-type --sort=version --color=auto '
-  alias ll='gls -lh --file-type --sort=version --color=auto '
-  alias la='gls -lhA --file-type --sort=version --color=auto '
-else
-  alias l='ls --file-type --sort=version --color=auto '
-  alias ls='ls --file-type --sort=version --color=auto '
-  alias ll='ls -lh --file-type --sort=version --color=auto '
-  alias la='ls -lhA --file-type --sort=version --color=auto '
-fi
+alias l='ls --file-type --sort=version --color=auto '
+alias ls='ls --file-type --sort=version --color=auto '
+alias ll='ls -lh --file-type --sort=version --color=auto '
+alias la='ls -lhA --file-type --sort=version --color=auto '
 
 # grep through the output of ps without showing grep itself in output
-# Also shim for the fact that BSD ps (Mac OS X) doesn't have the awesome tree
-# `ps f` support.
-if [ `$UNAME -s` = "Darwin" ]; then
-  alias ps='ps ax'
+alias ps='ps axf'
 
-  psgrep() {
-    ps ax | grep "[${*:0:1}]${*:1}"
-  }
-else
-  alias ps='ps axf'
-
-  psgrep() {
-    ps axf | grep "[${*:0:1}]${*:1}"
-  }
-fi
+psgrep() {
+  ps axf | grep "[${*:0:1}]${*:1}"
+}
 
 # Binary diff
 bindiff() {
