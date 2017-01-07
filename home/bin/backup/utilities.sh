@@ -1,29 +1,29 @@
 #!/bin/bash
-# Get and remove GPG-encrypted private data files, doing our best
+# Get and remove 7z-encrypted private data files, doing our best
 # to trap signals and not leave anything orphaned in ${HOME}.
 
 # Encrypt files with:
-# gpg --encrypt -r charles@charlespence.net <file>
+# 7z a -mhe=on <file>.7z -p <file>
+# shred -u <file>
 
 # Manually decrypt with
-# gpg --output <out> --decrypt <file>.gpg
+# 7z x <file>.7z
 
 function get_private_file {
 
 	# Decrypt the file with a safe umask
-	umask 077 && gpg --output ${HOME}/$2 --decrypt ${HOME}/.private/$1.gpg
+  umask 077 && 7z x ${HOME}/.private/$1.7z -o${HOME}
+  mv ${HOME}/$1 ${HOME}/$2
 
 	# Delete the file if the script fails
-	trap "rm -f ${HOME}/$2; exit" INT TERM EXIT
+	trap "shred -u ${HOME}/$2; exit" INT TERM EXIT
 }
 
 function release_private_file {
 
 	# Delete the file
-	rm ${HOME}/$1
+	shred -u ${HOME}/$1
 
 	# Release our trap
 	trap - INT TERM EXIT
 }
-
-
