@@ -1,3 +1,5 @@
+! Cursors
+Xcursor.theme: Neutral++-White
 
 ! URxvt look and feel
 URxvt.font: xft:Hack:size=10.5
