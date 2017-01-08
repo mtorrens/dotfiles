@@ -650,7 +650,7 @@ type/^Parity\ Archive\ Volume\ Set
 
 # Default target for anything not described above
 default/*
-	Open=xdg-open %f > /dev/null 2>&1 &
+	Open=mimeopen -n %f > /dev/null 2>&1 &
 	View=
 
 
