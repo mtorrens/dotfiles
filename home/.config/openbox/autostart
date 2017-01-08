@@ -1,6 +1,9 @@
 # Reset the background
 hsetroot -solid '#505170'
 
+# Start a Polkit authentication agent
+lxpolkit &
+
 # Start the system tray
 stalonetray &
 
