@@ -9,5 +9,5 @@ bin
 .config/sublime-text-3/Packages/User
 .config/sublime-text-3/Packages/User (OS Settings)
 .config/mc
-.local/share/applications
 .local/share/themes
+.local/share/applications
