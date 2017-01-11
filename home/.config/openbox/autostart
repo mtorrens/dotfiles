@@ -4,6 +4,9 @@ hsetroot -solid '#505170'
 # Start a Polkit authentication agent
 lxpolkit &
 
+# Start the clock
+lal -t Hack &
+
 # Start the system tray
 stalonetray &
 
