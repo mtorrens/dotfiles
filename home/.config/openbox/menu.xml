@@ -3,7 +3,7 @@
 <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
 <menu id="apps-accessories-menu" label="Accessories">
-  <item name="Calculator">
+  <item label="Calculator">
     <action name="Execute">
       <command>galculator</command>
     </action>
@@ -24,6 +24,11 @@
   <item label="Gephi">
     <action name="Execute">
       <command>gephi</command>
+    </action>
+  </item>
+  <item label="VirtualBox">
+    <action name="Execute">
+      <command>virtualbox</command>
     </action>
   </item>
 </menu>
@@ -81,6 +86,11 @@
       <command>chromium</command>
     </action>
   </item>
+  <item label="Remmina">
+    <action name="Execute">
+      <command>remmina</command>
+    </action>
+  </item>
   <item label="Deluge">
     <action name="Execute">
       <command>deluge</command>
@@ -89,6 +99,11 @@
 </menu>
 
 <menu id="apps-multimedia-menu" label="Multimedia">
+  <item label="GMusicBrowser">
+    <action name="Execute">
+      <command>gmusicbrowser</command>
+    </action>
+  </item>
   <item label="Ripper">
     <action name="Execute">
       <command>rrip_gui</command>
