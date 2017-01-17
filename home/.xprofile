@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# Set xrandr settings
-if [[ `hostname` == "terry" ]]; then
-  xrandr --output VIRTUAL1 --off --output DP2 --off --output DP1 --off --output HDMI2 --mode 1920x1200 --pos 0x0 --rotate left --output HDMI1 --primary --mode 1920x1200 --pos 1200x488 --rotate normal --output VGA1 --off
-fi
-
 # Fix keyboard configuration
 setxkbmap -option ctrl:nocaps
 
@@ -29,23 +24,4 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export _JAVA_OPTIONS="-Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true"
 
 # Fix ugly QT5 apps
-export QT_STYLE_OVERRIDE="gtk"
-
-# Configure Infinality
-# export INFINALITY_FT_FILTER_PARAMS="11 22 38 22 11"
-# export INFINALITY_FT_GRAYSCALE_FILTER_STRENGTH="25"
-# export INFINALITY_FT_FRINGE_FILTER_STRENGTH="0"
-# export INFINALITY_FT_AUTOHINT_HORIZONTAL_STEM_DARKEN_STRENGTH="10"
-# export INFINALITY_FT_AUTOHINT_VERTICAL_STEM_DARKEN_STRENGTH="25"
-# export INFINALITY_FT_WINDOWS_STYLE_SHARPENING_STRENGTH="0"
-# export INFINALITY_FT_CHROMEOS_STYLE_SHARPENING_STRENGTH="0"
-# export INFINALITY_FT_STEM_ALIGNMENT_STRENGTH="0"
-# export INFINALITY_FT_STEM_FITTING_STRENGTH="0"
-# export INFINALITY_FT_GAMMA_CORRECTION="0 100"
-# export INFINALITY_FT_BRIGHTNESS="0"
-# export INFINALITY_FT_CONTRAST="0"
-# export INFINALITY_FT_USE_VARIOUS_TWEAKS="osx"
-# export INFINALITY_FT_AUTOHINT_INCREASE_GLYPH_HEIGHTS="true"
-# export INFINALITY_FT_AUTOHINT_SNAP_STEM_HEIGHT="100"
-# export INFINALITY_FT_STEM_SNAPPING_SLIDING_SCALE="40"
-# export INFINALITY_FT_USE_KNOWN_SETTINGS_ON_SELECTED_FONTS="true"
+export QT_QPA_PLATFORMTHEME="qt5ct"
