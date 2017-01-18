@@ -1,11 +1,29 @@
 [
-    // On a MacBook Air, the "insert" key is actually fn+Enter, which is way
-    // too easy to press by accident.  Just rebind it to actually typing a
-    // carriage return.
-    { "keys": ["insert"], "command": "insert", "args": {"characters": "\n"} },
-
     // Stop changing my font size.  Ever.
     { "keys": ["ctrl++"], "command": "unbound" },
     { "keys": ["ctrl+="], "command": "unbound" },
-    { "keys": ["ctrl+-"], "command": "unbound" }
+    { "keys": ["ctrl+-"], "command": "unbound" },
+
+    // Don't use shift-tab for code folding (WTF, MarkdownEditing?)
+    { "keys": ["shift+tab"], "command": "unindent" },
+
+    // But do use it for bullet-cycled list unindenting in MarkdownEditing.
+    // NB: This had to be copied from the ME keybindings file, so it might be
+    // subject to change in a later version of that package.
+    { "keys": ["shift+tab"], "command": "indent_list_item", "args": {"reverse": true}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*(>\\s*)?[*+\\-]\\s+$", "match_all": true },
+            { "key": "following_text", "operator": "regex_contains", "operand": "^$", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true }
+        ]
+    },
+    { "keys": ["shift+tab"], "command": "indent_list_multiitem", "args": {"reverse": true}, "context":
+        [
+            { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "selector", "operator": "equal", "operand": "markup.list", "match_all": true }
+        ]
+    }
 ]
