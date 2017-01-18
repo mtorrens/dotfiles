@@ -86,6 +86,11 @@
       <command>chromium</command>
     </action>
   </item>
+  <item label="Skype">
+    <action name="Execute">
+      <command>skypeforlinux</command>
+    </action>
+  </item>
   <item label="Remmina">
     <action name="Execute">
       <command>remmina</command>
