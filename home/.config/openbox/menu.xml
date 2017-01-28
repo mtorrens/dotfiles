@@ -8,6 +8,11 @@
       <command>galculator</command>
     </action>
   </item>
+  <item label="Stopwatch">
+    <action name="Execute">
+      <command>pystopwatch</command>
+    </action>
+  </item>
   <item label="Color Picker">
     <action name="Execute">
       <command>gpick</command>
