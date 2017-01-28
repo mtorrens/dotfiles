@@ -571,6 +571,11 @@ shell/i/.arc
 	Extract=arc x %f '*'
 	Extract (with flags)=I=%{Enter any Arc flags:}; if test -n "$I"; then arc x $I %f; fi
 
+# Occasionally, `file` will recognize DOCX, XLSX, etc. files as ZIP files, so
+# head that off here
+regex/i/\.(docx|xlsx|pptx)
+  Open=mimeopen -n %f > /dev/null 2>&1 &
+
 # zip
 shell/i/.zip
 	Open=%cd %p/uzip://

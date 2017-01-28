@@ -10,3 +10,4 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoff
 inode/directory=midnight-commander.desktop;
 application/pdf=evince.desktop;
 image/png=mirage.desktop;
+video/x-matroska=vlc.desktop;

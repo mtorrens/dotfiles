@@ -84,7 +84,7 @@ ignore_ftp_chattr_errors=true
 skin=default
 
 [Layout]
-message_visible=1
+message_visible=0
 keybar_visible=1
 xterm_title=1
 output_lines=0
