@@ -11,3 +11,5 @@ inode/directory=midnight-commander.desktop;
 application/pdf=evince.desktop;
 image/png=mirage.desktop;
 video/x-matroska=vlc.desktop;
+image/jpeg=mirage.desktop;
+image/vnd.microsoft.icon=gimp.desktop;
