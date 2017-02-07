@@ -1,6 +1,9 @@
 # Reset the background
 hsetroot -solid '#505170'
 
+# Get the compositor up and running
+compton &
+
 # Start a Polkit authentication agent
 lxpolkit &
 
