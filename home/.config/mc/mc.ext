@@ -408,6 +408,7 @@ shell/i/.svg
 
 include/image
 	View=%view{ascii} identify %f
+	Open=mimeopen -n %f > /dev/null 2>&1 &
 
 
 ### Sound files ###
