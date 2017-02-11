@@ -156,7 +156,6 @@
     <keybind key="A-Tab">
       <action name="NextWindow">
         <raise>yes</raise>
-        <linear>yes</linear>
         <finalactions>
           <action name="Focus"/>
           <action name="Raise"/>
