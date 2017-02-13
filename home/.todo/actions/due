@@ -1,18 +1,6 @@
 #!/bin/bash
 export DATE=`date +%Y%m%d`
 
-if type gsed &>/dev/null; then
-  SED=gsed
-else
-  SED=sed
-fi
-
-if type gsort &>/dev/null; then
-  SORT=gsort
-else
-  SORT=sort
-fi
-
 # Don't run the filter when we list now, we'll run it in a second
 export TODOTXT_DISABLE_FILTER=1
 export TODOTXT_VERBOSE=0
