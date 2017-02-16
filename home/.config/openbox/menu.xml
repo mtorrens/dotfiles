@@ -184,7 +184,7 @@
   </item>
   <item label="File Manager">
     <action name="Execute">
-      <command>urxvt -e zsh -c '~/bin/base16-default-dark &amp;&amp; mc'</command>
+      <command>pcmanfm -n ~/Dropbox/Charles</command>
     </action>
   </item>
   <item label="Sublime Text">

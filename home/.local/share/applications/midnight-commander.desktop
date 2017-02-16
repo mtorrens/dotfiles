@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Midnight Commander
-Type=Application
-Terminal=false
-Comment=A visual file manager
-Exec=urxvt -e /bin/zsh -c '~/bin/base16-default-dark && mc'
-Icon=MidnightCommander
-Categories=System;FileTools;FileManager;

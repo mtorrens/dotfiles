@@ -7,7 +7,6 @@ x-scheme-handler/https=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
 text/x-log=sublime_text_3.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
-inode/directory=midnight-commander.desktop;
 application/pdf=evince.desktop;
 image/png=mirage.desktop;
 video/x-matroska=vlc.desktop;
