@@ -11,7 +11,7 @@ lxpolkit &
 lal -t Hack &
 
 # Start the system tray
-stalonetray &
+stalonetray --kludges force_icons_size &
 
 # Start the automounter
 udiskie -ant2 &
