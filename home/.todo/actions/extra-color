@@ -1,10 +1,5 @@
 #!/bin/bash
-
-if type gsed &>/dev/null; then
-  SED=gsed
-else
-  SED=sed
-fi
+export DATE=`date +%Y%m%d`
 
 cat |
   # Color up anything that's overdue, also culling off those leading 8-digit
@@ -17,8 +12,8 @@ cat |
     printf "%s\n", ($1 <= ENVIRON["DATE"] ? "\033[0m" : "")
   }' |
   # Color up due and again tags, and leading numbers, and priority items
-  $SED "s@\(due:[-0-9]*\)@\x1b[0;34m\1\x1b[0m@" |
-  $SED "s@\(again:[+0-9mdwy]*\)@\x1b[2m\1\x1b[0m@" |
-  $SED "s@^\([0-9]\+\) (A) \(.*\)\$@\1 \x1b[1;33m(A) \2\x1b[0m@" |
-  $SED "s@^\([0-9]\+\) \(.* WAIT .*\)\$@\1 \x1b[2m\2\x1b[0m@" |
-  $SED "s@^\([0-9]\+\) @\x1b[2m\1\x1b[0m @"
+  sed "s@\(due:[-0-9]*\)@\x1b[0;34m\1\x1b[0m@" |
+  sed "s@\(again:[+0-9mdwy]*\)@\x1b[38;5;242m\1\x1b[0m@" |
+  sed "s@^\([0-9]\+\) (A) \(.*\)\$@\1 \x1b[1;33m(A) \2\x1b[0m@" |
+  sed "s@^\([0-9]\+\) \(.* WAIT .*\)\$@\1 \x1b[38;5;242m\2\x1b[0m@" |
+  sed "s@^\([0-9]\+\) @\x1b[2m\1\x1b[0m @"
