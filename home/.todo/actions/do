@@ -40,7 +40,7 @@ function get_line()
 parse_options "$@"
 get_line
 
-if `echo "$LINE" | grep -q " again:"`; then
+if `echo "$LINE" | grep -q " rec:"`; then
   read -r -p "This appears to be a recurring task. Are you sure? [y/N] " response
   if [[ ! $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
     echo "You should recur this task instead, using 't again'."
