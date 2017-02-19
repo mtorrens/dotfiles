@@ -13,7 +13,13 @@ function get_private_file {
 
 	# Decrypt the file with a safe umask
   umask 077 && 7z x ${HOME}/.private/$1.7z -o${HOME}
-  mv ${HOME}/$1 ${HOME}/$2
+
+  if [[ ! -e ${HOME}/$1 ]]; then
+    echo "ERROR: Password must have been incorrect; no file created"
+    exit 1
+  fi
+
+  mv -f ${HOME}/$1 ${HOME}/$2
 
 	# Delete the file if the script fails
 	trap "shred -u ${HOME}/$2; exit" INT TERM EXIT
