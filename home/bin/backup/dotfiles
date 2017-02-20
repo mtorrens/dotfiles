@@ -23,7 +23,6 @@ cp ~/.gitconfig $DOTFILES/dotgitconfig
 cp ~/.netrc $DOTFILES/dotnetrc
 cp ~/.relish $DOTFILES/dotrelish
 cp ~/.transifexrc $DOTFILES/dottransifexrc
-cp ~/.trc $DOTFILES/dottrc
 
 rm -rf $DOTFILES/bin
 cp -RLf ~/bin $DOTFILES/bin
