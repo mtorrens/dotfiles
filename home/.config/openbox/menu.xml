@@ -189,7 +189,7 @@
   </item>
   <item label="Sublime Text">
     <action name="Execute">
-      <command>subl3</command>
+      <command>subl3 -n</command>
     </action>
   </item>
   <item label="Chromium">
