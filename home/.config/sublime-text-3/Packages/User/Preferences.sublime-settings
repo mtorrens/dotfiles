@@ -24,14 +24,18 @@
 	"auto_indent": true,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/User/base16-default.light (SL).tmTheme",
+	"close_windows_when_empty": true,
+	"color_scheme": "Packages/User/base16-default-light (SL).tmTheme",
 	"detect_indentation": true,
 	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
+	"fold_buttons": false,
+	"font_face": "Hack",
 	"font_options":
 	[
 		"subpixel_antialias"
 	],
+	"font_size": 10.5,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
@@ -39,12 +43,16 @@
 		"Markdown",
 		"Vintage"
 	],
+	"indent_subsequent_lines": true,
 	"indent_to_bracket": true,
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
 	"remember_open_files": false,
 	"rulers":
 	[
 		80
 	],
+	"save_on_focus_lost": true,
 	"scroll_past_end": true,
 	"smart_indent": true,
 	"spell_check": true,
@@ -54,6 +62,6 @@
 	"trim_automatic_white_space": true,
 	"trim_trailing_white_space_on_save": true,
 	"update_check": false,
-	"use_tab_steps": true,
+	"use_tab_stops": true,
 	"wrap_width": 80
 }
