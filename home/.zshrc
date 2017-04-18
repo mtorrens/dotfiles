@@ -105,11 +105,13 @@ alias ls='ls --file-type --sort=version --color=auto '
 alias ll='ls -lh --file-type --sort=version --color=auto '
 alias la='ls -lhA --file-type --sort=version --color=auto '
 
-# grep through the output of ps without showing grep itself in output
+# Customize ps output
 alias ps='ps axf'
+alias pgrep='pgrep -a'
 
-psgrep() {
-  ps axf | grep "[${*:0:1}]${*:1}"
+# Find broken symlinks
+find-broken() {
+  find $1 -xtype l
 }
 
 # Binary diff
