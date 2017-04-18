@@ -74,7 +74,7 @@
 	"bold_folder_labels": true,
 	"caret_style": "phase",
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/User/base16-default.light (SL).tmTheme",
+	"color_scheme": "Packages/User/base16-default-light (SL).tmTheme",
 	"detect_indentation": true,
 	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
