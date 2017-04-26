@@ -1,5 +1,5 @@
 # Reset the background
-hsetroot -solid '#505170'
+nitrogen --restore &
 
 # Start a Polkit authentication agent
 lxpolkit &
