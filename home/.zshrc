@@ -109,6 +109,9 @@ alias la='ls -lhA --file-type --sort=version --color=auto '
 alias ps='ps axf'
 alias pgrep='pgrep -a'
 
+# MPC server at home
+alias mpc='mpc -h 10.1.1.6'
+
 # Find broken symlinks
 find-broken() {
   find $1 -xtype l
