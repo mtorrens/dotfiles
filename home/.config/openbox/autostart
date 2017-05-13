@@ -17,8 +17,5 @@ udiskie -ant2 &
 command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT0 & }
 command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT1 & }
 
-# Wake-up daemon, also for the laptop
-caffeine &
-
 # Start the notification daemon
 dunst &
