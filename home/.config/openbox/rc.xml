@@ -212,22 +212,22 @@
         <command>zotero</command>
       </action>
     </keybind>
-    <keybind key="W-F9">
+    <keybind key="XF86AudioPrev">
       <action name="Execute">
         <command>gmusicbrowser -cmd PrevSong</command>
       </action>
     </keybind>
-    <keybind key="W-F10">
+    <keybind key="XF86AudioPlay">
       <action name="Execute">
         <command>gmusicbrowser -cmd PlayPause</command>
       </action>
     </keybind>
-    <keybind key="W-F11">
+    <keybind key="XF86AudioStop">
       <action name="Execute">
         <command>gmusicbrowser -cmd Stop</command>
       </action>
     </keybind>
-    <keybind key="W-F12">
+    <keybind key="XF86AudioNext">
       <action name="Execute">
         <command>gmusicbrowser -cmd NextSong</command>
       </action>
