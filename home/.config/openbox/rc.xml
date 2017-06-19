@@ -19,7 +19,7 @@
     <primaryMonitor>Active</primaryMonitor>
   </placement>
   <theme>
-    <name>Murrina-Tangoesque</name>
+    <name>Adwaita-openbox</name>
     <titleLayout>NLSIMC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>no</animateIconify>

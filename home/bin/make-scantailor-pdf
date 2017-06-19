@@ -1,0 +1,22 @@
+#!/bin/bash
+# Make a PDF from a bunch of TIFF images from my archival scans. This is so
+# customized that I don't expect anyone else to ever be able to use it, but
+# you might get some ideas.
+
+# The thing is, I don't actually *care* about the output resolution of the PDF
+# file, as I'm not planning on ever printing it (and if I do, I'll be using
+# page shrink and grow). But some images were tight zooms of single pages,
+# while other images were photographs of two pages at once (especially in the
+# letters), which means that the pixel resolution actually *isn't constant.*
+# What I want is to just *assume* that the width of the image is 7", and go
+# from there. That will give us consistent results.
+for i in *.tif; do
+  image_width=`identify $i | cut -d' ' -f3 | cut -d'x' -f1`
+  image_dpi=$((image_width / 7))
+
+  # Compress with Deflate, which is lossless
+  tiff2pdf -z -o `basename $i .tif`.pdf -x $image_dpi -y $image_dpi $i
+done
+
+# Rely on the fact that pages are in sorted order (yay)
+pdftk *.pdf cat output out.pdf

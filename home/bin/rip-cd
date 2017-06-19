@@ -1,0 +1,4 @@
+#!/bin/bash
+# Wrap a bunch of options for whipper
+
+whipper cd rip -p -O ~/Temporary --track-template '%A - %d/%t - %n' --disc-template '%A - %d/%A - %d'

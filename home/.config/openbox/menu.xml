@@ -26,6 +26,11 @@
       <command>zotero</command>
     </action>
   </item>
+  <item label="ScanTailor">
+    <action name="Execute">
+      <command>scantailor</command>
+    </action>
+  </item>
   <item label="Gephi">
     <action name="Execute">
       <command>gephi</command>
@@ -114,11 +119,6 @@
       <command>gmusicbrowser</command>
     </action>
   </item>
-  <item label="Ripper">
-    <action name="Execute">
-      <command>rrip_gui</command>
-    </action>
-  </item>
   <item label="Picard">
     <action name="Execute">
       <command>picard</command>
@@ -128,6 +128,11 @@
   <item label="VLC">
     <action name="Execute">
       <command>vlc</command>
+    </action>
+  </item>
+  <item label="MakeMKV">
+    <action name="Execute">
+      <command>makemkv</command>
     </action>
   </item>
   <item label="Handbrake">
