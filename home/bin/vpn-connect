@@ -1,4 +1,5 @@
 #!/bin/sh
 # Connect to the LSU VPN
 
-sudo openconnect --user cpence --servercert=64AEB3D282B239FE88D8241EAF835125DD68A133 client.vpn.lsu.edu
+#sudo openconnect --user cpence --servercert=64AEB3D282B239FE88D8241EAF835125DD68A133 client.vpn.lsu.edu
+sudo openconnect --user cpence client.vpn.lsu.edu
