@@ -12,3 +12,6 @@ image/png=mirage.desktop;
 video/x-matroska=vlc.desktop;
 image/jpeg=mirage.desktop;
 image/vnd.microsoft.icon=gimp.desktop;
+
+[Added Associations]
+inode/directory=mirage.desktop;
