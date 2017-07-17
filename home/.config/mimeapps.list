@@ -1,17 +1,18 @@
 [Default Applications]
+application/pdf=evince.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+image/jpeg=mirage.desktop;
+image/png=mirage.desktop;
+image/vnd.microsoft.icon=gimp.desktop;
+inode/directory=pcmanfm.desktop
 text/html=chromium.desktop
+text/x-log=sublime_text_3.desktop;
 text/x-tex=sublime_text_3.desktop;
+video/x-matroska=vlc.desktop;
 x-scheme-handler/about=chromium.desktop
 x-scheme-handler/http=chromium.desktop
 x-scheme-handler/https=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
-text/x-log=sublime_text_3.desktop;
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
-application/pdf=evince.desktop;
-image/png=mirage.desktop;
-video/x-matroska=vlc.desktop;
-image/jpeg=mirage.desktop;
-image/vnd.microsoft.icon=gimp.desktop;
 
 [Added Associations]
-inode/directory=mirage.desktop;
+inode/directory=pcmanfm.desktop;mirage.desktop;
