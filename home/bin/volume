@@ -2,11 +2,13 @@
 
 ACTION=$1
 
-CONTROL=Master
-MIN=`amixer sget $CONTROL | grep "Limits:" | sed 's@^ *@@' | cut -d' ' -f3`
-MAX=`amixer sget $CONTROL | grep "Limits:" | sed 's@^ *@@' | cut -d' ' -f5`
-CUR=`amixer sget $CONTROL | grep "\[[0-9]*%\]" | sed 's@^ *@@' | cut -d' ' -f3`
-if amixer sget $CONTROL | grep -q "\[on\]"; then
+SINK=`pacmd list-sinks | grep "\* index:" -A1 | grep "name: " | sed "s/.*name: <\(.*\)>.*/\1/"`
+MIN=0
+MAX=`pacmd list-sinks | grep "\* index:" -A20 | grep "base volume: " | sed "s/.*base volume: \([0-9]*\) \/.*/\1/"`
+CUR=`pacmd list-sinks | grep "\* index:" -A20 | grep "volume: front-left: " | sed "s/.*volume: front-left: \([0-9]*\) \/.*/\1/"`
+
+MUTEVAL=`pacmd list-sinks | grep "\* index:" -A20 | grep "muted: " | sed "s/.*muted: \(.*\)/\1/"`
+if [[ $MUTEVAL == 'no' ]]; then
   MUTED=0
 else
   MUTED=1
@@ -33,17 +35,17 @@ REMAINDER=$(((MAX - MIN) - (STEP_SIZE * STEPS)))
 CURRENT_STEP=$(((CUR - REMAINDER) / STEP_SIZE))
 
 if [[ $ACTION == 'mute' ]]; then
-  amixer -q sset $CONTROL mute
+  pacmd set-sink-mute $SINK true
   MUTED=1
   NEXT=CUR
 elif [[ $ACTION == 'unmute' ]]; then
   NEXT=CUR
   if [[ $CUR -eq 0 ]]; then
     NEXT=$((STEPS / 2 * STEP_SIZE + REMAINDER))
-    amixer -q sset $CONTROL $NEXT
+    pacmd set-sink-volume $SINK $NEXT
   fi
 
-  amixer -q sset $CONTROL unmute
+  pacmd set-sink-mute $SINK false
   MUTED=0
 else
   if [[ $ACTION == 'up' ]]; then
@@ -58,15 +60,15 @@ else
   fi
 
   if [[ $NEXT_STEP -le 0 ]]; then
-    amixer -q sset $CONTROL mute
-    amixer -q sset $CONTROL 0
+    pacmd set-sink-mute $SINK true
+    pacmd set-sink-volume $SINK 0
 
     NEXT=0
     MUTED=1
   else
     NEXT=$((NEXT_STEP * STEP_SIZE + REMAINDER))
-    amixer -q sset $CONTROL $NEXT
-    amixer -q sset $CONTROL unmute
+    pacmd set-sink-volume $SINK $NEXT
+    pacmd set-sink-mute $SINK false
     MUTED=0
   fi
 fi
