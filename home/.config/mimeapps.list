@@ -1,6 +1,7 @@
 [Default Applications]
 application/pdf=evince.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+audio/mpeg=vlc.desktop
 image/jpeg=mirage.desktop;
 image/png=mirage.desktop;
 image/vnd.microsoft.icon=gimp.desktop;
