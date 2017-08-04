@@ -124,6 +124,11 @@
       <command>picard</command>
     </action>
   </item>
+  <item label="Brasero">
+    <action name="Execute">
+      <command>brasero</command>
+    </action>
+  </item>
   <separator />
   <item label="VLC">
     <action name="Execute">
