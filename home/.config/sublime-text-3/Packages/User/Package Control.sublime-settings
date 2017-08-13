@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Autotools",
 		"Base16 Color Schemes",
 		"Better CoffeeScript",
 		"Cucumber",
