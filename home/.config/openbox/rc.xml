@@ -174,11 +174,7 @@
     </keybind>
     <keybind key="W-t">
       <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>URxvt</name>
-        </startupnotify>
-        <command>urxvt</command>
+        <command>st -f 'Hack:size=11' -g 110x30</command>
       </action>
     </keybind>
     <keybind key="W-s">
