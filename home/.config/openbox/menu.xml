@@ -189,7 +189,7 @@
   <separator label="Applications" />
   <item label="Terminal">
     <action name="Execute">
-      <command>st -f 'Hack:size=11' -g 110x30</command>
+      <command>st -f 'Hack:size=10.5' -g 110x30</command>
     </action>
   </item>
   <item label="File Manager">
