@@ -5,7 +5,7 @@ nitrogen --restore &
 lxpolkit &
 
 # Start the clock
-lal -t Hack &
+lal -t 'Droid Sans' -s 10 -c '#f5871f' -f '%a, %b %0d   %H:%M' -w 128 &
 
 # Start the system tray
 stalonetray --kludges force_icons_size &
