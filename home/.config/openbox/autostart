@@ -4,18 +4,11 @@ nitrogen --restore &
 # Start a Polkit authentication agent
 lxpolkit &
 
-# Start the clock
-lal -t 'Droid Sans' -s 10 -c '#f5871f' -f '%a, %b %0d   %H:%M' -w 128 &
-
-# Start the system tray
-stalonetray --kludges force_icons_size &
-
-# Start the automounter
-udiskie -ant2 &
-
-# Start battery icons, if we're on the laptop
-command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT0 & }
-command -v cbatticon >/dev/null 2>&1 && { cbatticon -n BAT1 & }
-
 # Start the notification daemon
 dunst &
+
+# Start the panel
+tint2 &
+
+# Start the automounter
+(sleep 1 && udiskie -ant2) &
