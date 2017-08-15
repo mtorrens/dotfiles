@@ -19,7 +19,7 @@
     <primaryMonitor>Active</primaryMonitor>
   </placement>
   <theme>
-    <name>Adwaita-openbox</name>
+    <name>Numix</name>
     <titleLayout>NLSIMC</titleLayout>
     <keepBorder>no</keepBorder>
     <animateIconify>no</animateIconify>

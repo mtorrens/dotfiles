@@ -86,8 +86,6 @@ LESSHISTFILE=-
 ###############################################################################
 # Colorize all the things
 
-[[ -s $HOME/bin/base16-default-dark ]] && source $HOME/bin/base16-default-dark
-
 if [ "$TERM" != dumb ]; then
   alias dmesg='dmesg -L'
   alias grep='grep --color=auto'

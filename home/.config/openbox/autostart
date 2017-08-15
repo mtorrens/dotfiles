@@ -1,6 +1,9 @@
 # Reset the background
 nitrogen --restore &
 
+# Start the compositor
+compton -CGb &
+
 # Start a Polkit authentication agent
 lxpolkit &
 
