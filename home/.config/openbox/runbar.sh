@@ -14,4 +14,4 @@ sleep 1
 
 trayx=$((monx - 320))
 
-stalonetray --geometry 20x1+${trayx}+0 &
+stalonetray --geometry 20x1+${trayx}+0 --sticky true &
