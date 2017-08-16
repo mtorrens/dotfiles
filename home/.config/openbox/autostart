@@ -11,7 +11,7 @@ lxpolkit &
 dunst &
 
 # Start the panel
-tint2 &
+$HOME/.config/openbox/runbar.sh &
 
 # Start the automounter
 (sleep 1 && udiskie -ant2) &
