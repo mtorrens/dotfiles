@@ -33,7 +33,12 @@ battery() {
 }
 
 batteries() {
-  echo -ne "$(battery /sys/class/power_supply/BAT0)%{O16}$(battery /sys/class/power_supply/BAT1)"
+  if [[ -d "/sys/class/power_supply/BAT0" ]]; then
+    echo -ne "$(battery /sys/class/power_supply/BAT0)"
+  fi
+  if [[ -d "/sys/class/power_supply/BAT1" ]]; then
+    echo -ne "%{O16}$(battery /sys/class/power_supply/BAT1)"
+  fi
 }
 
 zzz() {
