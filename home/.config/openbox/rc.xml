@@ -515,5 +515,9 @@
     <manageDesktops>yes</manageDesktops>
   </menu>
   <applications>
+    <application name="stalonetray">
+      <desktop>all</desktop>
+      <layer>above</layer>
+    </application>
   </applications>
 </openbox_config>
