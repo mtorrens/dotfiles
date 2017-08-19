@@ -11,3 +11,5 @@ transparent false
 vertical false
 
 window_layer top
+
+window_type desktop

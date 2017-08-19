@@ -1,6 +1,6 @@
 #!/bin/bash
 
-answer=$(zenity --list --radiolist --text="Would you like to shut down?" --column " " --column "Action" TRUE "Shut Down" FALSE "Reboot" FALSE "Log Out")
+answer=`echo -e "Shut Down\nReboot\nLog Out" | rofi -dmenu -p 'Would you like to shut down?' -i -no-custom`
 
 if [[ "$answer" == "Log Out" ]]; then
   # Log out

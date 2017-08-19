@@ -87,12 +87,12 @@
 	"dpi_scale": 1.0,
 	"ensure_newline_at_eof_on_save": true,
 	"fold_buttons": false,
-	"font_face": "Hack",
+	"font_face": "Fantasque Sans Mono",
 	"font_options":
 	[
 		"subpixel_antialias"
 	],
-	"font_size": 10.5,
+	"font_size": 11,
 	"highlight_line": true,
 	"hot_exit": false,
 	"ignored_packages":
