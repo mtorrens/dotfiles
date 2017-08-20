@@ -134,3 +134,16 @@ bindsym $mod+Shift+c reload
 
 # end session
 bindsym $mod+Shift+q exec "~/bin/end-session"
+
+# multimedia key bindings
+bindsym XF86AudioPrev exec --no-startup-id "gmusicbrowser -cmd PrevSong"
+bindsym XF86AudioPlay exec --no-startup-id "gmusicbrowser -cmd PlayPause"
+bindsym XF86AudioStop exec --no-startup-id "gmusicbrowser -cmd Stop"
+bindsym XF86AudioNext exec --no-startup-id "gmusicbrowser -cmd NextSong"
+bindsym Pause exec --no-startup-id "zsh -c '~/bin/pa-toggle'"
+bindsym XF86MonBrightnessUp exec --no-startup-id "zsh -c '~/bin/brightness up'"
+bindsym XF86MonBrightnessDown exec --no-startup-id "zsh -c '~/bin/brightness down'"
+bindsym XF86AudioMute exec --no-startup-id "zsh -c '~/bin/volume toggle'"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "zsh -c '~/bin/volume up'"
+bindsym XF86AudioLowerVolume exec --no-startup-id "zsh -c '~/bin/volume down'"
+bindsym XF86AudioMicMute exec --no-startup-id "zsh -c '~/bin/micmute'"
