@@ -96,11 +96,10 @@ wifi() {
 
   echo -ne "%{B$CYAN}%{F$BLACK}%{A:networkmanager_dmenu:}$ICONPAD\uf1eb$ENTRYPAD"
 
-  local line=`nmcli -t -c no -m tabular c show --active`
-  if [[ "$line" == "" ]]; then
+  if iwconfig 2>&1 | grep -q 'ESSID:off/any'; then
     echo -n "<disconnected>"
   else
-    ssid=`echo $line | cut -f1 -d':'`
+    ssid=`iwconfig 2>&1 | grep ESSID | sed 's@.* ESSID:"\(.*\)"@\1@'`
     echo -ne $ssid
   fi
 
