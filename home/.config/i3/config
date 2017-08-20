@@ -8,18 +8,16 @@ exec --no-startup-id "xsetroot -bitmap ~/Dropbox/Charles/Pictures/Wallpaper/Bitm
 exec --no-startup-id "lxpolkit"
 exec --no-startup-id "dunst"
 exec --no-startup-id "redshift"
-#exec --no-startup-id "light-locker"
+# exec --no-startup-id "light-locker"
 
-# Start lemonbar and stalonetray
+# Start bar
 exec --no-startup-id "~/.config/bar/run.sh"
 
 # Start PCManFM daemon for mounts
 exec --no-startup-id "pcmanfm -d"
 
-# Start tray apps
-exec --no-startup-id "sh -c 'sleep 3 && nm-applet'"
-exec --no-startup-id "sh -c 'sleep 3 && dropbox'"
-exec --no-startup-id "sh -c 'sleep 3 && gmusicbrowser'"
+# Start tray apps (FIXME replace gmb)
+# exec --no-startup-id "sh -c 'sleep 3 && gmusicbrowser'"
 
 
 #

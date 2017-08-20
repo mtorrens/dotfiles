@@ -6,8 +6,19 @@ ENTRYPAD="%{O10}"
 SEPARATOR="%{O10}"
 PLARR=""
 
+# Color theme
+WHITE="#d3d9c8"
+BLACK="#2d2d2d"
+BLUE="#6699cc"
+YELLOW="#ffcc66"
+GREEN="#99cc99"
+CYAN="#66cccc"
+PURPLE="#cc99cc"
+RED="#f2777a"
+
 # Auto detect network interfaces
 ifaces=$(ls /sys/class/net | grep -E '^(eth|wlan|enp|wlp)')
+wifi_ifaces=$(ls /sys/class/net | grep -E '^(wlan|wlp)')
 
 # Storage for network rate measurement
 last_rx=0
@@ -17,26 +28,26 @@ readable_bytes() {
   local bytes=$1
   local kib=$(( bytes >> 10 ))
   if [ $kib -lt 0 ]; then
-    echo -n "? K"
+    echo -n "?k"
   elif [ $kib -gt 1024 ]; then
     local mib_int=$(( kib >> 10 ))
     local mib_dec=$(( kib % 1024 * 976 / 10000 ))
     if [ "$mib_dec" -lt 10 ]; then
       mib_dec="0${mib_dec}"
     fi
-    echo -n "${mib_int}.${mib_dec} M"
+    echo -n "${mib_int}.${mib_dec}m"
   else
-    echo -n "${kib} K"
+    echo -n "${kib}k"
   fi
 }
 
 
 clock() {
-  echo -ne "%{B#d3d9c8}%{F#2d2d2d}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B#6699cc}%{F#d3d9c8}$PLARR"
+  echo -ne "%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
 }
 
 calendar() {
-  echo -ne "%{B#6699cc}%{F#2d2d2d}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %d")$ENTRYPAD%{B#ffcc66}%{F#6699cc}$PLARR"
+  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %d")$ENTRYPAD%{B$YELLOW}%{F$BLUE}$PLARR"
 }
 
 battery() {
@@ -46,7 +57,7 @@ battery() {
   local full=`cat $sys_dir/energy_full`
   local ratio=$((current * 100 / full))
 
-  echo -ne "%{B#ffcc66}%{F#2d2d2d}$ICONPAD"
+  echo -ne "%{B$YELLOW}%{F$BLACK}$ICONPAD"
   if [[ `cat /sys/class/power_supply/AC/online` -eq 1 ]]; then
     echo -ne "\uf1e6"
   elif [[ "$ratio" -ge 88 ]]; then
@@ -72,7 +83,28 @@ batteries() {
     echo -ne $ENTRYPAD
     battery /sys/class/power_supply/BAT1
   fi
-  echo -ne "%{B#99cc99}%{F#ffcc66}$PLARR"
+  echo -ne "%{B$GREEN}%{F$YELLOW}$PLARR"
+}
+
+wifi() {
+  if [[ "$wifi_ifaces" == "" ]]; then
+    return
+  fi
+  if [[ ! -e '/usr/bin/nmcli' ]]; then
+    return
+  fi
+
+  echo -ne "%{B$CYAN}%{F$BLACK}%{A:networkmanager_dmenu:}$ICONPAD\uf1eb$ENTRYPAD"
+
+  local line=`nmcli -t -c no -m tabular c show --active`
+  if [[ "$line" == "" ]]; then
+    echo -n "<disconnected>"
+  else
+    ssid=`echo $line | cut -f1 -d':'`
+    echo -ne $ssid
+  fi
+
+  echo -ne "$ENTRYPAD%{A}%{B$PURPLE}%{F$CYAN}$PLARR"
 }
 
 network() {
@@ -85,10 +117,14 @@ network() {
     tx=$(( tx + tmp_tx ))
   done
 
-  echo -ne "%{B#99cc99}%{F#2d2d2d}$ICONPAD\uf0ac$ENTRYPAD$(readable_bytes $(( rx - last_rx )))\uf0d7$ENTRYPAD$(readable_bytes $(( tx - last_tx )))\uf0d8$ENTRYPAD%{B#2d2d2d}%{F#99cc99}$PLARR"
+  echo -ne "%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$(readable_bytes $(( rx - last_rx )))\uf0d7$ENTRYPAD$(readable_bytes $(( tx - last_tx )))\uf0d8$ENTRYPAD%{B$CYAN}%{F$GREEN}$PLARR"
 
   last_rx=$rx
   last_tx=$tx
+}
+
+dropbox() {
+  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$BLACK}%{F$PURPLE}$PLARR"
 }
 
 zzz() {
@@ -107,6 +143,10 @@ while true; do
   batteries
   echo -ne $SEPARATOR
   network
+  echo -ne $SEPARATOR
+  wifi
+  echo -ne $SEPARATOR
+  dropbox
   echo -ne $SEPARATOR
   zzz
   echo ''

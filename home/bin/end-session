@@ -4,7 +4,7 @@ answer=`echo -e "Shut Down\nReboot\nLog Out" | rofi -dmenu -p 'Would you like to
 
 if [[ "$answer" == "Log Out" ]]; then
   # Log out
-  openbox --exit
+  i3-msg exit
 elif [[ "$answer" == "Reboot" ]]; then
   # Reboot
   sudo reboot
