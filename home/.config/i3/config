@@ -3,18 +3,26 @@
 # autostart
 #
 
-# Bring up wallpaper, compositor, polkit, notifications, redshift, locker
+# Wallpaper pattern
 exec --no-startup-id "xsetroot -bitmap ~/Dropbox/Charles/Pictures/Wallpaper/Bitmap/arches.xbm -bg '#2d2d2d' -fg '#393939'"
+
+# Policy kit
 exec --no-startup-id "lxpolkit"
+
+# Notification daemon
 exec --no-startup-id "dunst"
-exec --no-startup-id "redshift"
-# exec --no-startup-id "light-locker"
 
-# Start bar
-exec --no-startup-id "~/.config/bar/run.sh"
+# Screen locker
+exec --no-startup-id "light-locker"
 
-# Start PCManFM daemon for mounts
+# PCManFM daemon (for automounts)
 exec --no-startup-id "pcmanfm -d"
+
+# Redshift
+exec --no-startup-id "redshift"
+
+# Status bar
+exec --no-startup-id "~/.config/bar/run.sh"
 
 # Start tray apps (FIXME replace gmb)
 # exec --no-startup-id "sh -c 'sleep 3 && gmusicbrowser'"
@@ -41,10 +49,6 @@ hide_edge_borders none
 gaps inner 20
 gaps outer 0
 
-# Put the tray in the right place
-for_window [class="stalonetray"] floating enable
-for_window [class="stalonetray"] sticky enable
-
 
 #
 # mouse
@@ -52,6 +56,18 @@ for_window [class="stalonetray"] sticky enable
 
 # Don't have focus follow mouse
 focus_follows_mouse no
+
+
+#
+# specific window config
+#
+
+# Put the tray in the right place when I use it
+for_window [class="stalonetray"] floating enable
+for_window [class="stalonetray"] sticky enable
+
+# Zotero's citation dialogs should float
+for_window [title="Quick Format Citation"] floating enable
 
 
 #
@@ -69,6 +85,9 @@ bindsym $mod+z exec zotero
 
 # close window
 bindsym Mod1+F4 kill
+
+# lock the screen
+bindsym $mod+l exec --no-startup-id "light-locker-command -l"
 
 # start rofi
 bindsym $mod+space exec "rofi -show run"
