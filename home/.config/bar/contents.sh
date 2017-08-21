@@ -4,7 +4,7 @@
 ICONPAD="%{O6}"
 ENTRYPAD="%{O10}"
 SEPARATOR="%{O10}"
-PLARR=""
+PLARR="$SEPARATOR"
 
 # Color theme
 WHITE="#d3d9c8"
@@ -54,7 +54,13 @@ clock() {
 }
 
 calendar() {
-  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %d")$ENTRYPAD%{B$YELLOW}%{F$BLUE}$PLARR"
+  # Battery display is missing on desktop
+  local next=$YELLOW
+  if [[ ! -d "/sys/class/power_supply/BAT0" ]]; then
+    next=$GREEN
+  fi
+
+  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %d")$ENTRYPAD%{B$next}%{F$BLUE}$PLARR"
 }
 
 battery() {
@@ -94,11 +100,29 @@ batteries() {
   fi
 }
 
-wifi() {
-  if [[ "$wifi_ifaces" == "" ]]; then
-    return
+network() {
+  local rx=0 tx=0 tmp_rx tmp_tx next=$CYAN
+
+  # Wifi display is missing on desktop
+  if [[ "$wifi_ifaces" == "" || ! -e '/usr/bin/nmcli' ]]; then
+    next=$PURPLE
   fi
-  if [[ ! -e '/usr/bin/nmcli' ]]; then
+
+  for iface in $ifaces; do
+    read tmp_rx < "/sys/class/net/${iface}/statistics/rx_bytes"
+    read tmp_tx < "/sys/class/net/${iface}/statistics/tx_bytes"
+    rx=$(( rx + tmp_rx ))
+    tx=$(( tx + tmp_tx ))
+  done
+
+  echo -ne "%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$(readable_bytes $(( rx - last_rx )))\uf0d7$ENTRYPAD$(readable_bytes $(( tx - last_tx )))\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
+
+  last_rx=$rx
+  last_tx=$tx
+}
+
+wifi() {
+  if [[ "$wifi_ifaces" == "" || ! -e '/usr/bin/nmcli' ]]; then
     return
   fi
 
@@ -112,22 +136,6 @@ wifi() {
   fi
 
   echo -ne "$ENTRYPAD%{A}%{B$PURPLE}%{F$CYAN}$PLARR"
-}
-
-network() {
-  local rx=0 tx=0 tmp_rx tmp_tx
-
-  for iface in $ifaces; do
-    read tmp_rx < "/sys/class/net/${iface}/statistics/rx_bytes"
-    read tmp_tx < "/sys/class/net/${iface}/statistics/tx_bytes"
-    rx=$(( rx + tmp_rx ))
-    tx=$(( tx + tmp_tx ))
-  done
-
-  echo -ne "%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$(readable_bytes $(( rx - last_rx )))\uf0d7$ENTRYPAD$(readable_bytes $(( tx - last_tx )))\uf0d8$ENTRYPAD%{B$CYAN}%{F$GREEN}$PLARR"
-
-  last_rx=$rx
-  last_tx=$tx
 }
 
 dropbox() {
@@ -153,19 +161,12 @@ redshift() {
 
 while true; do
   workspace
-  echo -ne $SEPARATOR
   clock
-  echo -ne $SEPARATOR
   calendar
-  echo -ne $SEPARATOR
   batteries
-  echo -ne $SEPARATOR
   network
-  echo -ne $SEPARATOR
   wifi
-  echo -ne $SEPARATOR
   dropbox
-  echo -ne $SEPARATOR
   echo -ne "%{B$RED}%{F$BLACK}$ICONPAD"
   zzz
   echo -ne $ICONPAD
