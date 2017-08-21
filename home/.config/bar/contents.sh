@@ -85,12 +85,13 @@ battery() {
 batteries() {
   if [[ -d "/sys/class/power_supply/BAT0" ]]; then
     battery /sys/class/power_supply/BAT0
+
+    if [[ -d "/sys/class/power_supply/BAT1" ]]; then
+      echo -ne $ENTRYPAD
+      battery /sys/class/power_supply/BAT1
+    fi
+    echo -ne "%{B$GREEN}%{F$YELLOW}$PLARR"
   fi
-  if [[ -d "/sys/class/power_supply/BAT1" ]]; then
-    echo -ne $ENTRYPAD
-    battery /sys/class/power_supply/BAT1
-  fi
-  echo -ne "%{B$GREEN}%{F$YELLOW}$PLARR"
 }
 
 wifi() {
