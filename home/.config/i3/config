@@ -3,6 +3,9 @@
 # autostart
 #
 
+# Set up i3 workspaces per screen if needed
+exec --no-startup-id "/bin/sh ~/.config/i3/workspace.sh"
+
 # Wallpaper pattern
 exec --no-startup-id "xsetroot -bitmap ~/Dropbox/Charles/Pictures/Wallpaper/Bitmap/arches.xbm -bg '#2d2d2d' -fg '#393939'"
 
