@@ -15,6 +15,8 @@ GREEN="#99cc99"
 CYAN="#66cccc"
 PURPLE="#cc99cc"
 RED="#f2777a"
+ORANGE="#f99157"
+BROWN="#d27b53"
 
 # Auto detect network interfaces
 ifaces=$(ls /sys/class/net | grep -E '^(eth|wlan|enp|wlp)')
@@ -41,6 +43,11 @@ readable_bytes() {
   fi
 }
 
+
+workspace() {
+  num=`i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name'`
+  echo -ne "%{B$ORANGE}%{F$BLACK}$ICONPAD\uf108$ENTRYPAD$num$ENTRYPAD%{B$WHITE}%{F$ORANGE}$PLARR"
+}
 
 clock() {
   echo -ne "%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
@@ -123,7 +130,7 @@ network() {
 }
 
 dropbox() {
-  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$BLACK}%{F$PURPLE}$PLARR"
+  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$RED}%{F$PURPLE}$PLARR"
 }
 
 zzz() {
@@ -134,7 +141,18 @@ zzz() {
   fi
 }
 
+redshift() {
+  local out=`pgrep redshift`
+  if [[ "$out" == "" ]]; then
+    echo -ne "%{A:redshift &:}\uf070%{A}"
+  else
+    echo -ne "%{A:killall redshift:}\uf06e%{A}"
+  fi
+}
+
 while true; do
+  workspace
+  echo -ne $SEPARATOR
   clock
   echo -ne $SEPARATOR
   calendar
@@ -147,7 +165,11 @@ while true; do
   echo -ne $SEPARATOR
   dropbox
   echo -ne $SEPARATOR
+  echo -ne "%{B$RED}%{F$BLACK}$ICONPAD"
   zzz
+  echo -ne $ICONPAD
+  redshift
+  echo -ne "$ENTRYPAD%{B-}%{F$RED}$PLARR%{F-}"
   echo ''
 
   sleep 1
