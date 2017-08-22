@@ -1,0 +1,21 @@
+! ------------------------------------------------------------------------------
+! ROFI Color theme
+! ------------------------------------------------------------------------------
+rofi.color-enabled: true
+!rofi.lines: 3
+!rofi.columns: 1
+!rofi.location: 1
+rofi.terminal: st
+rofi.width: 640
+rofi.ssh-command: {terminal} -e "{ssh-client} {host}"
+
+rofi.color-enabled: true
+rofi.color-window: #2d2d2d, #515151, #515151
+rofi.color-normal: #2d2d2d, #d3d0c8, #393939, #d3d0c8, #2d2d2d
+rofi.color-active: #2d2d2d, #6699cc, #393939, #6699cc, #2d2d2d
+rofi.color-urgent: #2d2d2d, #f2777a, #393939, #f2777a, #2d2d2d
+
+rofi.separator-style:                solid
+rofi.font: Gohu GohuFont 12
+
+rofi.case-sensitive: false
