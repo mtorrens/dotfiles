@@ -144,9 +144,9 @@ dropbox() {
 
 zzz() {
   if xset q | grep -ql "DPMS is Enabled"; then
-    echo -ne "%{A:xset -dpms:}\uf186%{A}"
+    echo -ne "%{A:sh ~/.config/bar/screenon.sh:}\uf186%{A}"
   else
-    echo -ne "%{A:xset +dpms:}\uf185%{A}"
+    echo -ne "%{A:sh ~/.config/bar/screenoff.sh:}\uf185%{A}"
   fi
 }
 
