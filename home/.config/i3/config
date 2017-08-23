@@ -3,9 +3,6 @@
 # autostart
 #
 
-# Set up i3 workspaces per screen if needed
-exec --no-startup-id "/bin/sh ~/.config/i3/workspace.sh"
-
 # Wallpaper pattern
 exec --no-startup-id "xsetroot -bitmap ~/Dropbox/Charles/Pictures/Wallpaper/Bitmap/arches.xbm -bg '#2d2d2d' -fg '#393939'"
 
@@ -150,6 +147,9 @@ bindsym $mod+Shift+F9 move container to workspace 9
 bindsym $mod+Shift+F10 move container to workspace 10
 bindsym $mod+Shift+F11 move container to workspace 11
 bindsym $mod+Shift+F12 move container to workspace 12
+
+# Kick the current workspace to the other output
+bindsym $mod+Shift+Return move workspace to output right
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
