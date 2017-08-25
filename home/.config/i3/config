@@ -66,6 +66,9 @@ for_window [class="stalonetray"] sticky enable
 # Zotero's citation dialogs should float
 for_window [title="Quick Format Citation"] floating enable
 
+# Remmina's login dialog should float
+for_window [title="Remmina Remote Desktop Client"] floating enable
+
 
 #
 # keyboard
