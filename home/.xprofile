@@ -7,7 +7,8 @@
 # Go path needs to be set in every app in X
 export GOPATH=$HOME/Development/go
 
-# Run the SSH agent, regardless of environment
+# Run the Gnome keyring daemon and ssh-agent, regardless of DE
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets)
 eval `ssh-agent -s`
 
 # Fix ugly Java apps
