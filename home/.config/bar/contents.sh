@@ -139,7 +139,20 @@ wifi() {
 }
 
 dropbox() {
-  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$RED}%{F$PURPLE}$PLARR"
+  local next=$RED
+  if [[ -e /usr/bin/mpc ]]; then
+    next=$CYAN
+  fi
+
+  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$next}%{F$PURPLE}$PLARR"
+}
+
+mpd() {
+  if [[ ! -e /usr/bin/mpc ]]; then
+    return
+  fi
+
+  echo -ne "%{B$CYAN}%{F$BLACK}$ICONPAD\uf001$ENTRYPAD`mpc current`$ENTRYPAD%{B$RED}%{F$CYAN}$PLARR"
 }
 
 zzz() {
@@ -167,6 +180,7 @@ while true; do
   network
   wifi
   dropbox
+  mpd
   echo -ne "%{B$RED}%{F$BLACK}$ICONPAD"
   zzz
   echo -ne $ICONPAD
