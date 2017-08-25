@@ -81,6 +81,8 @@ fi
 
 LANG=en_US.UTF-8
 EDITOR=/usr/bin/nano
+VISUAL=/usr/bin/nano
+BROWSER=/usr/bin/chromium
 LESSHISTFILE=-
 
 ###############################################################################
@@ -106,9 +108,6 @@ alias la='ls -lhA --file-type --sort=version --color=auto '
 # Customize ps output
 alias ps='ps axf'
 alias pgrep='pgrep -a'
-
-# MPC server at home
-alias mpc='mpc -h 10.1.1.6'
 
 # Find broken symlinks
 find-broken() {
