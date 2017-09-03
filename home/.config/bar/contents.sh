@@ -60,7 +60,7 @@ calendar() {
     next=$GREEN
   fi
 
-  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %d")$ENTRYPAD%{B$next}%{F$BLUE}$PLARR"
+  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %-d")$ENTRYPAD%{B$next}%{F$BLUE}$PLARR"
 }
 
 battery() {
