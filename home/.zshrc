@@ -109,6 +109,9 @@ alias la='ls -lhA --file-type --sort=version --color=auto '
 alias ps='ps axf'
 alias pgrep='pgrep -a'
 
+# Customize MPC output
+export MPC_FORMAT='%artist% - %title% (##%track%: %album%)'
+
 # Find broken symlinks
 find-broken() {
   find $1 -xtype l
