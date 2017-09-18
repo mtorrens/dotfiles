@@ -97,7 +97,7 @@ bindsym $mod+l exec --no-startup-id "light-locker-command -l"
 # start rofi
 bindsym $mod+space exec "rofi -show run"
 bindsym $mod+Shift+space exec "rofi -show window"
-bindsym $mod+Insert exec "clerk"
+bindsym $mod+Insert exec "~/bin/mpdmenu"
 
 # make fullscreen
 bindsym $mod+Return fullscreen toggle
