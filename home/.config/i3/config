@@ -24,6 +24,8 @@ exec --no-startup-id "redshift"
 # Status bar
 exec --no-startup-id "~/.config/bar/run.sh"
 
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
 
 #
 # visual
@@ -72,6 +74,9 @@ for_window [title="Remmina Remote Desktop Client"] floating enable
 # Galculator should float
 for_window [title="Galculator"] floating enable
 
+# VirtualBox is massively buggy on i3
+for_window [class="VirtualBox"] floating enable
+
 
 #
 # keyboard
@@ -95,6 +100,7 @@ bindsym $mod+l exec --no-startup-id "light-locker-command -l"
 # start rofi
 bindsym $mod+space exec "rofi -show run"
 bindsym $mod+Shift+space exec "rofi -show window"
+bindsym $mod+Insert exec "~/bin/mpdmenu"
 
 # make fullscreen
 bindsym $mod+Return fullscreen toggle

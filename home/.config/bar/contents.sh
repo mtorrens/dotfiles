@@ -152,7 +152,9 @@ mpd() {
     return
   fi
 
-  echo -ne "%{B$CYAN}%{F$BLACK}$ICONPAD\uf001$ENTRYPAD`mpc current`$ENTRYPAD%{B$RED}%{F$CYAN}$PLARR"
+  local notify_1=`mpc current -f '%artist% - %title%'`
+  local notify_2=`mpc current -f 'track ##%track% of %album%'`
+  echo -ne "%{B$CYAN}%{F$BLACK}%{A:notify-send '$notify_1' '$notify_2':}$ICONPAD\uf001$ENTRYPAD`mpc current -f '%artist% - %title%'`$ENTRYPAD%{A}%{B$RED}%{F$CYAN}$PLARR"
 }
 
 zzz() {
