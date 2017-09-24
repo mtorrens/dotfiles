@@ -69,6 +69,9 @@ for_window [title="Quick Format Citation"] floating enable
 # Remmina's login dialog should float
 for_window [title="Remmina Remote Desktop Client"] floating enable
 
+# Galculator should float
+for_window [title="Galculator"] floating enable
+
 
 #
 # keyboard
