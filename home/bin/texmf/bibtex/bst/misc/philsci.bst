@@ -280,7 +280,7 @@ FUNCTION {output.year.check}
 { year empty$
      { "empty year in " cite$ * warning$ }
      { write$
-        " " year * extra.label * 
+        " " year * extra.label *
        mid.sentence 'output.state :=
      }
   if$
@@ -539,7 +539,7 @@ FUNCTION {format.editors}
 }
 
 FUNCTION {blank.sep}
-{ after.quote 'output.state := 
+{ after.quote 'output.state :=
 }
 
 FUNCTION {format.doi}
