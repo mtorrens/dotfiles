@@ -10,12 +10,12 @@ rofi.width: 640
 rofi.ssh-command: {terminal} -e "{ssh-client} {host}"
 
 rofi.color-enabled: true
-rofi.color-window: #2d2d2d, #515151, #515151
-rofi.color-normal: #2d2d2d, #d3d0c8, #393939, #d3d0c8, #2d2d2d
-rofi.color-active: #2d2d2d, #6699cc, #393939, #6699cc, #2d2d2d
-rofi.color-urgent: #2d2d2d, #f2777a, #393939, #f2777a, #2d2d2d
+rofi.color-window: #2b303b, #4f5b66, #4f5b66
+rofi.color-normal: #2b303b, #c0c5ce, #343d46, #c0c5ce, #2b303b
+rofi.color-active: #2b303b, #8fa1b3, #343d46, #8fa1b3, #2b303b
+rofi.color-urgent: #2b303b, #bf616a, #343d46, #bf616a, #2b303b
 
-rofi.separator-style:                solid
+rofi.separator-style: solid
 rofi.font: Fantasque Sans Mono 11
 
 rofi.case-sensitive: false

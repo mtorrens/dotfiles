@@ -6,17 +6,17 @@ ENTRYPAD="%{O10}"
 SEPARATOR="%{O10}"
 PLARR="$SEPARATOR"
 
-# Color theme
-WHITE="#d3d9c8"
-BLACK="#2d2d2d"
-BLUE="#6699cc"
-YELLOW="#ffcc66"
-GREEN="#99cc99"
-CYAN="#66cccc"
-PURPLE="#cc99cc"
-RED="#f2777a"
-ORANGE="#f99157"
-BROWN="#d27b53"
+# Color theme (base16-ocean)
+WHITE="#c0c5ce"
+BLACK="#2b303b"
+BLUE="#8fa1b3"
+YELLOW="#ebcb8b"
+GREEN="#a3be8c"
+CYAN="#96b5b4"
+PURPLE="#b48ead"
+RED="#bf616a"
+ORANGE="#d08770"
+BROWN="#ab7967"
 
 # Auto detect network interfaces
 ifaces=$(ls /sys/class/net | grep -E '^(eth|wlan|enp|wlp)')
