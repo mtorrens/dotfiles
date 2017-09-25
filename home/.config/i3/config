@@ -3,6 +3,9 @@
 # autostart
 #
 
+# Compositor
+exec --no-startup-id "compton"
+
 # Wallpaper
 exec --no-startup-id "nitrogen --restore"
 
