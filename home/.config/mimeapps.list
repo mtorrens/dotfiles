@@ -2,8 +2,8 @@
 application/pdf=evince.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
 audio/mpeg=vlc.desktop
-image/jpeg=mirage.desktop;
-image/png=mirage.desktop;
+image/jpeg=gpicview.desktop
+image/png=gpicview.desktop
 image/vnd.microsoft.icon=gimp.desktop;
 inode/directory=pcmanfm.desktop
 text/html=chromium.desktop
@@ -14,6 +14,20 @@ x-scheme-handler/about=chromium.desktop
 x-scheme-handler/http=chromium.desktop
 x-scheme-handler/https=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
+image/bmp=gpicview.desktop
+image/gif=gpicview.desktop
+image/jpg=gpicview.desktop
+image/tiff=gpicview.desktop
+image/x-bmp=gpicview.desktop
+image/x-pcx=gpicview.desktop
+image/x-tga=gpicview.desktop
+image/x-portable-pixmap=gpicview.desktop
+image/x-portable-bitmap=gpicview.desktop
+image/x-targa=gpicview.desktop
+image/x-portable-greymap=gpicview.desktop
+application/pcx=gpicview.desktop
+image/svg+xml=gpicview.desktop
+image/svg-xml=gpicview.desktop
 
 [Added Associations]
 inode/directory=pcmanfm.desktop;mirage.desktop;

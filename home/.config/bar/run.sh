@@ -11,7 +11,7 @@ monx=`echo $monline | sed "s@.* \([0-9]\+\)x[0-9]\+.*@\1@"`
 barwidth=$monx #$((monx - 320)) if tray active
 
 $HOME/.config/bar/contents.sh | lemonbar -p -g ${barwidth}x16+0+0 \
-    -F '#d3d0c8' -B '#2d2d2d' \
+    -F '#c0c5ce' -B '#2b303b' \
     -o -1 -f "Fantasque Sans Mono-11" \
     -o -2 -f "Font Awesome-10" | bash &
 

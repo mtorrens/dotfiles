@@ -3,8 +3,8 @@
 # autostart
 #
 
-# Wallpaper pattern
-exec --no-startup-id "xsetroot -bitmap ~/Dropbox/Charles/Pictures/Wallpaper/Bitmap/arches.xbm -bg '#2d2d2d' -fg '#393939'"
+# Wallpaper
+exec --no-startup-id "nitrogen --restore"
 
 # Policy kit
 exec --no-startup-id "lxpolkit"
@@ -32,20 +32,20 @@ floating_modifier Mod1
 #
 
 # Color theme
-client.focused          #a09f93 #000000 #000000 #a09f93 #a09f93
-client.focused_inactive #2d2d2d #000000 #000000 #2d2d2d #2d2d2d
-client.unfocused        #2d2d2d #000000 #000000 #2d2d2d #2d2d2d
-client.urgent           #f2777a #000000 #000000 #f2777a #f2777a
-client.placeholder      #000000 #000000 #000000 #2d2d2d #000000
+client.focused          #546e7a #000000 #000000 #546e7a #546e7a
+client.focused_inactive #ececec #000000 #000000 #ececec #ececec
+client.unfocused        #ececec #000000 #000000 #ececec #ececec
+client.urgent           #bf616a #000000 #000000 #bf616a #bf616a
+client.placeholder      #000000 #000000 #000000 #2b303b #000000
 
-client.background       #2d2d2d
+client.background       #2b303b
 
 # Disable all titlebars, needed for gaps, and configure borders
 for_window [class="^.*"] border pixel 2
-hide_edge_borders none
+hide_edge_borders smart
 
 # Activate gaps
-gaps inner 20
+gaps inner 40
 gaps outer 0
 
 
@@ -71,6 +71,9 @@ for_window [title="Zotero Preferences"] floating enable
 
 # Remmina's login dialog should float
 for_window [title="Remmina Remote Desktop Client"] floating enable
+
+# Galculator should float
+for_window [title="galculator"] floating enable
 
 # VirtualBox is massively buggy on i3
 for_window [class="VirtualBox"] floating enable
