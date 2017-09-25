@@ -11,7 +11,7 @@ d_album() {
     local artist="$1"
     local albums
 
-    mapfile -t albums < <(mpc list album artist "$artist")
+    mapfile -t albums < <(mpc list album albumartist "$artist")
     if (( ${#albums[@]} > 1 )) ; then
         {
             printf '%s\n' "$all_name"
@@ -57,9 +57,9 @@ case "$mode" in
 
         mpc clear
         if [[ $album == "$all_name" ]]; then
-            mpc findadd artist "$artist"
+            mpc findadd albumartist "$artist"
         else
-            mpc findadd artist "$artist" album "$album"
+            mpc findadd albumartist "$artist" album "$album"
         fi
 
         mpc play >/dev/null 2>&1
