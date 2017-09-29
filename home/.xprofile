@@ -4,6 +4,9 @@
 # Environment variables
 #
 
+# Configure VDPAU backend
+export VDPAU_DRIVER=va_gl
+
 # Go path needs to be set in every app in X
 export GOPATH=$HOME/Development/go
 
