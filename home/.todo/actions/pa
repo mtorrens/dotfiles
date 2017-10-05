@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Use the fact that print settings make these bold-yellow
-"$TODO_SH" ls |
-  grep $(printf "\x1B\[1;33m")
