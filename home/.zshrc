@@ -76,6 +76,12 @@ if [ -d $HOME/bin ]; then
   export PATH="$HOME/bin:$PATH"
 fi
 
+# Perlbrew path
+if [ -d $HOME/.local/share/perl5 ]; then
+  export PERLBREW_ROOT=$HOME/.local/share/perl5
+  source ${PERLBREW_ROOT}/etc/bashrc
+fi
+
 ###############################################################################
 # Configuration for other programs/systems
 
