@@ -8,6 +8,5 @@ bin
 .config/sublime-text-3/Packages
 .config/sublime-text-3/Packages/User
 .config/sublime-text-3/Packages/User (OS Settings)
-.config/mc
-.local/share/themes
+.config/zim
 .local/share/applications
