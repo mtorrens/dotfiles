@@ -1,0 +1,23 @@
+#!/bin/sh
+# Back up Todoist tasks
+
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
+
+echo "DOWNLOAD the ZIP backup file from Todoist and place it in the current directory."
+read -p "Press any key to continue..."
+
+FILE=`ls | grep '[0-9a-f]\{32\}\.zip'`
+
+mkdir todoist
+cp $FILE todoist
+cd todoist
+unzip $FILE
+rm $FILE
+cd ..
+
+tar cvf todoist.tar todoist
+xz -9e todoist.tar
+
+rm -r todoist
+
+mv todoist.tar.xz $OUTDIR
