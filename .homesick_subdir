@@ -10,3 +10,4 @@ bin
 .config/sublime-text-3/Packages/User (OS Settings)
 .config/zim
 .local/share/applications
+.recoll
