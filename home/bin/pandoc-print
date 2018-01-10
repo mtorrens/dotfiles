@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" = "--help" -o $# -ne 1 ]; then
+  echo "pandoc-print: convert Markdown to PDF for printing"
+  echo ""
+  echo "Usage: $0 <in.md>"
+  exit 1
+fi
+
+INFILE="$1"
+OUTFILE="`basename "$1" .md`.pdf"
+
+pandoc -t latex "$1" -o "$OUTFILE"

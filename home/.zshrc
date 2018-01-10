@@ -139,6 +139,7 @@ compdef _devp devp
 
 # Completion for a variety of my scripts
 compdef '_files -g "*.md"' pandoc-slides
+compdef '_files -g "*.md"' pandoc-print
 
 # Rage quit support
 function fuck() {
