@@ -137,6 +137,8 @@ devp() { subl3 --project ~/Development/$1/$1.sublime-project }
 _devp() { _files -W ~/Development -/; }
 compdef _devp devp
 
+alias subp='subl3 `ls *.sublime-workspace`'
+
 # Completion for a variety of my scripts
 compdef '_files -g "*.md"' pandoc-slides
 compdef '_files -g "*.md"' pandoc-print
