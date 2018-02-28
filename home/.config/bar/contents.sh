@@ -174,6 +174,16 @@ redshift() {
   fi
 }
 
+locale() {
+  echo -ne "%{A:sh ~/bin/toggle-europe:}"
+  if timedatectl status | grep -ql "America/Chicago"; then
+    echo -ne "\uf155"
+  else
+    echo -ne "\uf153"
+  fi
+  echo -ne "%{A}"
+}
+
 while true; do
   workspace
   clock
@@ -187,6 +197,8 @@ while true; do
   zzz
   echo -ne $ICONPAD
   redshift
+  echo -ne $ICONPAD
+  locale
   echo -ne "$ENTRYPAD%{B-}%{F$RED}$PLARR%{F-}"
   echo ''
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if timedatectl status | grep -ql "America/Chicago"; then
+  timedatectl set-timezone "Europe/Brussels"
+else
+  timedatectl set-timezone "America/Chicago"
+fi
+
