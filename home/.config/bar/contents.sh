@@ -66,23 +66,29 @@ calendar() {
 battery() {
   local sys_dir=$1
 
-  local current=`cat $sys_dir/energy_now`
-  local full=`cat $sys_dir/energy_full`
-  local ratio=$((current * 100 / full))
+  local ratio=`cat $sys_dir/capacity`
+  local status=`cat $sys_dir/status`
 
   echo -ne "%{B$YELLOW}%{F$BLACK}$ICONPAD"
-  if [[ `cat /sys/class/power_supply/AC/online` -eq 1 ]]; then
+  if [[ "$status" == "Charging" ]]; then
     echo -ne "\uf1e6"
-  elif [[ "$ratio" -ge 88 ]]; then
-    echo -ne "\uf240"
-  elif [[ "$ratio" -ge 63 ]]; then
-    echo -ne "\uf241"
-  elif [[ "$ratio" -ge 38 ]]; then
-    echo -ne "\uf242"
-  elif [[ "$ratio" -ge 12 ]]; then
-    echo -ne "\uf243"
+  elif [[ "$status" == "Discharging" ]]; then
+    # A discharging battery icon
+    if [[ "$ratio" -ge 88 ]]; then
+      echo -ne "\uf240"
+    elif [[ "$ratio" -ge 63 ]]; then
+      echo -ne "\uf241"
+    elif [[ "$ratio" -ge 38 ]]; then
+      echo -ne "\uf242"
+    elif [[ "$ratio" -ge 12 ]]; then
+      echo -ne "\uf243"
+    else
+      echo -ne "\uf244"
+    fi
   else
-    echo -ne "\uf244"
+    # Status is either "full" or "unknown," and it's very unclear what the
+    # latter actually means.
+    echo -ne "\uf14a"
   fi
 
   echo -ne "$ENTRYPAD$ratio%$ENTRYPAD"
