@@ -18,6 +18,6 @@ latexmk "$OUT_SLIDES"
 latexmk "$OUT_NOTES"
 
 rm "`basename "$OUT_SLIDES" .tex`".{aux,fls,log,out,fdb_latexmk,snm,toc,nav}
-rm "`basename "$OUT_NOTES" .tex`".{aux,fls,log,out,fdb_latexmk}
+rm "`basename "$OUT_NOTES" .tex`".{aux,fls,log,out,fdb_latexmk,snm,toc,nav}
 rm "$OUT_SLIDES"
 rm "$OUT_NOTES"
