@@ -99,6 +99,9 @@ fi
 ###############################################################################
 # Aliases for daily use
 
+# Upgrade with yay
+alias yaupg='yay -Syu'
+
 # Sort by version (which is awesome) and show type indicators
 alias l='ls --file-type --sort=version --color=auto '
 alias ls='ls --file-type --sort=version --color=auto '
