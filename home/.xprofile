@@ -21,6 +21,9 @@ export _JAVA_OPTIONS="-Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLo
 export QT_STYLE_OVERRIDE="GTK+"
 export QT_QPA_PLATFORMTHEME=qgnomeplatform
 
+# Don't let QT5 pick a weird scale factor
+export QT_AUTO_SCREEN_SCALE_FACTOR=0
+
 # Don't emit silly accessibility bus warnings in GTK apps
 export NO_AT_BRIDGE=1
 
