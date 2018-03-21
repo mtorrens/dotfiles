@@ -89,6 +89,16 @@ $else$%handout%
 \beamertemplatenavigationsymbols$if(navigation)$$navigation$$else$empty$endif$
 $endif$%handout
 
+% pencechp: center all graphics
+\AtBeginDocument{%
+  \letcs\oig{@orig\string\includegraphics}%
+  \renewcommand<>\includegraphics[2][]{%
+    \only#3{%
+      {\centering\oig[{#1}]{#2}\par}%
+    }%
+  }%
+}
+
 % pencechp: force the fonts I like
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -205,7 +215,9 @@ $endif$
 \graphicspath{{/home/cpence/Dropbox/Charles/Work/Slides/}}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+% pencechp: don't use \textheight as the top size, because that won't work with
+% titles -- use 0.8\textheight instead
+\def\maxheight{\ifdim\Gin@nat@height>0.8\textheight 0.8\textheight\else\Gin@nat@height\fi}
 \makeatother
 % Scale images if necessary, so that they will not overflow the page
 % margins by default, and it is still possible to overwrite the defaults
