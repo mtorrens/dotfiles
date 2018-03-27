@@ -29,10 +29,10 @@ setopt NO_LIST_BEEP
 setopt SHARE_HISTORY
 
 # Oh My Zsh
-if [[ -f $HOME/.oh-my-zsh/oh-my-zsh.sh ]]; then
-  ZSH=$HOME/.oh-my-zsh
-elif [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
+if [[ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]]; then
   ZSH=/usr/share/oh-my-zsh
+else
+  echo 'Cannot find oh-my-zsh; please install oh-my-zsh-git package ASAP'
 fi
 
 if [[ ! -z "$ZSH" ]]; then
@@ -48,7 +48,7 @@ if [[ ! -z "$ZSH" ]]; then
     mkdir $ZSH_CACHE_DIR
   fi
 
-  plugins=(archlinux git colored-man gem rake rbenv golang systemd virtualbox)
+  plugins=(git colored-man gem rake rbenv golang systemd virtualbox)
   source $ZSH/oh-my-zsh.sh
 
   # Except for this.  Don't do this.
@@ -99,8 +99,12 @@ fi
 ###############################################################################
 # Aliases for daily use
 
-# Upgrade with yay
-alias yaupg='yay -Syu'
+# Aliases for using yay for package management
+alias pacin='yay -S'
+alias pacins='yay -U'
+alias pacrem='yay -Rns'
+alias pacupg='yay -Syu --devel'
+alias pacclean='yay -Yc'
 
 # Sort by version (which is awesome) and show type indicators
 alias l='ls --file-type --sort=version --color=auto '
