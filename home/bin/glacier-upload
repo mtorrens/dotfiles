@@ -1,0 +1,10 @@
+#!/bin/bash
+# upload-to-glacier <file>
+#
+# Uploads a file to the evoText glacier storage.
+
+filename="$1"
+read -p "Preparing to upload '$filename', OK to proceed?"
+
+aws glacier upload-archive --profile et-glacier --account-id - \
+  --vault-name evoText_Storage --body "$filename"
