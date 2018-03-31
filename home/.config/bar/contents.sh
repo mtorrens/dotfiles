@@ -85,9 +85,13 @@ battery() {
     else
       echo -ne "\uf244"
     fi
+  elif [[ ( "$status" == "Unknown" ) && ( "$ratio" -lt 10 ) ]]; then
+    # If the status is "unknown," but the battery is empty, then that probably
+    # means it's discharged
+    echo -ne "\uf057"
   else
-    # Status is either "full" or "unknown," and it's very unclear what the
-    # latter actually means.
+    # Status is either "full" or "unknown," but the battery's not empty, so I
+    # don't really know what else that means
     echo -ne "\uf14a"
   fi
 
