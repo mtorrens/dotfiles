@@ -3,8 +3,14 @@
 #
 # Uploads a file to the evoText glacier storage.
 
+if [[ -f glacier.log ]]; then
+  echo "ERROR: glacier.log already exists, refusing to overwrite"
+  exit 1
+fi
+
 filename="$1"
 read -p "Preparing to upload '$filename', OK to proceed?"
 
 aws glacier upload-archive --profile et-glacier --account-id - \
-  --vault-name evoText_Storage --body "$filename"
+  --vault-name evoText_Storage --body "$filename" | tee glacier.log
+
