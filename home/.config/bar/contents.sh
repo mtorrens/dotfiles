@@ -1,5 +1,7 @@
 #!/bin/bash
 
+line=''
+
 # Configurables
 ICONPAD="%{O6}"
 ENTRYPAD="%{O10}"
@@ -29,28 +31,30 @@ last_tx=0
 readable_bytes() {
   local bytes=$1
   local kib=$(( bytes >> 10 ))
+  local ret=''
   if [ $kib -lt 0 ]; then
-    echo -n "?k"
+    ret+="?k"
   elif [ $kib -gt 1024 ]; then
     local mib_int=$(( kib >> 10 ))
     local mib_dec=$(( kib % 1024 * 976 / 10000 ))
     if [ "$mib_dec" -lt 10 ]; then
       mib_dec="0${mib_dec}"
     fi
-    echo -n "${mib_int}.${mib_dec}m"
+    ret+="${mib_int}.${mib_dec}m"
   else
-    echo -n "${kib}k"
+    ret+="${kib}k"
   fi
+  echo $ret
 }
 
 
 workspace() {
   num=`i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name'`
-  echo -ne "%{B$ORANGE}%{F$BLACK}$ICONPAD\uf108$ENTRYPAD$num$ENTRYPAD%{B$WHITE}%{F$ORANGE}$PLARR"
+  line+="%{B$ORANGE}%{F$BLACK}$ICONPAD\uf108$ENTRYPAD$num$ENTRYPAD%{B$WHITE}%{F$ORANGE}$PLARR"
 }
 
 clock() {
-  echo -ne "%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
+  line+="%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
 }
 
 calendar() {
@@ -60,7 +64,7 @@ calendar() {
     next=$GREEN
   fi
 
-  echo -ne "%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %-d")$ENTRYPAD%{B$next}%{F$BLUE}$PLARR"
+  line+="%{B$BLUE}%{F$BLACK}$ICONPAD\uf133$ENTRYPAD$(date "+%a, %b %-d")$ENTRYPAD%{B$next}%{F$BLUE}$PLARR"
 }
 
 battery() {
@@ -69,33 +73,33 @@ battery() {
   local ratio=`cat $sys_dir/capacity`
   local status=`cat $sys_dir/status`
 
-  echo -ne "%{B$YELLOW}%{F$BLACK}$ICONPAD"
+  line+="%{B$YELLOW}%{F$BLACK}$ICONPAD"
   if [[ "$status" == "Charging" ]]; then
-    echo -ne "\uf1e6"
+    line+="\uf1e6"
   elif [[ "$status" == "Discharging" ]]; then
     # A discharging battery icon
     if [[ "$ratio" -ge 88 ]]; then
-      echo -ne "\uf240"
+      line+="\uf240"
     elif [[ "$ratio" -ge 63 ]]; then
-      echo -ne "\uf241"
+      line+="\uf241"
     elif [[ "$ratio" -ge 38 ]]; then
-      echo -ne "\uf242"
+      line+="\uf242"
     elif [[ "$ratio" -ge 12 ]]; then
-      echo -ne "\uf243"
+      line+="\uf243"
     else
-      echo -ne "\uf244"
+      line+="\uf244"
     fi
   elif [[ ( "$status" == "Unknown" ) && ( "$ratio" -lt 10 ) ]]; then
     # If the status is "unknown," but the battery is empty, then that probably
     # means it's discharged
-    echo -ne "\uf057"
+    line+="\uf057"
   else
     # Status is either "full" or "unknown," but the battery's not empty, so I
     # don't really know what else that means
-    echo -ne "\uf14a"
+    line+="\uf14a"
   fi
 
-  echo -ne "$ENTRYPAD$ratio%$ENTRYPAD"
+  line+="$ENTRYPAD$ratio%$ENTRYPAD"
 }
 
 batteries() {
@@ -103,10 +107,10 @@ batteries() {
     battery /sys/class/power_supply/BAT0
 
     if [[ -d "/sys/class/power_supply/BAT1" ]]; then
-      echo -ne $ENTRYPAD
+      line+=$ENTRYPAD
       battery /sys/class/power_supply/BAT1
     fi
-    echo -ne "%{B$GREEN}%{F$YELLOW}$PLARR"
+    line+="%{B$GREEN}%{F$YELLOW}$PLARR"
   fi
 }
 
@@ -125,7 +129,10 @@ network() {
     tx=$(( tx + tmp_tx ))
   done
 
-  echo -ne "%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$(readable_bytes $(( rx - last_rx )))\uf0d7$ENTRYPAD$(readable_bytes $(( tx - last_tx )))\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
+  readable_rx=$(readable_bytes $(( rx - last_rx )))
+  readable_tx=$(readable_bytes $(( tx - last_tx )))
+
+  line+="%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$readable_rx\uf0d7$ENTRYPAD$readable_tx\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
 
   last_rx=$rx
   last_tx=$tx
@@ -136,16 +143,16 @@ wifi() {
     return
   fi
 
-  echo -ne "%{B$CYAN}%{F$BLACK}%{A:networkmanager_dmenu:}$ICONPAD\uf1eb$ENTRYPAD"
+  line+="%{B$CYAN}%{F$BLACK}%{A:networkmanager_dmenu:}$ICONPAD\uf1eb$ENTRYPAD"
 
   if iwconfig 2>&1 | grep -q 'ESSID:off/any'; then
-    echo -n "<disconnected>"
+    line+="<disconnected>"
   else
     ssid=`iwconfig 2>&1 | grep ESSID | sed 's@.* ESSID:"\(.*\)"@\1@'`
-    echo -ne $ssid
+    line+=$ssid
   fi
 
-  echo -ne "$ENTRYPAD%{A}%{B$PURPLE}%{F$CYAN}$PLARR"
+  line+="$ENTRYPAD%{A}%{B$PURPLE}%{F$CYAN}$PLARR"
 }
 
 dropbox() {
@@ -154,7 +161,7 @@ dropbox() {
     next=$CYAN
   fi
 
-  echo -ne "%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$next}%{F$PURPLE}$PLARR"
+  line+="%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$next}%{F$PURPLE}$PLARR"
 }
 
 mpd() {
@@ -164,37 +171,39 @@ mpd() {
 
   local notify_1=`mpc current -f '%artist% - %title%' | sed 's@:@-@g'`
   local notify_2=`mpc current -f 'track ##%track% of %album%' | sed 's@:@-@g'`
-  echo -ne "%{B$CYAN}%{F$BLACK}%{A:notify-send '$notify_1' '$notify_2':}$ICONPAD\uf001$ENTRYPAD`mpc current -f '%artist% - %title%'`$ENTRYPAD%{A}%{B$RED}%{F$CYAN}$PLARR"
+  line+="%{B$CYAN}%{F$BLACK}%{A:notify-send '$notify_1' '$notify_2':}$ICONPAD\uf001$ENTRYPAD`mpc current -f '%artist% - %title%'`$ENTRYPAD%{A}%{B$RED}%{F$CYAN}$PLARR"
 }
 
 zzz() {
   if xset q | grep -ql "DPMS is Enabled"; then
-    echo -ne "%{A:sh ~/.config/bar/screenon.sh:}\uf186%{A}"
+    line+="%{A:sh ~/.config/bar/screenon.sh:}\uf186%{A}"
   else
-    echo -ne "%{A:sh ~/.config/bar/screenoff.sh:}\uf185%{A}"
+    line+="%{A:sh ~/.config/bar/screenoff.sh:}\uf185%{A}"
   fi
 }
 
 redshift() {
   local out=`pgrep redshift`
   if [[ "$out" == "" ]]; then
-    echo -ne "%{A:redshift &:}\uf070%{A}"
+    line+="%{A:redshift &:}\uf070%{A}"
   else
-    echo -ne "%{A:killall redshift:}\uf06e%{A}"
+    line+="%{A:killall redshift:}\uf06e%{A}"
   fi
 }
 
 locale() {
-  echo -ne "%{A:sh ~/bin/toggle-europe:}"
+  line+="%{A:sh ~/bin/toggle-europe:}"
   if timedatectl status | grep -ql "America/Chicago"; then
-    echo -ne "\uf155"
+    line+="\uf155"
   else
-    echo -ne "\uf153"
+    line+="\uf153"
   fi
-  echo -ne "%{A}"
+  line+="%{A}"
 }
 
 while true; do
+  line=''
+
   workspace
   clock
   calendar
@@ -203,14 +212,15 @@ while true; do
   wifi
   dropbox
   mpd
-  echo -ne "%{B$RED}%{F$BLACK}$ICONPAD"
+  line+="%{B$RED}%{F$BLACK}$ICONPAD"
   zzz
-  echo -ne $ICONPAD
+  line+=$ICONPAD
   redshift
-  echo -ne $ICONPAD
+  line+=$ICONPAD
   locale
-  echo -ne "$ENTRYPAD%{B-}%{F$RED}$PLARR%{F-}"
-  echo ''
+  line+="$ENTRYPAD%{B-}%{F$RED}$PLARR%{F-}"
+
+  echo -e $line
 
   sleep 1
 done
