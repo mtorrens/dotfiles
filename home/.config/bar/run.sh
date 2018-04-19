@@ -10,6 +10,9 @@ monx=`echo $monline | sed "s@.* \([0-9]\+\)x[0-9]\+.*@\1@"`
 
 barwidth=$monx #$((monx - 320)) if tray active
 
+# For some reason, this needs to be exported here, too.
+export PYTHONIOENCODING=utf-8
+
 $HOME/.config/bar/contents.sh | lemonbar -p -g ${barwidth}x16+0+0 \
     -F '#c0c5ce' -B '#2b303b' \
     -o -1 -f "Fantasque Sans Mono-11" \

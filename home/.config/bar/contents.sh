@@ -28,6 +28,7 @@ wifi_ifaces=$(ls /sys/class/net | grep -E '^(wlan|wlp)')
 last_rx=0
 last_tx=0
 
+
 readable_bytes() {
   local bytes=$1
   local kib=$(( bytes >> 10 ))
@@ -157,21 +158,23 @@ wifi() {
 
 dropbox() {
   local next=$RED
-  if [[ -e /usr/bin/mpc ]]; then
+  if [[ -e /usr/bin/exaile ]]; then
     next=$CYAN
   fi
 
   line+="%{B$PURPLE}%{F$BLACK}$ICONPAD\uf16b$ENTRYPAD`dropbox-cli status | sed -n 1p`$ENTRYPAD%{B$next}%{F$PURPLE}$PLARR"
 }
 
-mpd() {
-  if [[ ! -e /usr/bin/mpc ]]; then
+music() {
+  if [[ ! -e /usr/bin/exaile ]]; then
     return
   fi
 
-  local notify_1=`mpc current -f '%artist% - %title%' | sed 's@:@-@g'`
-  local notify_2=`mpc current -f 'track ##%track% of %album%' | sed 's@:@-@g'`
-  line+="%{B$CYAN}%{F$BLACK}%{A:notify-send '$notify_1' '$notify_2':}$ICONPAD\uf001$ENTRYPAD`mpc current -f '%artist% - %title%'`$ENTRYPAD%{A}%{B$RED}%{F$CYAN}$PLARR"
+  local artist_title="$(export PYTHONIOENCODING=utf-8 && exaile --get-artist) - $(export PYTHONIOENCODING=utf-8 && exaile --get-title)"
+  local notify_1=`echo $artist_title | sed 's@:@-@g'`
+  local notify_2=$(export PYTHONIOENCODING=utf-8 && exaile --get-album | sed 's@:@-@g')
+
+  line+="%{B$CYAN}%{F$BLACK}%{A:notify-send '$notify_1' '$notify_2':}$ICONPAD\uf001$ENTRYPAD$artist_title$ENTRYPAD%{A}%{B$RED}%{F$CYAN}$PLARR"
 }
 
 zzz() {
@@ -211,7 +214,7 @@ while true; do
   network
   wifi
   dropbox
-  mpd
+  music
   line+="%{B$RED}%{F$BLACK}$ICONPAD"
   zzz
   line+=$ICONPAD
