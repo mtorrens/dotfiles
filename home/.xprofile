@@ -18,7 +18,7 @@ eval `ssh-agent -s`
 export _JAVA_OPTIONS="-Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=lcd -Dswing.aatext=true"
 
 # Configure the QT theme
-export QT_STYLE_OVERRIDE="GTK+"
+export QT_STYLE_OVERRIDE=adwaita
 export QT_QPA_PLATFORMTHEME=qgnomeplatform
 
 # Don't let QT5 pick a weird scale factor
