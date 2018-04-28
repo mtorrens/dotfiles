@@ -52,11 +52,11 @@ readable_bytes() {
 
 workspace() {
   num=`i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name'`
-  line+="%{B$ORANGE}%{F$BLACK}$ICONPAD\uf108$ENTRYPAD$num$ENTRYPAD%{B$WHITE}%{F$ORANGE}$PLARR"
+  line+="%{B$ORANGE}%{F$BLACK}$ICONPAD\uf108$ENTRYPAD%{T4}$num%{T-}$ENTRYPAD%{B$WHITE}%{F$ORANGE}$PLARR"
 }
 
 clock() {
-  line+="%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD$(date "+%H:%M")$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
+  line+="%{B$WHITE}%{F$BLACK}$ICONPAD\uf017$ENTRYPAD%{T4}$(date "+%H:%M")%{T-}$ENTRYPAD%{B$BLUE}%{F$WHITE}$PLARR"
 }
 
 calendar() {
@@ -134,7 +134,7 @@ network() {
   readable_rx=$(readable_bytes $(( ( rx - last_rx ) / SLEEP_DELAY )))
   readable_tx=$(readable_bytes $(( ( tx - last_tx ) / SLEEP_DELAY )))
 
-  line+="%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$readable_rx\uf0d7$ENTRYPAD$readable_tx\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
+  line+="%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$readable_rx%{O3}\uf0d7$ENTRYPAD$readable_tx%{O3}\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
 
   last_rx=$rx
   last_tx=$tx
