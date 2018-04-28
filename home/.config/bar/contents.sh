@@ -225,6 +225,6 @@ while true; do
 
   echo -e $line
 
-  sleep 1
+  sleep 3
 done
 
