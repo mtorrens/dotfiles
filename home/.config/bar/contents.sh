@@ -7,6 +7,7 @@ ICONPAD="%{O6}"
 ENTRYPAD="%{O10}"
 SEPARATOR="%{O10}"
 PLARR="$SEPARATOR"
+SLEEP_DELAY=3
 
 # Color theme (base16-ocean)
 WHITE="#c0c5ce"
@@ -130,8 +131,8 @@ network() {
     tx=$(( tx + tmp_tx ))
   done
 
-  readable_rx=$(readable_bytes $(( rx - last_rx )))
-  readable_tx=$(readable_bytes $(( tx - last_tx )))
+  readable_rx=$(readable_bytes $(( ( rx - last_rx ) / SLEEP_DELAY )))
+  readable_tx=$(readable_bytes $(( ( tx - last_tx ) / SLEEP_DELAY )))
 
   line+="%{B$GREEN}%{F$BLACK}$ICONPAD\uf0ac$ENTRYPAD$readable_rx\uf0d7$ENTRYPAD$readable_tx\uf0d8$ENTRYPAD%{B$next}%{F$GREEN}$PLARR"
 
@@ -225,6 +226,6 @@ while true; do
 
   echo -e $line
 
-  sleep 3
+  sleep $SLEEP_DELAY
 done
 
