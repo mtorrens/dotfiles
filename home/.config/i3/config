@@ -90,6 +90,7 @@ bindsym $mod+e exec pcmanfm
 bindsym $mod+s exec "subl3 -n"
 bindsym $mod+c exec chromium
 bindsym $mod+z exec zotero
+bindsym $mod+n exec zim
 
 # close window
 bindsym Mod1+F4 kill
