@@ -43,13 +43,9 @@ client.placeholder      #000000 #000000 #000000 #2b303b #000000
 
 client.background       #2b303b
 
-# Disable all titlebars, needed for gaps, and configure borders
+# Disable all titlebars and configure borders
 for_window [class="^.*"] border pixel 2
 hide_edge_borders smart
-
-# Activate gaps
-gaps inner 40
-gaps outer 0
 
 
 #
