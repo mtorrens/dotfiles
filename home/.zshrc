@@ -71,6 +71,13 @@ stty icrnl
 export GOPATH="$HOME/Development/go"
 export PATH="$PATH:$GOPATH/bin"
 
+# NPM path
+export NPM_PACKAGES="$HOME/.npm-packages"
+export PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+
 # Always let home-directory binaries override everything
 if [ -d $HOME/bin ]; then
   export PATH="$HOME/bin:$PATH"
