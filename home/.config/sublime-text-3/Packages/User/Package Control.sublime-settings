@@ -7,6 +7,7 @@
 	[
 		"Autotools",
 		"Base16 Color Schemes",
+		"CMake",
 		"Golang Build",
 		"GoSublime",
 		"JSONLint",
@@ -18,6 +19,7 @@
 		"Sass",
 		"Shader Syntax (GLSL HLSL Cg)",
 		"SublimeLinter",
+		"SublimeLinter-cpplint",
 		"SublimeLinter-haml",
 		"SublimeLinter-xmllint",
 		"Theme - Lanzhou",
