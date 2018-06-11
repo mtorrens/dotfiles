@@ -19,3 +19,11 @@ date      filename   version  action/reason/acknowledgements
 
 16.09.10  template.tex   -    added one more \documentclass offering to suit
                               the instructions
+
+19.12.17 spbasic.bst, spmpsci.bst   -   “n.separate" function that call within page range
+                              removed(because lengthy page ranges get affected)
+
+19.1.18 spphys.bst - Mathieu Dutour/Vogel, Andreas requirement (article title missing in bbl)
+	           -  format.title "title" output.check
+
+	         
