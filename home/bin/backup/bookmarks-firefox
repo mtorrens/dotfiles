@@ -8,12 +8,9 @@
 # Also, all goes pear-shaped if you have more than one FF profile.
 
 # This will be different on other operating systems
-FF_PROFILES_DIR="${HOME}/Library/Application Support/Firefox/Profiles"
-OUTDIR="$HOME/Storage/Backup/"
+FF_PROFILES_DIR="${HOME}/.mozilla/firefox"
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup"
 
-FF_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default -type d | head -n 1`
-cp "$FF_PROFILE/bookmarks.html" .
-lzma -9 ./bookmarks.html
-mv ./bookmarks.html.lzma ${OUTDIR}
-
-
+FF_PROFILE=`find "${FF_PROFILES_DIR}" -maxdepth 1 -name *.default* -type d | head -n 1`
+FF_BOOKMARKS=`ls ${FF_PROFILE}/bookmarkbackups/*.jsonlz4 | tail -n 1`
+cp $FF_BOOKMARKS ${OUTDIR}/bookmarks.jsonlz4
