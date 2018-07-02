@@ -89,8 +89,12 @@ fi
 LANG=en_US.UTF-8
 EDITOR=/usr/bin/nano
 VISUAL=/usr/bin/nano
-BROWSER=/usr/bin/chromium
+BROWSER=/usr/bin/firefox
 LESSHISTFILE=-
+
+XKB_DEFAULT_LAYOUT=us
+XKB_DEFAULT_VARIANT=altgr-intl
+XKB_DEFAULT_OPTIONS=ctrl:nocaps
 
 ###############################################################################
 # Colorize all the things
