@@ -86,15 +86,15 @@ fi
 ###############################################################################
 # Configuration for other programs/systems
 
-LANG=en_US.UTF-8
-EDITOR=/usr/bin/nano
-VISUAL=/usr/bin/nano
-BROWSER=/usr/bin/firefox
-LESSHISTFILE=-
+export LANG=en_US.UTF-8
+export EDITOR=/usr/bin/nano
+export VISUAL=/usr/bin/nano
+export BROWSER=/usr/bin/firefox
+export LESSHISTFILE=-
 
-XKB_DEFAULT_LAYOUT=us
-XKB_DEFAULT_VARIANT=altgr-intl
-XKB_DEFAULT_OPTIONS=ctrl:nocaps
+export XKB_DEFAULT_LAYOUT=us
+export XKB_DEFAULT_VARIANT=altgr-intl
+export XKB_DEFAULT_OPTIONS=ctrl:nocaps
 
 ###############################################################################
 # Colorize all the things
@@ -126,9 +126,6 @@ alias la='ls -lhA --file-type --sort=version --color=auto '
 # Customize ps output
 alias ps='ps axf'
 alias pgrep='pgrep -a'
-
-# Customize MPC output
-export MPC_FORMAT='%artist% - %title% (##%track%: %album%)'
 
 # Find broken symlinks
 find-broken() {
