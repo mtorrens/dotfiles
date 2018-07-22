@@ -477,7 +477,7 @@
 	//					Windows
 	//
 	// "zathura"		uses Zathura to open the pdf
-	"viewer": "evince",
+	"viewer": "command",
 
 	// OPTION: "viewer_settings"
 	// Specify viewer-dependent settings and preferences
@@ -495,7 +495,7 @@
 		},
 
 		"linux" : {
-			// See README or third-party documentation
+			"view_command": "/usr/bin/xreader"
 		}
 	},
 
