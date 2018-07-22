@@ -1,0 +1,8 @@
+#!/bin/sh
+# Print a separator. To use, set color= and background= to the color on the
+# left, and pass this script the color on the right.
+#
+# Run this with interval=once, it will never update.
+
+echo "<span color='$1'> █</span>"
+
