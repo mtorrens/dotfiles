@@ -3,10 +3,10 @@ bin
 .gnupg
 .subversion
 .config/gtk-3.0
-.config/dunst
 .config/sublime-text-3
 .config/sublime-text-3/Packages
 .config/sublime-text-3/Packages/User
 .config/sublime-text-3/Packages/User (OS Settings)
 .local/share/applications
 .recoll
+.emacs.d
