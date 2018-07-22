@@ -1,7 +1,13 @@
 [Default Applications]
 application/pcx=gpicview.desktop
-application/pdf=evince.desktop;
+application/pdf=xreader.desktop
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
 application/xml=sublime_text_3.desktop
 audio/mpeg=vlc.desktop
 image/bmp=gpicview.desktop
@@ -21,14 +27,26 @@ image/x-portable-pixmap=gpicview.desktop
 image/x-targa=gpicview.desktop
 image/x-tga=gpicview.desktop
 inode/directory=pcmanfm.desktop
-text/html=chromium.desktop
+text/html=firefox.desktop
 text/x-log=sublime_text_3.desktop;
 text/x-tex=sublime_text_3.desktop;
 video/x-matroska=vlc.desktop;
-x-scheme-handler/about=chromium.desktop
-x-scheme-handler/http=chromium.desktop
-x-scheme-handler/https=chromium.desktop
-x-scheme-handler/unknown=chromium.desktop
+x-scheme-handler/chrome=firefox.desktop
+x-scheme-handler/ftp=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
 
 [Added Associations]
+application/pdf=xreader.desktop;
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
 inode/directory=pcmanfm.desktop;mirage.desktop;
+text/html=firefox.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+x-scheme-handler/ftp=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
