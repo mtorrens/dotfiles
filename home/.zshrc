@@ -36,7 +36,8 @@ else
 fi
 
 if [[ ! -z "$ZSH" ]]; then
-  ZSH_THEME="gentoo"
+  export DEFAULT_USER="cpence"
+  ZSH_THEME="agnoster"
   CASE_SENSITIVE="true"
   DISABLE_AUTO_UPDATE="true"
   DISABLE_CORRECTION="true"
@@ -48,10 +49,10 @@ if [[ ! -z "$ZSH" ]]; then
     mkdir $ZSH_CACHE_DIR
   fi
 
-  plugins=(git colored-man gem rake rbenv golang systemd virtualbox)
+  plugins=(git colored-man gem rake rbenv bundler golang systemd aws heroku)
   source $ZSH/oh-my-zsh.sh
 
-  # Except for this.  Don't do this.
+# Except for this.  Don't do this.
   unalias 1 2 3 4 5 6 7 8 9
 fi
 
@@ -92,10 +93,6 @@ export VISUAL=/usr/bin/nano
 export BROWSER=/usr/bin/firefox
 export LESSHISTFILE=-
 
-export XKB_DEFAULT_LAYOUT=us
-export XKB_DEFAULT_VARIANT=altgr-intl
-export XKB_DEFAULT_OPTIONS=ctrl:nocaps
-
 ###############################################################################
 # Colorize all the things
 
@@ -114,7 +111,7 @@ fi
 alias pacin='yay -S'
 alias pacins='yay -U'
 alias pacrem='yay -Rns'
-alias pacupg='yay -Syu --devel'
+alias pacupg='yay -Syu --devel --combinedupgrade'
 alias pacclean='yay -Yc'
 
 # Sort by version (which is awesome) and show type indicators
@@ -122,6 +119,9 @@ alias l='ls --file-type --sort=version --color=auto '
 alias ls='ls --file-type --sort=version --color=auto '
 alias ll='ls -lh --file-type --sort=version --color=auto '
 alias la='ls -lhA --file-type --sort=version --color=auto '
+
+# Have mc change directory on exit
+alias mc='. /usr/lib/mc/mc-wrapper.sh'
 
 # Customize ps output
 alias ps='ps axf'
