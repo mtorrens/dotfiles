@@ -26,8 +26,8 @@
 ;; Bootstrap auto-updating
 (use-package auto-package-update
   :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -38,31 +38,79 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
+(setq line-number-mode t)
+(column-number-mode 1)
+
 ;; Color and fonts
 (use-package base16-theme
   :config
   (load-theme 'base16-ocean t))
 (set-default-font "Fantasque Sans Mono-11")
+(setq-default line-spacing 2)
+
+;; Usual key bindings that match every other app on earth
+(cua-mode t)
+(setq cua-auto-tabify-rectangles nil
+      cua-keep-region-after-copy t)
+
+;; Show selections, parentheses, highlight current line
+(transient-mark-mode 1)
+(delete-selection-mode 1)
+(show-paren-mode 1)
+(global-hl-line-mode 1)
+
+;; Enable highlighting to current visual line only
+(defun visual-line-range ()
+  (save-excursion
+    (cons
+     (progn (beginning-of-visual-line) (point))
+     (progn (next-line) (beginning-of-visual-line) (point)))))
+(setq hl-line-range-function 'visual-line-range)
 
 ;; Don't minimize/hide/bg with C-z, this does not play nice with i3
 (global-unset-key (kbd "C-z"))
+
+;; Enable undo and redo on normal key bindings
+(use-package undo-tree
+  :config (global-undo-tree-mode)
+  :bind (("C-z" . undo-tree-undo)
+         ("C-S-z" . undo-tree-redo)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; File reading/saving
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (prefer-coding-system 'utf-8)
-(setq backup-inhibited t)
+
+(setq backup-inhibited t
+      make-backup-files nil
+      auto-save-default nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Code formatting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil
+              tab-width 2)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Modes for various file types
+;; Notes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package markdown-mode)
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :config (setq markdown-asymmetric-header t))
+
+(use-package deft
+  :bind ("<f12>" . deft)
+  :commands (deft)
+  :config (setq deft-directory "~/Dropbox/Charles/Work/Research Notes"
+                deft-extensions '("md")
+                deft-default-extension "md"
+                deft-recursive t
+                deft-use-filename-as-title nil
+                deft-use-filter-string-for-filename t
+                deft-markdown-mode-title-level 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TeX
@@ -70,8 +118,8 @@
 (use-package tex
   :ensure auctex
   :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
+  (setq TeX-auto-save t
+        TeX-parse-self t)
   
   (add-to-list 'TeX-view-program-list '("xreader-custom" "xreader %o" "xreader") t)
   (setq TeX-view-program-selection '(((output-dvi has-no-display-manager)
@@ -95,6 +143,31 @@
 ;; Org
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package org
+  :init
+  (setq org-replace-disputed-keys t)
   :config
   (define-key global-map "\C-cl" 'org-store-link))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Editing for non-code files
+;;
+;; If it's not code, enable visual-line-mode and center up the display using the
+;; fringes.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package adaptive-wrap)
+(use-package visual-fill-column
+  :config
+  (setq visual-fill-column 80))
+
+(defun text-editing-mode ()
+  ;; Enable visual-line-mode, and have it respect indentation (like org-mode)
+  (visual-line-mode 1)
+  (visual-fill-column-mode 1)
+  (adaptive-wrap-prefix-mode 1)
+
+  ;; Re-enable hl-line-mode
+  (hl-line-mode 1))
+
+(add-hook 'markdown-mode-hook 'text-editing-mode)
+(add-hook 'LaTeX-mode-hook 'text-editing-mode)
+(add-hook 'org-mode-hook 'text-editing-mode)
