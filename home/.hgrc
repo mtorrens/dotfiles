@@ -1,6 +1,0 @@
-[ui]
-username = Charles Pence <charles@charlespence.net>
-
-[extensions]
-hgext.convert = 
-
