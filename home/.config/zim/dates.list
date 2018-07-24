@@ -1,7 +1,0 @@
-# List with date-time formats used for the
-# "Insert Date eand Time" dialog.
-# See man strftime a description of the format.
-%Y.%m.%d
-%x
-%c
-[d: %Y.%m.%d]
