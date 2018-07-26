@@ -42,21 +42,22 @@ $status = $1;
 $percent = $2;
 
 if ($percent < 12) {
-	$bat_icon = '<span color="#bf616a">‭</span>';
+	$bat_icon = '<span color="#bf616a"></span>';
 } elsif ($percent < 38) {
-	$bat_icon = '<span color="#d08770">‭</span>';
+	$bat_icon = '<span color="#d08770"></span>';
 } elsif ($percent < 63) {
-	$bat_icon = '<span color="#d08770">‭</span>';
+	$bat_icon = '<span color="#d08770"></span>';
 } elsif ($percent < 87) {
-	$bat_icon = '<span color="#2b303b">‭</span>';
+	$bat_icon = '<span color="#2b303b"></span>';
 } else {
-	$bat_icon = '<span color="#2b303b">‭</span>';
+	$bat_icon = '<span color="#2b303b"></span>';
 }
 
+$full_text = " ";
 if ($status eq 'Discharging') {
-	$full_text = "$bat_icon ";
+	$full_text .= "$bat_icon ";
 } elsif ($status eq 'Charging') {
-	$full_text = '‭ ';
+	$full_text .= ' ';
 } elsif ($status eq 'Unknown') {
 	open (AC_ADAPTER, "acpi -a |") or die;
 	$ac_adapt = <AC_ADAPTER>;
@@ -66,9 +67,9 @@ if ($status eq 'Discharging') {
 		$ac_adapt = $1;
 
 		if ($ac_adapt eq 'on-line') {
-			$full_text = '‭ ';
+			$full_text .= ' ';
 		} elsif ($ac_adapt eq 'off-line') {
-			$full_text = "$bat_icon ";
+			$full_text .= "$bat_icon ";
 		}
 	}
 }

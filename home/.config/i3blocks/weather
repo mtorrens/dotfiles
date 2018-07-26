@@ -1,0 +1,28 @@
+#!/bin/bash
+
+metric=1
+location="Baton%20Rouge,%20Louisiana"
+url="http://rss.accuweather.com/rss/liveweather_rss.asp?metric=$metric&locCode=$location"
+response=$(curl -s "$url")
+weather=$(echo $response | xml_grep '//rss/channel/item/title' --text_only | grep Currently | awk -F ":" '{print $2 $3}' | cut -c 2- | tr '[:upper:]' '[:lower:]')
+symbol=""
+
+if [[ $weather = *"sunny"* ]]; then
+  symbol="\ue30d"
+elif [[ $weather = *"flurries"* ]]; then
+  symbol="\ue35f"
+elif [[ $weather = *"cloud"* || $weather = *"dreary"* ]]; then
+  symbol="\ue312"
+elif [[ $weather = *"storm"* ]]; then
+  symbol="\ue30f"
+elif [[ $weather = *"shower"* || $weather = *"rain"* ]]; then
+  symbol="\ue308"
+elif [[ $weather = *"snow"* ]]; then
+  symbol="\ue30a"
+elif [[ $weather = *"ice"* || $weather = *"sleet"* ]]; then
+  symbol="\ue3aa"
+elif [[ $weather = *"clear"* ]]; then
+  symbol="\ue32b"
+fi
+
+echo -e " $symbol ${weather::-1}\ue339"

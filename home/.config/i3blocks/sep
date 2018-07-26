@@ -4,5 +4,5 @@
 #
 # Run this with interval=once, it will never update.
 
-echo "<span color='$1'> █</span>"
+echo "<span color='$1'> </span>"
 

@@ -184,13 +184,13 @@ bindsym $mod+r mode "resize"
 
 bar {
   position top
-  height 20
+  height 21
   status_command i3blocks
 
   tray_output primary
   tray_padding 0
 
-  font "pango:Fantasque Sans Mono"
+  font "pango:SauceCodePro Nerd Font Mono Semibold 11"
 
   colors {
     statusline #c0c5ce

@@ -45,7 +45,7 @@
 (use-package base16-theme
   :config
   (load-theme 'base16-ocean t))
-(set-default-font "Fantasque Sans Mono-11")
+(set-default-font "SauceCodePro Nerd Font Mono:pixelsize=14:style=Medium")
 (setq-default line-spacing 2)
 
 ;; Usual key bindings that match every other app on earth
@@ -57,15 +57,7 @@
 (transient-mark-mode 1)
 (delete-selection-mode 1)
 (show-paren-mode 1)
-(global-hl-line-mode 1)
-
-;; Enable highlighting to current visual line only
-(defun visual-line-range ()
-  (save-excursion
-    (cons
-     (progn (beginning-of-visual-line) (point))
-     (progn (next-line) (beginning-of-visual-line) (point)))))
-(setq hl-line-range-function 'visual-line-range)
+(global-hl-line-mode)
 
 ;; Don't minimize/hide/bg with C-z, this does not play nice with i3
 (global-unset-key (kbd "C-z"))

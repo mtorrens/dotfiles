@@ -1,12 +1,9 @@
-# Paste a Unicode 202D ‭ (it's between those two spaces to the left there, I
-# promise) after each FontAwesome icon, to fix a Pango bug.
-
 # Global properties
 separator=false
 separator_block_width=0
 markup=pango
 
-[sep5]
+[sep6]
 command=~/.config/i3blocks/sep '#bf616a'
 interval=once
 color=#2b303b
@@ -19,7 +16,7 @@ command=~/.config/i3blocks/volume
 interval=once
 signal=10
 
-[sep4]
+[sep5]
 command=~/.config/i3blocks/sep '#96b5b4'
 interval=once
 color=#bf616a
@@ -28,8 +25,8 @@ background=#bf616a
 [eth_band]
 color=#2b303b
 background=#96b5b4
-label=‭
-command=~/.config/i3blocks/bandwidth -i ' ‭‭' -o '‭'
+label= 
+command=~/.config/i3blocks/bandwidth -i ' ‭' -o ''
 instance=enp0s31f6
 interval=5
 
@@ -49,11 +46,11 @@ interval=10
 [wifi_band]
 color=#2b303b
 background=#96b5b4
-command=~/.config/i3blocks/bandwidth -i ' ‭‭' -o '‭'
+command=~/.config/i3blocks/bandwidth -i ' ‭' -o ''
 instance=wlp4s0
 interval=5
 
-[sep3]
+[sep4]
 command=~/.config/i3blocks/sep '#ebcb8b'
 interval=once
 color=#96b5b4
@@ -69,7 +66,7 @@ interval=30
 [battery_sep]
 color=#2b303b
 background=#ebcb8b
-command=echo '  '
+command=echo ' '
 interval=once
 
 [battery_two]
@@ -79,16 +76,28 @@ command=~/.config/i3blocks/battery
 instance=1
 interval=30
 
-[sep2]
-command=~/.config/i3blocks/sep '#8fa1b3'
+[sep3]
+command=~/.config/i3blocks/sep '#d08770'
 interval=once
 color=#ebcb8b
 background=#ebcb8b
 
+[weather]
+color=#2b303b
+background=#d08770
+command=~/.config/i3blocks/weather
+interval=300
+
+[sep2]
+command=~/.config/i3blocks/sep '#8fa1b3'
+interval=once
+color=#d08770
+background=#d08770
+
 [date]
 color=#2b303b
 background=#8fa1b3
-label=‭
+label= 
 command=date '+%a, %b %-d'
 interval=3600
 
@@ -101,6 +110,6 @@ interval=once
 [time]
 color=#2b303b
 background=#c0c5ce
-label=‭
+label= 
 command=date '+%H:%M '
 interval=5
