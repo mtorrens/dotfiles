@@ -2,26 +2,34 @@
 ;; Bootstrap and package management configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Trick: disable GC for the duration of loading the .emacs
+(setq gc-cons-threshold 64000000)
+(add-hook 'after-init-hook #'(lambda ()
+                               ;; restore after startup
+                               (setq gc-cons-threshold 800000)))
+
 ;; Set this, but don't load it; I'm using use-package rather than the internal
 ;; dependency management in package.el.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-;; Bootstrap package.el and MELPA
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+;; And load some bits of custom elisp that aren't available as packages
+(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
 
-(package-initialize)
-
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Bootstrap package.el, MELPA, use-package
+(setq package-enable-at-startup nil
+      package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)
+  (require 'package)
+  (package-initialize)
+  
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  (require 'use-package)
+
+  (setq use-package-always-ensure t))
 
 ;; Bootstrap auto-updating
 (use-package auto-package-update
@@ -34,9 +42,12 @@
 ;; Basic UI
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq inhibit-splash-screen t)
+(setq inhibit-splash-screen t
+      initial-scratch-message ";; ready\n\n"
+      visible-bell t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
 
 (setq line-number-mode t)
 (column-number-mode 1)
@@ -45,7 +56,7 @@
 (use-package base16-theme
   :config
   (load-theme 'base16-ocean t))
-(set-default-font "SauceCodePro Nerd Font Mono:pixelsize=14:style=Medium")
+(set-default-font "SauceCodePro Nerd Font Mono:pixelsize=15:style=Medium")
 (setq-default line-spacing 2)
 
 ;; Usual key bindings that match every other app on earth
@@ -150,16 +161,37 @@
 (use-package visual-fill-column
   :config
   (setq visual-fill-column 80))
+(use-package olivetti
+  :config
+  (setq-default olivetti-body-width 82))
+;; Make word-count-mode available, but don't turn it on automatically; it's
+;; very (!) slow for multi-megabyte text files.
+(require 'word-count)
 
 (defun text-editing-mode ()
+  ;; Activate olivetti
+  (olivetti-mode)
+  
   ;; Enable visual-line-mode, and have it respect indentation (like org-mode)
   (visual-line-mode 1)
   (visual-fill-column-mode 1)
-  (adaptive-wrap-prefix-mode 1)
+  (adaptive-wrap-prefix-mode 1))
 
-  ;; Re-enable hl-line-mode
-  (hl-line-mode 1))
-
+(add-hook 'text-mode-hook 'text-editing-mode)
 (add-hook 'markdown-mode-hook 'text-editing-mode)
 (add-hook 'LaTeX-mode-hook 'text-editing-mode)
 (add-hook 'org-mode-hook 'text-editing-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Code editing
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :config
+  (use-package all-the-icons-dired
+    :commands (all-the-icons-dired-mode))
+  (setq dired-sidebar-theme 'icons
+        dired-sidebar-face '(:family "Roboto" :height 140)
+        dired-sidebar-use-term-integration t
+        dired-sidebar-use-custom-font t))
