@@ -83,5 +83,10 @@ fi
 
 NEXT_PERCENT=$((NEXT * 100 / MAX))
 
+# Display an OSD
 killall -q osd_cat
 osd_cat -A center -p bottom -c $COLOR -l 1 -d 3 -f "-*-tahoma-bold-r-*-*-*-700-*-*-*-*-*-*" -b percentage -P $NEXT_PERCENT -T "$TEXT" &
+
+# Refresh i3blocks volume
+pkill -RTMIN+10 i3blocks
+
