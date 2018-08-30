@@ -15,11 +15,14 @@ exec --no-startup-id xss-lock -- i3lock -c 555577 -p default -e
 # Policy kit
 exec --no-startup-id lxpolkit
 
+# Thunar daemon
+exec --no-startup-id thunar --daemon
+
 # Applets
 exec --no-startup-id dropbox
 exec --no-startup-id nm-applet
 exec --no-startup-id udiskie -t
-exec --no-startup-id caffeine-indicator
+exec --no-startup-id caffeine
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
@@ -77,17 +80,16 @@ set $mod Mod4
 
 # start my most used apps
 bindsym $mod+t exec termite
-bindsym $mod+e exec pcmanfm
+bindsym $mod+e exec thunar
 bindsym $mod+s exec "subl3 -n"
 bindsym $mod+f exec firefox
 bindsym $mod+z exec zotero
-bindsym $mod+n exec zim
 
 # close window
 bindsym Mod1+F4 kill
 
 # lock the screen
-bindsym $mod+l exec --no-startup-id "light-locker-command -l"
+bindsym $mod+l exec --no-startup-id "i3lock -c 555577 -p default -e"
 
 # start rofi
 bindsym $mod+space exec "rofi -show run"
