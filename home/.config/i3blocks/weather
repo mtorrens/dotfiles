@@ -1,7 +1,7 @@
 #!/bin/bash
 
 metric=1
-location="Baton%20Rouge,%20Louisiana"
+location="Brussels,%20Belgium"
 url="http://rss.accuweather.com/rss/liveweather_rss.asp?metric=$metric&locCode=$location"
 response=$(curl -s "$url")
 weather=$(echo $response | xml_grep '//rss/channel/item/title' --text_only | grep Currently | awk -F ":" '{print $2 $3}' | cut -c 2- | tr '[:upper:]' '[:lower:]')
