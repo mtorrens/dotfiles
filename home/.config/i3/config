@@ -58,8 +58,10 @@ focus_follows_mouse no
 # specific window config
 #
 
-# Zotero's citation dialogs and preferences should float
+# Zotero's citation dialogs and preferences should float (hah, the window
+# title changes depending on localization)
 for_window [title="Quick Format Citation"] floating enable
+for_window [title="Mise en forme rapide des citations"] floating enable
 for_window [title="Zotero Preferences"] floating enable
 
 # Remmina's login dialog should float
