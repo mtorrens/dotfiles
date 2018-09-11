@@ -87,7 +87,7 @@ fi
 ###############################################################################
 # Configuration for other programs/systems
 
-export LANG=en_US.UTF-8
+export LANG=fr_BE.UTF-8
 export EDITOR=/usr/bin/nano
 export VISUAL=/usr/bin/nano
 export BROWSER=/usr/bin/firefox
