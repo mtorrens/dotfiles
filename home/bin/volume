@@ -74,10 +74,8 @@ else
 fi
 
 if [[ $MUTED -eq 1 ]]; then
-  TEXT="(Muting)"
   COLOR=red
 else
-  TEXT="Volume:"
   COLOR=green
 fi
 
@@ -85,7 +83,7 @@ NEXT_PERCENT=$((NEXT * 100 / MAX))
 
 # Display an OSD
 killall -q osd_cat
-osd_cat -A center -p bottom -c $COLOR -l 1 -d 3 -f "-*-tahoma-bold-r-*-*-*-700-*-*-*-*-*-*" -b percentage -P $NEXT_PERCENT -T "$TEXT" &
+osd_cat -A center -p bottom -c $COLOR -l 1 -d 3 -f "-*-fixed-*-r-*-*-*-120-*-*-*-*-*-*" -b percentage -P $NEXT_PERCENT &
 
 # Refresh i3blocks volume
 pkill -RTMIN+10 i3blocks
