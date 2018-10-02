@@ -7,9 +7,13 @@
 	[
 		"Autotools",
 		"Base16 Color Schemes",
+		"BracketHighlighter",
 		"CMake",
+		"Dotfiles Syntax Highlighting",
+		"GitGutter",
 		"Golang Build",
 		"GoSublime",
+		"Gremlins",
 		"JSONLint",
 		"Language - French - Français",
 		"LaTeX Word Count",
