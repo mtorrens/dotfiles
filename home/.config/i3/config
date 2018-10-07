@@ -70,6 +70,9 @@ for_window [title="Remmina Remote Desktop Client"] floating enable
 # Galculator should float
 for_window [title="galculator"] floating enable
 
+# pyStopwatch should float
+for_window [title="pyStopwatch"] floating enable
+
 # VirtualBox is massively buggy on i3
 for_window [class="VirtualBox"] floating enable
 
