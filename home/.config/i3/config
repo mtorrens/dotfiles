@@ -13,7 +13,7 @@ exec --no-startup-id hsetroot -solid '#555577'
 exec --no-startup-id xss-lock -- i3lock -c 555577 -p default -e
 
 # Policy kit
-exec --no-startup-id lxpolkit
+exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 
 # Thunar daemon
 exec --no-startup-id thunar --daemon
@@ -69,6 +69,9 @@ for_window [title="Remmina Remote Desktop Client"] floating enable
 
 # Galculator should float
 for_window [title="galculator"] floating enable
+
+# pyStopwatch should float
+for_window [title="pyStopwatch"] floating enable
 
 # VirtualBox is massively buggy on i3
 for_window [class="VirtualBox"] floating enable
