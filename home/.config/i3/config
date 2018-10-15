@@ -13,7 +13,7 @@ exec --no-startup-id hsetroot -solid '#555577'
 exec --no-startup-id xss-lock -- i3lock -c 555577 -p default -e
 
 # Policy kit
-exec --no-startup-id lxpolkit
+exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 
 # Thunar daemon
 exec --no-startup-id thunar --daemon
