@@ -1,0 +1,16 @@
+#!/bin/bash
+# markallread by Andrew Oakley www.aoakley.com Public Domain 2009-01-11,
+# modified by Charles Pence, 2018.
+
+# A script to mark all maildir mail as read in the current directory. I use
+# this to move getmail's new messages (downloaded to 'new') into 'cur', and add
+# a 'seen' flag, before I feed them into notmuch. Useful for archiving (e.g.) a
+# GMail account.
+
+for i in `ls -1 ./new/*`
+do
+  # Move from /new/ to /cur/
+  # Also add status "seen" to message by appending :2,S to filename
+  # as per http://cr.yp.to/proto/maildir.html
+  mv $i `echo $i | sed -r "s/^(.*)\/new\/(.*)$/\1\/cur\/\2:2,S/"`
+done

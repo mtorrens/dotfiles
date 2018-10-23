@@ -1,0 +1,30 @@
+#!/bin/bash
+# make-cover <pdf> <out> [page, def. 1] -- make a cover image from a paper PDF
+# for the website.
+
+if [ "$1" = "--help" -o $# -lt 2 ]; then
+  echo 'make-cover: make a website cover image from a PDF'
+  echo ''
+  echo 'Usage: make-cover <in.pdf> <out.jpg> [page = 1]'
+  exit 1
+fi
+
+pdf="$1"
+out="$2"
+page="$3"
+if [[ "$page" == "" ]]; then
+  page="1"
+fi
+
+if [[ "$out" == *.jpg ]]; then
+  # Don't put .jpg on the end, as pdftocairo will add it again
+  out=${out:0:-4}
+fi
+
+if [[ -e "$out.jpg" ]]; then
+  echo "ERROR: File $out.jpg already exists, aborting"
+  exit 1
+fi
+
+pdftocairo -f $page -singlefile -jpeg -jpegopt quality=93 -scale-to-x 320 \
+  -scale-to-y -1 "$pdf" "$out"
