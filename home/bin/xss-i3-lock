@@ -7,15 +7,31 @@
 # Options to pass to i3lock
 i3lock_options="-c 555577 -p default -e"
 
+# Place to save former current workspace
+old_ws=""
+
 # Run before starting the locker
 pre_lock() {
+    # Allow DPMS
     xset dpms 5 5 5
+
+    # Save the current workspace
+    old_ws=$(/home/cpence/bin/i3-current-ws)
+
+    # Switch to an empty workspace (yay wallpaper)
+    /home/cpence/bin/i3-find-open
+
     return
 }
 
 # Run after the locker exits
 post_lock() {
+    # Change back to the old current WS
+    i3-msg workspace number $old_ws
+
+    # Disable DPMS
     xset dpms 0 0 0
+
     return
 }
 
