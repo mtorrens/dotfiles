@@ -16,6 +16,6 @@ rofi.color-active: #2b303b, #8fa1b3, #343d46, #8fa1b3, #2b303b
 rofi.color-urgent: #2b303b, #bf616a, #343d46, #bf616a, #2b303b
 
 rofi.separator-style: solid
-rofi.font: Fantasque Sans Mono 11
+rofi.font: SauceCodePro Nerd Font Mono 11
 
 rofi.case-sensitive: false
