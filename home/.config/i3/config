@@ -10,7 +10,7 @@ exec --no-startup-id compton -CGb --no-fading-openclose
 exec --no-startup-id hsetroot -solid '#555577'
 
 # Screen locker
-exec --no-startup-id xss-lock -- i3lock -c 555577 -p default -e
+exec --no-startup-id xss-lock -l -- /home/cpence/bin/xss-i3-lock
 
 # Policy kit
 exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
