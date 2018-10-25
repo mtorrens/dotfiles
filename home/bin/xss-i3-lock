@@ -4,8 +4,11 @@
 
 ## CONFIGURATION ##############################################################
 
+# Place to save blurry image
+image=$(mktemp --suffix=.png)
+
 # Options to pass to i3lock
-i3lock_options="-c 555577 -p default -e"
+i3lock_options="-i $image -p default -e"
 
 # Place to save former current workspace
 old_ws=""
@@ -21,6 +24,11 @@ pre_lock() {
     # Switch to an empty workspace (yay wallpaper)
     /home/cpence/bin/i3-find-open
 
+    # Get and blur screenshot
+    scrot "$image"
+    convert "$image" -level "0%,100%,0.6" -filter Gaussian -resize 20% -define "filter:sigma=1.5" -resize 500.5% "$image"
+    #convert "$image" -level "0%,100%,0.6" -scale 10% -scale 1000% "$image"
+
     return
 }
 
@@ -31,6 +39,9 @@ post_lock() {
 
     # Disable DPMS
     xset dpms 0 0 0
+
+    # Clean up
+    rm $image
 
     return
 }
