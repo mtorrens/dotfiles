@@ -1,0 +1,36 @@
+#!/bin/bash
+# Set up displays using xrandr as appropriate
+
+printf "dock added or removed, updating status" | systemd-cat -t dock-hook
+
+# When udev calls this, there won't be DISPLAY set, so do that here
+if [[ -z "$DISPLAY" ]]; then
+    export DISPLAY=:0
+fi
+
+# See if the docking station is attached
+if xrandr | grep -q 'DP-1-1 connected'; then
+    printf "dock detected, enabling displays" | systemd-cat -t dock-hook
+    notify-send 'Dock' "Docking station detected, setting up external monitors..."
+
+    # Activate
+    xrandr --output DP-1-2 --auto
+    xrandr --output DP-1-1 --auto
+
+    # Configure res and position
+    xrandr --output DP-1-2 --rotate left
+    xrandr --output DP-1-1 --pos 1080x404 --primary
+
+    # Disable internal display
+    xrandr --output eDP-1 --off
+else
+    printf "dock absent, enabling internal screen" | systemd-cat -t dock-hook
+    notify-send 'Dock' "Docking station not present, setting up laptop display..."
+
+    # Internal screen
+    xrandr --output eDP-1 --auto
+
+    # Disable external displays
+    xrandr --output DP-1-1 --off
+    xrandr --output DP-1-2 --off
+fi
