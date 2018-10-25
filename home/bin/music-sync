@@ -1,0 +1,4 @@
+#!/bin/bash
+# Synchronize music from Dropbox to Wilkins
+
+rclone sync dropbox:/Music/ /mnt/wilkins/Music/ --tpslimit 9 --progress
