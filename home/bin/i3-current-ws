@@ -1,0 +1,9 @@
+#!/usr/bin/python
+
+import json, subprocess
+
+output = subprocess.check_output(['i3-msg', '-t', 'get_workspaces'])
+workspaces = json.loads(output)
+
+print([w for w in workspaces if w['focused']][0]['num'])
+
