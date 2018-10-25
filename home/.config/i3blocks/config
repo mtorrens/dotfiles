@@ -30,7 +30,21 @@ command=~/.config/i3blocks/bandwidth -i ' ‭' -o ''
 instance=enp0s31f6
 interval=5
 
-[battery_sep]
+[twoeth_sep]
+color=#2b303b
+background=#96b5b4
+command=echo '  '
+interval=once
+
+[eth2_band]
+color=#2b303b
+background=#96b5b4
+label= 
+command=~/.config/i3blocks/bandwidth -i ' ‭' -o ''
+instance=enp0s20f0u1u2
+interval=5
+
+[wifi_sep]
 color=#2b303b
 background=#96b5b4
 command=echo '  '
@@ -40,14 +54,14 @@ interval=once
 color=#2b303b
 background=#96b5b4
 command=~/.config/i3blocks/wifi
-instance=wlp4s0
+instance=wlp2s0
 interval=10
 
 [wifi_band]
 color=#2b303b
 background=#96b5b4
 command=~/.config/i3blocks/bandwidth -i ' ‭' -o ''
-instance=wlp4s0
+instance=wlp2s0
 interval=5
 
 [sep4]
@@ -56,24 +70,11 @@ interval=once
 color=#96b5b4
 background=#96b5b4
 
-[battery_one]
+[battery]
 color=#2b303b
 background=#ebcb8b
 command=~/.config/i3blocks/battery
 instance=0
-interval=30
-
-[battery_sep]
-color=#2b303b
-background=#ebcb8b
-command=echo ' '
-interval=once
-
-[battery_two]
-color=#2b303b
-background=#ebcb8b
-command=~/.config/i3blocks/battery
-instance=1
 interval=30
 
 [sep3]

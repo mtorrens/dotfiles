@@ -11,21 +11,19 @@ fi
 # See if the docking station is attached
 if xrandr | grep -q 'DP-1-1 connected'; then
     printf "dock detected, enabling displays" | systemd-cat -t dock-hook
-    notify-send 'Dock' "Docking station detected, setting up external monitors..."
 
     # Activate
     xrandr --output DP-1-2 --auto
     xrandr --output DP-1-1 --auto
 
     # Configure res and position
-    xrandr --output DP-1-2 --rotate left
-    xrandr --output DP-1-1 --pos 1080x404 --primary
+    xrandr --output DP-1-2 --rotate left --primary
+    xrandr --output DP-1-1 --pos 1080x404
 
     # Disable internal display
     xrandr --output eDP-1 --off
 else
     printf "dock absent, enabling internal screen" | systemd-cat -t dock-hook
-    notify-send 'Dock' "Docking station not present, setting up laptop display..."
 
     # Internal screen
     xrandr --output eDP-1 --auto
