@@ -7,7 +7,7 @@
 exec --no-startup-id compton -CGb --no-fading-openclose
 
 # Wallpaper
-exec --no-startup-id hsetroot -solid '#555577'
+exec --no-startup-id nitrogen --restore
 
 # Screen locker
 exec --no-startup-id xss-lock -l -- /home/cpence/bin/xss-i3-lock
@@ -22,7 +22,6 @@ exec --no-startup-id thunar --daemon
 exec --no-startup-id dropbox
 exec --no-startup-id nm-applet
 exec --no-startup-id udiskie -t
-exec --no-startup-id caffeine
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
