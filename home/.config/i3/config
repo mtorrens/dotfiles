@@ -93,7 +93,7 @@ bindsym $mod+z exec zotero
 bindsym Mod1+F4 kill
 
 # lock the screen
-bindsym $mod+l exec --no-startup-id "i3lock -c 555577 -p default -e"
+bindsym $mod+l exec --no-startup-id "betterlockscreen -l blur"
 
 # start rofi
 bindsym $mod+space exec "rofi -show run"
