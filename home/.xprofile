@@ -12,7 +12,8 @@ if [ -x /usr/bin/gnome-keyring-daemon ]; then
 fi
 export SSH_AUTH_SOCK
 
-# Configure VDPAU backend
+# Configure hardware acceleration
+export LIBVA_DRIVER_NAME=iHD
 export VDPAU_DRIVER=va_gl
 
 # Fix ugly Java apps
