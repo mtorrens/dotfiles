@@ -103,6 +103,7 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
+		"Markdown",
 		"Vintage"
 	],
 	"indent_subsequent_lines": true,
