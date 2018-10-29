@@ -16,10 +16,19 @@ if xrandr | grep -q 'DP-1-1 connected'; then
            --output DP-1-2 --auto --rotate left --pos 0x0 --primary \
            --output DP-1-1 --auto --pos 1080x404 \
            --output eDP-1 --off
+
+    sleep 1
+
+    xcalib -o 0 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
+    xcalib -o 1 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
 else
     printf "dock absent, enabling internal screen" | systemd-cat -t dock-hook
 
     xrandr --output eDP-1 --auto \
            --output DP-1-1 --off \
            --output DP-1-2 --off
+
+    sleep 1
+
+    xcalib -o 0 -v -c | systemd-cat -t dock-hook
 fi
