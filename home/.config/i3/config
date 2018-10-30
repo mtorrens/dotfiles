@@ -40,11 +40,15 @@ client.placeholder      #000000 #000000 #000000 #2b303b #000000
 
 client.background       #2b303b
 
-# Disable all titlebars and configure borders
+# Titlebars, borders, gaps
 default_border pixel 2
 default_floating_border pixel 2
-hide_edge_borders smart
 
+hide_edge_borders smart
+smart_borders on
+
+gaps inner 20
+gaps outer 30
 
 #
 # mouse
