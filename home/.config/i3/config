@@ -22,6 +22,7 @@ exec --no-startup-id thunar --daemon
 exec --no-startup-id caffeine
 exec --no-startup-id dropbox
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
 exec --no-startup-id udiskie -t
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
