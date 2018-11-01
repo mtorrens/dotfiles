@@ -94,6 +94,7 @@ bindsym $mod+e exec thunar
 bindsym $mod+s exec "subl3 -n"
 bindsym $mod+f exec firefox
 bindsym $mod+z exec zotero
+bindsym $mod+m exec thunderbird
 
 # close window
 bindsym Mod1+F4 kill
