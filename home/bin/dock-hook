@@ -23,9 +23,6 @@ if xrandr | grep -q 'DP-1-1 connected'; then
     xcalib -o 0 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
     xcalib -o 1 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
 
-    # Reset wallpaper
-    nitrogen --restore
-
     # Link the right location for music
     ln -sf '/mnt/wilkins/Music/Library' /home/cpence/Music
 else
@@ -41,9 +38,13 @@ else
     # Clear out ICC profiles
     xcalib -o 0 -v -c | systemd-cat -t dock-hook
 
-    # Reset wallpaper
-    nitrogen --restore
-
     # Link the right location for music
     ln -sf '/mnt/dekutree/Music/Library' /home/cpence/Music
 fi
+
+# Reset wallpaper
+nitrogen -restore
+
+# Reload i3 to catch the DPI change
+i3-msg restart
+
