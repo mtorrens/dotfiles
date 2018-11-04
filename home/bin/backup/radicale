@@ -1,0 +1,19 @@
+#!/bin/bash
+# Get all of my data off of the Radicale server. Must be done from the home
+# network.
+
+OUTDIR="$HOME/Dropbox/Storage/Charles/Backup/"
+
+# Make the tar file remotely and grab it
+ssh -t 10.1.1.20 "/bin/bash -c \
+	'sudo tar cvf calcard.tar -C /var/lib/radicale/collections/collection-root cpence &&\
+	sudo chown cpence:users calcard.tar'"
+scp 10.1.1.20:~/calcard.tar .
+
+# Back it up
+xz -9e calcard.tar
+mv calcard.tar.xz $OUTDIR
+
+# Clean up remotely
+ssh 10.1.1.20 "/bin/bash -c 'rm calcard.tar'"
+

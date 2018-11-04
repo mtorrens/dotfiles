@@ -1,0 +1,24 @@
+#!/bin/sh
+# Call Getmail to back up my mail accounts locally
+
+source ${HOME}/bin/backup/utilities.sh
+
+get_private_file getmail.gmail getmail.gmail
+getmail -r ${HOME}/getmail.gmail
+release_private_file getmail.gmail
+
+get_private_file getmail.family getmail.family
+getmail -r ${HOME}/getmail.family
+release_private_file getmail.family
+
+get_private_file getmail.uclouvain getmail.uclouvain
+getmail -r ${HOME}/getmail.uclouvain
+release_private_file getmail.uclouvain
+
+# Mark everything as read
+cd ${HOME}/Dropbox/Charles/Mail/18
+${HOME}/bin/mail/markallread
+
+# Update the cache
+notmuch new
+

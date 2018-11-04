@@ -4,7 +4,7 @@
 
 ~/bin/backup/bookmarks-firefox
 ~/bin/backup/calendar-google
-~/bin/backup/contacts-gmail-dl
+~/bin/backup/radicale
 ~/bin/backup/todo-todoist-dl
 ~/bin/backup/dotfiles
 ~/bin/backup/lastpass
