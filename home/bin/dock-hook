@@ -1,50 +1,27 @@
 #!/bin/bash
-# Set up displays using xrandr as appropriate
+# Set up user-account params for docking
 
-printf "dock added or removed, updating status" | systemd-cat -t dock-hook
+printf "running user hook for dock status" | systemd-cat -t dock-hook
 
 # When udev calls this, there won't be DISPLAY set, so do that here
 if [[ -z "$DISPLAY" ]]; then
     export DISPLAY=:0
 fi
 
+# Set the xrandr settings first
+$HOME/bin/dock-xrandr
+
 # See if the docking station is attached
 if xrandr | grep -q 'DP-1-1 connected'; then
-    printf "dock detected, enabling displays" | systemd-cat -t dock-hook
-
-    xrandr --dpi 105 \
-           --output DP-1-1 --auto --pos 1080x404 --primary \
-           --output DP-1-2 --auto --rotate left --pos 0x0 \
-           --output eDP-1 --off
-
-    sleep 1
-
-    # Load ICC profiles
-    xcalib -o 0 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
-    xcalib -o 1 -v ~/bin/dell-p2217h.icc | systemd-cat -t dock-hook
-
     # Link the right location for music
     ln -sf '/mnt/wilkins/Music/Library' /home/cpence/Music
 else
-    printf "dock absent, enabling internal screen" | systemd-cat -t dock-hook
-
-    xrandr --dpi 157 \
-           --output eDP-1 --auto \
-           --output DP-1-1 --off \
-           --output DP-1-2 --off
-
-    sleep 1
-
-    # Clear out ICC profiles
-    xcalib -o 0 -v -c | systemd-cat -t dock-hook
-
     # Link the right location for music
     ln -sf '/mnt/dekutree/Music/Library' /home/cpence/Music
 fi
 
 # Reset wallpaper
-nitrogen -restore
+nitrogen --restore
 
 # Reload i3 to catch the DPI change
 i3-msg restart
-

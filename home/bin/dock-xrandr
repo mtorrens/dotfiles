@@ -1,0 +1,37 @@
+#!/bin/bash
+# Set up displays using xrandr as appropriate
+
+printf "setting up xrandr displays" | systemd-cat -t dock-xrandr
+
+# When udev calls this, there won't be DISPLAY set, so do that here
+if [[ -z "$DISPLAY" ]]; then
+    export DISPLAY=:0
+fi
+
+# See if the docking station is attached
+if xrandr | grep -q 'DP-1-1 connected'; then
+    printf "dock detected, enabling displays" | systemd-cat -t dock-xrandr
+
+    xrandr --dpi 105 \
+           --output DP-1-1 --auto --pos 1080x404 --primary \
+           --output DP-1-2 --auto --rotate left --pos 0x0 \
+           --output eDP-1 --off
+
+    sleep 1
+
+    # Load ICC profiles
+    xcalib -o 0 -v /home/cpence/bin/dell-p2217h.icc | systemd-cat -t dock-xrandr
+    xcalib -o 1 -v /home/cpence/bin/dell-p2217h.icc | systemd-cat -t dock-xrandr
+else
+    printf "dock absent, enabling internal screen" | systemd-cat -t dock-xrandr
+
+    xrandr --dpi 157 \
+           --output eDP-1 --auto \
+           --output DP-1-1 --off \
+           --output DP-1-2 --off
+
+    sleep 1
+
+    # Clear out ICC profiles
+    xcalib -o 0 -v -c | systemd-cat -t dock-xrandr
+fi
