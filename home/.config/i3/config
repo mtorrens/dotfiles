@@ -15,6 +15,9 @@ exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 # Thunar daemon
 exec --no-startup-id thunar --daemon
 
+# Conky
+exec --no-startup-id conky -b
+
 # Applets
 exec --no-startup-id caffeine
 exec --no-startup-id dropbox
