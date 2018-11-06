@@ -9,9 +9,6 @@ exec --no-startup-id compton -CGb --no-fading-openclose
 # Wallpaper
 exec --no-startup-id nitrogen --restore
 
-# Screen locker
-exec --no-startup-id xss-lock -l -- /home/cpence/bin/xss-i3-lock
-
 # Policy kit
 exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
 
