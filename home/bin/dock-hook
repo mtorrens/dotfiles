@@ -23,5 +23,8 @@ fi
 # Reset wallpaper
 nitrogen --restore
 
-# Reload i3 to catch the DPI change
-i3-msg restart
+# Reload i3 to catch the DPI change, except for the first time we run
+if [[ "$1" != "--no-restart" ]]; then
+  i3-msg restart
+fi
+

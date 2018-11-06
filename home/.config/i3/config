@@ -3,11 +3,11 @@
 # autostart
 #
 
+# Run the user dock hook, since we've got a new session
+exec --no-startup-id ~/bin/dock-hook --no-restart
+
 # Compositor
 exec --no-startup-id compton -CGb --no-fading-openclose
-
-# Wallpaper
-exec --no-startup-id nitrogen --restore
 
 # Policy kit
 exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit
