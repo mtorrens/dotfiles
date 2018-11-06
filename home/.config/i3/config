@@ -181,34 +181,59 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "zsh -c '~/bin/volume down'"
 bindsym XF86AudioMicMute exec --no-startup-id "zsh -c '~/bin/micmute'"
 
 mode "resize" {
-        bindsym Left        resize shrink width 10 px or 10 ppt
-        bindsym Down        resize grow height 10 px or 10 ppt
-        bindsym Up          resize shrink height 10 px or 10 ppt
-        bindsym Right       resize grow width 10 px or 10 ppt
+  bindsym Left        resize shrink width 10 px or 10 ppt
+  bindsym Down        resize grow height 10 px or 10 ppt
+  bindsym Up          resize shrink height 10 px or 10 ppt
+  bindsym Right       resize grow width 10 px or 10 ppt
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
 
 bar {
+  i3bar_command i3bar -t
+  output DP-1-2
+
   position top
-  height 21
-  status_command i3blocks
+  tray_output none
 
-  tray_output primary
-  tray_padding 0
-
-  font "pango:SauceCodePro Nerd Font Mono Semibold 11"
+  font "pango:Roboto Semibold 10"
 
   colors {
-    statusline #c0c5ce
-    background #2b303b
+    statusline #00000000
+    background #00000000
+    separator #00000000
 
-    focused_workspace #c0c5ce #c0c5ce #2b303b
-    active_workspace #c0c5ce #a3be8c #2b303b
-    inactive_workspace #4c4e52 #2b303b #999da4
-    urgent_workspace #c0c5ce #bf616a #2b303b
+    focused_workspace  #ffffff #00000000 #ffffff
+    active_workspace   #00000000 #00000000 #ffffff
+    inactive_workspace #00000000 #00000000 #c0c5ce
+    urgent_workspace   #bf616a #00000000 #c0c5ce
+  }
+}
+
+bar {
+  i3bar_command i3bar -t
+
+  output DP-1-1
+  output eDP-1
+
+  position top
+  tray_output DP-1-1
+  tray_output eDP-1
+  tray_padding 0
+
+  font "pango:Roboto Semibold 10"
+
+  colors {
+    statusline #00000000
+    background #00000000
+    separator #00000000
+
+    focused_workspace  #ffffff #00000000 #ffffff
+    active_workspace   #00000000 #00000000 #ffffff
+    inactive_workspace #00000000 #00000000 #c0c5ce
+    urgent_workspace   #bf616a #00000000 #c0c5ce
   }
 }

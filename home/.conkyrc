@@ -1,0 +1,62 @@
+conky.config = {
+    alignment = 'top_left',
+    background = false,
+    border_width = 0,
+    cpu_avg_samples = 2,
+	default_color = 'white',
+    default_outline_color = 'white',
+    default_shade_color = '#444444',
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = true,
+    use_xft = true,
+    font = 'SauceCodePro Nerd Font Mono:size=12',
+    gap_x = 0,
+    gap_y = 30,
+    minimum_height = 5,
+	minimum_width = 1920,
+    maximum_width = 1920,
+    max_text_width = 0,
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_type = 'override',
+    short_units = true,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'left',
+    show_graph_scale = false,
+    show_graph_range = false
+}
+
+conky.text = [[${alignc}\
+# Battery
+ ${if_match $battery_percent >= 25}${else}${endif}${if_match $battery_percent >= 50}${else}${endif}${if_match $battery_percent >= 75}${else}${endif}${if_match $battery_percent == 100}${else}${endif}                     \
+#
+# Volume
+${if_pa_sink_muted}ﱝ${else}墳 ${if_match $pa_sink_volume >= 25}${else}${endif}${if_match $pa_sink_volume >= 50}${else}${endif}${if_match $pa_sink_volume >= 75}${else}${endif}${if_match $pa_sink_volume == 100}${else}${endif}${endif}                     \
+#
+# Network interfaces
+歷 \
+${if_existing /sys/class/net/wlp2s0/operstate up}${wireless_essid wlp2s0}: ${upspeed wlp2s0} ${downspeed wlp2s0}${else}\
+${if_existing /sys/class/net/enp0s31f6/operstate up}${upspeed enp0s31f6} ${downspeed enp0s31f6}${else}\
+${if_existing /sys/class/net/enp0s20f0u1u2/operstate up}${upspeed enp0s20f0u1u2} ${downspeed enp0s20f0u1u2}${endif}${endif}${endif}                     \
+#
+# Weather
+${weather http://tgftp.nws.noaa.gov/data/observations/metar/stations/ EBBR temperature}糖                     \
+#
+# Date
+ ${time %a, %b %-d}                     \
+#
+# Time
+ ${time %H:%M}
+]]
