@@ -40,7 +40,7 @@ conky.config = {
 
 conky.text = [[${alignc}\
 # Battery
- ${if_match $battery_percent >= 25}${else}${endif}${if_match $battery_percent >= 50}${else}${endif}${if_match $battery_percent >= 75}${else}${endif}${if_match $battery_percent == 100}${else}${endif}                     \
+ ${if_match $battery_percent >= 25}${else}${endif}${if_match $battery_percent >= 50}${else}${endif}${if_match $battery_percent >= 75}${else}${endif}${if_match $battery_percent >= 98}${else}${endif}                     \
 #
 # Volume
 ${if_pa_sink_muted}ﱝ${else}墳 ${if_match $pa_sink_volume >= 25}${else}${endif}${if_match $pa_sink_volume >= 50}${else}${endif}${if_match $pa_sink_volume >= 75}${else}${endif}${if_match $pa_sink_volume == 100}${else}${endif}${endif}                     \
