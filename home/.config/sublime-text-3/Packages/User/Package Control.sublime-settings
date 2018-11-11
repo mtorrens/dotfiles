@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"A File Icon",
 		"Autotools",
 		"Base16 Color Schemes",
 		"BracketHighlighter",
@@ -26,6 +27,7 @@
 		"SublimeLinter-cpplint",
 		"SublimeLinter-haml",
 		"SublimeLinter-xmllint",
+		"SwitchDictionary",
 		"Theme - Arc",
 		"TypeScript"
 	]
