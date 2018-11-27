@@ -171,11 +171,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+q exec "~/bin/end-session"
 
 # multimedia key bindings
-bindsym XF86AudioPrev exec --no-startup-id "exaile -p"
-bindsym XF86AudioPlay exec --no-startup-id "exaile -t"
-bindsym XF86AudioStop exec --no-startup-id "exaile -s"
-bindsym XF86AudioNext exec --no-startup-id "exaile -n"
-bindsym Pause exec --no-startup-id "zsh -c '~/bin/pa-toggle'"
 bindsym XF86MonBrightnessUp exec --no-startup-id "zsh -c '~/bin/brightness up'"
 bindsym XF86MonBrightnessDown exec --no-startup-id "zsh -c '~/bin/brightness down'"
 bindsym XF86AudioMute exec --no-startup-id "zsh -c '~/bin/volume toggle'"

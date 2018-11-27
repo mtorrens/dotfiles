@@ -11,15 +11,6 @@ fi
 # Set the xrandr settings first
 $HOME/bin/dock-xrandr
 
-# See if the docking station is attached
-if xrandr | grep -q 'DP-1-1 connected'; then
-    # Link the right location for music
-    ln -sf '/mnt/wilkins/Music/Library' /home/cpence/Music
-else
-    # Link the right location for music
-    ln -sf '/mnt/dekutree/Music/Library' /home/cpence/Music
-fi
-
 # Reset wallpaper
 nitrogen --restore
 

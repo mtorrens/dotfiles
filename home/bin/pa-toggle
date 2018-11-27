@@ -1,9 +1,0 @@
-#!/bin/sh
-
-ACTIVE_SINK=`pacmd list-sinks | grep "\* index:" -A1 | grep "name: " | sed "s/.*name: <\(.*\)>.*/\1/"`
-
-if [ "$ACTIVE_SINK" == "crossfeed" ]; then
-  ~/bin/pa-speakers
-else
-  ~/bin/pa-headphones
-fi
