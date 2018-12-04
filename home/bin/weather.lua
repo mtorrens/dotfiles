@@ -18,6 +18,9 @@ apikey = "dda365d29d20a50b3173abee4048370b"
 -- measure is °C if metric and °F if imperial
 measure = (cf == 'metric' and '' or '')
 
+-- save the cache somewhere safe
+cachename = os.getenv("HOME") .. '/.cache/weather.json'
+
 -- Unicode weather symbols to use
 icons = {
   ["01"] = "",
@@ -43,12 +46,12 @@ file_exists = function (name)
     end
 end
 
-if file_exists("weather.json") then
-    cache = io.open("weather.json","r+")
+if file_exists(cachename) then
+    cache = io.open(cachename, "r+")
     data = json.decode(cache:read())
     timepassed = os.difftime(currenttime, data.timestamp)
 else
-    cache = io.open("weather.json", "w")
+    cache = io.open(cachename, "w")
     timepassed = 6000
 end
 
