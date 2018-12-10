@@ -3,7 +3,6 @@
 # off-site backup setup can get to them.
 
 ~/bin/backup/bookmarks-firefox
-~/bin/backup/calendar-google
 ~/bin/backup/radicale
 ~/bin/backup/todo-todoist-dl
 ~/bin/backup/dotfiles
